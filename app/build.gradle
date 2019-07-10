@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+    defaultConfig {
+        applicationId "com.tzl.agriculture"
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+MobSDK {
+    appKey "2b95262c53922"
+    appSecret "e3705b9e9f7ceb0eabffbdb590b39680"
+    SMSSDK {}
+
+    ShareSDK {}
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    /*com.android.support:design:*/
+    implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'commons-lang:commons-lang:2.6'
+
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+
+    implementation 'com.facebook.fresco:fresco:0.14.1'
+
+    /*下拉刷新动画*/
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-11'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-11'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+
+    implementation 'com.youth.banner:banner:1.4.10'
+
+
+    //引入ButterKnife
+    implementation "com.jakewharton:butterknife:10.0.0"
+    annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0"
+
+
+    /**
+     * 网络请求
+     */
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
+    implementation project(path: ':myhttp')  //最新版本
+
+    /**
+     * 圆角图片
+     */
+    implementation 'com.github.SheHuan:NiceImageView:1.0.5'
+
+}
