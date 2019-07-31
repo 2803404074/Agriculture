@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".main.MainActivity">
 
         <FrameLayout
             android:id="@+id/fl_container"
@@ -37,7 +37,8 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="8dp"
+                android:padding="@dimen/dp_3"
+                android:drawableTop="@drawable/select_home"
                 android:text="首页" />
 
             <RadioButton
@@ -48,7 +49,8 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="8dp"
+                android:padding="@dimen/dp_3"
+                android:drawableTop="@drawable/select_xc"
                 android:text="乡愁" />
 
 
@@ -60,7 +62,8 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="8dp"
+                android:padding="@dimen/dp_3"
+                android:drawableTop="@drawable/select_my"
                 android:text="我的" />
         </RadioGroup>
     </RelativeLayout>

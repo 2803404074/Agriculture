@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorGri"
+    tools:context=".fragment.personal.activity.set.UpLoadIdentifyActivity">
+
+    <include layout="@layout/toolbar_left_white"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorGri2"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginVertical="@dimen/dp_20"
+        android:text="拍摄/上传您的二代身份证"/>
+
+    <RelativeLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_zm"
+            android:layout_width="@dimen/dp_250"
+            android:layout_height="@dimen/dp_150"
+            android:scaleType="fitXY"
+            android:src="@mipmap/my_sfzm"/>
+        <TextView
+            android:id="@+id/tv_zm"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击拍摄/上传人面像"
+            android:drawableTop="@mipmap/my_pz"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_fm"
+            android:layout_width="@dimen/dp_250"
+            android:layout_height="@dimen/dp_150"
+            android:scaleType="fitXY"
+            android:src="@mipmap/my_sfzbm"/>
+        <TextView
+            android:id="@+id/tv_fm"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击拍摄/上传国徽面"
+            android:drawableTop="@mipmap/my_pz"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="信息仅用于身份验证，趣乡将保障您的信息安全。"/>
+</LinearLayout>

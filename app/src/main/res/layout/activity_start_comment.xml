@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGri"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".mall.activity.StartCommentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <include layout="@layout/toolbar_left_white_left"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"/>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginVertical="@dimen/sp_15"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:background="@drawable/shape_white_noframe"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200">
+        <EditText
+            android:id="@+id/et_mess"
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:padding="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:hint="宝贝满足你的期待了吗？说说你的心得吧~"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:background="@drawable/xibk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加图片"
+            android:padding="@dimen/dp_10"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_alignParentBottom="true"
+            android:drawableTop="@android:drawable/ic_menu_camera"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:textSize="@dimen/sp_18"
+        android:padding="@dimen/dp_3"
+        android:gravity="center"
+        android:layout_gravity="right"
+        android:background="@drawable/shape_white_noframe"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="发布"/>
+</LinearLayout>

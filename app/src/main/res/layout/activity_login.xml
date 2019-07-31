@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.personal.activity.LoginActivity">
+    tools:context=".fragment.personal.login.activity.LoginActivity">
 
     <RelativeLayout
         android:layout_above="@+id/et_phone"
@@ -21,12 +21,6 @@
             android:padding="10dp"
             android:id="@+id/tv_go"
             android:text="中国（+86）"/>
-        <TextView
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text=">"/>
         <TextView
             android:layout_below="@+id/tv_go"
             android:layout_width="match_parent"
@@ -49,14 +43,25 @@
         android:layout_centerVertical="true"
         android:background="@color/colorGri"
         />
+    <TextView
+        android:id="@+id/tv_tips"
+        android:visibility="gone"
+        android:layout_below="@+id/tv_line"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccentButton"
+        android:text="该手机号未注册，请前往注册。"/>
 
     <LinearLayout
+        android:layout_below="@+id/tv_tips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
     <TextView
-        android:background="@drawable/shape_login_blue"
+        android:id="@+id/tv_next"
+        android:background="@drawable/shape_login_blue_hide"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#fff"
@@ -66,14 +71,24 @@
         android:gravity="center"
         android:layout_marginTop="50dp"
         android:textSize="21sp"
-        android:onClick="getCode"
-        android:text="获取验证码"
-        tools:ignore="OnClick" />
+        android:text="获取验证码" />
+        <TextView
+            android:id="@+id/tv_regist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="新用户注册"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -109,7 +124,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:text="登录即代币哦您已同意《趣乡村隐私政策》"/>
+        android:layout_marginBottom="@dimen/dp_10"
+        android:text="登录即已同意《趣味乡村隐私政策》"/>
     </LinearLayout>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/colorPrimaryDark" />
+
 </RelativeLayout>

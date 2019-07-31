@@ -13,6 +13,7 @@
         android:paddingVertical="10dp"
         android:background="@drawable/shape_white_noframe"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,55 +66,70 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="享 5 折 优 惠"/>
-               <ImageView
-                   android:id="@+id/iv_find_01"
+               <LinearLayout
                    android:layout_below="@+id/tv_mess01"
-                   android:layout_width="wrap_content"
+                   android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:src="@mipmap/ic_launcher" />
-               <ImageView
-                  android:id="@+id/iv_find_02"
-                   android:layout_marginStart="10dp"
-                   android:layout_below="@+id/tv_mess01"
-                   android:layout_toRightOf="@+id/iv_find_01"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:src="@mipmap/ic_launcher"
-                   android:layout_marginLeft="10dp" />
+                   android:orientation="horizontal">
+                   <ImageView
+                       android:id="@+id/iv_find_01"
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_height="@dimen/dp_70"
+                       android:scaleType="fitXY"
+                       android:src="@mipmap/test8" />
+                   <ImageView
+                       android:id="@+id/iv_find_02"
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_marginLeft="@dimen/dp_5"
+                       android:layout_height="@dimen/dp_70"
+                       android:scaleType="fitXY"
+                       android:src="@mipmap/test9" />
+               </LinearLayout>
+
            </RelativeLayout>
 
 
            <RelativeLayout
                android:layout_width="0dp"
                android:layout_weight="1"
+               android:layout_marginLeft="@dimen/dp_5"
                android:layout_height="wrap_content">
                <TextView
-                   android:id="@+id/tv_ly"
+                   android:id="@+id/tv_find02"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
                    android:textColor="@color/colorAccentButton"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="发现好货"/>
-
+                   android:text="去旅游"/>
                <TextView
-                   android:id="@+id/tv_dy"
-                   android:layout_below="@+id/tv_ly"
+                   android:id="@+id/tv_mess02"
+                   android:layout_below="@+id/tv_find02"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="感 受 他 们 的 历 史"/>
-               <ImageView
-                   android:id="@+id/iv_01"
-                   android:layout_below="@+id/tv_dy"
-                   android:layout_width="wrap_content"
+                   android:text="享 5 折 优 惠"/>
+               <LinearLayout
+                   android:layout_below="@+id/tv_mess02"
+                   android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:src="@mipmap/ic_launcher" />
-               <ImageView
-                   android:layout_below="@+id/tv_dy"
-                   android:layout_toRightOf="@+id/iv_01"
-                   android:layout_width="wrap_content"
-                   android:layout_marginStart="10dp"
-                   android:layout_height="wrap_content"
-                   android:src="@mipmap/ic_launcher"
-                   android:layout_marginLeft="10dp" />
+                   android:orientation="horizontal">
+                   <ImageView
+                       android:id="@+id/iv_qly_01"
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_height="@dimen/dp_70"
+                       android:scaleType="fitXY"
+                       android:src="@mipmap/test10" />
+                   <ImageView
+                       android:id="@+id/iv_qly_02"
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_marginLeft="@dimen/dp_5"
+                       android:layout_height="@dimen/dp_70"
+                       android:scaleType="fitXY"
+                       android:src="@mipmap/test11" />
+               </LinearLayout>
+
            </RelativeLayout>
        </LinearLayout>
 
@@ -121,39 +137,88 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/tv_hw"
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="户外运动"/>
+                    android:text="扶贫拼"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/colorGri2" />
                 <TextView
-                    android:id="@+id/tv_hw_mess"
-                    android:layout_below="@+id/tv_hw"
+                    android:id="@+id/tv_messfpt01"
+                    android:layout_below="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
                     android:text="感受他们的历史"/>
-                <ImageView
-                    android:layout_below="@+id/tv_hw_mess"
+                <LinearLayout
+                    android:layout_below="@+id/tv_messfpt01"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/iv_fpp_01"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/dp_70"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/test11" />
+                    <ImageView
+                        android:id="@+id/iv_fpp_02"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_height="@dimen/dp_70"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/test12" />
+                </LinearLayout>
+
             </RelativeLayout>
+
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_marginLeft="@dimen/dp_5"
                 android:layout_height="wrap_content">
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_f2_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorGri2"
+                    android:textSize="@dimen/sp_15"
+                    android:text="中国馆"/>
+                <TextView
+                    android:id="@+id/tv_f2_mess"
+                    android:layout_below="@+id/tv_f2_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开启拼团24小时"/>
+                <LinearLayout
+                    android:layout_below="@+id/tv_f2_mess"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/iv_zgg_01"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/dp_70"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/test9" />
+                    <ImageView
+                        android:id="@+id/iv_zgg_02"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_height="@dimen/dp_70"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/test8" />
+                </LinearLayout>
 
             </RelativeLayout>
         </LinearLayout>

@@ -14,92 +14,43 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="150dp"
-            android:layout_weight="2"
-            android:scaleType="fitXY"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
             android:src="@mipmap/test1"/>
         <ImageView
             android:layout_width="0dp"
+            android:layout_marginLeft="@dimen/dp_5"
             android:layout_height="150dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@mipmap/test2"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:src="@mipmap/test3"/>
+            android:src="@mipmap/test1"/>
     </LinearLayout>
 
-
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:src="@mipmap/test4"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dp_130">
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="fitXY"
-            android:layout_weight="1"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_marginLeft="2dp"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="fitXY"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingVertical="10dp"
-        android:background="@drawable/shape_white_noframe"
-        android:orientation="vertical">
-        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/test13"
+            android:layout_marginTop="@dimen/dp_5"
+            android:scaleType="centerCrop" />
+        <TextView
+            android:id="@+id/tv_tab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                android:textColor="@color/colorGri2"
-                android:text="发现"/>
-            <TextView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="享受生活    回味童年"/>
-        </LinearLayout>
+            android:text="订单农业"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/sp_21"
+            android:textColor="@android:color/white"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_below="@+id/tv_tab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:src="@mipmap/ic_launcher"
-                android:scaleType="fitXY"/>
-            <ImageView
-                android:layout_marginLeft="2dp"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:src="@mipmap/ic_launcher"
-                android:scaleType="fitXY"/>
-        </LinearLayout>
-    </LinearLayout>
+            android:text="消费扶贫，你我同行"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@android:color/white"/>
+    </RelativeLayout>
 
 </LinearLayout>

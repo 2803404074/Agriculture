@@ -11,7 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.tzl.agriculture.util.SPUtils;
+
 import Utils.OkHttp3Utils;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * fragment基类
@@ -19,6 +23,8 @@ import Utils.OkHttp3Utils;
  *
  */
 public abstract class BaseFragment extends Fragment {
+    private Unbinder unbinder;
+
     //获取TAG的fragment名称
     protected final String TAG = this.getClass().getSimpleName();
     protected String STATE_SAVE_IS_HIDDEN ;
@@ -36,12 +42,23 @@ public abstract class BaseFragment extends Fragment {
         context = null;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    public Context getContext(){
+        return this.context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(initLayout(), container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         initView(rootView);
-        initData(context);
+        initData();
         return rootView;
     }
 
@@ -89,10 +106,8 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 初始化、绑定数据
-     *
-     * @param mContext 上下文
      */
-    protected abstract void initData(Context mContext);
+    protected abstract void initData();
 
     /**
      * 保证同一按钮在1秒内只响应一次点击事件
@@ -112,6 +127,10 @@ public abstract class BaseFragment extends Fragment {
                 onSingleClick(v);
             }
         }
+    }
+
+    public String getToken(){
+        return (String) SPUtils.instance(getContext(),1).getkey("token","");
     }
 
     /**

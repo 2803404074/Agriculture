@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorGri"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.personal.activity.set.UserMessActivity">
+
+    <include layout="@layout/toolbar_left_white"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_head"
+        android:padding="@dimen/dp_5"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorGri2"
+            android:text="头像"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"/>
+
+        <com.shehuan.niv.NiceImageView
+            android:id="@+id/drawee_img"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:src="@mipmap/ic_launcher"
+            app:border_width="@dimen/dp_2"
+            android:scaleType="fitXY"
+            app:border_color="@color/colorYellow"
+            app:is_circle="true" />
+
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:padding="@dimen/dp_5"
+            android:rotation="180"
+            android:src="@mipmap/back_black"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:paddingHorizontal="@dimen/dp_5"
+        android:paddingVertical="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorGri2"
+            android:text="用户名"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_5"
+            android:text="adasd158321"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_nick"
+        android:layout_marginTop="@dimen/dp_10"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:paddingVertical="@dimen/dp_10"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorGri2"
+            android:text="昵称"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_5"
+            android:text="无法无天" />
+        <ImageView
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:padding="@dimen/dp_5"
+            android:rotation="180"
+            android:src="@mipmap/back_black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sex"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:paddingVertical="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_15"
+            android:paddingVertical="@dimen/dp_5"
+            android:textColor="@color/colorGri2"
+            android:text="性别"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_5"
+            android:text="男"/>
+        <ImageView
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:padding="@dimen/dp_5"
+            android:rotation="180"
+            android:src="@mipmap/back_black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:paddingVertical="@dimen/dp_10"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_marginTop="@dimen/dp_1"
+            android:paddingVertical="@dimen/dp_10"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorGri2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="出生日期"/>
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:layout_height="match_parent"
+            android:text="1995-11-11"/>
+    </LinearLayout>
+
+</LinearLayout>

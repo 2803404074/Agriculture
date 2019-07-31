@@ -13,7 +13,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.tzl.agriculture.util.SPUtils;
+
 import Utils.OkHttp3Utils;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * fragment基类
@@ -23,13 +27,19 @@ import Utils.OkHttp3Utils;
  * data 2019/7/8
  */
 public abstract class BaseFragmentFromType extends Fragment {
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+    private Unbinder unbinder;
     //获取TAG的fragment名称
     protected final String TAG = this.getClass().getSimpleName();
     protected String STATE_SAVE_IS_HIDDEN ;
     public Context context;
 
     private boolean IS_LOADED = false;
-    private static int mSerial = 0;
+    public static int mSerial = 0;
     private int mTabPos = 0;//第几个类型
     private String cType = "";//类型id
     private boolean isFirst = true;
@@ -70,6 +80,7 @@ public abstract class BaseFragmentFromType extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(initLayout(), container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         if (isFirst && mTabPos == mSerial) {
             isFirst = false;
             sendMessage();
@@ -175,6 +186,10 @@ public abstract class BaseFragmentFromType extends Fragment {
         public void onClick(View v) {
             onMultiClick(v);
         }
+    }
+
+    public String getToken(){
+        return (String) SPUtils.instance(context,1).getkey("token","");
     }
 
     @Override

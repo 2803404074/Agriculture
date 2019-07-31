@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -8,17 +8,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/dp_150"
         android:paddingHorizontal="20dp"
         android:orientation="horizontal"
         android:background="@color/colorPrimaryDark">
 
         <LinearLayout
+            android:id="@+id/ll_search"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/shape_search_home">
             <ImageView
                 android:layout_width="25dp"
@@ -36,19 +36,19 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:id="@+id/iv_my"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/shape_search_home"/>
-
+            android:src="@mipmap/xc_user"/>
 
     </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
+        android:layout_marginTop="@dimen/dp_45"
+        android:layout_marginHorizontal="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorGri"
@@ -61,24 +61,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsv_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
                 android:orientation="vertical">
-                <include layout="@layout/banner_home_x"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/home_recycler"
-                    android:overScrollMode="never"
-                    android:layout_marginHorizontal="10dp"
-                    android:background="#fff"
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner_xc"
+                    android:background="@color/colorPrimaryDark"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="@dimen/dp_140" />
+
+                <RelativeLayout
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/home_recycler"
+                        android:overScrollMode="never"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/colorGri"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </RelativeLayout>
+
 
                 <TextView
+                    android:id="@+id/tv_more"
+                    android:visibility="invisible"
                     android:textSize="21sp"
                     android:textColor="#fff"
                     android:paddingVertical="@dimen/dp_3"
@@ -90,6 +108,17 @@
                     android:layout_height="wrap_content"
                     android:text="查看更多村"/>
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:layout_centerHorizontal="true"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        app:SpinKit_Color="@color/colorPrimaryDark" />
+
+</RelativeLayout>

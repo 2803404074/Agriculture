@@ -8,17 +8,18 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/iv_img"
         android:layout_width="@dimen/dp_120"
-        android:layout_height="@dimen/dp_120"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_height="@dimen/dp_120" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="广西超大芒果大青芒超甜"
+            android:text="---"
             android:paddingHorizontal="@dimen/dp_5"
             android:textSize="21sp"
             android:lines="1"
@@ -27,6 +28,7 @@
             android:textStyle="bold"/>
 
         <LinearLayout
+            android:id="@+id/ll_gg"
             android:paddingHorizontal="@dimen/dp_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,11 +60,21 @@
                 android:layout_height="wrap_content"
                 android:text="15"/>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_collection_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_5"
+            android:visibility="gone"
+            android:text="收藏数量"/>
+
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="0dp"
            android:layout_weight="1"/>
         <LinearLayout
+            android:id="@+id/ll_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -72,13 +84,14 @@
                 android:textColor="@color/colorAccentButton"
                 android:text="@string/app_money"/>
             <TextView
-                android:id="@+id/tv_price01"
+                android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_18"
                 android:textColor="@color/colorAccentButton"
                 android:text="29.9"/>
             <TextView
+                android:id="@+id/tv_marketPrice"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,6 +101,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/tv_buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="立即抢购"

@@ -5,10 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.home.activity.StoryActivity">
+    android:background="@android:color/white"
+    tools:context=".fragment.xiangc.activity.StoryActivity">
 
-    <androidx.appcompat.widget.Toolbar
+
+    <include layout="@layout/toolbar_left_white"/>
+
+    <include layout="@layout/search_demo"
+        android:layout_marginVertical="@dimen/dp_7"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_m_30">
-    </androidx.appcompat.widget.Toolbar>
+        android:layout_height="wrap_content" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/h_refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:srlPrimaryColor="@android:color/white"
+        app:srlAccentColor="@color/colorGri"
+        app:srlEnableHeaderTranslationContent="false"
+        app:srlEnableLoadMore="false">
+    <com.scwang.smartrefresh.layout.header.BezierRadarHeader
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

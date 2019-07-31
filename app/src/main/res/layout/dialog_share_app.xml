@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_white_noframe"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_300"
+        android:background="@color/colorPrimaryDark">
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_width="@dimen/dp_180"
+            android:layout_height="@dimen/dp_180"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dp_10"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:orientation="horizontal">
+        <com.shehuan.niv.NiceImageView
+            android:id="@+id/nice_img"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:src="@mipmap/ic_launcher"
+            app:border_width="@dimen/dp_2"
+            android:scaleType="fitXY"
+            app:border_color="@color/colorYellow"
+            app:is_circle="true" />
+
+        <RelativeLayout
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_name"
+                android:textColor="@color/colorGri2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="桃酥姐姐"/>
+            <TextView
+                android:id="@+id/tv_inv"
+                android:textColor="@color/colorGri2"
+                android:layout_below="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="邀请码 : "/>
+            <TextView
+                android:id="@+id/tv_code"
+                android:layout_below="@+id/tv_name"
+                android:layout_toRightOf="@+id/tv_inv"
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorAccentButton"
+                android:layout_height="wrap_content"
+                android:text="QKJHJD1234582"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/colorGri"/>
+
+    <LinearLayout
+        android:id="@+id/ll_bc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:layout_height="wrap_content"
+            android:text="保存图片"/>
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:layout_height="wrap_content"
+            android:text="取消分享"/>
+    </LinearLayout>
+</LinearLayout>

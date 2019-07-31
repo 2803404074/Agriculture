@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="@drawable/shape_white_noframe"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_show_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="产品参数"
+            android:textSize="@dimen/sp_21"
+            android:textColor="@color/colorGri2"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/dp_5"
+            android:src="@drawable/smssdk_ic_popup_dialog_close"/>
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recy"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tv_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确认"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:background="@drawable/shape_login_blue"/>
+</LinearLayout>

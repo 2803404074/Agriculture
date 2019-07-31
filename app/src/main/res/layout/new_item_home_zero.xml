@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/colorGri"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_120"
+        android:background="@color/colorPrimaryDark"/>
+
+    <com.youth.banner.Banner
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:background="@drawable/shape_white_noframe"
+        android:layout_height="@dimen/dp_140">
+    </com.youth.banner.Banner>
+</RelativeLayout>

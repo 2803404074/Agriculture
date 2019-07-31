@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGri"
+    android:orientation="vertical"
+    tools:context=".fragment.personal.activity.set.FunctionResponseActivity">
+    <include layout="@layout/toolbar_left_white"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_100"
+            android:src="@mipmap/response_bg"/>
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/sp_15"
+                android:text="我们的每一个进步"/>
+            <TextView
+                android:textSize="@dimen/sp_15"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="与您一同前行"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/shape_white_noframe"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="@dimen/dp_300">
+
+        <TextView
+            android:layout_marginVertical="@dimen/dp_10"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGri2"
+            android:textSize="@dimen/sp_15"
+            android:textStyle="bold"
+            android:text="反馈问题类型"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recy_response"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:background="@drawable/shape_side_white"
+            android:layout_margin="@dimen/dp_20"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_200">
+            <EditText
+                android:id="@+id/et_content"
+                android:background="@null"
+                android:hint="不能愉快的使用软件？写下您的疑惑吧"
+                android:gravity="top"
+                android:padding="@dimen/dp_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_18"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/dp_8"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/shape_login_blue"
+        android:text="提交"/>
+</LinearLayout>

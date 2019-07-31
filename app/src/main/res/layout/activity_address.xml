@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorGri"
+    tools:context=".fragment.personal.activity.set.AddressActivity">
+
+    <include layout="@layout/toolbar_left_white"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recy"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tv_add_address"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="+新建地址"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:paddingVertical="@dimen/dp_5"
+        android:background="@drawable/shape_login_blue"
+        android:textSize="@dimen/sp_18"
+        />
+</LinearLayout>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context=".comment.activity.HtmlForStoryActivity">
+
+    <RelativeLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/back_black" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dp_5"
+            android:src="@android:drawable/ic_menu_share" />
+    </RelativeLayout>
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/colorPrimaryDark" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_top"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:text="标题标题标题标题标题标题标题标题标题标题标题标题标题"
+                android:textColor="@color/colorGri2"
+                android:textSize="@dimen/sp_19" />
+
+            <RelativeLayout
+                android:id="@+id/rl_mes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_title"
+                android:paddingHorizontal="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_toRightOf="@+id/iv_head"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_nickNama"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="昵称" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2019/8/1" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_follow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/shape_accet"
+                    android:paddingHorizontal="@dimen/dp_10"
+                    android:paddingVertical="@dimen/dp_3"
+                    android:text="关注"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+
+            <WebView
+                android:id="@+id/web_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/web_view"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dp_10">
+
+                <LinearLayout
+                    android:id="@+id/ll_collection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_login_blue_no"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15"
+                    android:paddingVertical="@dimen/dp_5">
+
+                    <com.sackcentury.shinebuttonlib.ShineButton
+                        android:id="@+id/bt_collect"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_centerHorizontal="true"
+                        app:btn_color="@android:color/darker_gray"
+                        app:btn_fill_color="@color/colorOrange"
+                        app:enable_flashing="true"
+                        app:shine_size="40dp"
+                        app:siShape="@raw/star" />
+
+                    <TextView
+                        android:id="@+id/tv_collection_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/bt_star"
+                        android:layout_centerHorizontal="true"
+                        android:padding="@dimen/dp_2"
+                        android:text="120"
+                        android:textColor="@color/colorGri2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_dz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:background="@drawable/shape_login_blue_no"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/dp_15"
+                    android:paddingVertical="@dimen/dp_5">
+
+                    <com.sackcentury.shinebuttonlib.ShineButton
+                        android:id="@+id/bt_dz"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:layout_marginHorizontal="@dimen/dp_5"
+                        app:btn_color="@android:color/darker_gray"
+                        app:btn_fill_color="@color/colorOrange"
+                        app:siShape="@raw/heart" />
+
+                    <TextView
+                        android:id="@+id/tv_dz_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_toRightOf="@+id/bt_heart"
+                        android:padding="@dimen/dp_2"
+                        android:text="211"
+                        android:textColor="@color/colorGri2" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

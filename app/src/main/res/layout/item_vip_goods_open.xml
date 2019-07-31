@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    android:paddingVertical="@dimen/dp_10">
+
+    <com.shehuan.niv.NiceImageView
+        android:id="@+id/nice_img"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_100"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/test11"
+        app:border_width="@dimen/dp_2"
+        app:corner_radius="@dimen/dp_20" />
+
+    <LinearLayout
+        android:paddingHorizontal="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="2"
+            android:text="【398顾问资格】+赠送20斤火龙果"
+            android:textColor="@color/colorGri2"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:id="@+id/tv_gg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="无敌水果无敌水果超级无敌水果" />
+
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_money"
+                android:textColor="@color/colorOrange" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="398"
+                android:textColor="@color/colorOrange" />
+
+            <View
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="1px"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开通"
+                android:paddingHorizontal="@dimen/dp_15"
+                android:paddingVertical="@dimen/dp_2"
+                android:background="@drawable/shape_login_orange"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

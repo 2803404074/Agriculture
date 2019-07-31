@@ -20,4 +20,11 @@
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">@dimen/sp_12</item>
     </style>
+
+
+    <style name="SpinnerStyle">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">#ddffffff</item> <!--改变了spinner的颜色  -->
+    </style>
+
 </resources>

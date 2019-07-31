@@ -1,0 +1,223 @@
+package com.tzl.agriculture.mall.activity;
+
+import android.content.Context;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.tzl.agriculture.R;
+import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
+import com.tzl.agriculture.model.AddressMo;
+import com.tzl.agriculture.model.GoodsDetailsMo;
+import com.tzl.agriculture.model.OrderMo;
+import com.tzl.agriculture.util.BottomShowUtil;
+import com.tzl.agriculture.util.JsonUtil;
+import com.tzl.agriculture.util.SPUtils;
+import com.tzl.agriculture.util.TextUtil;
+import com.tzl.agriculture.view.BaseAdapter;
+import com.tzl.agriculture.view.BaseRecyclerHolder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import Utils.GsonObjectCallback;
+import Utils.OkHttp3Utils;
+import butterknife.BindView;
+import config.Mall;
+import okhttp3.Call;
+
+public class OrderDetailsActivity extends SetBaseActivity implements View.OnClickListener {
+
+    @BindView(R.id.recy_sun)
+    RecyclerView recyclerView;
+
+    private BaseAdapter adapter;
+
+    private List<OrderMo.GoodsThis> list = new ArrayList<>();
+
+    @BindView(R.id.tv_adName)
+    TextView tvAdName;
+
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+
+    @BindView(R.id.tv_depName)
+    TextView tvDepName;
+
+    @BindView(R.id.tv_mess)
+    TextView tvMess;//留言,不可编辑
+
+    @BindView(R.id.tv_goodsNum)
+    TextView tvGoodsNum;//订单商品数量
+
+    @BindView(R.id.tv_price)
+    TextView tvPrice;//订单总价
+
+    @BindView(R.id.tv_orderNumber)
+    TextView tvOrderNumber;
+
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+
+    @BindView(R.id.tv_deName)
+    TextView tvDtName;
+
+    @BindView(R.id.ll_lickDep)
+    LinearLayout llLickDep;
+
+    @BindView(R.id.tv_tips)
+    TextView tvTips;
+
+    @BindView(R.id.tv_times)
+    TextView tvTimes;
+
+    @BindView(R.id.tv_fp)
+    TextView tvFp;
+    @Override
+    public int setLayout() {
+        return R.layout.activity_order_details;
+    }
+
+    @Override
+    public void initView() {
+        setTitle("订单详情");
+
+        llLickDep.setOnClickListener(this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setNestedScrollingEnabled(false);
+        adapter = new BaseAdapter<OrderMo.GoodsThis>(this,recyclerView,list,R.layout.item_my_order_goods) {
+            @Override
+            public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo.GoodsThis o) {
+                holder.setText(R.id.tv_title,o.getGoodsName());
+                holder.setText(R.id.tv_gg,o.getGoodsSpecs());
+                holder.setText(R.id.tv_price,getString(R.string.app_money)+o.getGoodsPrice());
+                holder.setText(R.id.tv_num,"X"+o.getGoodsNum());
+            }
+        };
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void initData() {
+        Map<String,String>map = new HashMap<>();
+        map.put("orderId",getIntent().getStringExtra("orderId"));
+        String str = JsonUtil.obj2String(map);
+        String token = (String) SPUtils.instance(this,1).getkey("token","");
+        OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.orderInfo, str, token, new GsonObjectCallback<String>(Mall.BASE) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optInt("code") == 0){
+                        JSONObject dataObj = object.optJSONObject("data");
+
+                        //地址信息
+                        String harvest = dataObj.optString("harvest");
+                        AddressMo addressMo = JsonUtil.string2Obj(harvest, AddressMo.class);
+
+                        //订单提示
+                        String tips = dataObj.optString("tip");
+                        String time = dataObj.optString("time");
+                        tvTips.setText(tips);
+                        tvTimes.setText(time);
+
+                        //配送方式
+                        String dtName = dataObj.optString("distribution");
+                        tvDtName.setText(TextUtil.checkStr2Str(dtName));
+
+                        //发票
+                        tvFp.setText(TextUtil.checkStr2Str(dataObj.optString("invoice")));
+
+                        //订单商品列表
+                        JSONObject shopObj = dataObj.optJSONObject("shopList");
+                        String goodsListBo = shopObj.optString("goodsListBo");
+                        list = JsonUtil.string2Obj(goodsListBo,List.class,OrderMo.GoodsThis.class);
+                        if (list== null)return;
+
+                        if (list!=null && list.size()>0){
+                            adapter.updateData(list);
+                        }
+
+                        phone = shopObj.optString("shopTel");
+                        String shopName = shopObj.optString("shopName");
+                        String shopOrderAmount = shopObj.optString("shopOrderAmount");
+                        String orderNum = shopObj.optString("orderNum");
+                        String createTime = shopObj.optString("createTime");
+                        String remarksUser = shopObj.optString("remarksUser");
+
+                        setUi(addressMo,shopName,shopOrderAmount,orderNum,createTime,remarksUser);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+
+            }
+        });
+    }
+
+    private void setUi(AddressMo addressMo,String shopName, String shopOrderAmount, String orderNum, String createTime, String remarksUser) {
+        if (null!=addressMo){
+            tvAdName.setText(TextUtil.checkStr2Str(addressMo.getReceiptName()));
+            tvPhone.setText(TextUtil.checkStr2Str(addressMo.getReceiptPhone()));
+            String address = TextUtil.checkStr2Str(addressMo.getProvinceStr())
+                    +TextUtil.checkStr2Str(addressMo.getCityStr())
+                    +TextUtil.checkStr2Str(addressMo.getAreaStr())
+                    +TextUtil.checkStr2Str(addressMo.getStreetStr())
+                    +TextUtil.checkStr2Str(addressMo.getAddress());
+            tvAddress.setText(address);
+        }
+
+        tvDepName.setText(shopName);
+
+        tvGoodsNum.setText("共"+String.valueOf(list.size())+"件商品");
+        tvPrice.setText(shopOrderAmount);
+
+        tvMess.setText(TextUtil.checkStr2Str(remarksUser));
+
+
+        tvOrderNumber.setText(orderNum);
+        tvDate.setText(createTime);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.ll_lickDep:
+                showBottomDialog(view);
+                break;
+                default:break;
+        }
+    }
+
+    protected String phone = "";
+    //参数弹窗
+    private void showBottomDialog(View parent) {
+        BottomShowUtil showUtil = new BottomShowUtil(this, this) {
+            @Override
+            public void convert(Context mContext, View holder) {
+                TextView tvPhone = holder.findViewById(R.id.tv_phone);
+                tvPhone.setText(TextUtil.checkStr2Str(phone));
+            }
+        };
+        showUtil.BottomShow(parent, R.layout.dialog_phone);
+    }
+}

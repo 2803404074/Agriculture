@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/dp_10"
+    android:layout_height="wrap_content">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:paddingVertical="10dp"
+       android:background="@drawable/shape_white_noframe"
+       android:orientation="vertical">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+         <TextView
+             android:id="@+id/tv_xchw_name"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textSize="25sp"
+             android:textStyle="bold"
+             android:textColor="@color/colorGri2"
+             android:text="发现好物"/>
+         <TextView
+             android:id="@+id/tv_xchw_tag"
+             android:layout_gravity="center"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="20dp"
+             android:text="享受生活    回味童年"/>
+      </LinearLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginVertical="3dp"
+          android:background="@color/colorGri"/>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+         <RelativeLayout
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:padding="@dimen/dp_5"
+             android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccentButton"
+                android:text="发现好货"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="限24小时"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/colorAccentButton"
+                android:layout_toRightOf="@+id/tv_find"/>
+            <TextView
+                android:id="@+id/tv_mess01"
+                android:layout_below="@+id/tv_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="享 5 折 优 惠"/>
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_below="@+id/tv_mess01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+               <ImageView
+                   android:id="@+id/iv_find_01"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="@dimen/dp_70"
+                   android:scaleType="fitXY"
+                   android:src="@mipmap/test8" />
+               <ImageView
+                   android:id="@+id/iv_find_02"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_marginLeft="@dimen/dp_5"
+                   android:layout_height="@dimen/dp_70"
+                   android:scaleType="fitXY"
+                   android:src="@mipmap/test9" />
+            </LinearLayout>
+
+         </RelativeLayout>
+
+
+         <RelativeLayout
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:padding="@dimen/dp_5"
+             android:layout_marginLeft="@dimen/dp_5"
+             android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_find02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="去旅游"
+                android:textColor="@color/colorAccentButton" />
+            <TextView
+                android:id="@+id/tv_mess02"
+                android:layout_below="@+id/tv_find02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="享 5 折 优 惠"/>
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_below="@+id/tv_mess02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+               <ImageView
+                   android:id="@+id/iv_qly_01"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="@dimen/dp_70"
+                   android:scaleType="fitXY"
+                   android:src="@mipmap/test10" />
+               <ImageView
+                   android:id="@+id/iv_qly_02"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_marginLeft="@dimen/dp_5"
+                   android:layout_height="@dimen/dp_70"
+                   android:scaleType="fitXY"
+                   android:src="@mipmap/test11" />
+            </LinearLayout>
+
+         </RelativeLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+         <RelativeLayout
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:padding="@dimen/dp_5"
+             android:id="@+id/rl_fpt"
+             android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_fpt">
+               <TextView
+                   android:id="@+id/tv_fpp_title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="扶贫拼"
+                   android:textSize="@dimen/sp_15"
+                   android:textColor="@color/colorGri2" />
+               <TextView
+                   android:id="@+id/tv_messfpt01"
+                   android:layout_below="@+id/tv_fpp_title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="感受他们的历史"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@+id/ll_fpt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:orientation="horizontal">
+               <ImageView
+                   android:id="@+id/iv_fpp_01"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="@dimen/dp_70"
+                   android:scaleType="fitXY"
+                   android:src="@mipmap/test22" />
+               <ImageView
+                   android:id="@+id/iv_fpp_02"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_marginLeft="@dimen/dp_5"
+                   android:layout_height="@dimen/dp_70"
+                   android:scaleType="fitXY"
+                   android:src="@mipmap/test21" />
+            </LinearLayout>
+
+         </RelativeLayout>
+
+
+         <RelativeLayout
+             android:id="@+id/rl_zgg"
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:padding="@dimen/dp_5"
+             android:layout_marginLeft="@dimen/dp_5"
+             android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/ll_zgg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+               <TextView
+                   android:id="@+id/tv_f2_title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textColor="@color/colorGri2"
+                   android:textSize="@dimen/sp_15"
+                   android:text="中国馆"/>
+               <TextView
+                   android:id="@+id/tv_f2_mess"
+                   android:layout_below="@+id/tv_f2_title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="开启拼团24小时"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@+id/ll_zgg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:orientation="horizontal">
+               <ImageView
+                   android:id="@+id/iv_zgg_01"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="@dimen/dp_70"
+                   android:scaleType="fitXY"
+                   android:src="@mipmap/test9" />
+               <ImageView
+                   android:id="@+id/iv_zgg_02"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_marginLeft="@dimen/dp_5"
+                   android:layout_height="@dimen/dp_70"
+                   android:scaleType="fitXY"
+                   android:src="@mipmap/test8" />
+            </LinearLayout>
+
+         </RelativeLayout>
+      </LinearLayout>
+   </LinearLayout>
+</LinearLayout>

@@ -91,7 +91,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
                         if(mItemClickListener!=null){
                             mItemClickListener.onItemClick(v, position - 1);
                         }
-
                     }
                 });
             } else {

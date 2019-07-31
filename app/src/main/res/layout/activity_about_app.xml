@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorGri"
+    tools:context=".fragment.personal.activity.set.AboutAppActivity">
+
+    <include layout="@layout/toolbar_left_white"/>
+
+    <TextView
+        android:id="@+id/tv_appName"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="趣味乡村"
+        android:layout_gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/sp_21"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/tv_appVersion"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="For Android v1.0.0"/>
+    <ImageView
+        android:id="@+id/iv_code"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
+        android:src="@mipmap/test6"/>
+    <TextView
+        android:id="@+id/tv_appContent"
+        android:layout_gravity="center"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="分享给您的朋友下载趣味乡村APP"/>
+    <TextView
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="检测更新"
+        android:visibility="gone"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold"
+        android:drawableRight="@mipmap/my_dpj"
+        android:background="@android:color/white"
+        android:padding="@dimen/dp_8"/>
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:text="广西凯道农业发展有限公司@2019趣味乡村xcxky.cn"/>
+</LinearLayout>

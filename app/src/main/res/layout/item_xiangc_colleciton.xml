@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_10"
+    android:layout_marginBottom="@dimen/dp_5"
+    android:background="@color/colorGri"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:src="@mipmap/test6"
+        android:scaleType="fitXY"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/dp_5"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="山里的蜂蜜"
+            android:textColor="@color/colorGri2"/>
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2019/7/19   12:52:01"/>
+
+        <View
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_seeNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2567人转发"/>
+
+    </LinearLayout>
+</LinearLayout>

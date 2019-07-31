@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context=".fragment.personal.login.PhoneRegistActivity">
+
+    <include layout="@layout/toolbar_left_white"/>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_50"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+        </Spinner>
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:background="@null"
+            android:padding="@dimen/dp_5"
+            android:hint="请输入手机号"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:background="@color/colorGri"/>
+
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/colorAccentButton"
+        android:text="该手机号已被注册"/>
+
+    <TextView
+        android:id="@+id/tv_next"
+        android:clickable="false"
+        android:background="@drawable/shape_login_blue_hide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:layout_marginHorizontal="50dp"
+        android:paddingVertical="8dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:textSize="21sp"
+        android:onClick="getCode"
+        android:text="下一步"
+        tools:ignore="OnClick" />
+</LinearLayout>

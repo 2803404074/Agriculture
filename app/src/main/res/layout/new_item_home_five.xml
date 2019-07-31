@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_130"
+    android:background="@color/colorGri"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="10dp">
+
+    <ImageView
+        android:id="@+id/iv_ddny"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_5"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/test13" />
+
+    <TextView
+        android:id="@+id/tv_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="订单农业"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_21" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_tab"
+        android:text="消费扶贫，你我同行"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_15" />
+</RelativeLayout>

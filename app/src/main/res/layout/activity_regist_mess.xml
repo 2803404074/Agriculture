@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context=".fragment.personal.login.RegistMessActivity">
+
+    <include layout="@layout/toolbar_left_white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_50"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="手机号 : "
+
+            android:textColor="@color/colorGri2"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center|left"
+            android:text="1564862156"
+            android:textSize="@dimen/sp_15" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingHorizontal="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/dp_50"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:text="昵称 : "
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorGri2"/>
+        <EditText
+            android:id="@+id/et_nickname"
+            android:textSize="@dimen/sp_15"
+            android:background="@null"
+            android:padding="@dimen/dp_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="您的昵称"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingHorizontal="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/dp_50"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:text="性别 : "
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorGri2"/>
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_n"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"/>
+
+            <RadioButton
+                android:id="@+id/rb_nv"
+                android:checked="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingHorizontal="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/dp_50"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:text="出生年月 : "
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorGri2"/>
+        <TextView
+            android:hint="您的出生你年月"
+            android:id="@+id/tv_date"
+            android:textSize="@dimen/sp_15"
+            android:background="@null"
+            android:padding="@dimen/dp_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingHorizontal="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/dp_50"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:text="邀请码 : "
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/colorGri2"/>
+        <EditText
+            android:hint="请填写邀请您的用户邀请码(选填) "
+            android:id="@+id/invCode"
+            android:textSize="@dimen/sp_15"
+            android:background="@null"
+            android:padding="@dimen/dp_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_regist"
+        android:layout_marginTop="@dimen/dp_100"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"
+        android:text="注 册"
+        android:layout_gravity="center"
+        android:textSize="@dimen/sp_18"
+        android:gravity="center"
+        android:paddingVertical="@dimen/dp_3"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:textColor="@android:color/white"
+        android:background="@drawable/shape_login_blue"/>
+    <TextView
+        android:id="@+id/tv_log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="log"/>
+</LinearLayout>

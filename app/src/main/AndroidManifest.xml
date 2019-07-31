@@ -1,28 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tzl.agriculture">
 
+
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-feature android:name="android.hardware.camera" /> <!-- 相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 写入SD卡的权限：如果你希望保存相机拍照后的照片 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> <!-- 读取SD卡的权限:打开相册选取图片所必须的权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECO RD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 通过GPS得到精确位置 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 修改WiFi状态，发起WiFi扫描, 需要WiFi信息用于网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 访问网络的变化, 需要某些信息用于网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 获取日志读取权限，帮助我们提高地图 sdk 稳定性 -->
+    <uses-permission android:name="android.hardware.sensor.accelerometer" /> <!-- 重力感应 -->
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:name=".application.AgricultureApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/application"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:networkSecurityConfig="@xml/network_config"
+        android:roundIcon="@mipmap/application"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".fragment.home.activity.StoryActivity"></activity>
-        <activity android:name=".fragment.home.activity.BroadcastActivity" />
-        <activity android:name=".fragment.home.activity.GoodsDetailsActivity" />
-        <activity android:name=".fragment.home.activity.LimitedTimeActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="camera.activity.CameraActivity"/>
+        <activity android:name=".mall.activity.ChinaGuActivity"></activity>
+        <activity android:name=".fragment.personal.activity.order.OrderSearchActivity" />
+        <activity android:name=".mall.activity.StartCommentActivity" />
+        <activity android:name=".fragment.home.activity.SearchActivity" />
+        <activity android:name=".mall.activity.OrderPayStatusActivity" />
+        <activity android:name=".fragment.vip.activity.ApplyActivity" />
+        <activity android:name=".mall.activity.OrderDetailsActivity" />
+        <activity android:name=".fragment.personal.activity.function.activity.MyCommentActivity" />
+        <activity android:name=".fragment.vip.activity.CouponActivity" />
+        <activity android:name=".mall.activity.OrderActivity" />
+        <activity android:name=".fragment.personal.activity.set.AddressSetActivity" />
+        <activity android:name=".fragment.personal.activity.set.AddressActivity" />
+        <activity android:name=".fragment.personal.login.RegistMessActivity" />
+        <activity android:name=".fragment.personal.login.PhoneRegistActivity" />
+        <activity android:name=".main.MainActivity" />
+        <activity android:name=".fragment.personal.login.activity.LoginActivity" />
+        <activity android:name=".fragment.personal.login.activity.LoginGetCodeActivity" />
+        <activity android:name=".fragment.vip.activity.VipActivity" />
+        <activity android:name=".fragment.xiangc.activity.ArticelSearchActivity" />
+        <activity android:name=".comment.activity.HtmlForStoryActivity" />
+        <activity android:name=".fragment.xiangc.activity.XiangcMyActivity" />
+        <activity android:name=".fragment.personal.activity.order.MyOrderActivity" />
+        <activity android:name=".fragment.personal.activity.ccb.activity.BrowseActivity" />
+        <activity android:name=".comment.activity.HtmlForXcActivity" />
+        <activity android:name=".fragment.personal.activity.ccb.activity.CartActivity" />
+        <activity android:name=".fragment.personal.activity.ccb.activity.CollectionGoodsActivity" />
+        <activity android:name=".fragment.personal.activity.set.AboutAppActivity" />
+        <activity android:name=".fragment.personal.activity.set.FunctionResponseActivity" />
+        <activity android:name=".fragment.personal.activity.set.DeviceManageActivity" />
+        <activity android:name=".fragment.personal.activity.set.BindPhoneActivity" />
+        <activity android:name=".fragment.personal.activity.set.AccountRelationActivity" />
+        <activity android:name=".fragment.personal.activity.set.UpLoadIdentifyActivity"
+            android:launchMode="singleTask" android:screenOrientation="portrait"/>
+        <activity android:name=".fragment.personal.activity.set.IdentityActivity" />
+        <activity android:name=".fragment.personal.activity.set.AccountSaveActivity" />
+        <activity android:name=".fragment.personal.activity.set.SetTextActivity" />
+        <activity android:name=".fragment.personal.activity.set.UserMessActivity" />
+        <activity android:name=".fragment.personal.activity.set.SettingActivity" />
+        <activity android:name=".fragment.xiangc.activity.StoryActivity" />
+        <activity android:name=".fragment.xiangc.activity.BroadcastActivity" />
+        <activity android:name=".mall.activity.GoodsDetailsActivity" />
+        <activity android:name=".mall.activity.LimitedTimeActivity" />
+        <activity android:name=".main.WellcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="2b95262c53922" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="e3705b9e9f7ceb0eabffbdb590b39680" />
     </application>
 
 </manifest>

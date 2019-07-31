@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.xiangc.activity.XiangcMyActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_180"
+        android:background="@mipmap/xangc_my_bg">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/back"/>
+
+        <com.shehuan.niv.NiceImageView
+            android:id="@+id/drawee_img"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher"
+            app:border_width="@dimen/dp_2"
+            android:scaleType="fitXY"
+            app:border_color="@color/colorYellow"
+            app:is_circle="true" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_below="@+id/drawee_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+
+            android:textColor="@android:color/white"
+            android:text="鸟语花香"/>
+    </RelativeLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        app:tabMaxWidth="0dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/dp_35"
+        android:paddingVertical="@dimen/dp_3"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        android:background="@android:color/white"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        app:tabSelectedTextColor="@android:color/black"
+        app:tabTextColor="@color/colorGri2">
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </androidx.viewpager.widget.ViewPager>
+</LinearLayout>

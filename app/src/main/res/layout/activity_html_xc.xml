@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white"
+    tools:context=".comment.activity.HtmlForXcActivity">
+
+    <RelativeLayout
+        android:id="@+id/ll_top"
+        android:paddingVertical="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/dp_5"
+            android:src="@mipmap/back_black"
+            android:padding="@dimen/dp_5"/>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_toRightOf="@+id/back"
+            android:layout_toLeftOf="@+id/tv_share"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:lines="1"
+            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_21"
+            android:textColor="@color/colorGri2"
+            android:gravity="center"
+            android:text="标题标标题标题标题标题"/>
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
+            android:src="@mipmap/xiangc_share"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dp_5"/>
+    </RelativeLayout>
+
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_above="@+id/ll_dz_collect"
+            android:layout_below="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </WebView>
+        <LinearLayout
+            android:id="@+id/ll_dz_collect"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_collection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/shape_login_blue_no"
+                android:paddingHorizontal="@dimen/dp_15"
+                android:paddingVertical="@dimen/dp_5">
+
+                <com.sackcentury.shinebuttonlib.ShineButton
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:id="@+id/bt_collect"
+                    android:layout_centerHorizontal="true"
+                    app:btn_color="@android:color/darker_gray"
+                    app:btn_fill_color="@color/colorOrange"
+                    app:enable_flashing="true"
+                    app:shine_size="40dp"
+                    app:siShape="@raw/star"/>
+                <TextView
+                    android:id="@+id/tv_collection_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorGri2"
+                    android:padding="@dimen/dp_2"
+                    android:layout_centerHorizontal="true"
+                    android:text="120"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_dz"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="@dimen/dp_15"
+                android:paddingVertical="@dimen/dp_5"
+                android:orientation="horizontal"
+                android:background="@drawable/shape_login_blue_no"
+                android:layout_height="wrap_content">
+
+                <com.sackcentury.shinebuttonlib.ShineButton
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:id="@+id/bt_dz"
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    app:btn_color="@android:color/darker_gray"
+                    app:btn_fill_color="@color/colorOrange"
+                    app:siShape="@raw/heart" />
+                <TextView
+                    android:id="@+id/tv_dz_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorGri2"
+                    android:padding="@dimen/dp_2"
+                    android:layout_gravity="center"
+                    android:text="211"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/colorPrimaryDark" />
+
+
+</RelativeLayout>

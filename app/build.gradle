@@ -11,6 +11,17 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword '1008611'
+            storeFile file('E:/key/agriculture-key.jks')
+            storePassword '1008611'
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -26,13 +37,41 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
+
+
 MobSDK {
     appKey "2b95262c53922"
     appSecret "e3705b9e9f7ceb0eabffbdb590b39680"
     SMSSDK {}
 
-    ShareSDK {}
+    ShareSDK {
+        devInfo {
+            Wechat {
+                appId "wx9253e5b4ad426487"
+                appSecret "47710a0111e37c8b361539d790678b6e"
+            }
+            WechatMoments {
+                appId "wx9253e5b4ad426487"
+                appSecret "47710a0111e37c8b361539d790678b6e"
+            }
+        }
+    }
 }
 
 dependencies {
@@ -74,11 +113,40 @@ dependencies {
      */
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 
+    //json解析
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.10'
+
     implementation project(path: ':myhttp')  //最新版本
+
+
+    //加载动画
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+
+    //点赞动画
+    implementation 'com.sackcentury:shinebutton:0.2.0'
+
+    //选择器
+    implementation 'com.contrarywind:Android-PickerView:3.2.7'
 
     /**
      * 圆角图片
      */
     implementation 'com.github.SheHuan:NiceImageView:1.0.5'
 
+    /**
+     * 省市县
+     */
+    implementation 'liji.library.dev:citypickerview:0.7.0'
+
+    /**
+     * 微信
+     */
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
+    /**
+     * 底部弹窗
+     */
+    implementation 'com.github.rey5137:material:1.2.2'
 }

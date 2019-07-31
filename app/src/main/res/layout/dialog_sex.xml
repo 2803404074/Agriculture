@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_20"
+    android:background="@color/colorW">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_5"
+        android:background="@color/colorGri">
+        <TextView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/sp_15"
+            android:textColor="#63B8FF"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="修改性别"
+            android:textColor="@color/colorGri2"
+            android:textSize="@dimen/sp_18"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/sp_15"
+            android:textColor="#63B8FF	"
+            android:text="确定"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_sex_nan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/sp_18"
+        android:padding="@dimen/dp_5"
+        android:text="男"/>
+    <TextView
+        android:id="@+id/tv_sex_nv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:textSize="@dimen/sp_18"
+        android:padding="@dimen/dp_5"
+        android:text="女"/>
+    <TextView
+        android:id="@+id/tv_sex_bm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/sp_18"
+        android:padding="@dimen/dp_5"
+        android:text="保密"/>
+</LinearLayout>

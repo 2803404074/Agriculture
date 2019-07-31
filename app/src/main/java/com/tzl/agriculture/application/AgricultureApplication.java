@@ -4,17 +4,23 @@ import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mob.MobSDK;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 /**
  * 牛逼
  */
 public class AgricultureApplication extends Application {
-
-
+    public static IWXAPI api;
+    public static String APP_ID="wx9253e5b4ad426487";
     @Override
     public void onCreate() {
         super.onCreate();
-       //MobSDK.init(this);
+        MobSDK.init(this);
         Fresco.initialize(this);
+
+        //微信
+        api = WXAPIFactory.createWXAPI(this,APP_ID,true);
+        api.registerApp(APP_ID);
     }
 }

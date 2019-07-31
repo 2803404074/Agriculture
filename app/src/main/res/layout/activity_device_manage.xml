@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGri"
+    android:orientation="vertical"
+    tools:context=".fragment.personal.activity.set.DeviceManageActivity">
+
+    <include layout="@layout/toolbar_left_white"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:text="该功能为了傲虎账户信息安全，如有异常，请至账户安全中心修改密码"/>
+
+    <TextView
+        android:padding="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="当前设备"
+        android:textStyle="bold"
+        android:textColor="@color/colorGri2"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MI5X"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@android:color/white"
+        android:padding="@dimen/dp_10"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="其他设备"
+        android:layout_marginTop="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
+        android:textStyle="bold"
+        android:textColor="@color/colorGri2"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="无其他设备"
+        android:textStyle="bold"
+        android:background="@android:color/white"
+        android:padding="@dimen/dp_10"/>
+
+</LinearLayout>

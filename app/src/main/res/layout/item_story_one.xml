@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_5"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/colorGri"
+        android:layout_marginVertical="@dimen/dp_5"/>
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_193"
+        android:src="@mipmap/test5"
+        android:scaleType="centerCrop"/>
+    <TextView
+        android:id="@+id/tv_title"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="农业农村局：“三农专家”深入田间地头助农增收!"
+        android:textSize="@dimen/sp_18"
+        android:paddingVertical="@dimen/dp_5"
+        android:textColor="@color/colorGri2"/>
+
+    <RelativeLayout
+        android:paddingHorizontal="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="农家咨询"/>
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2019/01/02"/>
+    </RelativeLayout>
+</LinearLayout>

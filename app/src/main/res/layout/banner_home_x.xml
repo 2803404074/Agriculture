@@ -12,7 +12,7 @@
         android:id="@+id/iv_h_one"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:src="@drawable/home"
+        android:src="@drawable/banner_test"
         android:scaleType="fitXY"
         android:layout_marginHorizontal="10dp"
         />

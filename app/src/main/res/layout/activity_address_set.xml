@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGri"
+    android:orientation="vertical"
+    tools:context=".fragment.personal.activity.set.AddressSetActivity">
+
+    <include layout="@layout/toolbar_left_white" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/colorGri1" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingVertical="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:hint="收货人"
+        android:textColor="@color/colorGri2"
+        android:textSize="@dimen/sp_21" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorGri2" />
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingVertical="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:hint="手机号"
+        android:textColor="@color/colorGri2"
+        android:textSize="@dimen/sp_21" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorGri2" />
+
+    <TextView
+        android:id="@+id/et_pcs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingVertical="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:hint="省/市/县"
+        android:textColor="@color/colorGri2"
+        android:textSize="@dimen/sp_21" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorGri2" />
+
+    <EditText
+        android:id="@+id/et_jd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingVertical="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:hint="街道"
+        android:textColor="@color/colorGri2"
+        android:textSize="@dimen/sp_21" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorGri2" />
+
+    <EditText
+        android:id="@+id/et_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingVertical="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:hint="详细地址"
+        android:textColor="@color/colorGri2"
+        android:textSize="@dimen/sp_21" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/colorGri1" />
+
+    <LinearLayout
+        android:id="@+id/ll_addressTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingVertical="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="地址标签"
+            android:textColor="@color/colorGri2"
+            android:textSize="@dimen/sp_21" />
+
+        <TextView
+            android:id="@+id/tv_tag"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/sp_15"
+            android:text="家"/>
+
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp_5"
+            android:rotation="180"
+            android:src="@mipmap/back_black" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorGri2" />
+
+
+    <LinearLayout
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingVertical="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="设为默认"
+            android:textColor="@color/colorGri2"
+            android:textSize="@dimen/sp_21" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1" />
+
+        <Switch
+            android:id="@+id/sw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="保存"
+        android:textSize="@dimen/sp_18"
+        android:background="@drawable/shape_login_blue"
+        android:gravity="center"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:paddingVertical="@dimen/dp_10"
+        android:textColor="@android:color/white"/>
+</LinearLayout>

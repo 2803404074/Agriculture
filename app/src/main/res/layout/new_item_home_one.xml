@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_stor"
+    android:layout_marginHorizontal="@dimen/dp_10"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:text="品牌故事"
+        android:layout_below="@+id/banner"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150">
+        <ImageView
+            android:id="@+id/iv_h_one"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/null_data"
+            />
+        <TextView
+            android:id="@+id/tv_story_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:textColor="@android:color/white"
+            android:layout_alignParentBottom="true"
+            android:paddingVertical="@dimen/dp_5"
+            android:background="#66000000"
+            android:paddingHorizontal="@dimen/dp_10"/>
+    </RelativeLayout>
+
+</LinearLayout>

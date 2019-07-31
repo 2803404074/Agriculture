@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".mall.activity.OrderPayStatusActivity">
+
+    <include layout="@layout/toolbar_left_blue"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_120"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="交易成功"
+            android:textSize="@dimen/sp_21"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="实付"
+                android:layout_gravity="center"
+                android:textSize="@dimen/sp_21"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_money"
+                android:textSize="@dimen/sp_21"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="65.00"
+                android:textSize="@dimen/sp_21"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_seeOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看订单"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/shape_blue_wi"
+            android:textSize="@dimen/sp_21"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recy_status"
+        android:background="@drawable/shape_white_noframe"
+        android:padding="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

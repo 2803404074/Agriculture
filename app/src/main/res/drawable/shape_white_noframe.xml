@@ -14,7 +14,7 @@
         android:left="8dp"
         android:right="8dp"
         android:top="3dp" />-->
-    <size android:width="100dp" />
+<!--    <size android:width="100dp" />-->
     <solid android:color="#fff" />
 
     <!--<stroke

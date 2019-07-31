@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/shape_side_white"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/dp_10"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            >
+
+            <CheckBox
+                android:id="@+id/cb_group"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:background="@drawable/checkbox_payment"
+                android:button="@android:color/transparent"
+                />
+
+            <TextView
+                android:id="@+id/tv_group"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Group"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.tzl.agriculture.fragment.personal.activity.ccb.widget.LinearLayoutForListView
+            android:id="@+id/listview_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

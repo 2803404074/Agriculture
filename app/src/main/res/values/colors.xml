@@ -4,6 +4,14 @@
     <color name="colorPrimaryDark">#225953</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorAccentButton">#F8313F</color>
+
+    <color name="colorW">#fff</color>
     <color name="colorGri">#F5F5F5</color>
+    <color name="colorGri1">#F1F1F1</color>
+    <color name="colorGrix">#F0F0F0</color>
     <color name="colorGri2">#3F3F3F</color>
+    <color name="colorOrange">#EE7621</color>
+    <color name="colorYellow">#EEEE00</color>
+
+    <color name="colorTouming">#80000000</color>
 </resources>
