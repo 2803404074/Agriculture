@@ -23,6 +23,7 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
 import com.tzl.agriculture.fragment.xiangc.activity.ArticelSearchActivity;
 import com.tzl.agriculture.fragment.xiangc.activity.XiangcMyActivity;
+import com.tzl.agriculture.model.BannerMo;
 import com.tzl.agriculture.model.XiangcMo;
 import com.tzl.agriculture.util.BannerUtil;
 import com.tzl.agriculture.util.JsonUtil;
@@ -45,6 +46,9 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
+import cc.ibooker.zviewpagerlib.GeneralVpLayout;
+import cc.ibooker.zviewpagerlib.HolderCreator;
+import cc.ibooker.zviewpagerlib.OnItemClickListener;
 import config.Article;
 import okhttp3.Call;
 
@@ -56,7 +60,7 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
     ImageView ivMy;
 
     @BindView(R.id.banner_xc)
-    Banner banner;
+    GeneralVpLayout banner;
 
     @BindView(R.id.refreshLayout)
     RefreshLayout mRefreshLayout;
@@ -73,8 +77,8 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
     @BindView(R.id.ll_search)
     LinearLayout llSearch;
 
-    @BindView(R.id.tv_more)
-    TextView tvMore;
+//    @BindView(R.id.tv_more)
+//    TextView tvMore;
 
     private boolean isLoad = false;
 
@@ -93,7 +97,7 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
     protected void initView(View view) {
         ivMy.setOnClickListener(this);
         llSearch.setOnClickListener(this);
-        tvMore.setOnClickListener(this);
+        //tvMore.setOnClickListener(this);
 
         mRefreshLayout.setEnableHeaderTranslationContent(true);//内容偏移
         mRefreshLayout.setPrimaryColorsId(R.color.colorPrimaryDark, android.R.color.white);//主题颜色
@@ -127,14 +131,15 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
                 //文章类型简述
                 holder.setText(R.id.tv_mess, "" + o.getTypeDesc());
 
-                if (null == o.getArticleInfoList() || o.getArticleInfoList().size()==0){
+                if (null == o.getArticleInfoList() || o.getArticleInfoList().size() == 0) {
                     holder.getView(R.id.tv_tips).setVisibility(View.VISIBLE);
                     holder.getView(R.id.recy_children).setVisibility(View.GONE);
-                }else {
+                } else {
                     holder.getView(R.id.tv_tips).setVisibility(View.GONE);
                     //文章类型下的文章列表
                     RecyclerView recyclerView = holder.getView(R.id.recy_children);
-                    if (recyclerView.getVisibility() == View.GONE)recyclerView.setVisibility(View.VISIBLE);
+                    if (recyclerView.getVisibility() == View.GONE)
+                        recyclerView.setVisibility(View.VISIBLE);
                     recyclerView.setNestedScrollingEnabled(false);
                     GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
                     recyclerView.setLayoutManager(manager);
@@ -186,12 +191,47 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
 
     }
 
+    private void initBanner() {
+        Map<String, String> map = new HashMap<>();
+        map.put("positionCode", "xc_head");
+        map.put("category", String.valueOf(1));
+        String str = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(Article.BASE).doPostJson(Article.banner, str,
+                new GsonObjectCallback<String>(Article.BASE) {
+                    //主线程处理
+                    @Override
+                    public void onUi(String msg) {
+                        try {
+                            JSONObject object = new JSONObject(msg);
+                            int code = object.optInt("code");
+                            if (code == 0) {//成功
+                                JSONObject data = object.optJSONObject("data");
+                                String array = data.optString("advertiseList");
+                                List<BannerMo> mDate = JsonUtil.string2Obj(array, List.class, BannerMo.class);
+                                BannerUtil bannerUtil = new BannerUtil(getActivity());
+                                bannerUtil.banner3(banner,mDate);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    //请求失败
+                    @Override
+                    public void onFailed(Call call, IOException e) {
+
+                    }
+                });
+
+
+    }
+
     private int pageNum = 1;
 
     @Override
     protected void initData() {
-        BannerUtil bannerUtil = new BannerUtil();
-        bannerUtil.starBanner(XiangcFragment.this.getActivity(), banner, "xc_head", 1);
+        initBanner();
+
         Map<String, String> map = new HashMap<>();
         map.put("typeId", "1");
         map.put("findChildren", "1");
@@ -209,9 +249,9 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
                         String str = dataObject.optString("articleTypeList");
                         mData = JsonUtil.string2Obj(str, List.class, XiangcMo.class);
 
-                        if (pageNum == 1){
+                        if (pageNum == 1) {
                             adapter.updateData(mData);
-                        }else {
+                        } else {
                             adapter.addAll(mData);
                         }
                     } else {
@@ -234,7 +274,7 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
                     @Override
                     public void run() {
                         spinKitView.setVisibility(View.GONE);
-                        ToastUtil.showShort(getContext(),"无法连接服务器，请检查您的网络");
+                        ToastUtil.showShort(getContext(), "无法连接服务器，请检查您的网络");
                     }
                 });
             }
@@ -252,11 +292,11 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
                 Intent intent2 = new Intent(getContext(), ArticelSearchActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.tv_more:
+//            case R.id.tv_more:
 //                pageNum++;
 //                isLoad = true;
 //                initData();
-                break;
+//                break;
             default:
                 break;
         }

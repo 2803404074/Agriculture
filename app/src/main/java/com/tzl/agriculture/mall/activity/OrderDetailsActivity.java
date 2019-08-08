@@ -1,6 +1,11 @@
 package com.tzl.agriculture.mall.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -9,8 +14,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rey.material.app.BottomSheetDialog;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
+import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
+import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.model.AddressMo;
 import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.model.OrderMo;
@@ -86,6 +94,18 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
 
     @BindView(R.id.tv_fp)
     TextView tvFp;
+
+    @BindView(R.id.tv_wlmc)
+    TextView tvWlmc;
+
+    @BindView(R.id.tv_kddh)
+    TextView tvKddh;
+
+    @Override
+    public void backFinish() {
+        finish();
+    }
+
     @Override
     public int setLayout() {
         return R.layout.activity_order_details;
@@ -103,8 +123,10 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo.GoodsThis o) {
                 holder.setText(R.id.tv_title,o.getGoodsName());
+                holder.setImageByUrl(R.id.iv_img,o.getPicUrl());
                 holder.setText(R.id.tv_gg,o.getGoodsSpecs());
-                holder.setText(R.id.tv_price,getString(R.string.app_money)+o.getGoodsPrice());
+                holder.getView(R.id.tv_price).setVisibility(View.GONE);
+
                 holder.setText(R.id.tv_num,"X"+o.getGoodsNum());
             }
         };
@@ -153,6 +175,12 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                         }
 
                         phone = shopObj.optString("shopTel");
+
+                        //物流名称
+                        tvWlmc.setText(TextUtil.checkStrNull(shopObj.optString("dtName"))?"---":shopObj.optString("dtName"));
+                        //快递单号
+                        tvKddh.setText(TextUtil.checkStrNull(shopObj.optString("dtNum"))?"---":shopObj.optString("dtNum"));
+
                         String shopName = shopObj.optString("shopName");
                         String shopOrderAmount = shopObj.optString("shopOrderAmount");
                         String orderNum = shopObj.optString("orderNum");
@@ -160,6 +188,8 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                         String remarksUser = shopObj.optString("remarksUser");
 
                         setUi(addressMo,shopName,shopOrderAmount,orderNum,createTime,remarksUser);
+                    }else {
+                        errTips(object.optInt("code"));
                     }
 
                 } catch (JSONException e) {
@@ -172,6 +202,26 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
 
             }
         });
+    }
+
+    //提示
+    private void errTips(int code) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setIcon(R.mipmap.application).setTitle("趣乡服务")
+                .setMessage("错误代码:"+code).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        finish();
+                    }
+                });
+        builder.setCancelable(false);
+        builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                return false;
+            }
+        });
+        builder.create().show();
     }
 
     private void setUi(AddressMo addressMo,String shopName, String shopOrderAmount, String orderNum, String createTime, String remarksUser) {
@@ -202,22 +252,32 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ll_lickDep:
-                showBottomDialog(view);
+                showBottomDialog();
                 break;
                 default:break;
         }
     }
 
     protected String phone = "";
-    //参数弹窗
-    private void showBottomDialog(View parent) {
-        BottomShowUtil showUtil = new BottomShowUtil(this, this) {
+
+    private BottomSheetDialog dialog;
+
+    //电话弹窗
+    private void showBottomDialog() {
+        dialog = new BottomSheetDialog(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_phone, null);
+        TextView tvPhone = view.findViewById(R.id.tv_phone);
+        tvPhone.setText(TextUtil.checkStr2Str(phone));
+        view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void convert(Context mContext, View holder) {
-                TextView tvPhone = holder.findViewById(R.id.tv_phone);
-                tvPhone.setText(TextUtil.checkStr2Str(phone));
+            public void onClick(View view) {
+                dialog.dismiss();
             }
-        };
-        showUtil.BottomShow(parent, R.layout.dialog_phone);
+        });
+        dialog.contentView(view)
+                .inDuration(200)
+                .outDuration(200)
+                .cancelable(true)
+                .show();
     }
 }

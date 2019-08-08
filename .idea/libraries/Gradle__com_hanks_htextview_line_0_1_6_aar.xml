@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.hanks:htextview-line:0.1.6@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ab087a3a0e7056144d8e1cdccf02e359/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ab087a3a0e7056144d8e1cdccf02e359/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.hanks/htextview-line/0.1.6/9b4b42bf5fce72efaea7f43042d879d8917542a5/htextview-line-0.1.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

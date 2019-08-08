@@ -12,5 +12,7 @@ public interface OnSelectedListener {
      * @param id 规格id,335
      *           @param name 规格名称
      */
-    void onSelected(int tagId, String id,String name);
+    //void onSelected(int tagId, String id,String name);
+
+    void onSelected(int tagId, String id,String name,int index);
 }

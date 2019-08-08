@@ -5,6 +5,7 @@ package com.tzl.agriculture.fragment.vip.model;
  *
  */
 public class CouponMo {
+    private boolean isLoad;
     private String cardId;
     private String typeId;
     private String category;
@@ -17,13 +18,21 @@ public class CouponMo {
     private String startEffective;
     private String endEffective;
     private String numEffective;
-    private String amount;
-    private String discount;//折扣
+    private String amount;//抵扣值
+    private String discount;//折扣值
     private int consumeType;//0 折扣    1抵扣
     private int cardState;//0待使用   1已使用   2已过期
     private String receiveState;
 
     public CouponMo() {
+    }
+
+    public boolean isLoad() {
+        return isLoad;
+    }
+
+    public void setLoad(boolean load) {
+        isLoad = load;
     }
 
     public String getDiscount() {

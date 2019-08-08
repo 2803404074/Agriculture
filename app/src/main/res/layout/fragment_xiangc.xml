@@ -51,7 +51,6 @@
         android:layout_marginHorizontal="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorGri"
         app:srlPrimaryColor="@color/colorPrimaryDark"
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="false"
@@ -72,9 +71,9 @@
                 android:descendantFocusability="blocksDescendants"
                 android:orientation="vertical">
 
-                <com.youth.banner.Banner
+                <cc.ibooker.zviewpagerlib.GeneralVpLayout
                     android:id="@+id/banner_xc"
-                    android:background="@color/colorPrimaryDark"
+                    android:layout_marginHorizontal="@dimen/dp_10"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_140" />
 
@@ -92,21 +91,6 @@
                         android:layout_height="match_parent">
                     </androidx.recyclerview.widget.RecyclerView>
                 </RelativeLayout>
-
-
-                <TextView
-                    android:id="@+id/tv_more"
-                    android:visibility="invisible"
-                    android:textSize="21sp"
-                    android:textColor="#fff"
-                    android:paddingVertical="@dimen/dp_3"
-                    android:paddingHorizontal="@dimen/dp_10"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="@dimen/dp_30"
-                    android:background="@drawable/shape_login_blue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="查看更多村"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:htext="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -66,5 +67,23 @@
                 android:drawableTop="@drawable/select_my"
                 android:text="我的" />
         </RadioGroup>
+
+
+        <com.hanks.htextview.rainbow.RainbowTextView
+            android:id="@+id/htext"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="设置服务地址"
+            android:textSize="20sp"
+            app:colorSpace="150dp"
+            android:paddingVertical="@dimen/dp_3"
+            android:paddingHorizontal="@dimen/dp_20"
+            app:colorSpeed="4dp"
+            android:background="@drawable/shape_white_noframe"
+            android:layout_above="@+id/main_radiogrop"
+            android:layout_alignParentRight="true"/>
+
     </RelativeLayout>
 </layout>

@@ -11,6 +11,7 @@
     <include layout="@layout/toolbar_left_white"/>
 
     <TextView
+        android:id="@+id/tv_phone"
         android:layout_marginTop="@dimen/dp_10"
         android:paddingHorizontal="@dimen/dp_10"
         android:paddingVertical="@dimen/dp_20"
@@ -18,6 +19,7 @@
         android:layout_height="wrap_content"
         android:text="绑定手机号认证"
         android:textSize="@dimen/sp_15"
+        android:drawablePadding="@dimen/dp_5"
         android:textColor="@color/colorGri2"
         android:textStyle="bold"
         android:background="@android:color/white"

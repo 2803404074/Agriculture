@@ -8,6 +8,11 @@ import com.tzl.agriculture.R;
 public class AccountRelationActivity extends SetBaseActivity {
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_accont_relation;
     }

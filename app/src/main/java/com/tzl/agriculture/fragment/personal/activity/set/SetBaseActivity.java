@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
  */
 public abstract class SetBaseActivity extends AppCompatActivity {
 
-    public static SetBaseActivity instance;
     @BindView(R.id.tv_title)
     TextView tvTitle;
 
@@ -36,24 +35,19 @@ public abstract class SetBaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(setLayout());
-        instance = this;
+
         ButterKnife.bind(this);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (getIntent().getIntExtra("type",0) == 1){
-                    Intent intent = new Intent(SetBaseActivity.this, OrderActivity.class);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }else {
-                    finish();
-                }
+                backFinish();
             }
         });
         initView();
         initData();
     }
 
+    public abstract void backFinish();
 
     public abstract int setLayout();
 
@@ -65,13 +59,6 @@ public abstract class SetBaseActivity extends AppCompatActivity {
         tvTitle.setText(title);
     }
 
-    //获取实例
-    public static SetBaseActivity getActivityInstance(){
-        if (instance!=null){
-            return instance;
-        }
-        return null;
-    }
 
     /**
      * 修改状态栏颜色
@@ -106,6 +93,5 @@ public abstract class SetBaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        instance = null;
     }
 }

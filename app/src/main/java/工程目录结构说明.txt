@@ -1,0 +1,35 @@
+概括：
+    采用传统的mvc模式开发。
+    网络请求使用okhttp。
+    数据绑定使用 ButterKnife ，部分页面使用 databanding（mvvm）。
+    屏幕已适配长度单位，在values/dimens   用法：@dimen/dp_5。
+    gradle没有统一依赖管理，新同事需要麻烦一下啦。
+    由于时间比较赶，本人只关注业务功能。内存、代码、性能等有待优化。
+
+app:主工程目录
+    application:应用入口。
+
+    baseresult:json返回的数据模型的基类。
+
+    comment : 目前只放HTML页面的公共activity，以及"品牌故事"和"乡愁"的Html页面。
+
+    fragment: 项目涉及到的模块，首页、乡愁、我的。
+        home：首页（含该模块的activity页面和fragment页面、工具）。
+        personal：我的 （含该模块的activity页面和fragment页面、工具）。
+        vip：会员中心 （含该模块的activity页面和fragment页面、工具）。
+        xiangc：乡愁 （含该模块的activity页面和fragment页面、工具）。
+
+    main ：欢迎页和mainActivity。
+
+    mall：商城模块的代码。
+
+    model：涉及到的数据模型，用于反序列化。
+
+    util：各种工具。
+
+    view：activity的基类以及 万能Recyclerview列表的适配器等等。
+
+    wxapi：微信强行的包，目前涉及到登陆和支付。
+
+
+myhttp:okhttp网络请求框架 和 拍照身份证的界面预览的代码（临时）。

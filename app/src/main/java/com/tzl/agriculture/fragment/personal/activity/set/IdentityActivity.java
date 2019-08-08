@@ -21,6 +21,11 @@ public class IdentityActivity extends SetBaseActivity implements View.OnClickLis
     TextView tvLoad;
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_identity;
     }

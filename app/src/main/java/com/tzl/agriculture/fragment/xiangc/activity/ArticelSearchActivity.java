@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
+import com.tzl.agriculture.fragment.home.activity.SearchActivity;
 import com.tzl.agriculture.model.XiangcMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
@@ -54,8 +55,8 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
     @BindView(R.id.tv_start)
     TextView tvStart;
 
-    @BindView(R.id.hot_layout)
-    ShowButtonLayout hotLayout;
+//    @BindView(R.id.hot_layout)
+//    ShowButtonLayout hotLayout;
 
     @BindView(R.id.history_layout)
     ShowButtonLayout historyLayout;
@@ -107,13 +108,13 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
         }
 
         //热门搜索
-        ShowButtonLayoutData data1 = new ShowButtonLayoutData<String>(this, hotLayout, hostList, new ShowButtonLayoutData.MyClickListener() {
-            @Override
-            public void clickListener(View v, double arg1, double arg2) {
-                String tag = (String) v.getTag();
-                getHttp(tag);
-            }
-        });
+//        ShowButtonLayoutData data1 = new ShowButtonLayoutData<String>(this, hotLayout, hostList, new ShowButtonLayoutData.MyClickListener() {
+//            @Override
+//            public void clickListener(View v, double arg1, double arg2) {
+//                String tag = (String) v.getTag();
+//                getHttp(tag);
+//            }
+//        });
 
         //历史搜索
         ShowButtonLayoutData data2 = new ShowButtonLayoutData<String>(this, historyLayout, HistList, new ShowButtonLayoutData.MyClickListener() {
@@ -123,7 +124,7 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
                 getHttp(tag);
             }
         });
-        data1.setData();
+        //data1.setData();
         data2.setData();
 
         tvStart.setOnClickListener(this);
@@ -162,16 +163,7 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(ArticelSearchActivity.this, HtmlForXcActivity.class);
                 XiangcMo.Article xiangcMo = (XiangcMo.Article) adapter.getData().get(position);
-                intent.putExtra("title",xiangcMo.getTitle());
-                intent.putExtra("content",xiangcMo.getContent());
                 intent.putExtra("articleId",xiangcMo.getArticleId());
-                intent.putExtra("date",xiangcMo.getCreateTime());
-                intent.putExtra("goodNum",xiangcMo.getGoodNum());
-                intent.putExtra("collectNum",xiangcMo.getCollectNum());
-
-                intent.putExtra("alreadyGood",xiangcMo.getAlreadyGood());
-
-                intent.putExtra("alreadyCollect",xiangcMo.getAlreadyCollect());
                 startActivity(intent);
             }
         });
@@ -213,9 +205,19 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
     private void getHttp(String tag) {
         Map<String,String>map = new HashMap<>();
         map.put("title",tag);
-        map.put("typeId","1");
-        map.put("findChildren","1");
-        map.put("category","1");
+
+        //0乡愁     1品牌故事、播报
+        int type = getIntent().getIntExtra("type",0);
+
+        if (type != 0){//播报、品牌故事的搜索  typeId首页传递  findChildren：0   category：0
+            map.put("typeId",getIntent().getStringExtra("typeId"));
+            map.put("findChildren","0");
+            map.put("category","0");
+        }else {//乡愁搜索
+            map.put("typeId","1");
+            map.put("findChildren","1");
+            map.put("category","1");
+        }
         String str = JsonUtil.obj2String(map);
         String token = (String) SPUtils.instance(this,1).getkey("token","");
         OkHttp3Utils.getInstance(Article.BASE).doPostJson2(Article.getArticles, str,token, new GsonObjectCallback<String>(Article.BASE) {

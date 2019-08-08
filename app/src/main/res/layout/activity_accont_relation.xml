@@ -22,16 +22,26 @@
             android:text="微信"
             android:drawablePadding="@dimen/dp_5"
             android:textSize="@dimen/sp_18"
+            android:gravity="center"
             android:drawableLeft="@drawable/xc"/>
 
         <TextView
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/iv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="未关联"
+            android:layout_centerVertical="true"
             android:drawablePadding="@dimen/dp_5"
-            android:textSize="@dimen/sp_18"
-            android:drawableRight="@drawable/xc"/>
+            android:textSize="@dimen/sp_18" />
+        <ImageView
+            android:id="@+id/iv1"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/back_black"
+            android:rotation="180"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -45,17 +55,27 @@
             android:layout_height="wrap_content"
             android:text="QQ"
             android:drawablePadding="@dimen/dp_5"
+            android:gravity="center"
             android:textSize="@dimen/sp_18"
             android:drawableLeft="@drawable/xc"/>
 
         <TextView
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/iv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="未关联"
+            android:layout_centerVertical="true"
             android:drawablePadding="@dimen/dp_5"
-            android:textSize="@dimen/sp_18"
-            android:drawableRight="@drawable/xc"/>
+            android:textSize="@dimen/sp_18" />
+        <ImageView
+            android:id="@+id/iv2"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/back_black"
+            android:rotation="180"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -69,18 +89,30 @@
             android:layout_height="wrap_content"
             android:text="微博"
             android:drawablePadding="@dimen/dp_5"
+            android:gravity="center"
             android:textSize="@dimen/sp_18"
             android:drawableLeft="@drawable/xc"/>
 
         <TextView
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/iv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="未关联"
+            android:layout_centerVertical="true"
             android:drawablePadding="@dimen/dp_5"
-            android:textSize="@dimen/sp_18"
-            android:drawableRight="@drawable/xc"/>
+            android:textSize="@dimen/sp_18" />
+        <ImageView
+            android:id="@+id/iv3"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/back_black"
+            android:rotation="180"/>
     </RelativeLayout>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

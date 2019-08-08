@@ -35,6 +35,8 @@ public class XiangcMo extends BaseResponse {
     public static class Article {
         private String articleId;
         private String typeId;
+        private String category;
+        private String articleShareUrl;//分享连接
         private String coverImgurl;
         private String coverImgurl2;
         private String coverImgurl3;
@@ -58,6 +60,15 @@ public class XiangcMo extends BaseResponse {
         private String alreadyGood;
         private String alreadyCollect;
         private String alreadyForward;
+
+
+        public String getCategory() {
+            return category;
+        }
+
+        public String getArticleShareUrl() {
+            return articleShareUrl;
+        }
 
         public String getCreateTime() {
             return createTime;

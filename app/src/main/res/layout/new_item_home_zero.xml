@@ -9,11 +9,10 @@
         android:layout_height="@dimen/dp_120"
         android:background="@color/colorPrimaryDark"/>
 
-    <com.youth.banner.Banner
-        android:layout_marginHorizontal="@dimen/dp_10"
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:background="@drawable/shape_white_noframe"
-        android:layout_height="@dimen/dp_140">
-    </com.youth.banner.Banner>
+        <cc.ibooker.zviewpagerlib.GeneralVpLayout
+            android:id="@+id/banner"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_160" />
+
 </RelativeLayout>

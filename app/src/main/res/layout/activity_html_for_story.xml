@@ -15,12 +15,25 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
             android:padding="@dimen/dp_5"
             android:src="@mipmap/back_black" />
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_toRightOf="@+id/back"
+            android:layout_toLeftOf="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="题标题标题标题标题标题标题"
+            android:textColor="@color/colorGri2"
+            android:textSize="@dimen/sp_19" />
         <ImageView
+            android:id="@+id/iv_share"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
             android:layout_alignParentRight="true"
@@ -50,15 +63,7 @@
             android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_top"
-                android:paddingHorizontal="@dimen/dp_10"
-                android:text="标题标题标题标题标题标题标题标题标题标题标题标题标题"
-                android:textColor="@color/colorGri2"
-                android:textSize="@dimen/sp_19" />
+
 
             <RelativeLayout
                 android:id="@+id/rl_mes"
@@ -95,6 +100,7 @@
 
                 <TextView
                     android:id="@+id/tv_follow"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

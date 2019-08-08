@@ -22,7 +22,7 @@
             android:text="---"
             android:paddingHorizontal="@dimen/dp_5"
             android:textSize="21sp"
-            android:lines="1"
+            android:lines="2"
             android:ellipsize="end"
             android:textColor="@color/colorGri2"
             android:textStyle="bold"/>
@@ -33,32 +33,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="距离结束仅剩"/>
 
             <TextView
-                android:layout_marginLeft="@dimen/dp_10"
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15"/>
+                android:text="15:15"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=":"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15"/>
+                android:text=" 后结束"/>
+
+
         </LinearLayout>
 
         <TextView

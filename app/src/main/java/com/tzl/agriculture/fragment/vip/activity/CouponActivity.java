@@ -1,6 +1,7 @@
 package com.tzl.agriculture.fragment.vip.activity;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,6 +54,11 @@ public class CouponActivity extends SetBaseActivity {
     private int page = 1;
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_coupon;
     }
@@ -69,7 +75,11 @@ public class CouponActivity extends SetBaseActivity {
             public void convert(Context mContext, BaseRecyclerHolder holder, CouponMo o) {
                 TextView tvPrice = holder.getView(R.id.tv_price);
                 TextView tvTip = holder.getView(R.id.tv_tip);
-                switch (o.getCardState()) {
+
+                int status = o.getCardState();
+                Log.e("niubi", "设置了" + status);
+
+                switch (status) {
                     case 0:
                         break;
                     case 1:
@@ -77,6 +87,7 @@ public class CouponActivity extends SetBaseActivity {
                         tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
                         tvTip.setBackgroundResource(R.drawable.shape_login_whi_no);
                         tvTip.setClickable(false);
+                        tvTip.setTextColor(getResources().getColor(R.color.colorTouming));
                         tvTip.setText("已使用");
                         break;
                     case 2:
@@ -101,8 +112,6 @@ public class CouponActivity extends SetBaseActivity {
                     holder.setText(R.id.tv_endTime, o.getEndEffective());
                     holder.setText(R.id.tv_mess, o.getCradNote());
                 }
-
-
             }
         };
         recyclerView.setAdapter(adapter);
@@ -121,7 +130,7 @@ public class CouponActivity extends SetBaseActivity {
     public void initData() {
         Map<String, String> map = new HashMap<>();
         map.put("pageNum", String.valueOf(page));
-        map.put("pageSize", "5");
+        map.put("pageSize", "20");
         String str = JsonUtil.obj2String(map);
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.minePage, str, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
             @Override
@@ -132,6 +141,10 @@ public class CouponActivity extends SetBaseActivity {
                         JSONObject dataObj = object.optJSONObject("data");
                         String str = dataObj.optString("records");
                         mData = JsonUtil.string2Obj(str, List.class, CouponMo.class);
+
+                        for (int i = 0; i < mData.size(); i++) {
+                            Log.e("niubi", "状态:" + mData.get(i).getCardState());
+                        }
                         if (null != mData && mData.size() > 0) {
                             if (page > 1) {
                                 adapter.addAll(mData);
@@ -139,9 +152,13 @@ public class CouponActivity extends SetBaseActivity {
                                 adapter.updateData(mData);
                             }
                             //tvSize.setText(mData.size());
-                        }else {
-                            ivTips.setVisibility(View.VISIBLE);
+                        } else {
+                            if (adapter.getData() == null || adapter.getData().size() == 0) {
+                                ivTips.setVisibility(View.VISIBLE);
+                            }
                         }
+                    } else {
+                        ivTips.setVisibility(View.VISIBLE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -2,7 +2,10 @@ package com.tzl.agriculture.fragment.home.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +33,7 @@ import java.util.Map;
 
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
+import butterknife.BindView;
 import config.Mall;
 import okhttp3.Call;
 
@@ -37,6 +41,9 @@ import okhttp3.Call;
  *
  */
 public class GoodsFragmentPage extends BaseFragmentFromType {
+
+    @BindView(R.id.iv_tips)
+    ImageView ivTips;
 
     private RecyclerView recyclerView;
 
@@ -65,7 +72,13 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                 holder.setText(R.id.tv_name, o.getGoodsName());
                 holder.setText(R.id.tv_price, o.getPrice());
-                holder.setText(R.id.tv_marketPrice,o.getOriginalPrice());
+
+                TextView tvMarketPrice = holder.getView(R.id.tv_marketPrice);
+
+                tvMarketPrice.setText(o.getOriginalPrice());
+                tvMarketPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
+
+                holder.setText(R.id.tv_date,o.getSpikeEndTime());
             }
         };
         recyclerView.setAdapter(adapter);
@@ -122,20 +135,46 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                             } else {
                                 adapter.updateData(mData);
                             }
+                        }else {
+                            if (adapter.getData() == null || adapter.getData().size() == 0){
+                                ivTips.setVisibility(View.VISIBLE);
+                            }
+                            ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
                         }
                     } else {
+                        if (adapter.getData() == null || adapter.getData().size() == 0){
+                            ivTips.setVisibility(View.VISIBLE);
+                        }
                         ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+            }
+            @Override
+            public void onFailed(Call call, IOException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (adapter.getData() == null || adapter.getData().size() == 0){
+                            ivTips.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
             }
 
             @Override
-            public void onFailed(Call call, IOException e) {
-
+            public void onFailure(Call call, IOException e) {
+                super.onFailure(call, e);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (adapter.getData() == null || adapter.getData().size() == 0){
+                            ivTips.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
             }
         });
     }

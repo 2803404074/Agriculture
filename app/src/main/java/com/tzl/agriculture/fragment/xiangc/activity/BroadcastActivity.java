@@ -74,11 +74,13 @@ public class BroadcastActivity extends AppCompatActivity implements View.OnClick
                     holder.setImageByUrl(R.id.iv_img,o.getCoverImgurl());
                     holder.setText(R.id.tv_dz, TextUtil.checkStr2Num(o.getGoodNum()));
                     holder.setText(R.id.tv_date,TextUtil.checkStr2Str(o.getCreateTime()));
+                    holder.setText(R.id.tv_name,o.getUserNickname());
                 }else if (mType == adapter.mTowPType){
                     holder.setText(R.id.tv_title,o.getTitle());
                     holder.setImageByUrl(R.id.iv_img,o.getCoverImgurl());
                     holder.setText(R.id.tv_dz, TextUtil.checkStr2Num(o.getGoodNum()));
                     holder.setText(R.id.tv_date,TextUtil.checkStr2Str(o.getCreateTime()));
+                    holder.setText(R.id.tv_name,o.getUserNickname());
                 }else {
                     holder.setText(R.id.tv_title,o.getTitle());
                     holder.setImageByUrl(R.id.iv_img1,o.getCoverImgurl());
@@ -86,6 +88,7 @@ public class BroadcastActivity extends AppCompatActivity implements View.OnClick
                     holder.setImageByUrl(R.id.iv_img3,o.getCoverImgurl3());
                     holder.setText(R.id.tv_dz, TextUtil.checkStr2Num(o.getGoodNum()));
                     holder.setText(R.id.tv_date,TextUtil.checkStr2Str(o.getCreateTime()));
+                    holder.setText(R.id.tv_name,o.getUserNickname());
                 }
             }
         };
@@ -98,15 +101,7 @@ public class BroadcastActivity extends AppCompatActivity implements View.OnClick
             public void onItemClick(View view, int position) {
                 XiangcMo.Article data = mData.get(position);
                 Intent intent = new Intent(BroadcastActivity.this, HtmlForStoryActivity.class);
-                intent.putExtra("title",data.getTitle());
-                intent.putExtra("userName",data.getUserNickname());
-                intent.putExtra("date",data.getCreateTime());
-                intent.putExtra("content",data.getContent());
-                intent.putExtra("goodNum",data.getGoodNum());
-                intent.putExtra("collectNum",data.getCollectNum());
                 intent.putExtra("articleId",data.getArticleId());
-                intent.putExtra("alreadyGood",data.getAlreadyGood());
-                intent.putExtra("alreadyCollect",data.getAlreadyCollect());
                 startActivity(intent);
             }
         });
@@ -151,6 +146,8 @@ public class BroadcastActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.tv_search:
                 Intent intent = new Intent(this, ArticelSearchActivity.class);
+                intent.putExtra("type",1);
+                intent.putExtra("typeId",getIntent().getStringExtra("typeId"));
                 startActivity(intent);
                 break;
                 default:break;

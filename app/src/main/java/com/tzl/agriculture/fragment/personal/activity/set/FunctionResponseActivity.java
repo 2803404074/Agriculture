@@ -52,6 +52,12 @@ public class FunctionResponseActivity extends SetBaseActivity implements View.On
     private List<String> mDate = new ArrayList<>();
 
     private String mType;
+
+    @Override
+    public void backFinish() {
+        finish();
+    }
+
     @Override
     public int setLayout() {
         return R.layout.activity_function_response;
@@ -83,16 +89,16 @@ public class FunctionResponseActivity extends SetBaseActivity implements View.On
                         @Override
                         public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
                             holder.setText(R.id.cb_name,o);
+                            holder.getView(R.id.cb_name).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    mType = o;
+                                }
+                            });
                         }
                     };
                     recyclerView.setAdapter(adapter);
 
-                    adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            mType = mDate.get(position);
-                        }
-                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

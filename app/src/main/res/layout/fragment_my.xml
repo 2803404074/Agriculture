@@ -45,21 +45,11 @@
                     android:layout_marginBottom="@dimen/dp_10"
                     android:orientation="horizontal">
 
-                   <!-- <com.facebook.drawee.view.SimpleDraweeView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/drawee_img"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        fresco:roundAsCircle="true" />-->
-
-                    <com.shehuan.niv.NiceImageView
-                        android:id="@+id/drawee_img"
-                        android:layout_width="@dimen/dp_70"
-                        android:layout_height="@dimen/dp_70"
-                        android:src="@mipmap/ic_launcher"
-                        app:border_width="@dimen/dp_2"
-                        android:scaleType="fitXY"
-                        app:border_color="@color/colorYellow"
-                        app:is_circle="true" />
+                        fresco:roundAsCircle="true" />
 
                     <TextView
                         android:id="@+id/tv_nickName"
@@ -67,12 +57,22 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:textColor="#fff"
+                        android:layout_gravity="center"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="1px"
                         android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/iv_set"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_30"
+                        android:padding="@dimen/dp_5"
+                        android:layout_marginRight="@dimen/dp_30"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/setup" />
 
                 </LinearLayout>
 
@@ -195,15 +195,6 @@
                         android:textSize="@dimen/sp_9"
                         android:textStyle="bold" />
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_set"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="@dimen/dp_10"
-                    android:padding="@dimen/dp_5"
-                    android:src="@mipmap/setup" />
             </RelativeLayout>
 
             <LinearLayout
@@ -280,11 +271,6 @@
                     android:text="功能与服务"
                     android:textColor="@color/colorGri2"
                     android:textSize="21sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/colorGri" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_menu"

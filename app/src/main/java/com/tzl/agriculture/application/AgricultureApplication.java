@@ -11,8 +11,10 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  * 牛逼
  */
 public class AgricultureApplication extends Application {
+
     public static IWXAPI api;
     public static String APP_ID="wx9253e5b4ad426487";
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -96,7 +97,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
     //圆角头像
     @BindView(R.id.drawee_img)
-    NiceImageView headView;
+    SimpleDraweeView headView;
 
     //昵称
     @BindView(R.id.tv_nickName)
@@ -241,6 +242,9 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_share_app,null,false);
         final AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(view).create();
 
+        RelativeLayout relativeLayout = view.findViewById(R.id.rl_bg);
+        relativeLayout.setBackgroundResource(R.mipmap.share_news);
+
         //头像
         NiceImageView imageView = view.findViewById(R.id.nice_img);
         Glide.with(getContext()).load(userInfo.getHeadUrl()).into(imageView);
@@ -300,6 +304,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
 
     private UserInfo userInfo;
+
     @Override
     protected void initData() {
         //获取用户信息
@@ -368,7 +373,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     private void setViewData() {
         if (null!=userInfo){
             tvNickName.setText(userInfo.getNickname());
-            Glide.with(getContext()).load(userInfo.getHeadUrl()).into(headView);
+            headView.setImageURI(userInfo.getHeadUrl());
         }
     }
 
@@ -393,6 +398,19 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         });
         builder.create().show();
     }
+
+    //
+    private void showTips() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setIcon(R.mipmap.application).setTitle("趣乡服务")
+                .setMessage("敬请期待").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -419,8 +437,9 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 startActivity(intent1);
                 break;
             case R.id.ll_cart:
-                Intent intent2 = new Intent(getContext(), CartActivity.class);
-                startActivity(intent2);
+                showTips();
+//                Intent intent2 = new Intent(getContext(), CartActivity.class);
+//                startActivity(intent2);
                 break;
             case R.id.ll_see:
                 Intent intent3 = new Intent(getContext(), BrowseActivity.class);

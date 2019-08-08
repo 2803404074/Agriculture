@@ -26,7 +26,7 @@
             android:src="@mipmap/test1"
             android:scaleType="fitXY"
             app:corner_radius="@dimen/dp_7"
-            android:layout_height="@dimen/dp_100" />
+            android:layout_height="@dimen/dp_110" />
         <com.shehuan.niv.NiceImageView
             android:id="@+id/iv_img2"
             android:layout_width="0dp"
@@ -35,7 +35,7 @@
             android:scaleType="fitXY"
             android:layout_marginHorizontal="@dimen/dp_5"
             app:corner_radius="@dimen/dp_7"
-            android:layout_height="@dimen/dp_100" />
+            android:layout_height="@dimen/dp_110" />
         <com.shehuan.niv.NiceImageView
             android:id="@+id/iv_img3"
             android:layout_width="0dp"
@@ -43,7 +43,7 @@
             android:src="@mipmap/test1"
             android:scaleType="fitXY"
             app:corner_radius="@dimen/dp_7"
-            android:layout_height="@dimen/dp_100" />
+            android:layout_height="@dimen/dp_110" />
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="@dimen/dp_10"
@@ -51,6 +51,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="乡村黑农"/>

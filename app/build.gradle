@@ -27,6 +27,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
     }
 
     dataBinding {
@@ -48,9 +51,12 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
     }
-
     dexOptions {
         javaMaxHeapSize "4g"
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 
@@ -149,4 +155,21 @@ dependencies {
      * 底部弹窗
      */
     implementation 'com.github.rey5137:material:1.2.2'
+
+    /**
+     * 自定义圆角banner
+     */
+    implementation 'com.github.zrunker:ZViewPager:v1.0.4'
+
+    /**
+     * 炫酷textview
+     */
+    implementation "com.hanks:htextview-base:0.1.6"        // base library
+    implementation "com.hanks:htextview-fade:0.1.6"        // optional
+    implementation "com.hanks:htextview-line:0.1.6"        // optional
+    implementation "com.hanks:htextview-rainbow:0.1.6"     // optional
+    implementation "com.hanks:htextview-typer:0.1.6"       // optional
+    implementation "com.hanks:htextview-scale:0.1.6"       // optional
+    implementation "com.hanks:htextview-evaporate:0.1.6"   // optional
+    implementation "com.hanks:htextview-fall:0.1.6"        // optional
 }

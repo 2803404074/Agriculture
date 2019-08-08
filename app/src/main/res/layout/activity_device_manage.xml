@@ -24,6 +24,7 @@
         android:textStyle="bold"
         android:textColor="@color/colorGri2"/>
     <TextView
+        android:id="@+id/tv_devName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="MI5X"

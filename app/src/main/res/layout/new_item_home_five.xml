@@ -20,10 +20,12 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:text="订单农业"
+        android:visibility="gone"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_21" />
 
     <TextView
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_tab"

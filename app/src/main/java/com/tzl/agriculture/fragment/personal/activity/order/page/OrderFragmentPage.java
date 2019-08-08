@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
@@ -119,8 +121,16 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                     case 3:
                         tvStatus.setText("等待买家收货");
                         holder.getView(R.id.tv_lxmj).setVisibility(View.VISIBLE);
-                        holder.getView(R.id.tv_qxdd).setVisibility(View.VISIBLE);
                         holder.getView(R.id.tv_ckwl).setVisibility(View.VISIBLE);
+                        TextView tvQrsh = holder.getView(R.id.tv_qrsh);
+                        tvQrsh.setVisibility(View.VISIBLE);
+                        tvQrsh.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                showTwo(o,1,"是否确认收货？");
+                            }
+                        });
+
                         break;
                     case 4:
                         tvStatus.setText("订单已评价");
@@ -134,7 +144,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                 holder.getView(R.id.tv_qxdd).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showTwo(o);
+                        showTwo(o,0,"是否取消订单？");
                     }
                 });
 
@@ -201,7 +211,8 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                             ivTips.setVisibility(View.VISIBLE);
                         }
                     } else {
-                        //ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
+                        ToastUtil.showShort(getContext(), "错误代码:"+object.optInt("code"));
+                        getActivity().finish();
                     }
 
                 } catch (JSONException e) {
@@ -236,6 +247,8 @@ public class OrderFragmentPage extends BaseFragmentFromType {
         });
     }
 
+
+
     /**
      * 取消订单
      * @param orderMo
@@ -251,10 +264,8 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                     JSONObject object = new JSONObject(result);
                     if (object.optInt("code") == 0){
                         ToastUtil.showShort(getContext(),"取消成功");
-
                         mData.remove(orderMo);
                         adapter.updateData(mData);
-
                         sendMessage();
                     }
                 } catch (JSONException e) {
@@ -269,13 +280,23 @@ public class OrderFragmentPage extends BaseFragmentFromType {
         });
     }
 
-    //添加地址提示
-    private void showTwo(OrderMo orderMo) {
+
+    /**
+     *  提示
+     * @param orderMo
+     * @param index 0 取消订单，1确认收货
+     */
+    private void showTwo(OrderMo orderMo , int index,String tips) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setIcon(R.mipmap.application).setTitle("趣乡服务")
-                .setMessage("是否取消订单？").setPositiveButton("是", new DialogInterface.OnClickListener() {
+                .setMessage(tips).setPositiveButton("是", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                       cancelOrder(orderMo);
+                        if (index == 0){
+                            cancelOrder(orderMo);
+                        }
+                        if (index == 1){
+                            qrsh(orderMo);
+                        }
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
@@ -286,4 +307,36 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                 });
         builder.create().show();
     }
+
+    /**
+     * 确认收货
+     * @param orderMo
+     */
+    private void qrsh(OrderMo orderMo){
+        Map<String,String>map = new HashMap<>();
+        map.put("orderId",orderMo.getOrderId());
+        String str = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.receivingOrder, str, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optInt("code") == 0){
+                        ToastUtil.showShort(getContext(),"收货成功");
+                        mData.remove(orderMo);
+                        adapter.updateData(mData);
+                        sendMessage();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+
+            }
+        });
+    }
+
 }

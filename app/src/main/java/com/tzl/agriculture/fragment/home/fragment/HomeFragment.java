@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -28,18 +30,14 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.comment.activity.HtmlForStoryActivity;
 import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
 import com.tzl.agriculture.fragment.home.activity.SearchActivity;
-import com.tzl.agriculture.fragment.personal.activity.set.AddressActivity;
-import com.tzl.agriculture.fragment.vip.activity.CouponActivity;
-import com.tzl.agriculture.fragment.vip.activity.VipActivity;
+import com.tzl.agriculture.fragment.home.util.HomeAdapter;
+import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.fragment.xiangc.activity.BroadcastActivity;
+import com.tzl.agriculture.fragment.xiangc.activity.StoryActivity;
+import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.mall.activity.ChinaGuActivity;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
 import com.tzl.agriculture.mall.activity.LimitedTimeActivity;
-import com.tzl.agriculture.fragment.xiangc.activity.StoryActivity;
-import com.tzl.agriculture.fragment.home.util.HomeAdapter;
-import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
-import com.tzl.agriculture.main.MainActivity;
-import com.tzl.agriculture.mall.activity.OrderActivity;
 import com.tzl.agriculture.model.BannerMo;
 import com.tzl.agriculture.model.HomeMo;
 import com.tzl.agriculture.model.UserInfo;
@@ -67,10 +65,9 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import cc.ibooker.zviewpagerlib.GeneralVpLayout;
 import config.App;
 import config.Article;
-import config.Base;
 import okhttp3.Call;
 
 public class HomeFragment extends BaseFragment {
@@ -89,6 +86,7 @@ public class HomeFragment extends BaseFragment {
     SpinKitView spinKitView;
 
     private List<HomeMo> mData = new ArrayList<>();
+
     public static HomeFragment getInstance() {
         HomeFragment homeFragment = new HomeFragment();
         return homeFragment;
@@ -101,7 +99,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        ButterKnife.bind(view);
+
         rlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,34 +136,40 @@ public class HomeFragment extends BaseFragment {
         setAdapter2();
     }
 
-    private void setAdapter2(){
+    private void setAdapter2() {
+
         homeAdapter = new HomeAdapter(mContext) {
             @Override
             public void convert(Context mContext, final BaseRecyclerHolder holder, int mType) {
 
-                if (mType == homeAdapter.mTypeZero){
+                if (mType == homeAdapter.mTypeZero) {
                     List<String> mTitle = new ArrayList<>();
                     List<String> mUrl = new ArrayList<>();
                     List<BannerMo> bannerMos = mData.get(mType).getAdvertiseList();
-                    for (int i = 0; i <bannerMos.size() ; i++) {
+                    for (int i = 0; i < bannerMos.size(); i++) {
                         mUrl.add(bannerMos.get(i).getUrl());
                         mTitle.add(bannerMos.get(i).getDescription());
                     }
-                    Banner banner = holder.getView(R.id.banner);
-                    BannerUtil.startBanner(banner,HomeFragment.this.getActivity(),mUrl,mTitle);
-                }else if (mType == homeAdapter.mTypeOne){
+                    GeneralVpLayout<BannerMo> banner = holder.getView(R.id.banner);
+                    BannerUtil util = new BannerUtil(context);
+                    util.banner3(banner,bannerMos);
+
+                    //BannerUtil.startBanner(banner, HomeFragment.this.getActivity(), mUrl, mTitle);
+                } else if (mType == homeAdapter.mTypeOne) {
                     TextView tvTitle = holder.getView(R.id.tv_title);
                     tvTitle.setText(mData.get(mType).getArticleList().getTypeName());
-                    List<XiangcMo.Article> article =  mData.get(mType).getArticleList().getArticleInfoList();
-                    if (null!=article && article.size()>0){
-                        holder.setImageByUrl(R.id.iv_h_one,article.get(0).getCoverImgurl());
-                        holder.setText(R.id.tv_story_title,article.get(0).getTitle());
+                    TextUtil.setTextViewStyles(tvTitle);
+
+                    List<XiangcMo.Article> article = mData.get(mType).getArticleList().getArticleInfoList();
+                    if (null != article && article.size() > 0) {
+                        holder.setImageByUrl(R.id.iv_h_one, article.get(0).getCoverImgurl());
+                        holder.setText(R.id.tv_story_title, article.get(0).getTitle());
                         //品牌故事跳转
                         tvTitle.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(getContext(),StoryActivity.class);
-                                intent.putExtra("typeId",mData.get(mType).getArticleList().getTypeId());
+                                Intent intent = new Intent(getContext(), StoryActivity.class);
+                                intent.putExtra("typeId", mData.get(mType).getArticleList().getTypeId());
                                 startActivity(intent);
                             }
                         });
@@ -173,125 +177,72 @@ public class HomeFragment extends BaseFragment {
                         holder.getView(R.id.iv_h_one).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(getContext(),HtmlForStoryActivity.class);
-                                intent.putExtra("articleId",article.get(0).getArticleId());
+                                Intent intent = new Intent(getContext(), HtmlForStoryActivity.class);
+                                intent.putExtra("articleId", article.get(0).getArticleId());
                                 startActivity(intent);
                             }
                         });
-                    }else {
+                    } else {
                         //隐藏品牌故事
                         TextView textView = holder.getView(R.id.tv_title);
                         textView.setText("请添加该区域内容");
                         textView.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
 
-                }else if (mType == homeAdapter.mTypeTow){
-
-                    //点击弹窗提示
-                    holder.getView(R.id.ll_ptjx).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showTwo();
-                        }
-                    });
-                    holder.getView(R.id.ll_tjyh).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showTwo();
-                        }
-                    });
+                } else if (mType == homeAdapter.mTypeTow) {
 
                     //获取限时购模块数据（限时购、拼团、特价）
                     List<HomeMo.LimitGoods> goodsList = mData.get(mType).getGoodsTypeList();
 
                     //获取限时购数据
                     HomeMo.LimitGoods limitGoods = goodsList.get(0);
-                    holder.setText(R.id.tv_xsg,limitGoods.getTypeName());
-                    holder.setText(R.id.tv_xsg_tag,limitGoods.getTag());
+                    holder.setText(R.id.tv_xsg, limitGoods.getTypeName());
+                    holder.setText(R.id.tv_xsg_tag, limitGoods.getTag());
 
-                    if (limitGoods.getGoodsList() !=null && limitGoods.getGoodsList().size()>0){
-                        holder.setImageByUrl(R.id.tv_xsg_01,limitGoods.getGoodsList().get(0).getPicUrl());
-                        holder.getView(R.id.tv_xsg_01).setOnClickListener(new View.OnClickListener() {
+                    if (limitGoods.getGoodsList() != null && limitGoods.getGoodsList().size() > 0) {
+                        RecyclerView recyXsg = holder.getView(R.id.rv_xsg);
+                        recyXsg.setNestedScrollingEnabled(false);
+                        recyXsg.setLayoutManager(new GridLayoutManager(context,4));
+                        BaseAdapter adapter = new BaseAdapter<HomeMo.LimitGoods.GoodsList>(context,recyXsg,limitGoods.getGoodsList(),R.layout.img_view) {
                             @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
-                                intent.putExtra("goodsId",limitGoods.getGoodsList().get(0).getGoodsId());
+                            public void convert(Context mContext, BaseRecyclerHolder holder, HomeMo.LimitGoods.GoodsList o) {
+                                holder.setImageByUrl(R.id.img,o.getPicUrl());
+                            }
+                        };
+                        recyXsg.setAdapter(adapter);
+                        adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Intent intent = new Intent(getContext(), LimitedTimeActivity.class);
                                 startActivity(intent);
                             }
                         });
                     }
-                    if (limitGoods.getGoodsList() !=null && limitGoods.getGoodsList().size()>1){
-                        holder.setImageByUrl(R.id.tv_xsg_02,limitGoods.getGoodsList().get(1).getPicUrl());
-                        holder.getView(R.id.tv_xsg_02).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
-                                intent.putExtra("goodsId",limitGoods.getGoodsList().get(1).getGoodsId());
-                                startActivity(intent);
-                            }
-                        });
-                    }
-
-                    //获取拼团数据
-                    HomeMo.LimitGoods ptGoods = goodsList.get(1);
-                    holder.setText(R.id.tv_pt_title,ptGoods.getTypeName());
-                    holder.setText(R.id.tv_pt_tag,ptGoods.getTag());
-                    if (null!=ptGoods.getGoodsList() && ptGoods.getGoodsList().size()>0){
-                        holder.setImageByUrl(R.id.iv_pt_img,ptGoods.getGoodsList().get(0).getPicUrl());
-                        holder.getView(R.id.iv_pt_img).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
-                                intent.putExtra("goodsId",ptGoods.getGoodsList().get(0).getGoodsId());
-                                startActivity(intent);
-                            }
-                        });
-                    }
-
-
-                    //获取特价数据
-                    HomeMo.LimitGoods tjGoods = goodsList.get(2);
-                    holder.setText(R.id.tv_tj,tjGoods.getTypeName());
-                    holder.setText(R.id.tv_tj_tag,tjGoods.getTag());
-                    if (null!=tjGoods.getGoodsList() && tjGoods.getGoodsList().size()>0){
-                        holder.setImageByUrl(R.id.iv_tj_img,tjGoods.getGoodsList().get(0).getPicUrl());
-                        holder.getView(R.id.iv_tj_img).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
-                                intent.putExtra("goodsId",tjGoods.getGoodsList().get(0).getGoodsId());
-                                startActivity(intent);
-                            }
-                        });
-                    }
-
                     //限时购点击
                     holder.getView(R.id.ll_xsg).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(getContext(),LimitedTimeActivity.class);
+                            Intent intent = new Intent(getContext(), LimitedTimeActivity.class);
                             startActivity(intent);
                         }
                     });
-
-
-                }else  if (mType == homeAdapter.mTypeThree){
+                } else if (mType == homeAdapter.mTypeThree) {
                     XiangcMo xiangcMo = mData.get(mType).getArticleList();
                     holder.setText(R.id.tv_title_bb, xiangcMo.getTypeName());
                     List<XiangcMo.Article> article = xiangcMo.getArticleInfoList();
                     TextView textView = holder.getView(R.id.tv_bro);
-                    if (null!=article && article.size()>0){
+                    if (null != article && article.size() > 0) {
                         textView.setText(article.get(0).getTitle());
                         textView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(getContext(),HtmlForXcActivity.class);
-                                intent.putExtra("articleId",article.get(0).getArticleId());
+                                Intent intent = new Intent(getContext(), HtmlForXcActivity.class);
+                                intent.putExtra("articleId", article.get(0).getArticleId());
                                 startActivity(intent);
                             }
                         });
-                    }else {
-                        textView =holder.getView(R.id.tv_bro);
+                    } else {
+                        textView = holder.getView(R.id.tv_bro);
                         textView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                         textView.setText("请添加该区域的内容");
                     }
@@ -299,13 +250,13 @@ public class HomeFragment extends BaseFragment {
                     holder.getView(R.id.tv_news_more).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(getContext(),BroadcastActivity.class);
-                            intent.putExtra("typeId",xiangcMo.getTypeId());
+                            Intent intent = new Intent(getContext(), BroadcastActivity.class);
+                            intent.putExtra("typeId", xiangcMo.getTypeId());
                             startActivity(intent);
                         }
                     });
 
-                }else  if (mType == homeAdapter.mTypeFour){
+                } else if (mType == homeAdapter.mTypeFour) {
 
                     holder.getView(R.id.iv_new).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -317,30 +268,39 @@ public class HomeFragment extends BaseFragment {
                     holder.getView(R.id.iv_inv).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                           showShareDialog();
+                            showShareDialog();
                         }
                     });
 
-                }else  if (mType == homeAdapter.mTypeFive){//订单农业
+                } else if (mType == homeAdapter.mTypeFive) {//订单农业
                     holder.getView(R.id.iv_ddny).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             showTwo();
                         }
                     });
-                }else if (mType == homeAdapter.mTypeSix){//乡村好物模块
+                } else if (mType == homeAdapter.mTypeSix) {//乡村好物模块
 
                     HomeMo.XchwGoods xchwModel = mData.get(mType).getXchwModel();
 
-                   //模块总名称
-                    holder.setText(R.id.tv_xchw_name,xchwModel.getModelName());
-                    holder.setText(R.id.tv_xchw_tag,xchwModel.getModelTag());
+                    //模块总名称
+                    holder.setText(R.id.tv_xchw_name, xchwModel.getModelName());
+                    holder.setText(R.id.tv_xchw_tag, xchwModel.getModelTag());
 
                     holder.getView(R.id.tv_xchw_name).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(getContext(),LimitedTimeActivity.class);
-                            intent.putExtra("mType",1);
+                            Intent intent = new Intent(getContext(), LimitedTimeActivity.class);
+                            intent.putExtra("mType", 1);
+                            startActivity(intent);
+                        }
+                    });
+
+                    holder.getView(R.id.rl_fxhw).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getContext(), LimitedTimeActivity.class);
+                            intent.putExtra("mType", 1);
                             startActivity(intent);
                         }
                     });
@@ -348,61 +308,61 @@ public class HomeFragment extends BaseFragment {
 
                     //发现好货
                     List<HomeMo.LimitGoods> goodsList = xchwModel.getGoodsTypeList();
-                    holder.setText(R.id.tv_find,goodsList.get(0).getTypeName());
-                    holder.setText(R.id.tv_mess01,goodsList.get(0).getTag());
-                    if (null != goodsList.get(0).getGoodsList() && goodsList.get(0).getGoodsList().size()>0){
-                        holder.setImageByUrl(R.id.iv_find_01,goodsList.get(0).getGoodsList().get(0).getPicUrl());
-                        holder.getView(R.id.iv_find_01).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getContext(),GoodsDetailsActivity.class);
-                                intent.putExtra("goodsId",goodsList.get(0).getGoodsList().get(0).getGoodsId());
-                                intent.putExtra("type",2);
-                                startActivity(intent);
-                            }
-                        });
+                    holder.setText(R.id.tv_find, goodsList.get(0).getTypeName());
+                    holder.setText(R.id.tv_mess01, goodsList.get(0).getTag());
+                    if (null != goodsList.get(0).getGoodsList() && goodsList.get(0).getGoodsList().size() > 0) {
+                        holder.setImageByUrl(R.id.iv_find_01, goodsList.get(0).getGoodsList().get(0).getPicUrl());
+//                        holder.getView(R.id.iv_find_01).setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
+//                                intent.putExtra("goodsId", goodsList.get(0).getGoodsList().get(0).getGoodsId());
+//                                intent.putExtra("type", 2);
+//                                startActivity(intent);
+//                            }
+//                        });
                     }
 
-                    if (null != goodsList.get(0).getGoodsList() && goodsList.get(0).getGoodsList().size()>1){
-                        holder.setImageByUrl(R.id.iv_find_02,goodsList.get(0).getGoodsList().get(1).getPicUrl());
-                        holder.getView(R.id.iv_find_02).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getContext(),GoodsDetailsActivity.class);
-                                intent.putExtra("goodsId",goodsList.get(0).getGoodsList().get(1).getGoodsId());
-                                intent.putExtra("type",2);
-                                startActivity(intent);
-                            }
-                        });
+                    if (null != goodsList.get(0).getGoodsList() && goodsList.get(0).getGoodsList().size() > 1) {
+                        holder.setImageByUrl(R.id.iv_find_02, goodsList.get(0).getGoodsList().get(1).getPicUrl());
+//                        holder.getView(R.id.iv_find_02).setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
+//                                intent.putExtra("goodsId", goodsList.get(0).getGoodsList().get(1).getGoodsId());
+//                                intent.putExtra("type", 2);
+//                                startActivity(intent);
+//                            }
+//                        });
                     }
 
 
                     //去旅游
                     List<HomeMo.LimitGoods> goodsList2 = xchwModel.getGoodsTypeList();
-                    holder.setText(R.id.tv_find02,goodsList2.get(1).getTypeName());
-                    holder.setText(R.id.tv_mess02,goodsList2.get(1).getTag());
+                    holder.setText(R.id.tv_find02, goodsList2.get(1).getTypeName());
+                    holder.setText(R.id.tv_mess02, goodsList2.get(1).getTag());
 
-                    List<HomeMo.LimitGoods.GoodsList> goo= goodsList2.get(1).getArticleList();
-                    if (goo!=null && goo.size()>0){
-                        holder.setImageByUrl(R.id.iv_qly_01,goo.get(0).getPicUrl());
+                    List<HomeMo.LimitGoods.GoodsList> goo = goodsList2.get(1).getArticleList();
+                    if (goo != null && goo.size() > 0) {
+                        holder.setImageByUrl(R.id.iv_qly_01, goo.get(0).getPicUrl());
                         ImageView iv01 = holder.getView(R.id.iv_qly_01);
                         iv01.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(getContext(),HtmlForXcActivity.class);
-                                intent.putExtra("articleId",goo.get(0).getArticleId());
+                                Intent intent = new Intent(getContext(), HtmlForXcActivity.class);
+                                intent.putExtra("articleId", goo.get(0).getArticleId());
                                 startActivity(intent);
                             }
                         });
                     }
-                    if (goo!=null && goo.size()>1){
-                        holder.setImageByUrl(R.id.iv_qly_02,goo.get(1).getPicUrl());
+                    if (goo != null && goo.size() > 1) {
+                        holder.setImageByUrl(R.id.iv_qly_02, goo.get(1).getPicUrl());
                         ImageView iv02 = holder.getView(R.id.iv_qly_02);
                         iv02.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(getContext(),HtmlForXcActivity.class);
-                                intent.putExtra("articleId",goo.get(0).getArticleId());
+                                Intent intent = new Intent(getContext(), HtmlForXcActivity.class);
+                                intent.putExtra("articleId", goo.get(0).getArticleId());
                                 startActivity(intent);
                             }
                         });
@@ -416,81 +376,55 @@ public class HomeFragment extends BaseFragment {
                         }
                     });
                     List<HomeMo.LimitGoods> goodsList3 = xchwModel.getGoodsTypeList();
-                    holder.setText(R.id.tv_fpp_title,goodsList3.get(2).getTypeName());
-                    holder.setText(R.id.tv_messfpt01,goodsList3.get(2).getTag());
-                    List<HomeMo.LimitGoods.GoodsList> goo2= goodsList3.get(2).getGoodsList();
-                    if (goo2!=null && goo2.size()>0){
-                        holder.setImageByUrl(R.id.iv_fpp_01,goo2.get(0).getPicUrl());
+                    holder.setText(R.id.tv_fpp_title, goodsList3.get(2).getTypeName());
+                    holder.setText(R.id.tv_messfpt01, goodsList3.get(2).getTag());
+                    List<HomeMo.LimitGoods.GoodsList> goo2 = goodsList3.get(2).getGoodsList();
+                    if (goo2 != null && goo2.size() > 0) {
+                        holder.setImageByUrl(R.id.iv_fpp_01, goo2.get(0).getPicUrl());
                         holder.getView(R.id.iv_fpp_01).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(getContext(),GoodsDetailsActivity.class);
-                                intent.putExtra("goodsId",goo2.get(0).getGoodsId());
+                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
+                                intent.putExtra("goodsId", goo2.get(0).getGoodsId());
                                 startActivity(intent);
                             }
                         });
                     }
-                    if (goo2!=null && goo2.size()>1){
-                        holder.setImageByUrl(R.id.iv_fpp_02,goo2.get(1).getPicUrl());
+                    if (goo2 != null && goo2.size() > 1) {
+                        holder.setImageByUrl(R.id.iv_fpp_02, goo2.get(1).getPicUrl());
                         holder.getView(R.id.iv_fpp_02).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(getContext(),GoodsDetailsActivity.class);
-                                intent.putExtra("goodsId",goo2.get(1).getGoodsId());
+                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
+                                intent.putExtra("goodsId", goo2.get(1).getGoodsId());
                                 startActivity(intent);
                             }
                         });
                     }
 
-
-                    //中国馆---先屏蔽
+                    //中国馆
                     holder.getView(R.id.rl_zgg).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showTwo();
+                            Intent intent = new Intent(getContext(), ChinaGuActivity.class);
+                            startActivity(intent);
                         }
                     });
-
-//                    holder.getView(R.id.ll_zgg).setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            Intent intent = new Intent(getContext(), ChinaGuActivity.class);
-//                            startActivity(intent);
-//                        }
-//                    });
                     List<HomeMo.LimitGoods> goodsList4 = xchwModel.getGoodsTypeList();
-                    holder.setText(R.id.tv_f2_title,goodsList4.get(3).getTypeName());
-                    holder.setText(R.id.tv_f2_mess,goodsList4.get(3).getTag());
-                    List<HomeMo.LimitGoods.GoodsList> goo3= goodsList4.get(3).getGoodsList();
-                    if (goo3!=null && goo3.size()>0){
-                        holder.setImageByUrl(R.id.iv_zgg_01,goo3.get(0).getPicUrl());
-                        holder.getView(R.id.iv_zgg_01).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-//                                Intent intent = new Intent(getContext(),GoodsDetailsActivity.class);
-//                                intent.putExtra("goodsId",goo3.get(0).getGoodsId());
-//                                intent.putExtra("type",2);
-//                                startActivity(intent);
-                            }
-                        });
+                    holder.setText(R.id.tv_f2_title, goodsList4.get(3).getTypeName());
+                    holder.setText(R.id.tv_f2_mess, goodsList4.get(3).getTag());
+                    List<HomeMo.LimitGoods.GoodsList> goo3 = goodsList4.get(3).getGoodsList();
+                    if (goo3 != null && goo3.size() > 0) {
+                        holder.setImageByUrl(R.id.iv_zgg_01, goo3.get(0).getPicUrl());
                     }
-                    if (goo3!=null && goo3.size()>1){
-                        holder.setImageByUrl(R.id.iv_zgg_02,goo3.get(1).getPicUrl());
-                        holder.getView(R.id.iv_zgg_02).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-//                                Intent intent = new Intent(getContext(),GoodsDetailsActivity.class);
-//                                intent.putExtra("goodsId",goo3.get(1).getGoodsId());
-//                                intent.putExtra("type",2);
-//                                startActivity(intent);
-                            }
-                        });
+                    if (goo3 != null && goo3.size() > 1) {
+                        holder.setImageByUrl(R.id.iv_zgg_02, goo3.get(1).getPicUrl());
                     }
 
-                }else if (mType == homeAdapter.mTypeSeven){//乡愁模块
+                } else if (mType == homeAdapter.mTypeSeven) {//乡愁模块
                     recyclerViewXc = holder.getView(R.id.recycler_seven);
                     recyclerViewXc.setLayoutManager(new LinearLayoutManager(getContext()));
-                    adapterXc = new BaseAdapter<XiangcMo>(getContext(),recyclerViewXc,mData.get(mType).getArticleListXc(),R.layout.item_xiangc_title) {
+                    adapterXc = new BaseAdapter<XiangcMo>(getContext(), recyclerViewXc, mData.get(mType).getArticleListXc(), R.layout.item_xiangc_title) {
                         @Override
                         public void convert(Context mContext, BaseRecyclerHolder holder, XiangcMo o) {
                             //文章类型标题
@@ -498,14 +432,15 @@ public class HomeFragment extends BaseFragment {
                             //文章类型简述
                             holder.setText(R.id.tv_mess, "" + o.getTypeDesc());
 
-                            if (null == o.getArticleInfoList() || o.getArticleInfoList().size()==0){
+                            if (null == o.getArticleInfoList() || o.getArticleInfoList().size() == 0) {
                                 holder.getView(R.id.tv_tips).setVisibility(View.VISIBLE);
                                 holder.getView(R.id.recy_children).setVisibility(View.GONE);
-                            }else {
+                            } else {
                                 holder.getView(R.id.tv_tips).setVisibility(View.GONE);
                                 //文章类型下的文章列表
                                 RecyclerView recyclerView = holder.getView(R.id.recy_children);
-                                if (recyclerView.getVisibility() == View.GONE)recyclerView.setVisibility(View.VISIBLE);
+                                if (recyclerView.getVisibility() == View.GONE)
+                                    recyclerView.setVisibility(View.VISIBLE);
                                 recyclerView.setNestedScrollingEnabled(false);
                                 GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
                                 recyclerView.setLayoutManager(manager);
@@ -543,54 +478,64 @@ public class HomeFragment extends BaseFragment {
 
     private RecyclerView recyclerViewXc;
     private BaseAdapter adapterXc;
+
     @Override
     protected void initData() {
-        Map<String,String>map = new HashMap<>();
-        map.put("typeId","4");
-        map.put("positionCode","home_head");
-        map.put("category","0");
+        Map<String, String> map = new HashMap<>();
+        map.put("typeId", "4");
+        map.put("positionCode", "home_head");
+        map.put("category", "0");
         String str = JsonUtil.obj2String(map);
         OkHttp3Utils.getInstance(Article.BASE).doPostJson2(Article.home, str, getToken(), new GsonObjectCallback<String>(Article.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code")==0){
+                    if (object.optInt("code") == 0) {
                         ivTips.setVisibility(View.GONE);
                         String str = object.optString("data");
-                        mData = JsonUtil.string2Obj(str,List.class, HomeMo.class);
-                        if (mData!=null && mData.size()>0){
+                        mData = JsonUtil.string2Obj(str, List.class, HomeMo.class);
+                        if (mData != null && mData.size() > 0) {
                             homeAdapter.update(mData);
                         }
-                    }else if (object.optInt("code") == 502 || object.optInt("code") == 501 ){
+                    } else if (object.optInt("code") == 502 || object.optInt("code") == 501) {
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
-                        if (null !=MainActivity.instance){
+                        if (null != MainActivity.instance) {
                             MainActivity.instance.finish();
                         }
-                    }else {
-                        ToastUtil.showShort(getContext(),TextUtil.checkStr2Str(object.optString("msg")));
+                    } else {
+                        ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
                         ivTips.setVisibility(View.VISIBLE);
                     }
                     spinKitView.setVisibility(View.GONE);
-                }catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                     spinKitView.setVisibility(View.GONE);
                 }
             }
-            @Override
-            public void onFailed(Call call, IOException e) {
-                Log.e("httpOnFailed",e.getMessage());
-            }
 
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("httpOnFailure",e.getMessage());
+            public void onFailed(Call call, IOException e) {
+                Log.e("httpOnFailed", e.getMessage());
                 HomeFragment.this.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         spinKitView.setVisibility(View.GONE);
-                        ivTips.setImageResource(R.mipmap.null_data);
+                        ivTips.setImageResource(R.mipmap.null_network);
+                        ivTips.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("onFailure", e.getMessage());
+                HomeFragment.this.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        spinKitView.setVisibility(View.GONE);
+                        ivTips.setImageResource(R.mipmap.null_network);
                         ivTips.setVisibility(View.VISIBLE);
                     }
                 });
@@ -612,24 +557,32 @@ public class HomeFragment extends BaseFragment {
         builder.create().show();
     }
 
+    private AlertDialog dialog;
     /**
      * 新人礼包
      */
     private void showShareDialogNes() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.img_fragment,null,false);
-        final AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(view).create();
-        ImageView img = view.findViewById(R.id.hxxq_img);
-        img.setImageResource(R.mipmap.share_news_lb);
+
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_img, null, false);
+        view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog = new AlertDialog.Builder(getContext(),R.style.TransparentDialog).setView(view).create();
+//        ImageView img = view.findViewById(R.id.hxxq_img);
+//        img.setImageResource(R.mipmap.share_news_lb);
         dialog.show();
         //此处设置位置窗体大小，我这里设置为了手机屏幕宽度的3/4
-        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(getContext())/4*3), LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(getContext()) / 4 * 3), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
     /**
      * 分享弹窗
      */
     private void showShareDialog() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_share_app,null,false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_share_app, null, false);
         final AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(view).create();
         UserInfo info = UserData.instance(getContext()).getUsreInfo();
         //背景
@@ -650,7 +603,7 @@ public class HomeFragment extends BaseFragment {
         TextView tvCode = view.findViewById(R.id.tv_code);
 
 
-        initDialogImg(img,tvCode);
+        initDialogImg(img, tvCode);
 
         view.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -661,21 +614,21 @@ public class HomeFragment extends BaseFragment {
         view.findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.showShort(getContext(),"图片已保存至本地：c:/app/article/2019/07/25/agriculterapp.jpg");
+                ToastUtil.showShort(getContext(), "图片已保存至本地：c:/app/article/2019/07/25/agriculterapp.jpg");
             }
         });
         dialog.show();
         //此处设置位置窗体大小，我这里设置为了手机屏幕宽度的3/4
-        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(getContext())/4*3), LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(getContext()) / 4 * 3), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
-    private void initDialogImg(ImageView imageView,TextView tvCode) {
+    private void initDialogImg(ImageView imageView, TextView tvCode) {
         OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.shareApp, "", getToken(), new GsonObjectCallback<String>(App.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == 0){
+                    if (object.optInt("code") == 0) {
                         JSONObject dataObj = object.optJSONObject("data");
                         JSONObject shareObj = dataObj.optJSONObject("shareInfo");
                         Glide.with(getContext()).load(shareObj.optString("qrCodeUrl")).into(imageView);
@@ -685,6 +638,7 @@ public class HomeFragment extends BaseFragment {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailed(Call call, IOException e) {
 

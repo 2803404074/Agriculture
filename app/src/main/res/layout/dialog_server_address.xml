@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_5"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dp_5"
+        android:background="@drawable/shape_white_noframe"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/cb1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="农:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址："/>
+
+        <EditText
+            android:id="@+id/et1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="http://192.168.1.180"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="端口："/>
+
+        <EditText
+            android:id="@+id/et_dk_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:layout_gravity="center"
+            android:text="8769"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginVertical="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dp_5"
+        android:background="@drawable/shape_white_noframe"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/cb2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="傅:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址："/>
+
+        <EditText
+            android:id="@+id/et2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="http://192.168.1.9"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="端口："/>
+
+        <EditText
+            android:id="@+id/et_dk_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:text="8769"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dp_5"
+        android:background="@drawable/shape_white_noframe"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/cb3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="梁:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址："/>
+
+        <EditText
+            android:id="@+id/et3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="http://192.168.1.140"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="端口："/>
+
+        <EditText
+            android:id="@+id/et_dk_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:text="8769"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dp_5"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:background="@drawable/shape_white_noframe"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/cb4"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="岑:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址："/>
+
+        <EditText
+            android:id="@+id/et4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="http://192.168.1.161"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="端口："/>
+
+        <EditText
+            android:id="@+id/et_dk_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:text="8769"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/shape_white_noframe"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/cb5"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="远程:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址："/>
+
+        <EditText
+            android:id="@+id/et5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="http://app.xcxky.cn"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="端口："/>
+
+        <EditText
+            android:id="@+id/et_dk_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:text="80"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/dp_3"
+        android:text="查看选择后的路径："/>
+
+    <TextView
+        android:id="@+id/tv_checkIp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:textColor="@color/colorAccentButton"
+        android:textStyle="bold"
+        android:text="-----"/>
+    <TextView
+        android:id="@+id/tv_click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_21"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@drawable/shape_white_noframe"
+        android:gravity="center"
+        android:text="确定"/>
+</LinearLayout>

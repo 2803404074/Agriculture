@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.tzl.agriculture.R;
 
@@ -96,16 +97,17 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
     public BaseRecyclerHolder setImageByUrl(int viewId, String url){
         if(!StringUtils.isEmpty(url) && !url.endsWith("null")){
             //GlideLoadUtils.getInstance().glideLoad(context,url,(ImageView) getView(viewId));
-            Glide.with(context).load(url).apply(getOptions()).into((ImageView) getView(viewId));
+            Glide.with(context).load(url).apply(
+                    RequestOptions.bitmapTransform(
+                            new RoundedCorners(10))).into((ImageView) getView(viewId));
         }
-        //Picasso.with(context).load(url).into((ImageView) getView(viewId));
-        //        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(context));
-        //        ImageLoader.getInstance().displayImage(url, (ImageView) getView(viewId));
+
         return this;
     }
 
 
     private RequestOptions getOptions(){
+        RoundedCorners roundedCorners = new RoundedCorners(10);
         if (options != null){
             return options;
         }else {
@@ -113,6 +115,7 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
             options.placeholder(R.mipmap.application)//图片加载出来前，显示的图片
                     .fallback( R.mipmap.errno) //url为空的时候,显示的图片
                     .error(R.mipmap.errno);//图片加载失败后，显示的图片
+            options.bitmapTransform(roundedCorners);
             return options;
         }
     }

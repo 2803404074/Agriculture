@@ -33,9 +33,16 @@ public class OrderPayStatusActivity extends SetBaseActivity implements View.OnCl
     @BindView(R.id.tv_seeOrder)
     TextView tvSeeOrder;
 
+    @BindView(R.id.tv_tips)
+    TextView tvTips;
     private BaseAdapter adapter;
 
     private List<String> mData = new ArrayList<>();
+
+    @Override
+    public void backFinish() {
+        finish();
+    }
 
     @Override
     public int setLayout() {
@@ -44,7 +51,13 @@ public class OrderPayStatusActivity extends SetBaseActivity implements View.OnCl
 
     @Override
     public void initView() {
-        setTitle("");
+
+        if (-1 == getIntent().getIntExtra("status",0)){
+            setTitle("未支付");
+            tvTips.setText("订单金额");
+        }else {
+            setTitle("交易成功");
+        }
         tvPrice.setText(getIntent().getStringExtra("price"));
         for (int i=0;i<10;i++){
             mData.add("数据"+i);
@@ -70,8 +83,10 @@ public class OrderPayStatusActivity extends SetBaseActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_seeOrder:
-                Intent intent = new Intent(this, MyOrderActivity.class);
+                Intent intent = new Intent(this, OrderDetailsActivity.class);
+                intent.putExtra("orderId",getIntent().getStringExtra("orderId"));
                 startActivity(intent);
+                finish();
                 break;
                 default:break;
         }

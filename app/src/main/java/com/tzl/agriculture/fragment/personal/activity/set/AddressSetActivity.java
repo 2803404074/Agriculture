@@ -77,6 +77,11 @@ public class AddressSetActivity extends SetBaseActivity {
     private String district;//县
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_address_set;
     }

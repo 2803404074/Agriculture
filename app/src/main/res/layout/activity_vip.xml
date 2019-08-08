@@ -114,15 +114,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="78.00"
+                            android:layout_marginTop="@dimen/dp_5"
                             android:textColor="@android:color/white"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="邀请好友可得最高返利"
-                            android:textColor="@android:color/white" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -188,7 +183,6 @@
                     android:layout_height="wrap_content"/>
 
                 <LinearLayout
-                    android:id="@+id/ll_hy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="@dimen/dp_5"
@@ -260,12 +254,6 @@
                 android:paddingHorizontal="@dimen/dp_10"
                 android:textColor="@color/colorGri2"
                 android:textStyle="bold"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_2"
-                android:layout_marginVertical="@dimen/dp_5"
-                android:background="@color/colorGri"/>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recy"
                 android:layout_width="match_parent"

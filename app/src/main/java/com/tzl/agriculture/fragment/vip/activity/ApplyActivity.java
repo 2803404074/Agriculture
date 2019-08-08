@@ -62,6 +62,12 @@ public class ApplyActivity extends SetBaseActivity implements View.OnClickListen
     private BaseAdapter adapter;
 
     private List<GoodsMo> mData = new ArrayList<>();
+
+    @Override
+    public void backFinish() {
+        finish();
+    }
+
     @Override
     public int setLayout() {
         return R.layout.activity_apply;
@@ -143,13 +149,13 @@ public class ApplyActivity extends SetBaseActivity implements View.OnClickListen
      * 分享弹窗
      */
     private void showShareDialog(int index) {
-        View view = LayoutInflater.from(this).inflate(R.layout.img_fragment,null,false);
+        View view = LayoutInflater.from(this).inflate(R.layout.img_fragment_tips, null, false);
         ImageView imageView = view.findViewById(R.id.hxxq_img);
-        initDialogImg(imageView,index);
+        initDialogImg(imageView, index);
         final AlertDialog dialog = new AlertDialog.Builder(ApplyActivity.this).setView(view).create();
         dialog.show();
         //此处设置位置窗体大小，我这里设置为了手机屏幕宽度的3/4
-        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(this)/4*3), LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(this) / 4 * 3), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
     private void initDialogImg(ImageView imageView, int index) {
         String token = (String) SPUtils.instance(this, 1).getkey("token", "");
@@ -167,7 +173,6 @@ public class ApplyActivity extends SetBaseActivity implements View.OnClickListen
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailed(Call call, IOException e) {
 

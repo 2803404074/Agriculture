@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserInfo implements Serializable {
 
-    private Integer userId;
+    private int userId;
 
     private String username;
 
@@ -16,13 +16,11 @@ public class UserInfo implements Serializable {
 
     private String phone;
 
-    private Integer userType;//3会员，2普通
+    private int userType;//3会员，2普通
 
     private String inviteCode;
 
     private Integer inviteUserid;
-
-    private String registerTime;
 
     private String fullname;
 
@@ -30,7 +28,7 @@ public class UserInfo implements Serializable {
 
     private String nation;
 
-    private String sex;
+    private String sex;//1男  0女
 
     private String age;
 
@@ -48,12 +46,14 @@ public class UserInfo implements Serializable {
 
     private String information;
 
+    public UserInfo() {
+    }
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -97,11 +97,11 @@ public class UserInfo implements Serializable {
         this.phone = phone;
     }
 
-    public Integer getUserType() {
+    public int getUserType() {
         return userType;
     }
 
-    public void setUserType(Integer userType) {
+    public void setUserType(int userType) {
         this.userType = userType;
     }
 
@@ -119,14 +119,6 @@ public class UserInfo implements Serializable {
 
     public void setInviteUserid(Integer inviteUserid) {
         this.inviteUserid = inviteUserid;
-    }
-
-    public String getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(String registerTime) {
-        this.registerTime = registerTime;
     }
 
     public String getFullname() {

@@ -51,6 +51,11 @@ public class MyCommentActivity extends SetBaseActivity {
 
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_my_comment;
     }
@@ -142,7 +147,9 @@ public class MyCommentActivity extends SetBaseActivity {
                                 adapter.addAll(list);
                             }
                         }else {
-                            ivTips.setVisibility(View.VISIBLE);
+                            if (adapter.getData() == null || adapter.getData().size() == 0){
+                                ivTips.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 } catch (JSONException e) {

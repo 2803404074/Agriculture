@@ -53,6 +53,8 @@ public class AddressActivity extends SetBaseActivity {
 
     private List<AddressMo> mData = new ArrayList<>();
 
+
+
     @Override
     public int setLayout() {
         return R.layout.activity_address;
@@ -66,13 +68,13 @@ public class AddressActivity extends SetBaseActivity {
         adapter = new BaseAdapter<AddressMo>(this, recyclerView, mData, R.layout.item_address) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, AddressMo o) {
-                if (o.getIsDefault() == 1){
-                    holder.setText(R.id.tv_Mr,"默认");
+                if (o.getIsDefault() == 1) {
+                    holder.setText(R.id.tv_Mr, "默认");
                 }
                 holder.setText(R.id.tv_name, o.getReceiptName());
                 holder.setText(R.id.tv_phone, o.getReceiptPhone());
-                String address = o.getProvinceStr()+o.getCityStr()+o.getAreaStr()+o.getStreetStr()+o.getAddress();
-                holder.setText(R.id.tv_address,address);
+                String address = o.getProvinceStr() + o.getCityStr() + o.getAreaStr() + o.getStreetStr() + o.getAddress();
+                holder.setText(R.id.tv_address, address);
                 holder.getView(R.id.iv_edit).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -87,43 +89,49 @@ public class AddressActivity extends SetBaseActivity {
             @Override
             public void onItemClick(View view, int position) {
                 AddressMo addressMo = (AddressMo) adapter.getData().get(position);
-                Intent intent = new Intent(AddressActivity.this,AddressSetActivity.class);
-                intent.putExtra("mess",JsonUtil.obj2String(addressMo));
-                startActivityForResult(intent,100);
+                Intent intent = new Intent(AddressActivity.this, AddressSetActivity.class);
+                intent.putExtra("mess", JsonUtil.obj2String(addressMo));
+                startActivityForResult(intent, 100);
             }
         });
 
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddressActivity.this,AddressSetActivity.class);
-                startActivityForResult(intent,100);
+                Intent intent = new Intent(AddressActivity.this, AddressSetActivity.class);
+                startActivityForResult(intent, 100);
             }
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (getIntent().getIntExtra("type",0) == 1){
-            Intent intent = new Intent(this, OrderActivity.class);
-            setResult(RESULT_OK, intent);
-            finish();
-        }
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (getIntent().getIntExtra("type",0) == 1){
+        if (getIntent().getIntExtra("type", 0) == 1) {
             Intent intent = new Intent(this, OrderActivity.class);
+            setResultForOrderActivity(intent);
             setResult(RESULT_OK, intent);
             finish();
         }
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void backFinish() {
+        if (getIntent().getIntExtra("type", 0) == 1) {
+            Intent intent = new Intent(this, OrderActivity.class);
+            setResultForOrderActivity(intent);
+            setResult(RESULT_OK, intent);
+            finish();
+        }else {
+            finish();
+        }
+    }
+
+
     /**
      * 操作弹窗
+     *
      * @param o
      */
     private void showAlert(AddressMo o) {
@@ -131,21 +139,14 @@ public class AddressActivity extends SetBaseActivity {
         final AlertDialog dialog = new AlertDialog.Builder(this).setView(view).create();
 
         TextView title = view.findViewById(R.id.tv_title);
-        TextView copy = view.findViewById(R.id.tv_copy);
+        TextView tvDefault = view.findViewById(R.id.tv_default);
         TextView delete = view.findViewById(R.id.tv_delete);
 
         title.setText("您将进行");
-        copy.setOnClickListener(new View.OnClickListener() {
+
+        tvDefault.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //获取剪贴板管理器：
-                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                // 创建普通字符型ClipData
-                ClipData mClipData = ClipData.newPlainText("Label", o.getAddress());
-                // 将ClipData内容放到系统剪贴板里。
-                cm.setPrimaryClip(mClipData);
-                dialog.dismiss();
-                ToastUtil.showShort(AddressActivity.this, "复制成功");
 
             }
         });
@@ -169,15 +170,15 @@ public class AddressActivity extends SetBaseActivity {
      * 删除地址
      */
     private void addressDelete(String harvestId) {
-        String token = (String) SPUtils.instance(this,1).getkey("token","");
-        OkHttp3Utils.getInstance(Article.BASE).doPostJson2(User.deleteAddress+harvestId, "", token, new GsonObjectCallback<String>(Article.BASE) {
+        String token = (String) SPUtils.instance(this, 1).getkey("token", "");
+        OkHttp3Utils.getInstance(Article.BASE).doPostJson2(User.deleteAddress + harvestId, "", token, new GsonObjectCallback<String>(Article.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == 0){
+                    if (object.optInt("code") == 0) {
                         ToastUtil.showShort(AddressActivity.this, "删除成功");
-                    }else {
+                    } else {
                         ToastUtil.showShort(AddressActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                     }
 
@@ -198,19 +199,19 @@ public class AddressActivity extends SetBaseActivity {
      */
     @Override
     public void initData() {
-        String token = (String) SPUtils.instance(this,1).getkey("token","");
+        String token = (String) SPUtils.instance(this, 1).getkey("token", "");
         OkHttp3Utils.getInstance(Article.BASE).doPostJson2(User.addressList, "", token, new GsonObjectCallback<String>(Article.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == 0){
+                    if (object.optInt("code") == 0) {
                         JSONObject dataObj = object.optJSONObject("data");
                         String str = dataObj.optString("records");
-                        mData = JsonUtil.string2Obj(str,List.class,AddressMo.class);
+                        mData = JsonUtil.string2Obj(str, List.class, AddressMo.class);
 
                         adapter.updateData(mData);
-                    }else {
+                    } else {
                         ToastUtil.showShort(AddressActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                     }
 
@@ -229,11 +230,28 @@ public class AddressActivity extends SetBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode ==RESULT_OK){
-            if (requestCode == 100){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 100) {
                 initData();
             }
         }
+    }
 
+
+    private void setResultForOrderActivity(Intent intent) {
+        for (int i = 0; i < mData.size(); i++) {
+            if (mData.get(i).getIsDefault() == 1) {
+                intent.putExtra("addressId", mData.get(i).getHarvestId());
+                intent.putExtra("name", mData.get(i).getReceiptName());
+                intent.putExtra("phone", mData.get(i).getReceiptPhone());
+                String str = TextUtil.checkStr2Str(mData.get(i).getProvinceStr())
+                        + TextUtil.checkStr2Str(mData.get(i).getCityStr())
+                        + TextUtil.checkStr2Str(mData.get(i).getStreetStr())
+                        + TextUtil.checkStr2Str(mData.get(i).getAreaStr());
+                intent.putExtra("address", str);
+                break;
+            }
+        }
+        setResult(RESULT_OK, intent);
     }
 }

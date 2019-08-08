@@ -33,6 +33,11 @@ public class AccountSaveActivity extends SetBaseActivity implements View.OnClick
 
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_acount_save;
     }

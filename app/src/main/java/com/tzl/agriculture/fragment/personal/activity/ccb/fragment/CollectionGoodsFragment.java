@@ -75,7 +75,9 @@ public class CollectionGoodsFragment extends BaseFragment {
         adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                GoodsMin goodsMin = (GoodsMin) adapter.getData().get(position);
                 Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
+                intent.putExtra("goodsId",goodsMin.getGoodsId());
                 intent.putExtra("type", 2);
                 startActivity(intent);
             }

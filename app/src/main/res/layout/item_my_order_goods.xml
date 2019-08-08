@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:paddingHorizontal="@dimen/dp_10"
     android:layout_marginVertical="@dimen/dp_2"
     android:background="@drawable/shape_white_noframe"
     android:layout_height="wrap_content">
@@ -36,17 +35,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥65.10"
+            android:visibility="gone"
             android:layout_alignParentRight="true"
             />
 
         <TextView
-            android:layout_below="@+id/tv_price"
+            android:layout_below="@+id/tv_title"
             android:id="@+id/tv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="x1"
             android:layout_alignParentRight="true"
             />
+
 
         <TextView
             android:id="@+id/tv_gg"

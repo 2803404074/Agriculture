@@ -64,8 +64,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.tv_start)
     TextView tvStart;
 
-    @BindView(R.id.hot_layout)
-    ShowButtonLayout hotLayout;
+//    @BindView(R.id.hot_layout)
+//    ShowButtonLayout hotLayout;
 
     @BindView(R.id.history_layout)
     ShowButtonLayout historyLayout;
@@ -116,13 +116,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         //热门搜索
-        ShowButtonLayoutData data1 = new ShowButtonLayoutData<String>(this, hotLayout, hostList, new ShowButtonLayoutData.MyClickListener() {
-            @Override
-            public void clickListener(View v, double arg1, double arg2) {
-                String tag = (String) v.getTag();
-                getHttp(tag);
-            }
-        });
+//        ShowButtonLayoutData data1 = new ShowButtonLayoutData<String>(this, hotLayout, hostList, new ShowButtonLayoutData.MyClickListener() {
+//            @Override
+//            public void clickListener(View v, double arg1, double arg2) {
+//                String tag = (String) v.getTag();
+//                getHttp(tag);
+//            }
+//        });
 
         Collections.reverse(HistList);
 
@@ -134,7 +134,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 getHttp(tag);
             }
         });
-        data1.setData();
+        //data1.setData();
         data2.setData();
 
         tvStart.setOnClickListener(this);

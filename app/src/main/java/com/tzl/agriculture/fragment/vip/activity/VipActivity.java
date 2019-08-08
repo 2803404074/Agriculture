@@ -61,7 +61,6 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
     @BindView(R.id.tv_jmlb)
     TextView tvJmlb;
 
-
     @BindView(R.id.drawee_img)
     NiceImageView draweeView;
 
@@ -109,6 +108,11 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_vip;
     }
@@ -119,6 +123,17 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         setStatusColor(R.color.colorW);
         setAndroidNativeLightStatusBar(true);
 
+
+        DrawableSizeUtil sizeUtil = new DrawableSizeUtil(this);
+        sizeUtil.setImgSize(100, 100, 1, tvShare, R.mipmap.icon_sha);
+        sizeUtil.setImgSize(100, 100, 1, tvYjsy, R.mipmap.icon_shouyi);
+        sizeUtil.setImgSize(100, 100, 1, tvZszk, R.mipmap.icon_zhekou);
+        sizeUtil.setImgSize(100, 100, 1, tvJmlb, R.mipmap.icon_gift);
+
+        tvShare.setOnClickListener(this);
+        tvYjsy.setOnClickListener(this);
+        tvZszk.setOnClickListener(this);
+        tvJmlb.setOnClickListener(this);
         ivOpen.setOnClickListener(this);
 
         String user = (String) SPUtils.instance(this, 1).getkey("user", "");
@@ -126,6 +141,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         Glide.with(this).load(userInfo.getHeadUrl()).into(draweeView);
 
         tvPhone.setText(userInfo.getPhone());
+
 
         if (userInfo.getUserType() == 3) {
             llMyJf.setVisibility(View.VISIBLE);
@@ -166,6 +182,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
 
         } else {
+            recyclerView.setVisibility(View.GONE);
             tvInvNow.setVisibility(View.VISIBLE);
             tvBy.setVisibility(View.GONE);
 
@@ -174,18 +191,6 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
             tvMyQi.setText("年卡权益");
             tvOpenTips.setText("暂未开通");
-
-            DrawableSizeUtil sizeUtil = new DrawableSizeUtil(this);
-            sizeUtil.setImgSize(100, 100, 1, tvShare, R.mipmap.icon_sha);
-            sizeUtil.setImgSize(100, 100, 1, tvYjsy, R.mipmap.icon_shouyi);
-            sizeUtil.setImgSize(100, 100, 1, tvZszk, R.mipmap.icon_zhekou);
-            sizeUtil.setImgSize(100, 100, 1, tvJmlb, R.mipmap.icon_gift);
-
-            tvShare.setOnClickListener(this);
-            tvYjsy.setOnClickListener(this);
-            tvZszk.setOnClickListener(this);
-            tvJmlb.setOnClickListener(this);
-
 
         }
 
@@ -199,9 +204,6 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                 }
             }
         });
-
-
-
     }
 
     private int page = 1;

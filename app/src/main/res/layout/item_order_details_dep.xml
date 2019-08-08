@@ -28,16 +28,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_50"
-            android:paddingRight="@dimen/dp_20"
+            android:paddingHorizontal="@dimen/dp_5"
             android:orientation="horizontal">
             <TextView
                 android:textColor="@color/colorGri2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/sp_13"
                 android:text="配送方式"/>
             <View
                 android:layout_width="0dp"
@@ -48,21 +48,20 @@
                 android:textColor="@color/colorGri2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/sp_13"
                 android:text="快递   免邮"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_50"
+            android:paddingHorizontal="@dimen/dp_5"
             android:layout_marginVertical="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_20"
             android:orientation="horizontal">
             <TextView
                 android:textColor="@color/colorGri2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/sp_13"
                 android:text="开具发票"/>
             <View
                 android:layout_width="0dp"
@@ -74,26 +73,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/sp_13"
                 android:text="本次不具备开发票"/>
-            <ImageView
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
-                android:src="@mipmap/back_black"
-                android:padding="@dimen/dp_5"
-                android:rotation="180"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_50"
-            android:paddingRight="@dimen/dp_20"
+            android:paddingHorizontal="@dimen/dp_5"
             android:orientation="horizontal">
             <TextView
                 android:textColor="@color/colorGri2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/sp_13"
                 android:text="订单备注"/>
             <TextView
                 android:id="@+id/tv_mess"
@@ -101,8 +93,9 @@
                 android:layout_width="0dp"
                 android:paddingLeft="@dimen/dp_20"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/sp_13"
                 android:background="@null"
                 android:hint="选填"/>
         </LinearLayout>
@@ -197,6 +190,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2019/06/30    10:15:12"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="物流名称"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_wlmc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dp_5"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="快递单号"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_kddh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000"/>
     </LinearLayout>
 
     <LinearLayout

@@ -112,6 +112,7 @@
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
             android:padding="@dimen/dp_5"
+            android:layout_gravity="center"
             android:rotation="180"
             android:src="@mipmap/back_black"/>
     </LinearLayout>
@@ -148,6 +149,7 @@
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
             android:padding="@dimen/dp_5"
+            android:layout_gravity="center"
             android:rotation="180"
             android:src="@mipmap/back_black"/>
     </LinearLayout>
@@ -174,6 +176,14 @@
             android:gravity="right|center"
             android:layout_height="match_parent"
             android:text="1995-11-11"/>
+
+        <ImageView
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:padding="@dimen/dp_5"
+            android:rotation="180"
+            android:layout_gravity="center"
+            android:src="@mipmap/back_black"/>
     </LinearLayout>
 
 </LinearLayout>

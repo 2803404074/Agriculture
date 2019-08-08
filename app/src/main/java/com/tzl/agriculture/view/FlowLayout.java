@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
+import com.tzl.agriculture.R;
 import com.tzl.agriculture.model.Specifications;
 
 import java.util.ArrayList;
@@ -38,11 +39,13 @@ public class FlowLayout extends ViewGroup implements CompoundButton.OnCheckedCha
         super(context, attrs);
     }
 
-    public FlowLayout(Context context, List<Specifications.ValueList> specifications) {
+    public FlowLayout(Context context, List<Specifications.ValueList> specifications,int index) {
         super(context);
         this.specifications = specifications;
+        this.index = index;
     }
 
+    private int index;
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
@@ -65,8 +68,11 @@ public class FlowLayout extends ViewGroup implements CompoundButton.OnCheckedCha
         for (int i = 0; i < cCount; i++) {
             // 通过索引拿到每一个子view
             View child = getChildAt(i);
+            //child.setBackgroundResource(R.drawable.shape_login_whi_no);
+
             // 测量子View的宽和高,系统提供的measureChild
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
+
             // 得到LayoutParams
             MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
 
@@ -226,7 +232,7 @@ public class FlowLayout extends ViewGroup implements CompoundButton.OnCheckedCha
         if (isChecked) {
             buttonView.setChecked(true);
             if (listener != null) {
-                listener.onSelected((int)buttonView.getTag(),String.valueOf(buttonView.getId()), (String) buttonView.getText());
+                listener.onSelected((int)buttonView.getTag(),String.valueOf(buttonView.getId()), (String) buttonView.getText(),index);
             }
         }
     }

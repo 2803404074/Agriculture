@@ -2,26 +2,44 @@ package com.tzl.agriculture.main;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.hanks.htextview.rainbow.RainbowTextView;
+import com.rey.material.app.BottomSheetDialog;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.home.fragment.HomeFragment;
 import com.tzl.agriculture.fragment.personal.framgent.PersonFragment;
 import com.tzl.agriculture.fragment.xiangc.fragment.XiangcFragment;
 import com.tzl.agriculture.util.DrawableSizeUtil;
+import com.tzl.agriculture.util.ToastUtil;
+import com.tzl.agriculture.view.DoubleClickListener;
 
+import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import config.Base;
 
-public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     public static MainActivity instance;
+
+    //测试环境
+    @BindView(R.id.htext)
+    RainbowTextView tvSetAddress;
+
+
     @BindView(R.id.main_radiogrop)
     RadioGroup radioGroup;
 
@@ -50,15 +68,26 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     }
 
     private void initView() {
+        tvSetAddress.animateText("设置服务地址");
+
         instance = MainActivity.this;
+        tvSetAddress.setOnClickListener(this);
         fragmentManager = getSupportFragmentManager();
         radioGroup.setOnCheckedChangeListener(this);
         radioButton_01.setChecked(true);
         radioButton_01.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         DrawableSizeUtil drawableSizeUtil = new DrawableSizeUtil(this);
-        drawableSizeUtil.setImgSize(60,60,1,radioButton_01,R.drawable.select_home);
-        drawableSizeUtil.setImgSize(60,60,1,radioButton_02,R.drawable.select_xc);
-        drawableSizeUtil.setImgSize(60,60,1,radioButton_03,R.drawable.select_my);
+        drawableSizeUtil.setImgSize(60, 60, 1, radioButton_01, R.drawable.select_home);
+        drawableSizeUtil.setImgSize(60, 60, 1, radioButton_02, R.drawable.select_xc);
+        drawableSizeUtil.setImgSize(60, 60, 1, radioButton_03, R.drawable.select_my);
+
+
+        radioButton_01.setOnClickListener(new DoubleClickListener() {
+            @Override
+            public void onDoubleClick(View v) {
+                ToastUtil.showShort(MainActivity.this,"双击");
+            }
+        });
     }
 
     @Override
@@ -116,14 +145,14 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 }
                 break;
             case 2:
-            /*****/
-            if (fg_02 == null) {
-                fg_02 = PersonFragment.getInstance();
-                beginTransaction.add(R.id.fl_container, fg_02);
-            } else {
-                beginTransaction.show(fg_02);
-            }
-            break;
+                /*****/
+                if (fg_02 == null) {
+                    fg_02 = PersonFragment.getInstance();
+                    beginTransaction.add(R.id.fl_container, fg_02);
+                } else {
+                    beginTransaction.show(fg_02);
+                }
+                break;
             default:
                 break;
         }
@@ -162,6 +191,173 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.htext:
+                showBottomDialog();
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private BottomSheetDialog dialog;
+
+    private void showBottomDialog() {
+        dialog = new BottomSheetDialog(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_server_address, null);
+
+
+        //选择
+        CheckBox cb1 = view.findViewById(R.id.cb1);
+
+        CheckBox cb2 = view.findViewById(R.id.cb2);
+
+        CheckBox cb3 = view.findViewById(R.id.cb3);
+
+        CheckBox cb4 = view.findViewById(R.id.cb4);
+
+        CheckBox cb5 = view.findViewById(R.id.cb5);
+
+        //地址
+        EditText etAdd1 = view.findViewById(R.id.et1);
+
+        EditText etAdd2 = view.findViewById(R.id.et2);
+
+        EditText etAdd3 = view.findViewById(R.id.et3);
+
+        EditText etAdd4 = view.findViewById(R.id.et4);
+
+        EditText etAdd5 = view.findViewById(R.id.et5);
+
+        //端口
+        EditText etDk1 = view.findViewById(R.id.et_dk_1);
+
+        EditText etDk2 = view.findViewById(R.id.et_dk_2);
+
+        EditText etDk3 = view.findViewById(R.id.et_dk_3);
+
+        EditText etDk4 = view.findViewById(R.id.et_dk_4);
+
+        EditText etDk5 = view.findViewById(R.id.et_dk_5);
+
+        TextView tvCheckIp = view.findViewById(R.id.tv_checkIp);
+
+
+        cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    cb2.setChecked(false);
+                    cb3.setChecked(false);
+                    cb4.setChecked(false);
+                    cb5.setChecked(false);
+                    url = etAdd1.getText().toString();
+                    dk = etDk1.getText().toString();
+                    base = url+":"+dk;
+                    tvCheckIp.setText(base);
+                }
+            }
+        });
+
+        cb2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    cb1.setChecked(false);
+                    cb3.setChecked(false);
+                    cb4.setChecked(false);
+                    cb5.setChecked(false);
+                    url = etAdd2.getText().toString();
+                    dk = etDk2.getText().toString();
+
+                    base = url+":"+dk;
+                    tvCheckIp.setText(base);
+                }
+            }
+        });
+
+
+        cb3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    cb2.setChecked(false);
+                    cb1.setChecked(false);
+                    cb4.setChecked(false);
+                    cb5.setChecked(false);
+                    url = etAdd3.getText().toString();
+                    dk = etDk3.getText().toString();
+
+                    base = url+":"+dk;
+                    tvCheckIp.setText(base);
+                }
+            }
+        });
+
+
+        cb4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    cb2.setChecked(false);
+                    cb3.setChecked(false);
+                    cb1.setChecked(false);
+                    cb5.setChecked(false);
+                    url = etAdd4.getText().toString();
+                    dk = etDk4.getText().toString();
+
+                    base = url+":"+dk;
+                    tvCheckIp.setText(base);
+                }
+            }
+        });
+
+        cb5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    cb2.setChecked(false);
+                    cb3.setChecked(false);
+                    cb4.setChecked(false);
+                    cb1.setChecked(false);
+                    url = etAdd5.getText().toString();
+                    dk = etDk5.getText().toString();
+
+                    base = url+":"+dk;
+                    tvCheckIp.setText(base);
+                }
+            }
+        });
+
+        view.findViewById(R.id.tv_click).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OkHttp3Utils.desInstance();
+                Base.BASE = base;
+                dialog.dismiss();
+                ToastUtil.showShort(MainActivity.this,"设置成功");
+            }
+        });
+
+
+        dialog.contentView(view)/*加载视图*/
+                /*.heightParam(height/2),显示的高度*/
+                /*动画设置*/
+                .inDuration(200)
+                .outDuration(200)
+                /*.inInterpolator(new BounceInterpolator())
+                .outInterpolator(new AnticipateInterpolator())*/
+                .cancelable(true)
+                .show();
+
+    }
+
+    private String base;
+    private String url="";
+    private String dk="";
 }
 
 

@@ -38,7 +38,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
         notifyDataSetChanged();
     }
 
-    public List<T> getData(){
+    public List<T> getData() {
         return mDatas;
     }
 
@@ -49,6 +49,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
 
     public void addAll2(T data) {
         mDatas.add(0, data);
+        notifyDataSetChanged();
+    }
+
+    public void addAll3(T data, int index) {
+        mDatas.add(index, data);
         notifyDataSetChanged();
     }
 
@@ -88,7 +93,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mItemClickListener!=null){
+                        if (mItemClickListener != null) {
                             mItemClickListener.onItemClick(v, position - 1);
                         }
                     }
@@ -98,12 +103,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mItemClickListener!=null){
+                        if (mItemClickListener != null) {
                             mItemClickListener.onItemClick(v, position);
                         }
 
                     }
                 });
+
             }
 
             return;
@@ -113,6 +119,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
             return;
         }
     }
+
     @Override
     public int getItemViewType(int position) {
         if (mHeadView == null && mFooterView == null) {
@@ -129,6 +136,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
         return TYPE_NORMAL;
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
     public abstract void convert(Context mContext, BaseRecyclerHolder holder, T t);
 

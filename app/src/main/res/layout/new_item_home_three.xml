@@ -3,10 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@android:color/white"
+    android:background="@drawable/shape_white_noframe"
+    android:layout_marginVertical="@dimen/dp_5"
     android:layout_marginBottom="@dimen/dp_5"
     android:paddingVertical="@dimen/dp_5"
-    android:paddingHorizontal="@dimen/dp_2"
+    android:paddingHorizontal="@dimen/dp_3"
     android:layout_marginTop="@dimen/dp_1"
     android:id="@+id/ll_brocast"
     android:layout_marginHorizontal="@dimen/dp_10">

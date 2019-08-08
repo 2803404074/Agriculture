@@ -13,6 +13,7 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.model.XiangcMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
+import com.tzl.agriculture.util.ShareUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 
@@ -27,6 +28,8 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import config.Article;
 import okhttp3.Call;
 
@@ -34,6 +37,9 @@ import okhttp3.Call;
  * 品牌故事软文
  */
 public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnClickListener {
+
+    @BindView(R.id.iv_share)
+    ImageView ivShare;
 
     @BindView(R.id.back)
     ImageView ivBack;
@@ -44,8 +50,8 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
     @BindView(R.id.tv_nickNama)
     TextView tvNickName;
 
-    @BindView(R.id.tv_follow)
-    TextView tvFollow;
+//    @BindView(R.id.tv_follow)
+//    TextView tvFollow;
 
     @BindView(R.id.tv_date)
     TextView tvDate;
@@ -76,6 +82,9 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
 
     @BindView(R.id.iv_head)
     ImageView ivHead;
+
+    private XiangcMo.Article article;
+
     @Override
     public int setLayout() {
         return R.layout.activity_html_for_story;
@@ -96,7 +105,7 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
                             if (object.optInt("code") == 0) {
                                 JSONObject dataObj = object.optJSONObject("data");
                                 String str = dataObj.optString("articleInfo");
-                                XiangcMo.Article article = JsonUtil.string2Obj(str, XiangcMo.Article.class);
+                                article = JsonUtil.string2Obj(str, XiangcMo.Article.class);
                                 setViewData(article);
                             }
                         } catch (JSONException e) {
@@ -108,7 +117,40 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
                     public void onFailed(Call call, IOException e) {
                     }
                 });
+
+        ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showShare();
+            }
+        });
+
     }
+
+    private void showShare() {
+        ShareUtils.getInstance(this).startShare("趣味乡村-品牌故事",
+                article.getTitle(),
+                article.getCoverImgurl(),
+                article.getArticleShareUrl(), new PlatformActionListener() {
+                    @Override
+                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                        startSendServer(article.getArticleId(),article.getCategory());
+                    }
+
+                    @Override
+                    public void onError(Platform platform, int i, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onCancel(Platform platform, int i) {
+
+                    }
+                });
+
+        startSendServer(article.getArticleId(), article.getCategory() == null ? "" : article.getCategory());
+    }
+
 
     private void setViewData(XiangcMo.Article article) {
 
@@ -240,11 +282,12 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
             case R.id.back:
                 finish();
                 break;
-            case R.id.tv_follow:
-
-                break;
+//            case R.id.tv_follow:
+//
+//                break;
             default:
                 break;
         }
     }
+
 }

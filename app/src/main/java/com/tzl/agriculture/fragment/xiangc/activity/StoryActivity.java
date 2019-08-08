@@ -46,6 +46,11 @@ public class StoryActivity extends SetBaseActivity {
     private List<XiangcMo.Article> mData = new ArrayList<>();
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_story;
     }
@@ -93,6 +98,8 @@ public class StoryActivity extends SetBaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(StoryActivity.this, ArticelSearchActivity.class);
+                intent.putExtra("type",1);
+                intent.putExtra("typeId",getIntent().getStringExtra("typeId"));
                 startActivity(intent);
             }
         });

@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white"
+    android:background="@drawable/xxbj_yellow"
     android:layout_margin="@dimen/dp_10"
+    android:paddingBottom="@dimen/dp_8"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -21,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorOrange"
-            android:textSize="@dimen/sp_23"
+            android:textSize="@dimen/sp_25"
             android:text="16"/>
         <TextView
             android:id="@+id/tv_name"
@@ -31,17 +32,18 @@
             android:textSize="@dimen/sp_15"
             android:layout_gravity="center"
             android:paddingHorizontal="@dimen/dp_10"
-            android:text="商家券：米乐阳光水果店铺（南宁店）"/>
+            android:text="商家券："/>
         <TextView
             android:id="@+id/tv_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_15"
+            android:layout_gravity="center"
             android:paddingHorizontal="@dimen/dp_10"
-            android:paddingVertical="@dimen/dp_3"
+            android:paddingVertical="@dimen/dp_2"
             android:background="@drawable/shape_login_orange"
-            android:text="立即使用"/>
+            android:text="未使用"/>
     </LinearLayout>
 
     <LinearLayout
@@ -70,10 +72,10 @@
 
     <TextView
         android:id="@+id/tv_mess"
-        android:layout_marginTop="@dimen/dp_30"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/sp_15"
         android:paddingHorizontal="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:hint="满19元可用、限最新版本客户端使用"/>
 </LinearLayout>

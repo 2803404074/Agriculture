@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -116,9 +119,6 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.tv_dep_name)
     TextView tvDepName;
-
-    @BindView(R.id.tv_dep_tag)
-    TextView tvDepTag;
 
     @BindView(R.id.web_view)
     WebView webView;
@@ -260,6 +260,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         }
 
         tvMarketPrice.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getOriginalPrice()));
+        tvMarketPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
+
         tvPrice.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getPrice()));
         tvGoodsName.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getGoodsName()));
         tvAddress.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getShipAddress()));
@@ -286,8 +288,10 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
 
         //店铺logo
-        Glide.with(this).load(goodsDetailsMo.getGoods().getLogoIcon()).into(ivDepHead);
+        if (!GoodsDetailsActivity.this.isFinishing()) {
+            Glide.with(this).load(goodsDetailsMo.getGoods().getLogoIcon()).into(ivDepHead);
 
+        }
         //店铺名称
         tvDepName.setText(goodsDetailsMo.getGoods().getName());
 
@@ -371,7 +375,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 ShareUtils.getInstance(this).startShare(
                         goodsDetailsMo.getGoods().getName(),
                         goodsDetailsMo.getGoods().getGoodsName(),
-                        imgUrl,goodsDetailsMo.getGoods().getGoodsShareUrl());
+                        imgUrl,goodsDetailsMo.getGoods().getGoodsShareUrl(),null);
                 break;
             case R.id.tv_buy:
                 showBottomDialog(view);
@@ -401,10 +405,15 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
     private BottomSheetDialog dialog;
 
+    private ShoppingSelectView selectView;
+
     //购买弹窗
     private void showBottomDialog(View parent) {
         dialog = new BottomSheetDialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_goods_gg, null);
+
+        SpinKitView spinK = view.findViewById(R.id.spin_kit);
+
 
         view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -414,6 +423,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         });
 
         ImageView imageView = view.findViewById(R.id.iv_img);
+        if (goodsDetailsMo ==null)return;
+        if (goodsDetailsMo.getGoods() == null)return;
         if (goodsDetailsMo.getGoods().getGallerys() != null && goodsDetailsMo.getGoods().getGallerys().size() > 0) {
             Glide.with(GoodsDetailsActivity.this).load(goodsDetailsMo.getGoods().getGallerys().get(0)).into(imageView);
         }
@@ -433,12 +444,15 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
         TextView tvBuy = view.findViewById(R.id.tv_buy);
 
-        TextView tvTips = view.findViewById(R.id.tv_tips);
+//        TextView tvTips = view.findViewById(R.id.tv_tips);
+//
+//        RecyclerView recyclerView = view.findViewById(R.id.recy_tips);
 
         //规格控件
-        ShoppingSelectView selectView = view.findViewById(R.id.shopping_selectView);
+        selectView = view.findViewById(R.id.shopping_selectView);
+
+        selectView.setTextViewAndGGproject(tvNum,tvPrice, tvKc, tvBuy, goodsDetailsMo.getGoodsSpecifications());
         selectView.setData(goodsDetailsMo.getGoodsSpecs());//规格数组
-        selectView.setTextViewAndGGproject(tvNum,tvPrice, tvKc, tvBuy, tvTips, goodsDetailsMo.getGoodsSpecifications());
 
         //加
         tvAdd.setOnClickListener(new View.OnClickListener() {
@@ -474,9 +488,13 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 if (!StringUtils.isEmpty(selectView.getProductId())) {
                     productId = selectView.getProductId();
                 }
-                quitOrder(productId, tvNum.getText().toString());
-                spinKitView.setVisibility(View.VISIBLE);
-                dialog.dismiss();
+                if (StringUtils.isEmpty(productId)){
+                    ToastUtil.showShort(GoodsDetailsActivity.this,"产品已售完或超过购买库存数量");
+                    return;
+                }
+                spinK.setVisibility(View.VISIBLE);
+                quitOrder(spinK,productId, tvNum.getText().toString());
+
             }
         });
 
@@ -567,7 +585,14 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     //确认订单
-    private void quitOrder(String productId, String num) {
+    private void quitOrder(SpinKitView spinK,String productId, String num) {
+        if (selectView != null){
+            if (StringUtils.isEmpty(selectView.getProductId())){
+                ToastUtil.showShort(this,"请选择规格");
+                spinK.setVisibility(View.GONE);
+                return;
+            }
+        }
         Map<String, String> map = new HashMap<>();
         map.put("specsIds", productId);
         map.put("goodsNum", num);
@@ -583,7 +608,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                     } else {
                         ToastUtil.showShort(GoodsDetailsActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                     }
-                    spinKitView.setVisibility(View.GONE);
+                    spinK.setVisibility(View.GONE);
+                    dialog.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -594,7 +620,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        spinKitView.setVisibility(View.GONE);
+                        spinK.setVisibility(View.GONE);
                     }
                 });
             }
@@ -605,7 +631,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        spinKitView.setVisibility(View.GONE);
+                        spinK.setVisibility(View.GONE);
                     }
                 });
             }
@@ -658,5 +684,11 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 llDeatilsMenu.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Glide.with(getApplicationContext()).pauseRequests();
     }
 }

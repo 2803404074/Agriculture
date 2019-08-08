@@ -25,8 +25,7 @@
             android:layout_height="@dimen/dp_70"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"
-            app:border_width="@dimen/dp_2"
+            app:border_width="@dimen/dp_1"
             android:scaleType="fitXY"
             app:border_color="@color/colorYellow"
             app:is_circle="true" />

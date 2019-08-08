@@ -51,6 +51,25 @@ public class DateUtil {
         return timeStemp;
     }
 
+    /**
+     * 日期转时间戳
+     * @param timers
+     * @return
+     */
+    public static long timeToStamp2(String timers) {
+        Date d = new Date();
+        long timeStemp = 0;
+        try {
+            SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
+            d = sf.parse(timers);// 日期转换为时间戳
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        timeStemp = d.getTime();
+        return timeStemp;
+    }
+
 
 
     public static String dateToStr(Date date) {
@@ -68,6 +87,13 @@ public class DateUtil {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
         return simpleDateFormat.format(new Date());
     }
+
+
+    public static String getDateForNow2() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        return simpleDateFormat.format(new Date());
+    }
+
 
     /**
      * 判断手机号是否符合规范

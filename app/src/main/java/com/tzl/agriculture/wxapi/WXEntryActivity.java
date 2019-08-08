@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -13,17 +12,14 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.application.AgricultureApplication;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
+import com.tzl.agriculture.fragment.personal.login.activity.PhoneRegistActivity;
 import com.tzl.agriculture.main.MainActivity;
-import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
-import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
-
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
-import java.util.HashMap;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import config.User;
@@ -72,6 +68,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
                 ToastUtil.showShort(WXEntryActivity.this, "请求拒绝");
+                finish();
                 break;
             default:
                 //发送返回
@@ -91,7 +88,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     jsonObject = new JSONObject(result);
                     String accessToken = jsonObject.optString("access_token");
                     String openId = jsonObject.getString("openid");
-
                     //获取用户信息
                     getUserInfo(accessToken, openId);
 
@@ -102,7 +98,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
             @Override
             public void onFailed(Call call, IOException e) {
+                finish();
+            }
 
+            @Override
+            public void onFailure(Call call, IOException e) {
+                super.onFailure(call, e);
+                finish();
             }
         });
     }
@@ -128,8 +130,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     int sex = object.optInt("sex");
                     String headimgurl = object.optString("headimgurl");
 
-                    //登陆后端
-                    senMyServer(openId, nickname,sex, headimgurl);
+                    //检测用户
+                    checkUser(openId, nickname,sex, headimgurl);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -137,36 +139,48 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
             @Override
             public void onFailed(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                });
+            }
 
+            @Override
+            public void onFailure(Call call, IOException e) {
+                super.onFailure(call, e);
+                finish();
             }
         });
     }
 
-    private void senMyServer(final String openID, final String uName, int sex, final String headimgurl) {
+    private void checkUser(final String openID, final String uName, int sex, final String headimgurl){
         OkHttp3Utils.desInstance();
-        HashMap<String, String> map = new HashMap<>();
-        map.put("openId", openID);
-        map.put("nickName", uName);
-        map.put("sex", sex == 1? "男":"女");
-        map.put("headUrl", headimgurl);
-        String str = JsonUtil.obj2String(map);
-        OkHttp3Utils.getInstance(User.BASE).doPostJson(User.wechatLogin, str, new GsonObjectCallback<String>(User.BASE) {
+        OkHttp3Utils.getInstance(User.BASE).doGet2(User.checkOpenId + openID, new GsonObjectCallback<String>(User.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    int errno = object.optInt("code");
-                    if (errno == 0){
-                        JSONObject data = object.optJSONObject("data");
-                        String token = data.optString("token");
-                        SPUtils.instance(WXEntryActivity.this,1).put("token",token);
-                        Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        LoginActivity.instance.finish();
-                        finish();//结束当前页面
-                    }else {
-                        ToastUtil.showShort(WXEntryActivity.this,"登陆失败");
-                        finish();
+                    if (object.optInt("code") == 0){
+                        JSONObject dataObj = object.optJSONObject("data");
+                        boolean hasUser = dataObj.optBoolean("isRegister");{
+                            if (hasUser){//有该用户
+                                SPUtils.instance(WXEntryActivity.this,1).put("token",dataObj.optString("token"));
+                                Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                                LoginActivity.instance.finish();
+                            }else {//没有该用户,去绑定手机号
+                                Intent intent = new Intent(WXEntryActivity.this, PhoneRegistActivity.class);
+                                intent.putExtra("openId",openID);
+                                intent.putExtra("userName",uName);
+                                intent.putExtra("sex",sex);
+                                intent.putExtra("imgUrl",headimgurl);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -175,10 +189,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
             @Override
             public void onFailed(Call call, IOException e) {
-                Toast.makeText(WXEntryActivity.this, "登陆失败", Toast.LENGTH_LONG).show();
-                //loadingDialog.dismiss();
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                super.onFailure(call, e);
+                finish();
             }
         });
     }
-
 }

@@ -17,6 +17,9 @@ import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.MyWebViewClient;
 import com.tzl.agriculture.util.SPUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -134,6 +137,31 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
     }
+
+    public void startSendServer(String articleId,String category){
+        Map<String,String>map = new HashMap<>();
+        map.put("articleId",articleId);
+        map.put("category",category);
+        map.put("optionType","2");
+        String str = JsonUtil.obj2String(map);
+        String token = (String) SPUtils.instance(this,1).getkey("token","");
+        OkHttp3Utils.getInstance(Article.BASE).doPostJson2(Article.toOperatArticle, str, token, new GsonObjectCallback<String>(Article.BASE) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+
+            }
+        });
+    }
+
 
     @Override
     protected void onDestroy() {

@@ -12,19 +12,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.github.ybq.android.spinkit.sprite.Sprite;
-import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.application.AgricultureApplication;
-import com.tzl.agriculture.fragment.personal.login.PhoneRegistActivity;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseActivity;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +35,6 @@ import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import config.Article;
 import config.User;
 import okhttp3.Call;
 
@@ -121,31 +118,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
+        tvNext.setClickable(false);
 
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //SMSSDK.getVerificationCode("86",etPhone.getText().toString());
-                spinKitView.setVisibility(View.VISIBLE);
-                try {
-                    Thread.sleep(500);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtil.showShort(LoginActivity.this,"验证码已发送");
-                            Intent intent = new Intent(LoginActivity.this,LoginGetCodeActivity.class);
-                            intent.putExtra("phone",etPhone.getText().toString());
-                            startActivity(intent);
-                            spinKitView.setVisibility(View.GONE);
-                        }
-                    });
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (phoneOk){
+                    ToastUtil.showShort(LoginActivity.this,"验证码已发送");
+                    Intent intent = new Intent(LoginActivity.this,LoginGetCodeActivity.class);
+                    intent.putExtra("phone",etPhone.getText().toString());
+                    startActivity(intent);
+                }else if (StringUtils.isEmpty(etPhone.getText().toString())){
+                    ToastUtil.showShort(LoginActivity.this,"请输入手机号");
+                }else {
+                    ToastUtil.showShort(LoginActivity.this,"请输入正确的手机号");
                 }
             }
         });
-
     }
 
     @Override
@@ -153,6 +143,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
+    private boolean phoneOk = false;
 
     Handler mHandler = new Handler(new Handler.Callback() {
         @Override
@@ -207,6 +198,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             etPhone.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             tvNext.setBackgroundResource(R.drawable.shape_login_blue);
                             tvNext.setClickable(true);
+                            phoneOk = true;
                         }
                     }
                     spinKitView.setVisibility(View.GONE);

@@ -5,7 +5,8 @@
 
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"
+    <uses-permission
+        android:name="android.permission.WRITE_APN_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-feature android:name="android.hardware.camera" /> <!-- 相机权限 -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 写入SD卡的权限：如果你希望保存相机拍照后的照片 -->
@@ -39,7 +40,7 @@
         android:roundIcon="@mipmap/application"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="camera.activity.CameraActivity"/>
+        <activity android:name="camera.activity.CameraActivity" />
         <activity android:name=".mall.activity.ChinaGuActivity"></activity>
         <activity android:name=".fragment.personal.activity.order.OrderSearchActivity" />
         <activity android:name=".mall.activity.StartCommentActivity" />
@@ -49,17 +50,20 @@
         <activity android:name=".mall.activity.OrderDetailsActivity" />
         <activity android:name=".fragment.personal.activity.function.activity.MyCommentActivity" />
         <activity android:name=".fragment.vip.activity.CouponActivity" />
-        <activity android:name=".mall.activity.OrderActivity" />
+        <activity android:name=".mall.activity.OrderActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".fragment.personal.activity.set.AddressSetActivity" />
         <activity android:name=".fragment.personal.activity.set.AddressActivity" />
-        <activity android:name=".fragment.personal.login.RegistMessActivity" />
-        <activity android:name=".fragment.personal.login.PhoneRegistActivity" />
+        <activity android:name=".fragment.personal.login.activity.RegistMessActivity" />
+        <activity android:name=".fragment.personal.login.activity.PhoneRegistActivity" />
         <activity android:name=".main.MainActivity" />
-        <activity android:name=".fragment.personal.login.activity.LoginActivity" />
+        <activity android:name=".fragment.personal.login.activity.LoginActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".fragment.personal.login.activity.LoginGetCodeActivity" />
         <activity android:name=".fragment.vip.activity.VipActivity" />
         <activity android:name=".fragment.xiangc.activity.ArticelSearchActivity" />
         <activity android:name=".comment.activity.HtmlForStoryActivity" />
+        <activity android:name=".comment.activity.OrderHtmlActivity"/>
         <activity android:name=".fragment.xiangc.activity.XiangcMyActivity" />
         <activity android:name=".fragment.personal.activity.order.MyOrderActivity" />
         <activity android:name=".fragment.personal.activity.ccb.activity.BrowseActivity" />
@@ -71,8 +75,10 @@
         <activity android:name=".fragment.personal.activity.set.DeviceManageActivity" />
         <activity android:name=".fragment.personal.activity.set.BindPhoneActivity" />
         <activity android:name=".fragment.personal.activity.set.AccountRelationActivity" />
-        <activity android:name=".fragment.personal.activity.set.UpLoadIdentifyActivity"
-            android:launchMode="singleTask" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".fragment.personal.activity.set.UpLoadIdentifyActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity android:name=".fragment.personal.activity.set.IdentityActivity" />
         <activity android:name=".fragment.personal.activity.set.AccountSaveActivity" />
         <activity android:name=".fragment.personal.activity.set.SetTextActivity" />
@@ -88,6 +94,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="qwxc" android:host="domain" android:pathPrefix="/link" />
+            </intent-filter>
+
         </activity>
 
         <activity
@@ -97,6 +111,22 @@
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="wx9253e5b4ad426487" />
+            </intent-filter>
+        </activity>
+
+
 
         <meta-data
             android:name="Mob-AppKey"
@@ -104,6 +134,6 @@
         <meta-data
             android:name="Mob-AppSecret"
             android:value="e3705b9e9f7ceb0eabffbdb590b39680" />
-    </application>
 
+    </application>
 </manifest>

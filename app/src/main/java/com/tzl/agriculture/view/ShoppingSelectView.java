@@ -8,13 +8,20 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.tzl.agriculture.R;
+import com.tzl.agriculture.fragment.personal.activity.function.activity.MyCommentActivity;
 import com.tzl.agriculture.model.ProductMo;
 import com.tzl.agriculture.model.Specifications;
 import com.tzl.agriculture.util.ToastUtil;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -33,7 +40,12 @@ public class ShoppingSelectView extends LinearLayout {
     private TextView countPrice;//总价
     private TextView stock;//库存
     private TextView tvBuy;//购买
-    private TextView tvTips;//购买
+
+
+    //private TextView tvTips;//
+//    private RecyclerView recyclerView;//已选提示
+//    private BaseAdapter adapter;
+//    private List<String> mData;
 
     private double lastPrice;//选完规格后的价钱
     private String productId;//选完规格后的id
@@ -99,6 +111,7 @@ public class ShoppingSelectView extends LinearLayout {
         this.context = context;
     }
 
+    private  int index = 0;
     public void getView() {
         if (list.size() < 1) {
             return;
@@ -129,7 +142,8 @@ public class ShoppingSelectView extends LinearLayout {
 
             addView(textView);
             //设置一个大规格下的所有小规格
-            FlowLayout layout = new FlowLayout(context, attr.getValueList());
+            FlowLayout layout = new FlowLayout(context, attr.getValueList(),index);
+            index++;
 
             layout.setTitle(attr.getName());
             layout.setPadding(dip2px(context, flowLayoutMargin), 0, dip2px(context, flowLayoutMargin), 0);
@@ -140,9 +154,10 @@ public class ShoppingSelectView extends LinearLayout {
                  * @param tagId 所属的父及id
                  * @param id 规格id,335   需要匹配的id
                  * @param name 规格名称
+                 * @param index  点击的是几个大规格，用于展示“已选”
                  */
                 @Override
-                public void onSelected(int tagId, String id, String name) {
+                public void onSelected(int tagId, String id, String name,int index) {
                     for (int i = 0; i < faterArr.length; i++) {
                         if (tagId == faterArr[i]) {
                             sunArr[i] = id;
@@ -150,8 +165,6 @@ public class ShoppingSelectView extends LinearLayout {
                     }
                     //开始计算
                     startJs();
-                    tips += name + "\t";
-                    tvTips.setText(tips);
                 }
             });
 
@@ -159,10 +172,16 @@ public class ShoppingSelectView extends LinearLayout {
                 Specifications.ValueList smallAttr = attr.getValueList().get(k);
                 //属性按钮
                 RadioButton button = new RadioButton(context);
+
                 //默认选中第一个
-                /*if (i == 0) {
+                if (k == 0) {
                     button.setChecked(true);
-                }*/
+                    for (int i = 0; i < faterArr.length; i++) {
+                        if (attr.getId() == faterArr[i]) {
+                            sunArr[i] = attr.getValueList().get(k).getSpecsId();
+                        }
+                    }
+                }
                 //设置按钮的参数
                 LayoutParams buttonParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
                         dip2px(context, buttonHeight));
@@ -177,6 +196,7 @@ public class ShoppingSelectView extends LinearLayout {
                 button.setLayoutParams(marginParams);
                 button.setGravity(Gravity.CENTER);
                 button.setBackgroundResource(R.drawable.tv_sel);
+
                 button.setButtonDrawable(android.R.color.transparent);
                 button.setText(smallAttr.getSpecsValue());//设置规格内容
                 button.setId(Integer.parseInt(smallAttr.getSpecsId()));//设置规格ID
@@ -185,11 +205,12 @@ public class ShoppingSelectView extends LinearLayout {
             }
             addView(layout);
         }
+
+        startJs();
     }
 
+    private String lastStr = "";
     private void startJs() {
-        String lastStr = "";
-
         for (int i = 0; i < sunArr.length; i++) {
             //只有一个规格
             if (sunArr.length == 1) {
@@ -216,6 +237,9 @@ public class ShoppingSelectView extends LinearLayout {
                 productId = productInfo.get(i).getId();
                 isFinish = true;
 
+                //价格变化
+                countPrice.setText(productInfo.get(i).getPrice());
+
                 //设置数量
                 if (Integer.parseInt(tvNum.getText().toString())> Integer.parseInt(productInfo.get(i).getNumber())){
                     tvNum.setText(productInfo.get(i).getNumber());
@@ -223,6 +247,7 @@ public class ShoppingSelectView extends LinearLayout {
                 if (Integer.parseInt(productInfo.get(i).getNumber()) < 1) {
                     ToastUtil.showShort(context, "该规格的产品卖完啦。。");
                     isFinish = false;
+                    productId = "";
                 }
                 break;
             } else {
@@ -250,6 +275,8 @@ public class ShoppingSelectView extends LinearLayout {
 
     public void setData(List<Specifications> data) {
         list = data;
+//        if (list == null)return;
+//        mData =  new ArrayList<>();
         getView();
     }
 
@@ -262,13 +289,13 @@ public class ShoppingSelectView extends LinearLayout {
      * @param stock       库存控件
      * @param productInfo 规格对象
      */
-    public void setTextViewAndGGproject(TextView tvNum,TextView countPrice, TextView stock, TextView tvBuy, TextView tvTips,
+    public void setTextViewAndGGproject(TextView tvNum,TextView countPrice, TextView stock, TextView tvBuy,
                                         List<ProductMo> productInfo) {
         this.tvNum = tvNum;
         this.countPrice = countPrice;
         this.stock = stock;
         this.tvBuy = tvBuy;
-        this.tvTips = tvTips;
         this.productInfo = productInfo;
+
     }
 }

@@ -61,6 +61,12 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
     TextView tvAddress;
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+
+    @Override
     public int setLayout() {
         return R.layout.activity_setting;
     }

@@ -55,7 +55,11 @@ public class WellcomActivity extends AppCompatActivity {
             public void run() {
                 String isLogin = (String) SPUtils.instance(WellcomActivity.this, 1).getkey("token", "");
                 if (!StringUtils.isEmpty(isLogin)) {
-                    initData(isLogin);
+
+                    Intent intent = new Intent(WellcomActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    //initData(isLogin);
                 } else {
                     Intent intent = new Intent(WellcomActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -95,6 +99,11 @@ public class WellcomActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        ToastUtil.showShort(WellcomActivity.this,"网络异常");
+                        Intent intent = new Intent(WellcomActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+
                     }
                 });
             }
@@ -104,7 +113,10 @@ public class WellcomActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        ToastUtil.showShort(WellcomActivity.this,"网络异常");
+                        Intent intent = new Intent(WellcomActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 });
             }

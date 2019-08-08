@@ -6,11 +6,15 @@ import java.util.List;
  * 轮播图
  */
 public class BannerMo {
+
     private String adId;
+
     private String link;
     private int linkType;
+
     private String description;
     private String url;
+
 
     public int getLinkType() {
         return linkType;

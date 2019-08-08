@@ -74,18 +74,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="热门搜索"/>
+            <!--<TextView-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="热门搜索"/>-->
 
-            <com.tzl.agriculture.view.ShowButtonLayout
-                android:id="@+id/hot_layout"
-                android:layout_width="match_parent"
-                android:layout_margin="5dp"
-                android:layout_height="wrap_content">
-            </com.tzl.agriculture.view.ShowButtonLayout>
+            <!--<com.tzl.agriculture.view.ShowButtonLayout-->
+                <!--android:id="@+id/hot_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:layout_height="wrap_content">-->
+            <!--</com.tzl.agriculture.view.ShowButtonLayout>-->
 
             <LinearLayout
                 android:layout_width="wrap_content"

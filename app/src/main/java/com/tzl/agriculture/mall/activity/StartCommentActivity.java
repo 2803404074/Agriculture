@@ -34,6 +34,11 @@ public class StartCommentActivity extends SetBaseActivity implements View.OnClic
     TextView tvSend;
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_start_comment;
     }

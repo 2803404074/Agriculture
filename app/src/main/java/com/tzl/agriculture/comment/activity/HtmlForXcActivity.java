@@ -1,10 +1,14 @@
 package com.tzl.agriculture.comment.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.sackcentury.shinebuttonlib.ShineButton;
@@ -12,7 +16,9 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.model.XiangcMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
+import com.tzl.agriculture.util.ShareUtils;
 import com.tzl.agriculture.util.TextUtil;
+import com.tzl.agriculture.util.ToastUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
@@ -25,7 +31,10 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
 import config.Article;
 import okhttp3.Call;
 
@@ -68,6 +77,8 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
     @BindView(R.id.ll_dz)
     LinearLayout llDz;
 
+    private XiangcMo.Article article;
+
     @Override
     public int setLayout() {
         return R.layout.activity_html_xc;
@@ -94,7 +105,7 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
                             if (object.optInt("code") == 0) {
                                 JSONObject dataObj = object.optJSONObject("data");
                                 String str = dataObj.optString("articleInfo");
-                                XiangcMo.Article article = JsonUtil.string2Obj(str, XiangcMo.Article.class);
+                                article = JsonUtil.string2Obj(str, XiangcMo.Article.class);
                                 setViewData(article);
                             }
                         } catch (JSONException e) {
@@ -111,13 +122,42 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showShare();
+                ShareUtils.getInstance(getContext()).startShare(
+                        "趣味乡村-乡愁",
+                        article.getTitle(),
+                        article.getCoverImgurl(),
+                        article.getArticleShareUrl(), new PlatformActionListener() {
+
+                            @Override
+                            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                                ToastUtil.showShort(getContext(), "分享成功");
+                                //成功
+
+                            }
+
+                            @Override
+                            public void onError(Platform platform, int i, Throwable throwable) {
+                                ToastUtil.showShort(getContext(), "分享失败");
+                                //错误
+                            }
+
+                            @Override
+                            public void onCancel(Platform platform, int i) {
+                                ToastUtil.showShort(getContext(), "分享取消");
+                                //取消
+                            }
+                        });
+
+                startSendServer(article.getArticleId(), article.getCategory() == null ? "" : article.getCategory());
             }
         });
 
     }
 
+
     private void setViewData(XiangcMo.Article article) {
+
+
         //标题
         textView.setText(article.getTitle());
 
@@ -128,20 +168,20 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
         tvCollectionNum.setText(TextUtil.checkStr2Num(article.getCollectNum()));
 
         //如果点赞字段值不为null ，则已点赞该文章
-        if (!StringUtils.isEmpty(article.getAlreadyGood())){
+        if (!StringUtils.isEmpty(article.getAlreadyGood())) {
             tvDzNum.setTextColor(getResources().getColor(R.color.colorOrange));
             llDz.setBackgroundResource(R.drawable.shape_login_orange_no);
             btDz.setChecked(true);
         }
 
         //如果收藏字段值不为null ，则已收藏该文章
-        if (!StringUtils.isEmpty(article.getAlreadyCollect())){
+        if (!StringUtils.isEmpty(article.getAlreadyCollect())) {
             tvCollectionNum.setTextColor(getResources().getColor(R.color.colorOrange));
             llCollection.setBackgroundResource(R.drawable.shape_login_orange_no);
             btCollect.setChecked(true);
         }
 
-        setWebView(webView,spinKitView,article.getContent());
+        setWebView(webView, spinKitView, article.getContent());
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +237,7 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
     public void initData() {
         addBrow(getIntent().getStringExtra("articleId"));
     }
+
     /**
      * 请求后端
      *
@@ -214,6 +255,7 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
                     @Override
                     public void onUi(String result) {
                     }
+
                     @Override
                     public void onFailed(Call call, IOException e) {
 
@@ -221,24 +263,4 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
                 });
     }
 
-
-    private void showShare() {
-        OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
-        oks.disableSSOWhenAuthorize();
-        // title标题，微信、QQ和QQ空间等平台使用
-        oks.setTitle("趣乡村");
-        // titleUrl QQ和QQ空间跳转链接
-        oks.setTitleUrl("www.xcxky.cn");
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText("第一次分享");
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImageUrl("http://pic24.nipic.com/20120922/10898738_143746326185_2.jpg");//确保SDcard下面存在此张图片
-        // url在微信、微博，Facebook等平台中使用
-        oks.setUrl("www.xcxky.cn");
-        // comment是我对这条分享的评论，仅在人人网使用
-        oks.setComment("第一次分享文本");
-        // 启动分享GUI
-        oks.show(this);
-    }
 }

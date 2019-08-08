@@ -39,6 +39,11 @@ public class UpLoadIdentifyActivity extends SetBaseActivity {
     private String path02;
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_up_load_identify;
     }

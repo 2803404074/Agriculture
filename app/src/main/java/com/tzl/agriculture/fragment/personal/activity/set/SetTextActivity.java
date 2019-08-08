@@ -1,5 +1,6 @@
 package com.tzl.agriculture.fragment.personal.activity.set;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +21,11 @@ public class SetTextActivity extends SetBaseActivity {
     EditText etNickName;
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_set_text;
     }
@@ -31,6 +37,9 @@ public class SetTextActivity extends SetBaseActivity {
             @Override
             public void onClick(View view) {
                 UserData.instance(SetTextActivity.this).updateUserInfo(getToken(),3,etNickName.getText().toString());
+                Intent intent = new Intent(SetTextActivity.this,UserMessActivity.class);
+                intent.putExtra("name",etNickName.getText().toString());
+                setResult(200, intent);
                 finish();
             }
         });
@@ -38,6 +47,6 @@ public class SetTextActivity extends SetBaseActivity {
 
     @Override
     public void initData() {
-        etNickName.setText(UserData.instance(SetTextActivity.this).getUsreInfo().getNickname());
+        etNickName.setText(getIntent().getStringExtra("name"));
     }
 }

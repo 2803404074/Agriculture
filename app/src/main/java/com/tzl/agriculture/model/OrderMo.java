@@ -1,5 +1,7 @@
 package com.tzl.agriculture.model;
 
+import com.tzl.agriculture.fragment.vip.model.CouponMo;
+
 import java.io.Serializable;
 import java.util.List;
 

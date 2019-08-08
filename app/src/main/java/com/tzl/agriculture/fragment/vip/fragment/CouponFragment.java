@@ -33,7 +33,7 @@ import config.Mall;
 import okhttp3.Call;
 
 /**
- * 商品收藏fragment
+ *
  */
 public class CouponFragment extends BaseFragment {
 

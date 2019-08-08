@@ -33,6 +33,11 @@ public class AboutAppActivity extends SetBaseActivity {
     TextView tvAppContent;
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_about_app;
     }

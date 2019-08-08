@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/dp_20"
     android:background="@drawable/shape_white_noframe"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_20"
     tools:context=".fragment.personal.activity.set.AddressSetActivity">
 
     <ImageView
@@ -64,7 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/iv_img"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -84,129 +85,162 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_30"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:text="配送区域"
-                android:textColor="@color/colorGri2"
-                android:textSize="@dimen/sp_15" />
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/dp_10">
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20"
-                    android:src="@mipmap/position" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_30"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:text="配送区域"
+                        android:textColor="@color/colorGri2"
+                        android:textSize="@dimen/sp_15" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="@dimen/dp_10">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"
+                            android:src="@mipmap/position" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:text="南宁市    青秀区    民族大道" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_10"
+                        android:text="付款后48小时内发货" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="@dimen/dp_10"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已选:"
+                            android:textColor="@color/colorGri2"
+                            android:textSize="@dimen/sp_15" />
+                        <!--<androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recy_tips"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>-->
+                        <TextView
+                            android:id="@+id/tv_tips"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="无"
+                            android:textColor="@color/colorGri2"
+                            android:textSize="@dimen/sp_15" />
+                    </LinearLayout>
+
+                    <com.tzl.agriculture.view.ShoppingSelectView
+                        android:id="@+id/shopping_selectView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="@dimen/dp_10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="购买数量"
+                            android:textColor="@color/colorGri2"
+                            android:textSize="@dimen/sp_16" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1px"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_reduce"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorGri"
+                            android:paddingHorizontal="@dimen/dp_15"
+                            android:paddingVertical="@dimen/dp_3"
+                            android:text="-"
+                            android:textColor="@color/colorGri2"
+                            android:textSize="@dimen/sp_18" />
+
+                        <TextView
+                            android:id="@+id/tv_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/dp_2"
+                            android:background="@color/colorGri"
+                            android:paddingHorizontal="@dimen/dp_10"
+                            android:paddingVertical="@dimen/dp_3"
+                            android:text="1"
+                            android:textColor="@color/colorGri2"
+                            android:textSize="@dimen/sp_18" />
+
+                        <TextView
+                            android:id="@+id/tv_add"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorGri"
+                            android:paddingHorizontal="@dimen/dp_15"
+                            android:paddingVertical="@dimen/dp_3"
+                            android:text="+"
+                            android:textColor="@color/colorGri2"
+                            android:textSize="@dimen/sp_18" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/spin_kit"
+                    android:visibility="gone"
+                    style="@style/SpinKitView.Large.Circle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:text="南宁市    青秀区    民族大道" />
-            </LinearLayout>
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    app:SpinKit_Color="@color/colorPrimaryDark" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:text="付款后48小时内发货" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_10"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorGri2"
-                    android:textSize="@dimen/sp_15"
-                    android:text="已选:"/>
-                <TextView
-                    android:id="@+id/tv_tips"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorGri2"
-                    android:textSize="@dimen/sp_15"
-                    android:text="无"/>
-            </LinearLayout>
-
-            <com.tzl.agriculture.view.ShoppingSelectView
-                android:id="@+id/shopping_selectView"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_10"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorGri2"
-                    android:textSize="@dimen/sp_16"
-                    android:text="购买数量"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1px"
-                    android:layout_weight="1"/>
-
-                <TextView
-                    android:id="@+id/tv_reduce"
-                    android:paddingHorizontal="@dimen/dp_15"
-                    android:paddingVertical="@dimen/dp_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorGri"
-                    android:textColor="@color/colorGri2"
-                    android:textSize="@dimen/sp_18"
-                    android:text="-"/>
-                <TextView
-                    android:id="@+id/tv_num"
-                    android:paddingHorizontal="@dimen/dp_10"
-                    android:paddingVertical="@dimen/dp_3"
-                    android:textSize="@dimen/sp_18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorGri"
-                    android:textColor="@color/colorGri2"
-                    android:layout_marginHorizontal="@dimen/dp_2"
-                    android:text="1"/>
-                <TextView
-                    android:id="@+id/tv_add"
-                    android:paddingHorizontal="@dimen/dp_15"
-                    android:paddingVertical="@dimen/dp_3"
-                    android:textSize="@dimen/sp_18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorGri"
-                    android:textColor="@color/colorGri2"
-                    android:text="+"/>
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 
-
     <RelativeLayout
-        android:paddingHorizontal="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10">
+        android:layout_marginTop="@dimen/dp_10"
+        android:paddingHorizontal="@dimen/dp_10">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -220,9 +254,9 @@
             android:id="@+id/tv_buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/dp_10"
-           android:layout_alignParentRight="true"
             android:background="@drawable/shape_login_blue"
             android:paddingHorizontal="@dimen/dp_10"
             android:paddingVertical="@dimen/dp_5"

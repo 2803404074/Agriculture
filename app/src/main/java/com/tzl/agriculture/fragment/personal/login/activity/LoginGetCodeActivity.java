@@ -16,7 +16,6 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
-import com.tzl.agriculture.fragment.personal.login.RegistMessActivity;
 import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.util.JsonUtil;
@@ -36,7 +35,6 @@ import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import config.Article;
 import config.User;
 import okhttp3.Call;
 
@@ -64,6 +62,11 @@ public class LoginGetCodeActivity extends SetBaseActivity {
 
     @BindView(R.id.tv_phone_tips)
     TextView tvPhoneTips;
+
+    @Override
+    public void backFinish() {
+        finish();
+    }
 
     @Override
     public int setLayout() {
@@ -100,9 +103,9 @@ public class LoginGetCodeActivity extends SetBaseActivity {
                 tvCheck.setBackgroundResource(R.drawable.shape_login_blue_hide);
                 tvCheck.setClickable(false);
                 if (StringUtils.isEmpty(getIntent().getStringExtra("regist"))){
-                    loginJudge();
+                    loginJudge();//登陆的验证
                 }else {
-                    registJudgeCode();
+                    registJudgeCode();//注册的验证
                 }
             }
         });
@@ -193,7 +196,12 @@ public class LoginGetCodeActivity extends SetBaseActivity {
                             if (!StringUtils.isEmpty(getIntent().getStringExtra("regist"))) {
                                 Intent intent = new Intent(LoginGetCodeActivity.this, RegistMessActivity.class);
                                 intent.putExtra("phone", phoneNumber);
+                                intent.putExtra("openId", getIntent().getStringExtra("openId"));
+                                intent.putExtra("userName", getIntent().getStringExtra("userName"));
+                                intent.putExtra("sex", getIntent().getIntExtra("sex",1));
+                                intent.putExtra("imgUrl", getIntent().getStringExtra("imgUrl"));
                                 startActivity(intent);
+                                finish();
                             } else {
                                 //直接登陆
                                 Intent intent = new Intent(LoginGetCodeActivity.this, MainActivity.class);
@@ -201,7 +209,6 @@ public class LoginGetCodeActivity extends SetBaseActivity {
                                 startActivity(intent);
                                 finish();
                                 LoginActivity.instance.finish();
-
                             }
                         }
                     }else {

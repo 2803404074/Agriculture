@@ -40,6 +40,11 @@ public class MyOrderActivity extends SetBaseActivity implements View.OnClickList
     private List<String> tabTitle = new ArrayList<>();
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_my_order;
     }

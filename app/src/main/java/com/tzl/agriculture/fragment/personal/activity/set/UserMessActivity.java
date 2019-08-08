@@ -102,6 +102,11 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
     private BottomSheetDialog dialog;
 
     @Override
+    public void backFinish() {
+        finish();
+    }
+
+    @Override
     public int setLayout() {
         return R.layout.activity_user_mess;
     }
@@ -120,8 +125,8 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
             tvNickName.setText(userInfo.getNickname());
             tvUserName.setText(userInfo.getUsername());
             Glide.with(this).load(userInfo.getHeadUrl()).into(draweeView);
-            tvSex.setText(TextUtil.checkStr2Str(userInfo.getSex()));
-            tvDate.setText(TextUtil.checkStr2Str(userInfo.getAge()));
+            tvSex.setText(userInfo.getSex());
+            tvDate.setText(TextUtil.checkStr2Str(userInfo.getBirthday()));
         }
 
         tvDate.setOnClickListener(this);
@@ -149,7 +154,8 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_nick:
                 Intent intent = new Intent(this,SetTextActivity.class);
-                startActivity(intent);
+                intent.putExtra("name",tvNickName.getText().toString());
+                startActivityForResult(intent,100);
                 break;
             case R.id.ll_sex:
                 showBottomDialogCs();
@@ -196,9 +202,9 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
         TextView tvNv = view.findViewById(R.id.tv_sex_nv);
         TextView tvBm = view.findViewById(R.id.tv_sex_bm);
 
-        if (userInfo.getSex().equals("男")){
+        if (userInfo.getSex().equals("男")){//男
             tvNan.setBackgroundResource(R.drawable.shape_side_white);
-        }else if (userInfo.getSex().equals("女")){
+        }else if (userInfo.getSex().equals("女")){//女
             tvNv.setBackgroundResource(R.drawable.shape_side_white);
         }else {
             tvBm.setBackgroundResource(R.drawable.shape_side_white);
@@ -210,7 +216,7 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                 tvNan.setBackgroundResource(R.drawable.shape_side_white);
                 tvNv.setBackgroundResource(R.color.colorW);
                 tvBm.setBackgroundResource(R.color.colorW);
-                sexStr = "男";
+                sexStr = "1";
             }
         });
         tvNv.setOnClickListener(new View.OnClickListener() {
@@ -219,7 +225,7 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                 tvNv.setBackgroundResource(R.drawable.shape_side_white);
                 tvBm.setBackgroundResource(R.color.colorW);
                 tvNan.setBackgroundResource(R.color.colorW);
-                sexStr = "女";
+                sexStr = "0";
             }
         });
         tvBm.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +234,7 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                 tvBm.setBackgroundResource(R.drawable.shape_side_white);
                 tvNv.setBackgroundResource(R.color.colorW);
                 tvNan.setBackgroundResource(R.color.colorW);
-                sexStr = "保密";
+                sexStr = "2";
             }
         });
 
@@ -236,6 +242,7 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+                tvSex.setText(Integer.parseInt(sexStr) == 1?"男":"女");
                 UserData.instance(UserMessActivity.this).updateUserInfo(getToken(),4,sexStr);
             }
         });
@@ -338,6 +345,14 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 100){
+            if (resultCode == 200){
+                if (data != null){
+                    tvNickName.setText(data.getStringExtra("name"));
+                }
+            }
+        }
 
         switch (requestCode) {
             case REQ_1: {

@@ -3,7 +3,10 @@ package com.tzl.agriculture.util;
 import android.app.Activity;
 import android.content.Context;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
 public class ShareUtils {
     private static ShareUtils shareUtils;
@@ -27,7 +30,7 @@ public class ShareUtils {
      * @param imgUrl 图片
      * @param linkUrl 连接
      */
-    public void startShare(String title,String text,String imgUrl,String linkUrl){
+    public void startShare(String title, String text, String imgUrl, String linkUrl, PlatformActionListener listener){
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
@@ -45,5 +48,8 @@ public class ShareUtils {
         //oks.setComment("第一次分享文本");
         // 启动分享GUI
         oks.show(mContext);
+
+        oks.setCallback(listener);
+
     }
 }

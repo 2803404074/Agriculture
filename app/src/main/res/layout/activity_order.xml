@@ -74,7 +74,7 @@
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recy"
       android:layout_below="@+id/or_is_address"
-      android:layout_above="@+id/ll_bottom"
+      android:layout_above="@+id/ll_yhq"
       android:padding="@dimen/dp_5"
       android:layout_marginBottom="@dimen/dp_5"
       android:layout_marginHorizontal="@dimen/dp_10"
@@ -82,6 +82,48 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:id="@+id/ll_yhq"
+       android:layout_above="@+id/recy_yhq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal">
+        <TextView
+            android:textColor="@color/colorOrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_18"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="我的优惠券："/>
+        <TextView
+            android:id="@+id/tv_yhq_status"
+            android:textColor="@color/colorOrange"
+            android:textSize="@dimen/sp_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recy_yhq"
+        android:layout_above="@+id/tv_youh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <!--原价及优惠-->
+    <TextView
+        android:id="@+id/tv_youh"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_marginHorizontal="@dimen/dp_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_3"
+        android:textSize="@dimen/sp_15"
+        android:layout_gravity="center"
+        android:textColor="@color/colorAccentButton"
+        android:text="已优惠xxx元"/>
 
     <!--底部确认-->
     <LinearLayout
@@ -115,6 +157,7 @@
             android:textSize="21sp"
             android:layout_gravity="center"
             android:text="0.0" />
+
         <TextView
             android:id="@+id/orther_ok"
             android:layout_width="wrap_content"
@@ -128,4 +171,14 @@
             android:textColor="#fff" />
     </LinearLayout>
 
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        app:SpinKit_Color="@color/colorPrimaryDark" />
 </RelativeLayout>
