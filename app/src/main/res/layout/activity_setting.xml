@@ -19,17 +19,14 @@
         android:padding="@dimen/dp_10"
         android:orientation="horizontal">
 
-        <com.shehuan.niv.NiceImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/drawee_img"
-            android:layout_width="@dimen/dp_70"
-            android:layout_height="@dimen/dp_70"
-            android:src="@mipmap/ic_launcher"
-            app:border_width="@dimen/dp_2"
-            android:scaleType="fitXY"
-            app:border_color="@color/colorYellow"
-            app:is_circle="true" />
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            fresco:roundAsCircle="true" />
 
         <TextView
+            android:layout_marginLeft="15dp"
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_weight="1"

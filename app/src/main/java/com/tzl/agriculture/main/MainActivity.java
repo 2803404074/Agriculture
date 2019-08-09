@@ -1,5 +1,6 @@
 package com.tzl.agriculture.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hanks.htextview.rainbow.RainbowTextView;
 import com.rey.material.app.BottomSheetDialog;
@@ -22,14 +24,28 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.home.fragment.HomeFragment;
 import com.tzl.agriculture.fragment.personal.framgent.PersonFragment;
 import com.tzl.agriculture.fragment.xiangc.fragment.XiangcFragment;
+import com.tzl.agriculture.model.UserInfo;
 import com.tzl.agriculture.util.DrawableSizeUtil;
+import com.tzl.agriculture.util.JsonUtil;
+import com.tzl.agriculture.util.SPUtils;
+import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.DoubleClickListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import config.Base;
+import config.User;
+import okhttp3.Call;
+
+import static com.mob.MobSDK.getContext;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
@@ -68,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     }
 
     private void initView() {
+
+        getUserInfo();
+
         tvSetAddress.animateText("设置服务地址");
 
         instance = MainActivity.this;
@@ -85,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         radioButton_01.setOnClickListener(new DoubleClickListener() {
             @Override
             public void onDoubleClick(View v) {
-                ToastUtil.showShort(MainActivity.this,"双击");
+                Intent intent = new Intent("android.intent.action.DOUBLE_ACTION");
+                LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
             }
         });
     }
@@ -358,6 +378,51 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private String base;
     private String url="";
     private String dk="";
+
+
+
+    private void getUserInfo(){
+        String token = (String) SPUtils.instance(this,1).getkey("token","");
+        //获取用户信息
+        OkHttp3Utils.getInstance(User.BASE).doGet(User.getUserInfo2, token, new GsonObjectCallback<String>(User.BASE) {
+            @Override
+            public void onUi(String result) {
+
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optInt("code") == 0){
+                        JSONObject dataObj = object.optJSONObject("data");
+                        String str = dataObj.optString("user");
+                        SPUtils.instance(getContext(),1).put("user",str);
+                    }else if (object.optInt("code") == -1){
+                        ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailed(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showShort(getContext(),"请求超时");
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                super.onFailure(call, e);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtil.showShort(getContext(),"无法连接服务，请稍后再试");
+                    }
+                });
+            }
+        });
+    }
 }
 
 

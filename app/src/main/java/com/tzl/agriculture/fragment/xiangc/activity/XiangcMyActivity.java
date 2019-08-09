@@ -45,7 +45,7 @@ public class XiangcMyActivity extends AppCompatActivity implements View.OnClickL
     TextView tvName;
 
     @BindView(R.id.drawee_img)
-    NiceImageView draweeView;
+    SimpleDraweeView draweeView;
 
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
@@ -81,7 +81,7 @@ public class XiangcMyActivity extends AppCompatActivity implements View.OnClickL
                     String str = dataObj.optString("optionNumList");
                     String head = dataObj.optString("headUrl");
                     String username = dataObj.optString("username");
-                    Glide.with(XiangcMyActivity.this).load(head).into(draweeView);
+                    draweeView.setImageURI(head);
                     tvName.setText(TextUtil.checkStr2Str(username));
 
                     List<DzColSh> mData = JsonUtil.string2Obj(str,List.class,DzColSh.class);

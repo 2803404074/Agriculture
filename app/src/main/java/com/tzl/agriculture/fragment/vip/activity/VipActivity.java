@@ -3,13 +3,15 @@ package com.tzl.agriculture.fragment.vip.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.shehuan.niv.NiceImageView;
 import com.tzl.agriculture.R;
+import com.tzl.agriculture.bean.VipCommodity;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
 import com.tzl.agriculture.model.GoodsMo;
@@ -28,7 +31,6 @@ import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ScreenUtils;
 import com.tzl.agriculture.util.TextUtil;
-import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
 
@@ -36,6 +38,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +68,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
     TextView tvJmlb;
 
     @BindView(R.id.drawee_img)
-    NiceImageView draweeView;
+    SimpleDraweeView draweeView;
 
     @BindView(R.id.tv_phone)
     TextView tvPhone;
@@ -88,8 +94,14 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
     @BindView(R.id.re_my_jl)
     RecyclerView reMyJl;//会员显示 我的奖励
 
-    @BindView(R.id.tv_by)
-    TextView tvBy;
+    @BindView(R.id.tv_vip_no)
+    ImageView tvBy;
+
+    @BindView(R.id.tv_month)
+    TextView tvMonth;
+
+    @BindView(R.id.rl_vip_yes)
+    RelativeLayout rlVipYes;
 
     @BindView(R.id.tv_myqi)
     TextView tvMyQi;//如果普通用户，则显示 我的权益，如果是会员则显示我的奖励
@@ -105,6 +117,8 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
     private List<GoodsMo> mData = new ArrayList<>();
 
     private UserInfo userInfo;
+
+    private List<VipCommodity> vipCommodityLists = new ArrayList<>();;
 
 
     @Override
@@ -138,12 +152,12 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
         String user = (String) SPUtils.instance(this, 1).getkey("user", "");
         userInfo = JsonUtil.string2Obj(user, UserInfo.class);
-        Glide.with(this).load(userInfo.getHeadUrl()).into(draweeView);
-
+        draweeView.setImageURI(userInfo.getHeadUrl());
         tvPhone.setText(userInfo.getPhone());
 
-
         if (userInfo.getUserType() == 3) {
+            tvBy.setVisibility(View.GONE);
+            rlVipYes.setVisibility(View.VISIBLE);
             llMyJf.setVisibility(View.VISIBLE);
             llMyJfTips.setVisibility(View.GONE);
             ivOpen.setVisibility(View.GONE);
@@ -174,17 +188,77 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                 public void onItemClick(View view, int position) {
                     GoodsMo goodsMo = (GoodsMo) adapter.getData().get(position);
                     Intent intent = new Intent(VipActivity.this, GoodsDetailsActivity.class);
-                    intent.putExtra("goodsId",goodsMo.getGoodsId());
-                    intent.putExtra("type",1);
+                    intent.putExtra("goodsId", goodsMo.getGoodsId());
+                    intent.putExtra("type", 1);
                     startActivity(intent);
                 }
             });
 
 
         } else {
-            recyclerView.setVisibility(View.GONE);
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+            adapter = new BaseAdapter<VipCommodity>(this,recyclerView,vipCommodityLists,R.layout.item_vip_commodity_adapter) {
+                @Override
+                public void convert(Context mContext, BaseRecyclerHolder holder, VipCommodity o) {
+                    switch (o.getMonth()){
+                        case 1:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_1);
+                            break;
+                        case 2:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_2);
+                            break;
+                        case 3:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_3);
+                            break;
+                        case 4:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_4);
+                            break;
+                        case 5:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_5);
+                            break;
+                        case 6:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_6);
+                            break;
+                        case 7:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_7);
+                            break;
+                        case 8:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_8);
+                            break;
+                        case 9:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_9);
+                            break;
+                        case 10:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_10);
+                            break;
+                        case 11:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_11);
+                            break;
+                        case 12:
+                            holder.setImageResource(R.id.iv_month,R.mipmap.month_12);
+                            break;
+
+                    }
+
+                    holder.setImageByUrl(R.id.iv_commodity_img,o.getPicUrl());
+
+                }
+            };
+            recyclerView.setAdapter(adapter);
+
+            adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                   Intent intent = new Intent(VipActivity.this,MonthActivity.class);
+                   intent.putExtra("monthNumber",vipCommodityLists.get(position).getMonth());
+                   startActivity(intent);
+                }
+            });
+
+
             tvInvNow.setVisibility(View.VISIBLE);
-            tvBy.setVisibility(View.GONE);
+            tvBy.setVisibility(View.VISIBLE);
+            rlVipYes.setVisibility(View.GONE);
 
             llMyJf.setVisibility(View.GONE);
             llMyJfTips.setVisibility(View.VISIBLE);
@@ -192,11 +266,17 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             tvMyQi.setText("年卡权益");
             tvOpenTips.setText("暂未开通");
 
+
+
         }
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (userInfo.getUserType() == 2){
+                    return;
+                }
                 //判断是否滑到的底部
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                     page++;
@@ -204,43 +284,82 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                 }
             }
         });
+
+
     }
 
     private int page = 1;
 
     @Override
     public void initData() {
-        if (userInfo.getUserType() != 3) return;
-        Map<String, String> map = new HashMap<>();
-        map.put("isEquity", "0");
-        map.put("pageNum",String.valueOf(page));
-        String str = JsonUtil.obj2String(map);
-        String token = (String) SPUtils.instance(this, 1).getkey("token", "");
-        OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.vipGoodsList, str, token, new GsonObjectCallback<String>(App.BASE) {
-            @Override
-            public void onUi(String result) {
-                try {
-                    JSONObject object = new JSONObject(result);
-                    JSONObject dataObj = object.optJSONObject("data");
-                    String str = dataObj.optString("records");
-                    mData = JsonUtil.string2Obj(str, List.class, GoodsMo.class);
-                    if (mData != null) {
-                        if (page == 0){
-                            adapter.updateData(mData);
-                        }else {
-                            adapter.addAll(mData);
-                        }
+
+        if (userInfo.getUserType() == 2) {
+
+            String token = (String) SPUtils.instance(VipActivity.this, 1).getkey("token", "");
+
+            Map<String,String>map = new HashMap<>();
+            String str = JsonUtil.obj2String(map);
+            OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.sNoVipGoodsList, str,token, new GsonObjectCallback<String>(App.BASE) {
+                @Override
+                public void onUi(String result) {
+                    try {
+
+                        JSONObject object = new JSONObject(result);
+                        String str = object.optString("data");
+                        List<VipCommodity> vipCommodityList = JsonUtil.string2Obj(str, List.class, VipCommodity.class);
+                        adapter.updateData(vipCommodityList);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
 
-            @Override
-            public void onFailed(Call call, IOException e) {
+                @Override
+                public void onFailed(Call call, IOException e) {
 
-            }
-        });
+                }
+            });
+
+        } else if (userInfo.getUserType() == 3) {
+            Map<String, String> map = new HashMap<>();
+            map.put("pageNum", String.valueOf(page));
+            String str = JsonUtil.obj2String(map);
+            String token = (String) SPUtils.instance(this, 1).getkey("token", "");
+            OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.vipGoodsList, str, token, new GsonObjectCallback<String>(App.BASE) {
+                @Override
+                public void onUi(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        JSONObject dataObj = object.optJSONObject("data");
+
+                        //月份
+                        String moth = dataObj.optString("month");
+                        tvMonth.setText(moth);
+
+                        //商品列表
+                        JSONObject pageObj = dataObj.optJSONObject("goodsListApiVoIPage");
+                        String str = pageObj.optString("records");
+                        mData = JsonUtil.string2Obj(str, List.class, GoodsMo.class);
+                        if (mData != null) {
+                            if (page == 0) {
+                                adapter.updateData(mData);
+                            } else {
+                                adapter.addAll(mData);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailed(Call call, IOException e) {
+
+                }
+            });
+        }
+
+
     }
 
     @Override
@@ -419,5 +538,26 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         public void setName(String name) {
             this.name = name;
         }
+    }
+
+    public Bitmap returnBitMap(String url){
+        URL myFileUrl = null;
+        Bitmap bitmap = null;
+        try {
+            myFileUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 }

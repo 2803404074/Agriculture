@@ -12,6 +12,7 @@ public class GoodsMo implements Serializable {
     private String goodsDesc;
     private String categoryId;
     private String picUrl;
+    private String goodsPic;
     private String spikeStartTime;
     private String spikeEndTime;
     private String shopName;
@@ -19,6 +20,14 @@ public class GoodsMo implements Serializable {
     private String price;
 
     public GoodsMo() {
+    }
+
+    public String getGoodsPic() {
+        return goodsPic;
+    }
+
+    public void setGoodsPic(String goodsPic) {
+        this.goodsPic = goodsPic;
     }
 
     public String getOriginalPrice() {

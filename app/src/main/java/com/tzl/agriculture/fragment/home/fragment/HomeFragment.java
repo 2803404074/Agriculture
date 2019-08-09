@@ -1,9 +1,11 @@
 package com.tzl.agriculture.fragment.home.fragment;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -32,6 +31,7 @@ import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
 import com.tzl.agriculture.fragment.home.activity.SearchActivity;
 import com.tzl.agriculture.fragment.home.util.HomeAdapter;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
+import com.tzl.agriculture.fragment.vip.activity.VipActivity;
 import com.tzl.agriculture.fragment.xiangc.activity.BroadcastActivity;
 import com.tzl.agriculture.fragment.xiangc.activity.StoryActivity;
 import com.tzl.agriculture.main.MainActivity;
@@ -51,8 +51,9 @@ import com.tzl.agriculture.util.UserData;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseFragment;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
-import com.youth.banner.Banner;
+import com.tzl.agriculture.view.VerticalTextview;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -87,6 +88,8 @@ public class HomeFragment extends BaseFragment {
 
     private List<HomeMo> mData = new ArrayList<>();
 
+    private MessageBroadcastReceiver receiver = new MessageBroadcastReceiver();
+
     public static HomeFragment getInstance() {
         HomeFragment homeFragment = new HomeFragment();
         return homeFragment;
@@ -99,6 +102,8 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+        //注册广播
+        registerBroadcast();
 
         rlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,13 +119,11 @@ public class HomeFragment extends BaseFragment {
         mRefreshLayout.setPrimaryColorsId(R.color.colorPrimaryDark, android.R.color.white);//主题颜色
         homeRecycler = view.findViewById(R.id.home_recycler);
         homeRecycler.setLayoutManager(new LinearLayoutManager(mContext));
-        //homeRecycler.addItemDecoration(new DividerItemDecoration(mContext, VERTICAL));
         homeRecycler.setItemAnimator(new DefaultItemAnimator());
 
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
                 mData.clear();
                 setAdapter2();
                 initData();
@@ -130,11 +133,14 @@ public class HomeFragment extends BaseFragment {
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                //refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
         setAdapter2();
     }
+
+    private VerticalTextview tvBro;
+
 
     private void setAdapter2() {
 
@@ -154,7 +160,6 @@ public class HomeFragment extends BaseFragment {
                     BannerUtil util = new BannerUtil(context);
                     util.banner3(banner,bannerMos);
 
-                    //BannerUtil.startBanner(banner, HomeFragment.this.getActivity(), mUrl, mTitle);
                 } else if (mType == homeAdapter.mTypeOne) {
                     TextView tvTitle = holder.getView(R.id.tv_title);
                     tvTitle.setText(mData.get(mType).getArticleList().getTypeName());
@@ -226,26 +231,31 @@ public class HomeFragment extends BaseFragment {
                             startActivity(intent);
                         }
                     });
-                } else if (mType == homeAdapter.mTypeThree) {
+                } else if (mType == homeAdapter.mTypeThree) {//播报
                     XiangcMo xiangcMo = mData.get(mType).getArticleList();
                     holder.setText(R.id.tv_title_bb, xiangcMo.getTypeName());
+                    tvBro = holder.getView(R.id.tv_bro);
+
                     List<XiangcMo.Article> article = xiangcMo.getArticleInfoList();
-                    TextView textView = holder.getView(R.id.tv_bro);
-                    if (null != article && article.size() > 0) {
-                        textView.setText(article.get(0).getTitle());
-                        textView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getContext(), HtmlForXcActivity.class);
-                                intent.putExtra("articleId", article.get(0).getArticleId());
-                                startActivity(intent);
-                            }
-                        });
-                    } else {
-                        textView = holder.getView(R.id.tv_bro);
-                        textView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                        textView.setText("请添加该区域的内容");
+
+                    ArrayList<String> textList = new ArrayList<>();
+                    for (int i = 0; i < article.size(); i++) {
+                        textList.add(article.get(i).getTitle());
                     }
+                    tvBro.setTextList(textList);
+                    tvBro.setText(18, 5, getResources().getColor(R.color.colorGri2));//设置属性
+                    tvBro.setTextStillTime(5000);//设置停留时长间隔
+                    tvBro.setAnimTime(500);//设置进入和退出的时间间隔
+                    tvBro.startAutoScroll();
+
+                    tvBro.setOnItemClickListener(new VerticalTextview.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Intent intent = new Intent(getContext(),HtmlForStoryActivity.class);
+                            intent.putExtra("articleId",article.get(position).getArticleId());
+                            startActivity(intent);
+                        }
+                    });
 
                     holder.getView(R.id.tv_news_more).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -268,7 +278,8 @@ public class HomeFragment extends BaseFragment {
                     holder.getView(R.id.iv_inv).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showShareDialog();
+                            Intent intent = new Intent(getContext(), VipActivity.class);
+                            startActivity(intent);
                         }
                     });
 
@@ -305,37 +316,17 @@ public class HomeFragment extends BaseFragment {
                         }
                     });
 
-
                     //发现好货
                     List<HomeMo.LimitGoods> goodsList = xchwModel.getGoodsTypeList();
                     holder.setText(R.id.tv_find, goodsList.get(0).getTypeName());
                     holder.setText(R.id.tv_mess01, goodsList.get(0).getTag());
                     if (null != goodsList.get(0).getGoodsList() && goodsList.get(0).getGoodsList().size() > 0) {
                         holder.setImageByUrl(R.id.iv_find_01, goodsList.get(0).getGoodsList().get(0).getPicUrl());
-//                        holder.getView(R.id.iv_find_01).setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
-//                                intent.putExtra("goodsId", goodsList.get(0).getGoodsList().get(0).getGoodsId());
-//                                intent.putExtra("type", 2);
-//                                startActivity(intent);
-//                            }
-//                        });
                     }
 
                     if (null != goodsList.get(0).getGoodsList() && goodsList.get(0).getGoodsList().size() > 1) {
                         holder.setImageByUrl(R.id.iv_find_02, goodsList.get(0).getGoodsList().get(1).getPicUrl());
-//                        holder.getView(R.id.iv_find_02).setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
-//                                intent.putExtra("goodsId", goodsList.get(0).getGoodsList().get(1).getGoodsId());
-//                                intent.putExtra("type", 2);
-//                                startActivity(intent);
-//                            }
-//                        });
                     }
-
 
                     //去旅游
                     List<HomeMo.LimitGoods> goodsList2 = xchwModel.getGoodsTypeList();
@@ -513,6 +504,8 @@ public class HomeFragment extends BaseFragment {
                     e.printStackTrace();
                     spinKitView.setVisibility(View.GONE);
                 }
+
+                mRefreshLayout.finishRefresh();
             }
 
             @Override
@@ -521,6 +514,7 @@ public class HomeFragment extends BaseFragment {
                 HomeFragment.this.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        mRefreshLayout.finishRefresh();
                         spinKitView.setVisibility(View.GONE);
                         ivTips.setImageResource(R.mipmap.null_network);
                         ivTips.setVisibility(View.VISIBLE);
@@ -534,6 +528,7 @@ public class HomeFragment extends BaseFragment {
                 HomeFragment.this.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        mRefreshLayout.finishRefresh();
                         spinKitView.setVisibility(View.GONE);
                         ivTips.setImageResource(R.mipmap.null_network);
                         ivTips.setVisibility(View.VISIBLE);
@@ -543,8 +538,6 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
-
-
     //订单农业，扶贫厅 弹窗
     private void showTwo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setIcon(R.mipmap.application).setTitle("趣乡服务")
@@ -578,50 +571,6 @@ public class HomeFragment extends BaseFragment {
         dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(getContext()) / 4 * 3), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
-    /**
-     * 分享弹窗
-     */
-    private void showShareDialog() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_share_app, null, false);
-        final AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(view).create();
-        UserInfo info = UserData.instance(getContext()).getUsreInfo();
-        //背景
-        RelativeLayout rlBg = view.findViewById(R.id.rl_bg);
-        rlBg.setBackgroundResource(R.mipmap.share_news);
-        //头像
-        NiceImageView imageView = view.findViewById(R.id.nice_img);
-        Glide.with(getContext()).load(info.getHeadUrl()).into(imageView);
-
-        //昵称
-        TextView tvName = view.findViewById(R.id.tv_name);
-        tvName.setText(info.getNickname());
-
-        //二维码
-        ImageView img = view.findViewById(R.id.iv_img);
-
-        //邀请码
-        TextView tvCode = view.findViewById(R.id.tv_code);
-
-
-        initDialogImg(img, tvCode);
-
-        view.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        view.findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtil.showShort(getContext(), "图片已保存至本地：c:/app/article/2019/07/25/agriculterapp.jpg");
-            }
-        });
-        dialog.show();
-        //此处设置位置窗体大小，我这里设置为了手机屏幕宽度的3/4
-        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(getContext()) / 4 * 3), LinearLayout.LayoutParams.WRAP_CONTENT);
-    }
-
     private void initDialogImg(ImageView imageView, TextView tvCode) {
         OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.shareApp, "", getToken(), new GsonObjectCallback<String>(App.BASE) {
             @Override
@@ -645,4 +594,46 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (tvBro != null){
+            tvBro.startAutoScroll();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (tvBro != null){
+            tvBro.stopAutoScroll();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (tvBro != null){
+            tvBro.startAutoScroll();
+        }
+    }
+
+
+    private void registerBroadcast() {
+        IntentFilter filter = new IntentFilter("android.intent.action.DOUBLE_ACTION");
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, filter);
+    }
+
+    private class MessageBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.getAction().equals("android.intent.action.DOUBLE_ACTION")){
+                homeRecycler.scrollToPosition(0);
+                mRefreshLayout.setEnableRefresh(true);
+            }
+        }
+    }
+
 }

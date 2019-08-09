@@ -92,6 +92,17 @@ public class GoodsDetailsMo {
         private String shopId;//店铺id
         private String name;//店铺名称
         private String logoIcon;//店铺logo
+        private int purchaseLimit;//限购，0无线，1限购一件
+        private String freeShipping;//邮费
+
+
+        public int getPurchaseLimit() {
+            return purchaseLimit;
+        }
+
+        public String getFreeShipping() {
+            return freeShipping;
+        }
 
         public int getNumber() {
             return number;

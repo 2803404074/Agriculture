@@ -26,26 +26,23 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_190"
+                android:layout_height="@dimen/dp_200"
                 android:background="@mipmap/menber_beij">
 
-                <com.shehuan.niv.NiceImageView
+                <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/drawee_img"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_centerHorizontal="true"
                     android:layout_width="@dimen/dp_65"
                     android:layout_height="@dimen/dp_65"
-                    android:src="@mipmap/ic_launcher"
-                    app:border_width="@dimen/dp_2"
-                    android:scaleType="fitXY"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/dp_10"
-                    app:border_color="@color/colorYellow"
-                    app:is_circle="true" />
+                    fresco:roundAsCircle="true" />
 
                 <LinearLayout
                     android:id="@+id/ll_ph"
                     android:layout_below="@+id/drawee_img"
                     android:layout_centerHorizontal="true"
                     android:layout_width="@dimen/dp_180"
+                    android:layout_marginTop="@dimen/dp_3"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
@@ -243,17 +240,46 @@
                 android:layout_height="@dimen/dp_10"
                 android:background="@color/colorGri"/>
 
-            <TextView
-                android:id="@+id/tv_by"
+            <ImageView
+                android:id="@+id/tv_vip_no"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="包邮邀新专区"
-                android:background="@android:color/white"
-                android:textSize="@dimen/sp_18"
-                android:paddingVertical="@dimen/dp_5"
-                android:paddingHorizontal="@dimen/dp_10"
-                android:textColor="@color/colorGri2"
-                android:textStyle="bold"/>
+                android:layout_height="@dimen/dp_40"
+                android:src="@mipmap/vip_qnsg"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_vip_yes"
+                android:paddingHorizontal="@dimen/dp_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="水果礼"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="#000"/>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true">
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_30"
+                        android:src="@mipmap/month_bg"/>
+
+                    <TextView
+                        android:id="@+id/tv_month"
+                        android:textColor="@color/colorMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="10"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recy"
                 android:layout_width="match_parent"

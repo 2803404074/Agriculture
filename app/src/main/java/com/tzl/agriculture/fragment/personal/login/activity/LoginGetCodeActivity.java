@@ -20,6 +20,7 @@ import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
+import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -84,17 +85,6 @@ public class LoginGetCodeActivity extends SetBaseActivity {
         myCountDownTimer = new MyCountDownTimer(60000, 1000);
         myCountDownTimer.start();
 
-        EventHandler eh = new EventHandler() {
-            @Override
-            public void afterEvent(int event, int result, Object data) {
-                Message msg = new Message();
-                msg.arg1 = event;
-                msg.arg2 = result;
-                msg.obj = data;
-                mHandler.sendMessage(msg);
-            }
-        };
-        SMSSDK.registerEventHandler(eh);
         tvCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,13 +103,60 @@ public class LoginGetCodeActivity extends SetBaseActivity {
         tvReGet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //SMSSDK.getVerificationCode("86", phoneNumber);
-                myCountDownTimer.start();
+                getCodeMeth();
             }
         });
-
     }
 
+    private void getCodeMeth() {
+        Map<String, String> map = new HashMap<>();
+
+        String strTag = "";
+        if (StringUtils.isEmpty(getIntent().getStringExtra("regist"))){
+            strTag = "login";
+        }else {
+            strTag = "register";
+        }
+
+        map.put("tempCode", strTag);
+        map.put("phoneNum", phoneNumber);
+        String str = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(User.BASE).doPostJson2(User.sendSms, str, getToken(),
+                new GsonObjectCallback<String>(User.BASE) {
+                    @Override
+                    public void onUi(String result) {
+                        try {
+                            JSONObject object = new JSONObject(result);
+                            if (object.optInt("code") == 0) {
+                                myCountDownTimer.start();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(LoginGetCodeActivity.this, "请求超时");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        super.onFailure(call, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(LoginGetCodeActivity.this, "网络异常");
+                            }
+                        });
+                    }
+                });
+    }
     @Override
     public void initData() {
 
@@ -129,12 +166,11 @@ public class LoginGetCodeActivity extends SetBaseActivity {
     private void loginJudge() {
         if (StringUtils.isEmpty(phoneNumber)){
             ToastUtil.showShort(this,"手机号不能为空");
+            spinKitView.setVisibility(View.GONE);
             return;
         }
         Map<String, String> map = new HashMap<>();
-        map.put("appkey", "2b95262c53922");
-        map.put("phone", phoneNumber);
-        map.put("zone", "86");
+        map.put("phoneNum", phoneNumber);
         map.put("code", etCode.getText().toString());
         String str = JsonUtil.obj2String(map);
         OkHttp3Utils.getInstance(User.BASE).doPostJson(User.login, str, new GsonObjectCallback<String>(User.BASE) {
@@ -142,25 +178,18 @@ public class LoginGetCodeActivity extends SetBaseActivity {
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == -1){
-                        ToastUtil.showShort(LoginGetCodeActivity.this,object.optString("msg"));
-                        return;
-                    }
-                    JSONObject dataObj = object.optJSONObject("data");
-                    String token = dataObj.optString("token");
-                    if (!StringUtils.isEmpty(token)){
-                        Intent intent = new Intent(LoginGetCodeActivity.this, MainActivity.class);
-                        SPUtils.instance(LoginGetCodeActivity.this,1).put("login","1");
+                    if (object.optInt("code") == 0){
+                        JSONObject dataObj = object.optJSONObject("data");
+                        String token = dataObj.optString("token");
                         SPUtils.instance(LoginGetCodeActivity.this,1).put("token",token);
+                        Intent intent = new Intent(LoginGetCodeActivity.this, MainActivity.class);
                         startActivity(intent);
+
                         finish();
                         if (LoginActivity.instance!=null){
                             LoginActivity.instance.finish();
                         }
                     }
-                    tvCheck.setBackgroundResource(R.drawable.shape_login_blue);
-                    tvCheck.setClickable(true);
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -179,10 +208,12 @@ public class LoginGetCodeActivity extends SetBaseActivity {
             ToastUtil.showShort(this,"手机号不能为空");
             return;
         }
+        if (StringUtils.isEmpty(etCode.getText().toString())){
+            ToastUtil.showShort(this,"验证码不能为空");
+            return;
+        }
         Map<String, String> map = new HashMap<>();
-        map.put("appkey", "2b95262c53922");
-        map.put("phone", phoneNumber);
-        map.put("zone", "86");
+        map.put("phoneNum", phoneNumber);
         map.put("code", etCode.getText().toString());
         String str = JsonUtil.obj2String(map);
         OkHttp3Utils.getInstance(User.BASE).doPostJson(User.checkCode, str, new GsonObjectCallback<String>(User.BASE) {
@@ -193,29 +224,14 @@ public class LoginGetCodeActivity extends SetBaseActivity {
                     if (object.optInt("code") == 0){
                         if (object.optBoolean("data")){
                             //注册信息页面
-                            if (!StringUtils.isEmpty(getIntent().getStringExtra("regist"))) {
-                                Intent intent = new Intent(LoginGetCodeActivity.this, RegistMessActivity.class);
-                                intent.putExtra("phone", phoneNumber);
-                                intent.putExtra("openId", getIntent().getStringExtra("openId"));
-                                intent.putExtra("userName", getIntent().getStringExtra("userName"));
-                                intent.putExtra("sex", getIntent().getIntExtra("sex",1));
-                                intent.putExtra("imgUrl", getIntent().getStringExtra("imgUrl"));
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                //直接登陆
-                                Intent intent = new Intent(LoginGetCodeActivity.this, MainActivity.class);
-                                SPUtils.instance(LoginGetCodeActivity.this, 1).put("login", "1");
-                                startActivity(intent);
-                                finish();
-                                LoginActivity.instance.finish();
-                            }
+                            Intent intent = new Intent(LoginGetCodeActivity.this, RegistMessActivity.class);
+                            intent.putExtra("phone", phoneNumber);
+                            startActivity(intent);
+                            finish();
                         }
                     }else {
                         ToastUtil.showShort(LoginGetCodeActivity.this,"状态码:"+object.optString("code , ")+object.optString("msg"));
                     }
-                    tvCheck.setBackgroundResource(R.drawable.shape_login_blue);
-                    tvCheck.setClickable(true);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -227,22 +243,6 @@ public class LoginGetCodeActivity extends SetBaseActivity {
             }
         });
     }
-
-    Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message msg) {
-            int event = msg.arg1;
-            int result = msg.arg2;
-            if (result == SMSSDK.RESULT_COMPLETE) {
-                if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                    Toast.makeText(getApplicationContext(), "验证码已经发送", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(getApplicationContext(), "验证码发送失败", Toast.LENGTH_SHORT).show();
-            }
-            return false;
-        }
-    });
 
 
     /**

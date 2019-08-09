@@ -14,6 +14,8 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
 import com.tzl.agriculture.mall.activity.OrderDetailsActivity;
 import com.tzl.agriculture.model.GoodsMo;
+import com.tzl.agriculture.util.CountDownUtil;
+import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
@@ -22,6 +24,7 @@ import com.tzl.agriculture.view.BaseFragmentFromType;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
 import com.tzl.agriculture.view.onLoadMoreListener;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -78,7 +81,8 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 tvMarketPrice.setText(o.getOriginalPrice());
                 tvMarketPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
 
-                holder.setText(R.id.tv_date,o.getSpikeEndTime());
+                TextView tvDate = holder.getView(R.id.tv_date);
+                dowTime(o.getSpikeEndTime(),tvDate);
             }
         };
         recyclerView.setAdapter(adapter);
@@ -139,13 +143,12 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                             if (adapter.getData() == null || adapter.getData().size() == 0){
                                 ivTips.setVisibility(View.VISIBLE);
                             }
-                            ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
+                            //ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
                         }
                     } else {
                         if (adapter.getData() == null || adapter.getData().size() == 0){
                             ivTips.setVisibility(View.VISIBLE);
                         }
-                        ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
                     }
 
                 } catch (JSONException e) {
@@ -175,6 +178,24 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                         }
                     }
                 });
+            }
+        });
+    }
+
+    private void dowTime(String data,TextView tvDate) {
+        if (StringUtils.isEmpty(data) || data.equals("null")){
+            tvDate.setText("活动已结束");
+            return;
+        }
+        CountDownUtil downUtil = new CountDownUtil();
+        downUtil.start(DateUtil.timeToStamp(data), new CountDownUtil.OnCountDownCallBack() {
+            @Override
+            public void onProcess(int day, int hour, int minute, int second) {
+                tvDate.setText(day + "天 " + hour + "时 " + minute + "分 " + second + "秒");
+            }
+            @Override
+            public void onFinish() {
+                tvDate.setText("活动已结束");
             }
         });
     }

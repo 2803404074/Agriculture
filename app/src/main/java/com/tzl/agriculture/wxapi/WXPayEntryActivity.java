@@ -12,6 +12,7 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tzl.agriculture.mall.activity.OrderActivity;
 import com.tzl.agriculture.mall.activity.OrderPayStatusActivity;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ToastUtil;
@@ -50,9 +51,15 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
                 intent.putExtra("orderId",(String) SPUtils.instance(WXPayEntryActivity.this,1).getkey("orderId",""));
                 startActivity(intent);
                 finish();
+                if (OrderActivity.instance != null){
+                    OrderActivity.instance.finish();
+                }
             }else {
                 //支付失败
                 finish();
+                if (OrderActivity.instance != null){
+                    OrderActivity.instance.finish();
+                }
                 ToastUtil.showShort(this,"支付失败,查看一下重复的订单参数是否一致");
             }
         }

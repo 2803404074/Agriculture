@@ -169,17 +169,11 @@
                 android:paddingHorizontal="@dimen/dp_5"
                 android:layout_marginHorizontal="@dimen/dp_10"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="马上成为销售顾问"
-                    android:gravity="center"
 
-                    android:background="@android:color/white"
-                    android:textSize="@dimen/sp_18"
-                    android:padding="@dimen/dp_8"
-                    android:textColor="@color/colorGri2"
-                    android:textStyle="bold"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:src="@mipmap/vip_cwxs"/>
 
                 <View
                     android:layout_marginHorizontal="@dimen/dp_10"

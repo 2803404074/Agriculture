@@ -1,16 +1,24 @@
 package com.tzl.agriculture.mall.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -119,15 +127,15 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setNestedScrollingEnabled(false);
-        adapter = new BaseAdapter<OrderMo.GoodsThis>(this,recyclerView,list,R.layout.item_my_order_goods) {
+        adapter = new BaseAdapter<OrderMo.GoodsThis>(this, recyclerView, list, R.layout.item_my_order_goods) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo.GoodsThis o) {
-                holder.setText(R.id.tv_title,o.getGoodsName());
-                holder.setImageByUrl(R.id.iv_img,o.getPicUrl());
-                holder.setText(R.id.tv_gg,o.getGoodsSpecs());
+                holder.setText(R.id.tv_title, o.getGoodsName());
+                holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
+                holder.setText(R.id.tv_gg, o.getGoodsSpecs());
                 holder.getView(R.id.tv_price).setVisibility(View.GONE);
 
-                holder.setText(R.id.tv_num,"X"+o.getGoodsNum());
+                holder.setText(R.id.tv_num, "X" + o.getGoodsNum());
             }
         };
         recyclerView.setAdapter(adapter);
@@ -135,16 +143,16 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
 
     @Override
     public void initData() {
-        Map<String,String>map = new HashMap<>();
-        map.put("orderId",getIntent().getStringExtra("orderId"));
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", getIntent().getStringExtra("orderId"));
         String str = JsonUtil.obj2String(map);
-        String token = (String) SPUtils.instance(this,1).getkey("token","");
+        String token = (String) SPUtils.instance(this, 1).getkey("token", "");
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.orderInfo, str, token, new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == 0){
+                    if (object.optInt("code") == 0) {
                         JSONObject dataObj = object.optJSONObject("data");
 
                         //地址信息
@@ -167,19 +175,19 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                         //订单商品列表
                         JSONObject shopObj = dataObj.optJSONObject("shopList");
                         String goodsListBo = shopObj.optString("goodsListBo");
-                        list = JsonUtil.string2Obj(goodsListBo,List.class,OrderMo.GoodsThis.class);
-                        if (list== null)return;
+                        list = JsonUtil.string2Obj(goodsListBo, List.class, OrderMo.GoodsThis.class);
+                        if (list == null) return;
 
-                        if (list!=null && list.size()>0){
+                        if (list != null && list.size() > 0) {
                             adapter.updateData(list);
                         }
 
                         phone = shopObj.optString("shopTel");
 
                         //物流名称
-                        tvWlmc.setText(TextUtil.checkStrNull(shopObj.optString("dtName"))?"---":shopObj.optString("dtName"));
+                        tvWlmc.setText(TextUtil.checkStrNull(shopObj.optString("dtName")) ? "---" : shopObj.optString("dtName"));
                         //快递单号
-                        tvKddh.setText(TextUtil.checkStrNull(shopObj.optString("dtNum"))?"---":shopObj.optString("dtNum"));
+                        tvKddh.setText(TextUtil.checkStrNull(shopObj.optString("dtNum")) ? "---" : shopObj.optString("dtNum"));
 
                         String shopName = shopObj.optString("shopName");
                         String shopOrderAmount = shopObj.optString("shopOrderAmount");
@@ -187,8 +195,8 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                         String createTime = shopObj.optString("createTime");
                         String remarksUser = shopObj.optString("remarksUser");
 
-                        setUi(addressMo,shopName,shopOrderAmount,orderNum,createTime,remarksUser);
-                    }else {
+                        setUi(addressMo, shopName, shopOrderAmount, orderNum, createTime, remarksUser);
+                    } else {
                         errTips(object.optInt("code"));
                     }
 
@@ -207,7 +215,7 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
     //提示
     private void errTips(int code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setIcon(R.mipmap.application).setTitle("趣乡服务")
-                .setMessage("错误代码:"+code).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setMessage("错误代码:" + code).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -224,21 +232,21 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
         builder.create().show();
     }
 
-    private void setUi(AddressMo addressMo,String shopName, String shopOrderAmount, String orderNum, String createTime, String remarksUser) {
-        if (null!=addressMo){
+    private void setUi(AddressMo addressMo, String shopName, String shopOrderAmount, String orderNum, String createTime, String remarksUser) {
+        if (null != addressMo) {
             tvAdName.setText(TextUtil.checkStr2Str(addressMo.getReceiptName()));
             tvPhone.setText(TextUtil.checkStr2Str(addressMo.getReceiptPhone()));
             String address = TextUtil.checkStr2Str(addressMo.getProvinceStr())
-                    +TextUtil.checkStr2Str(addressMo.getCityStr())
-                    +TextUtil.checkStr2Str(addressMo.getAreaStr())
-                    +TextUtil.checkStr2Str(addressMo.getStreetStr())
-                    +TextUtil.checkStr2Str(addressMo.getAddress());
+                    + TextUtil.checkStr2Str(addressMo.getCityStr())
+                    + TextUtil.checkStr2Str(addressMo.getAreaStr())
+                    + TextUtil.checkStr2Str(addressMo.getStreetStr())
+                    + TextUtil.checkStr2Str(addressMo.getAddress());
             tvAddress.setText(address);
         }
 
         tvDepName.setText(shopName);
 
-        tvGoodsNum.setText("共"+String.valueOf(list.size())+"件商品");
+        tvGoodsNum.setText("共" + String.valueOf(list.size()) + "件商品");
         tvPrice.setText(shopOrderAmount);
 
         tvMess.setText(TextUtil.checkStr2Str(remarksUser));
@@ -250,11 +258,12 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.ll_lickDep:
                 showBottomDialog();
                 break;
-                default:break;
+            default:
+                break;
         }
     }
 
@@ -274,10 +283,46 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                 dialog.dismiss();
             }
         });
+        view.findViewById(R.id.tv_dial).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!TextUtils.isEmpty(phone)) {
+
+                    if (ContextCompat.checkSelfPermission(OrderDetailsActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                        //点击拨打电话
+                        Intent intent = new Intent(android.content.Intent.ACTION_CALL, Uri.parse("tel:" + phone.trim()));
+                        startActivity(intent);
+                    } else {
+                        ActivityCompat.requestPermissions(OrderDetailsActivity.this,
+                                new String[]{Manifest.permission.CALL_PHONE}, 100);
+                    }
+
+                }else{
+                    Toast.makeText(OrderDetailsActivity.this,"号码不能为空！",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
         dialog.contentView(view)
                 .inDuration(200)
                 .outDuration(200)
                 .cancelable(true)
                 .show();
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            //点击拨打电话
+            Intent intent = new Intent(android.content.Intent.ACTION_CALL, Uri.parse("tel:" + phone.trim()));
+            startActivity(intent);
+        }
+    }
+
+
 }
+

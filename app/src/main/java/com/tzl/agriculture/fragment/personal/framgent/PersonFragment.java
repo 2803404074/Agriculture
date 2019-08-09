@@ -163,7 +163,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-                initData();
+                getUserInfo();
             }
         });
 
@@ -271,7 +271,11 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         view.findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.showShort(getContext(),"图片已保存至本地：c:/app/article/2019/07/25/agriculterapp.jpg");
+                //保存图片
+
+
+
+
             }
         });
         dialog.show();
@@ -307,6 +311,11 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void initData() {
+
+    }
+
+
+    private void getUserInfo(){
         //获取用户信息
         OkHttp3Utils.getInstance(User.BASE).doGet(User.getUserInfo2, getToken(), new GsonObjectCallback<String>(User.BASE) {
             @Override
@@ -332,7 +341,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     }else if (object.optInt("code") == -1){
                         ToastUtil.showShort(getContext(),TextUtil.checkStr2Str(object.optString("msg")));
                     }else {
-                       showTwo();
+                        showTwo();
                     }
 
                 } catch (JSONException e) {
@@ -364,8 +373,10 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 });
             }
         });
-
     }
+
+
+
 
     /**
      * 绑定用户数据
@@ -469,5 +480,11 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 break;
             default:break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserInfo();
     }
 }

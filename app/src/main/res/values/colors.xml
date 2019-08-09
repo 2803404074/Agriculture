@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#225953</color>
+    <color name="colorMonth">#4a9a91</color>
     <color name="darkMeng">#668B8B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorAccentButton">#F8313F</color>
@@ -18,4 +19,7 @@
     <color name="colorTouming">#80000000</color>
 
     <color name="colorTouming2">#00000000</color>
+    <color name="colorGreen">#34b386</color>
+
+    <color name="colorGray">#fccc</color>
 </resources>

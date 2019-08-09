@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -63,6 +64,7 @@ import okhttp3.Call;
 
 public class OrderActivity extends SetBaseActivity implements View.OnClickListener {
 
+    public static OrderActivity instance;
     @BindView(R.id.spin_kit)
     SpinKitView spinKitView;
 
@@ -140,6 +142,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
+        instance = this;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(OrderActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 //没有权限则申请权限
@@ -248,9 +251,27 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                         //优惠券数量
                         tvYhqSize.setText(TextUtil.checkStr2Str(couponBosObj.optString("useCouponNum")));
 
+                        String member = couponBosObj.optString("member");
+                        if (!TextUtils.isEmpty(member)){
+                            if (member.equals("true")){//是会员
+                                String memberAmount = couponBosObj.optString("memberAmount");
+                                //订单已优惠（整个页面的）
+                                tvYouh.setText(TextUtil.checkStr2Str("原价："+
+                                        couponBosObj.optString("totalAmount")+"，已优惠"+couponBosObj.optString("deductedAmount")+"元 ，会员折扣优惠" + memberAmount +"元。"));
+                            }else{
+                                //订单已优惠（整个页面的）
+                                tvYouh.setText(TextUtil.checkStr2Str("原价："+
+                                        couponBosObj.optString("totalAmount")+"，已优惠"+couponBosObj.optString("deductedAmount")+"元"));
+                            }
+                        }else{
+                            //订单已优惠（整个页面的）
+                            tvYouh.setText(TextUtil.checkStr2Str("原价："+
+                                    couponBosObj.optString("totalAmount")+"，已优惠"+couponBosObj.optString("deductedAmount")+"元"));
+                        }
+
                         //订单已优惠（整个页面的）
-                        tvYouh.setText(TextUtil.checkStr2Str("原价："+
-                                couponBosObj.optString("totalAmount")+"，已优惠"+couponBosObj.optString("deductedAmount")+"元"));
+//                        tvYouh.setText(TextUtil.checkStr2Str("原价："+
+//                                couponBosObj.optString("totalAmount")+"，已优惠"+couponBosObj.optString("deductedAmount")+"元"));
 
                         //整个订单需要支付的金额
                         tvTotalPrice.setText(TextUtil.checkStr2Str(couponBosObj.optString("paymentAmount")));

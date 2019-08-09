@@ -18,7 +18,7 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:src="@mipmap/test1"/>
+            android:src="@mipmap/ic_new"/>
         <ImageView
             android:id="@+id/iv_inv"
             android:layout_width="0dp"
@@ -26,6 +26,6 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@mipmap/test2"/>
+            android:src="@mipmap/ic_member_centre"/>
     </LinearLayout>
 </LinearLayout>

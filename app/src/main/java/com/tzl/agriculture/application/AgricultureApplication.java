@@ -18,7 +18,9 @@ public class AgricultureApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //分享、短信
         MobSDK.init(this);
+        //圆图
         Fresco.initialize(this);
 
         //微信

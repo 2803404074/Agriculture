@@ -51,6 +51,7 @@ import cc.ibooker.zviewpagerlib.HolderCreator;
 import cc.ibooker.zviewpagerlib.OnItemClickListener;
 import config.Article;
 import okhttp3.Call;
+import okhttp3.Response;
 
 public class XiangcFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.nsv_view)
@@ -108,7 +109,7 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                //refreshLayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
                 pageNum = 1;
                 isLoad = false;
                 initData();
@@ -118,7 +119,7 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                //refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
 
@@ -241,7 +242,6 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onUi(String result) {
                 try {
-
                     spinKitView.setVisibility(View.GONE);
                     JSONObject object = new JSONObject(result);
                     if (object.optInt("code") == 0) {
@@ -257,6 +257,8 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
                     } else {
                         ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
                     }
+                    mRefreshLayout.finishRefresh();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -273,8 +275,20 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
                 XiangcFragment.this.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        mRefreshLayout.finishRefresh();
                         spinKitView.setVisibility(View.GONE);
                         ToastUtil.showShort(getContext(), "无法连接服务器，请检查您的网络");
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                super.onResponse(call, response);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRefreshLayout.finishRefresh();
                     }
                 });
             }

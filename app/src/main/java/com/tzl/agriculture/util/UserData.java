@@ -48,8 +48,8 @@ public class UserData {
                 userInfo.setNickname(str);
                 break;
             case 4:
-                if (userInfo.getSex().equals(str))return;
-                userInfo.setSex(str);
+                if (userInfo.getSex() == (Integer.parseInt(str)))return;
+                userInfo.setSex(Integer.parseInt(str));
                 break;
             case 5:
                 userInfo.setBirthday(str);

@@ -118,11 +118,10 @@ public class ApplyActivity extends SetBaseActivity implements View.OnClickListen
 
     @Override
     public void initData() {
-        String token = (String) SPUtils.instance(this,1).getkey("token","");
         Map<String,String>map = new HashMap<>();
-        map.put("isEquity","1");
+        map.put("","");
         String str = JsonUtil.obj2String(map);
-        OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.vipGoods, str, token, new GsonObjectCallback<String>(Mall.BASE) {
+        OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.openVipGoods, str, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
                 try {

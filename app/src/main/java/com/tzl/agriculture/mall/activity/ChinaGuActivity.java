@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -53,6 +54,7 @@ import butterknife.BindView;
 import config.Mall;
 import okhttp3.Call;
 
+/*中国馆*/
 public class ChinaGuActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.h_refreshLayout)
@@ -118,7 +120,10 @@ public class ChinaGuActivity extends BaseActivity implements View.OnClickListene
                 holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                 holder.setText(R.id.tv_name, o.getGoodsName());
                 holder.setText(R.id.tv_price, o.getPrice());
-                holder.setText(R.id.tv_marketPrice, o.getOriginalPrice());
+
+                TextView tvMarketPrice = holder.getView(R.id.tv_marketPrice);
+                tvMarketPrice.setText(o.getOriginalPrice());
+                tvMarketPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
             }
         };
         recyclerView.setAdapter(adapter);

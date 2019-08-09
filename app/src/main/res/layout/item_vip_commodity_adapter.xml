@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_margin="10dp"
+    android:id="@+id/rl_commodity_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@drawable/shape_item_vip_commodity">
+
+    <ImageView
+        android:id="@+id/iv_commodity_img"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:textColor="@color/colorGreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/iv_commodity_img"
+        android:layout_marginTop="10dp"
+        android:text="更多好礼>>>" />
+
+    <ImageView
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_5"
+        android:id="@+id/iv_month"
+        android:src="@mipmap/month_1"
+        android:layout_width="30dp"
+        android:layout_height="25dp" />
+
+</RelativeLayout>

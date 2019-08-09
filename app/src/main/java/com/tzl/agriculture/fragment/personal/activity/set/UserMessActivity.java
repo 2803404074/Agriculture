@@ -81,7 +81,7 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
     LinearLayout llSex;
 
     @BindView(R.id.drawee_img)
-    NiceImageView draweeView;
+    SimpleDraweeView draweeView;
 
     @BindView(R.id.tv_userName)
     TextView tvUserName;
@@ -124,8 +124,8 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
         if (null!=userInfo){
             tvNickName.setText(userInfo.getNickname());
             tvUserName.setText(userInfo.getUsername());
-            Glide.with(this).load(userInfo.getHeadUrl()).into(draweeView);
-            tvSex.setText(userInfo.getSex());
+            draweeView.setImageURI(userInfo.getHeadUrl());
+            tvSex.setText(userInfo.getSex() == 1?"男":"女");
             tvDate.setText(TextUtil.checkStr2Str(userInfo.getBirthday()));
         }
 
@@ -202,9 +202,9 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
         TextView tvNv = view.findViewById(R.id.tv_sex_nv);
         TextView tvBm = view.findViewById(R.id.tv_sex_bm);
 
-        if (userInfo.getSex().equals("男")){//男
+        if (userInfo.getSex()==1){//男
             tvNan.setBackgroundResource(R.drawable.shape_side_white);
-        }else if (userInfo.getSex().equals("女")){//女
+        }else if (userInfo.getSex()==0){//女
             tvNv.setBackgroundResource(R.drawable.shape_side_white);
         }else {
             tvBm.setBackgroundResource(R.drawable.shape_side_white);
@@ -379,8 +379,8 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                         this.headUri = imageUris;
 
                         Uri uri = bitmap2uri(UserMessActivity.this, bitmapCamera);
+                        draweeView.setImageURI(uri);
 
-                        Glide.with(this).load(uri).into(draweeView);
                         if (bitmapCamera != null) {
                             File file = null;   //图片地址
                             try {

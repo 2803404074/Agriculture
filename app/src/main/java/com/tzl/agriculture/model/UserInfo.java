@@ -28,7 +28,7 @@ public class UserInfo implements Serializable {
 
     private String nation;
 
-    private String sex;//1男  0女
+    private int sex;//1男  0女
 
     private String age;
 
@@ -145,11 +145,11 @@ public class UserInfo implements Serializable {
         this.nation = nation;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 

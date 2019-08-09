@@ -35,7 +35,7 @@ import config.Mall;
 import okhttp3.Call;
 
 /**
- * 优惠券 页面
+ * 优惠券 新人福利页面
  */
 public class CouponActivity extends SetBaseActivity {
 
@@ -78,6 +78,13 @@ public class CouponActivity extends SetBaseActivity {
 
                 int status = o.getCardState();
                 Log.e("niubi", "设置了" + status);
+
+                tvPrice.setTextColor(getResources().getColor(R.color.colorOrange));
+                tvPrice.setTextColor(getResources().getColor(R.color.colorOrange));
+                tvTip.setBackgroundResource(R.drawable.shape_login_orange);
+                tvTip.setClickable(false);
+                tvTip.setTextColor(getResources().getColor(R.color.colorW));
+                tvTip.setText("未使用");
 
                 switch (status) {
                     case 0:

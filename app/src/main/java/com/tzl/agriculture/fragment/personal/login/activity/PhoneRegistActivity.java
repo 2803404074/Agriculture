@@ -19,6 +19,8 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.JsonUtil;
+import com.tzl.agriculture.util.TextUtil;
+import com.tzl.agriculture.util.ToastUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
@@ -70,41 +72,9 @@ public class PhoneRegistActivity extends SetBaseActivity {
         return R.layout.activity_phone_regist;
     }
 
-    //{"detail":"如果当前appkey对应的包名没有通过审核，每天次appkey+包名最多可以发送20条短信","description":"当前appkey发送短信的数量超过限额"
-    Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message msg) {
-            int event = msg.arg1;
-            int result = msg.arg2;
-            //Object data = msg.obj;
-            if (result == SMSSDK.RESULT_COMPLETE) {
-                if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                    Toast.makeText(getApplicationContext(), "验证码已经发送", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(getApplicationContext(), "验证码发送失败", Toast.LENGTH_SHORT).show();
-//                if (null != LoginGetCodeActivity.getActivityInstance()){
-//                    LoginGetCodeActivity.getActivityInstance().finish();
-//                }
-            }
-            return false;
-        }
-    });
 
     @Override
     public void initView() {
-
-        EventHandler eh = new EventHandler() {
-            @Override
-            public void afterEvent(int event, int result, Object data) {
-                Message msg = new Message();
-                msg.arg1 = event;
-                msg.arg2 = result;
-                msg.obj = data;
-                mHandler.sendMessage(msg);
-            }
-        };
-        SMSSDK.registerEventHandler(eh);
 
         setTitle("手机号注册");
 
@@ -156,20 +126,7 @@ public class PhoneRegistActivity extends SetBaseActivity {
             @Override
             public void onClick(View view) {
                 number = etPhone.getText().toString();
-                SMSSDK.getVerificationCode("86", etPhone.getText().toString());
-                Intent intent = new Intent(PhoneRegistActivity.this, LoginGetCodeActivity.class);
-                intent.putExtra("phone", number);
-                intent.putExtra("regist", "1");
-
-                intent.putExtra("openId", getIntent().getStringExtra("openId"));
-                intent.putExtra("userName", getIntent().getStringExtra("userName"));
-                intent.putExtra("sex", getIntent().getIntExtra("sex",1));
-                intent.putExtra("imgUrl", getIntent().getStringExtra("imgUrl"));
-
-
-                startActivity(intent);
-
-                finish();
+                getCodeMeth();
             }
         });
     }
@@ -179,6 +136,51 @@ public class PhoneRegistActivity extends SetBaseActivity {
 
     }
 
+    private void getCodeMeth() {
+        Map<String, String> map = new HashMap<>();
+        map.put("tempCode", "register");
+        map.put("phoneNum", etPhone.getText().toString());
+        String str = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(User.BASE).doPostJson2(User.sendSms, str, getToken(),
+                new GsonObjectCallback<String>(User.BASE) {
+                    @Override
+                    public void onUi(String result) {
+                        try {
+                            JSONObject object = new JSONObject(result);
+                            if (object.optInt("code") == 0) {
+                                Intent intent = new Intent(PhoneRegistActivity.this, LoginGetCodeActivity.class);
+                                intent.putExtra("phone",etPhone.getText().toString());
+                                intent.putExtra("regist","1");
+                                startActivity(intent);
+                            }
+                            ToastUtil.showShort(PhoneRegistActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(PhoneRegistActivity.this, "请求超时");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        super.onFailure(call, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(PhoneRegistActivity.this, "网络异常");
+                            }
+                        });
+                    }
+                });
+    }
 
     /**
      * 输入完整的手机号，请求后端判断是否已存在

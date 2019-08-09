@@ -36,7 +36,7 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
 
     //头像
     @BindView(R.id.drawee_img)
-    NiceImageView draweeView;
+    SimpleDraweeView draweeView;
 
     //点击头像昵称区域
     @BindView(R.id.ll_mes)
@@ -75,7 +75,7 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
     public void initView() {
         setTitle("设置");
         tvNickName.setText(getIntent().getStringExtra("name"));
-        Glide.with(this).load(getIntent().getStringExtra("head")).into(draweeView);
+        draweeView.setImageURI(getIntent().getStringExtra("head"));
         llMes.setOnClickListener(this);
         tvAccountSave.setOnClickListener(this);
         tvFunctionResponse.setOnClickListener(this);

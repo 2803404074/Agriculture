@@ -19,6 +19,7 @@ import com.tzl.agriculture.application.AgricultureApplication;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
+import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseActivity;
 
@@ -63,6 +64,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @BindView(R.id.tv_tips)
     TextView tvTips;
+
     @Override
     public int setLayout() {
         return R.layout.activity_login;
@@ -76,18 +78,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         DrawableSizeUtil drawableSizeUtil = new DrawableSizeUtil(this);
         drawableSizeUtil.setImgSize(79, 79, 1, tvWechat, R.mipmap.wechat);
-
-        EventHandler eh = new EventHandler() {
-            @Override
-            public void afterEvent(int event, int result, Object data) {
-                Message msg = new Message();
-                msg.arg1 = event;
-                msg.arg2 = result;
-                msg.obj = data;
-                mHandler.sendMessage(msg);
-            }
-        };
-        SMSSDK.registerEventHandler(eh);
 
 
         tvRegist.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +101,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (DateUtil.isPhoneNumber(etPhone.getText().toString())){
+                if (DateUtil.isPhoneNumber(etPhone.getText().toString())) {
                     judgePhoneNumber(etPhone.getText().toString());
                     spinKitView.setVisibility(View.VISIBLE);
                 }
@@ -123,19 +113,54 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //SMSSDK.getVerificationCode("86",etPhone.getText().toString());
-                if (phoneOk){
-                    ToastUtil.showShort(LoginActivity.this,"验证码已发送");
-                    Intent intent = new Intent(LoginActivity.this,LoginGetCodeActivity.class);
-                    intent.putExtra("phone",etPhone.getText().toString());
-                    startActivity(intent);
-                }else if (StringUtils.isEmpty(etPhone.getText().toString())){
-                    ToastUtil.showShort(LoginActivity.this,"请输入手机号");
-                }else {
-                    ToastUtil.showShort(LoginActivity.this,"请输入正确的手机号");
-                }
+                getCodeMeth();
             }
         });
+    }
+
+    private void getCodeMeth() {
+        Map<String, String> map = new HashMap<>();
+        map.put("tempCode", "login");
+        map.put("phoneNum", etPhone.getText().toString());
+        String str = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(User.BASE).doPostJson2(User.sendSms, str, getToken(this),
+                new GsonObjectCallback<String>(User.BASE) {
+                    @Override
+                    public void onUi(String result) {
+                        try {
+                            JSONObject object = new JSONObject(result);
+                            if (object.optInt("code") == 0) {
+                                Intent intent = new Intent(LoginActivity.this, LoginGetCodeActivity.class);
+                                intent.putExtra("phone",etPhone.getText().toString());
+                                startActivity(intent);
+                            }
+                            ToastUtil.showShort(LoginActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(LoginActivity.this, "请求超时");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        super.onFailure(call, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(LoginActivity.this, "网络异常");
+                            }
+                        });
+                    }
+                });
     }
 
     @Override
@@ -143,62 +168,44 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    private boolean phoneOk = false;
-
-    Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message msg) {
-            int event = msg.arg1;
-            int result = msg.arg2;
-            Object data = msg.obj;
-            if (result == SMSSDK.RESULT_COMPLETE) {
-                if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                    //Toast.makeText(getApplicationContext(), "验证码已经发送", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                //Toast.makeText(getApplicationContext(), "验证码发送失败", Toast.LENGTH_SHORT).show();
-            }
-            return false;
-        }
-    });
 
     /**
      * 输入完整的手机号，请求后端判断是否已存在
+     *
      * @param number
      */
-    private void judgePhoneNumber(String number){
-        Map<String,String> map = new HashMap<>();
-        map.put("phone",number);
+    private void judgePhoneNumber(String number) {
+        Map<String, String> map = new HashMap<>();
+        map.put("phone", number);
         String strJson = JsonUtil.obj2String(map);
         OkHttp3Utils.getInstance(User.BASE).doPostJson(User.checkPhone, strJson, new GsonObjectCallback<String>(User.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if ( object.optInt("code") == 401){
+                    if (object.optInt("code") == 401) {
                         tvTips.setVisibility(View.VISIBLE);
                         tvTips.setText(object.optString("msg"));
                         tvNext.setClickable(false);
                     }
-                    if ( object.optInt("code") ==-1){
+                    if (object.optInt("code") == -1) {
                         tvTips.setVisibility(View.VISIBLE);
                         tvTips.setText(object.optString("msg"));
                         tvNext.setClickable(false);
                     }
                     //请求成功
-                    if (object.optInt("code") == 0){
-                        if (!object.optBoolean("data")){//该手机未注册，不存在
+                    if (object.optInt("code") == 0) {
+                        if (!object.optBoolean("data")) {//该手机未注册，不存在
                             tvTips.setVisibility(View.VISIBLE);
                             tvTips.setText("该手机号未注册，请前往注册");
                             etPhone.setTextColor(getResources().getColor(R.color.colorAccentButton));
                             tvNext.setBackgroundResource(R.drawable.shape_login_blue_hide);
                             tvNext.setClickable(false);
-                        }else if (object.optBoolean("data")){
+                        } else if (object.optBoolean("data")) {
                             tvTips.setVisibility(View.GONE);
                             etPhone.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             tvNext.setBackgroundResource(R.drawable.shape_login_blue);
                             tvNext.setClickable(true);
-                            phoneOk = true;
                         }
                     }
                     spinKitView.setVisibility(View.GONE);
@@ -206,6 +213,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailed(Call call, IOException e) {
 
@@ -215,11 +223,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_wechat:
                 wechatLogin();
                 break;
-                default:break;
+            default:
+                break;
         }
     }
 

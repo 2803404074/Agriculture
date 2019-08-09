@@ -8,49 +8,71 @@
     android:paddingRight="@dimen/dp_10"
     android:background="@android:color/white"
     android:layout_height="wrap_content">
+
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_marginLeft="15dp"
+                android:id="@+id/drawee_img"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                fresco:roundAsCircle="true" />
+
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:id="@+id/tv_name"
+                android:layout_gravity="left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:text="桃酥姐姐"/>
+
+            <TextView
+                android:gravity="right|center_vertical"
+                android:layout_weight="1"
+                android:id="@+id/tv_date"
+                android:layout_centerVertical="true"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="2019/08/08"/>
+
+        </LinearLayout>
+
+        <!--评论内容-->
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:id="@+id/tv_content"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="水蜜桃收到了，礼品盒包装的很好看，桃子完好无损，桃香扑面而来。"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/drawee_img"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            fresco:roundAsCircle="true" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!--用户信息-->
-            <RelativeLayout
-                android:paddingHorizontal="@dimen/dp_5"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_30">
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="桃酥姐姐"/>
 
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2019/08/08"/>
-            </RelativeLayout>
-
-            <!--评论内容-->
-            <TextView
-                android:id="@+id/tv_content"
-                android:paddingHorizontal="@dimen/dp_5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="水蜜桃收到了，礼品盒包装的很好看，桃子完好无损，桃香扑面而来。"/>
 
             <!--照片-->
             <androidx.recyclerview.widget.RecyclerView
@@ -83,7 +105,7 @@
                 <TextView
                     android:id="@+id/tv_mon"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="45dp"
                     android:layout_toRightOf="@+id/iv_goods_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,9 +113,9 @@
                     android:text="@string/app_money"/>
 
                 <TextView
+                    android:layout_marginTop="45dp"
                     android:id="@+id/tv_price"
                     android:layout_toRightOf="@+id/tv_mon"
-                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorGri2"

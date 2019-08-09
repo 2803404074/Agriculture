@@ -171,6 +171,7 @@
     <orderEntry type="library" name="Gradle: com.github.rey5137:material:1.2.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-common:2.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.hanks:htextview-fade:0.1.6@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.Dkaishu:ScrollTextView:V1.2.4@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:butterknife:10.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.daasuu:EasingInterpolator:1.0.0@aar" level="project" />
@@ -230,6 +231,7 @@
     <orderEntry type="library" name="Gradle: androidx.databinding:databinding-runtime:3.4.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.fresco:fresco:0.14.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.collection:collection:1.0.0@jar" level="project" />
+    <orderEntry type="module" module-name="myhttp" />
     <orderEntry type="module" module-name="myhttp" />
   </component>
 </module>

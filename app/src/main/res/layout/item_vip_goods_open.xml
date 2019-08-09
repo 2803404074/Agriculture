@@ -8,14 +8,11 @@
     android:orientation="horizontal"
     android:paddingVertical="@dimen/dp_10">
 
-    <com.shehuan.niv.NiceImageView
+    <ImageView
         android:id="@+id/nice_img"
         android:layout_width="@dimen/dp_150"
         android:layout_height="@dimen/dp_100"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/test11"
-        app:border_width="@dimen/dp_2"
-        app:corner_radius="@dimen/dp_5" />
+        android:padding="@dimen/dp_5" />
 
     <LinearLayout
         android:paddingHorizontal="@dimen/dp_5"
@@ -35,8 +32,10 @@
 
         <TextView
             android:id="@+id/tv_gg"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_2"
             android:text="无敌水果无敌水果超级无敌水果" />
 
 
@@ -68,6 +67,7 @@
                 android:layout_height="1px"
                 android:layout_weight="1"/>
             <TextView
+                android:id="@+id/tv_kt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="开通"

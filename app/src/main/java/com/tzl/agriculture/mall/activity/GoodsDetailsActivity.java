@@ -163,6 +163,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.spin_kit)
     SpinKitView spinKitView;
 
+    @BindView(R.id.tv_yf)
+    TextView tvYf;//邮费
     @Override
     public int setLayout() {
         return R.layout.activity_goods_details;
@@ -237,17 +239,26 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         int type = getIntent().getIntExtra("type",0);
 
         if (type == 0 || !StringUtils.isEmpty(goodsDetailsMo.getGoods().getSpikeEndTime())){//限时购  -- 隐藏兑换，显示倒计时,显示购买
-            tvDh.setVisibility(View.GONE);
-            llDeatilsMenu.setVisibility(View.VISIBLE);
+
+
+
+            int isSpike = goodsDetailsMo.getGoods().getIsSpike();
+            if (isSpike == 0){
+                llDateDown.setVisibility(View.VISIBLE);
+            }else{
+                llDateDown.setVisibility(View.GONE);
+            }
             //倒计时
             dowTime(goodsDetailsMo.getGoods().getSpikeEndTime());
+            tvDh.setVisibility(View.GONE);
+            llDeatilsMenu.setVisibility(View.VISIBLE);
 
         } else if (type == 1){//会员兑换  -- 隐藏倒计时，显示兑换,隐藏购买
             tvDh.setVisibility(View.VISIBLE);//兑换视图
             llDeatilsMenu.setVisibility(View.GONE);//购买视图
             llDateDown.setVisibility(View.GONE);//倒计时视图
             tvDh.setOnClickListener(this);
-        }else {//普通、开会员     -- 隐藏倒计时，隐藏兑换，显示购买
+        }else{//普通、开会员     -- 隐藏倒计时，隐藏兑换，显示购买
             tvDh.setVisibility(View.GONE);
             llDateDown.setVisibility(View.GONE);
             llDeatilsMenu.setVisibility(View.VISIBLE);
@@ -266,6 +277,9 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         tvGoodsName.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getGoodsName()));
         tvAddress.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getShipAddress()));
         tvBz.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoodsServicesStr()));
+
+        //邮费
+        tvYf.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getFreeShipping()));
 
         //评论数量
         tvCommentNum.setText(goodsDetailsMo.getGoodsCommentList()==null ? "0":String.valueOf(goodsDetailsMo.getGoodsCommentList().size()));
@@ -458,6 +472,11 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (goodsDetailsMo.getGoods().getPurchaseLimit()==1){
+                    ToastUtil.showShort(GoodsDetailsActivity.this,"该商品每人只限购一件哦");
+                    return;
+                }
+
                 int n = Integer.parseInt(tvNum.getText().toString());
                 n++;
                 if (n>goodsDetailsMo.getGoods().getNumber()){
@@ -676,7 +695,35 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         downUtil.start(DateUtil.timeToStamp(data), new CountDownUtil.OnCountDownCallBack() {
             @Override
             public void onProcess(int day, int hour, int minute, int second) {
-                tvDate.setText(day + "天 " + hour + "时 " + minute + "分 " + second + "秒");
+                String strDay = "";
+                String strHour= "";
+                String strMinute = "";
+                String strSecond = "";
+
+                if (day<10){
+                    strDay = 0+String.valueOf(day);
+                }else {
+                    strDay = String.valueOf(day);
+                }
+
+                if (hour<10){
+                    strHour = 0+String.valueOf(hour);
+                }else {
+                    strHour = String.valueOf(hour);
+                }
+
+                if (minute<10){
+                    strMinute = 0+String.valueOf(minute);
+                }else {
+                    strMinute = String.valueOf(minute);
+                }
+
+                if (second<10){
+                    strSecond = 0+String.valueOf(second);
+                }else {
+                    strSecond = String.valueOf(second);
+                }
+                tvDate.setText(strDay + "天 " + strHour + "时 " + strMinute + "分 " + strSecond + "秒");
             }
             @Override
             public void onFinish() {

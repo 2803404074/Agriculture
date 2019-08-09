@@ -28,15 +28,15 @@
         android:textSize="@dimen/sp_15"
         android:textColor="@color/colorAccentButton" />
 
-    <TextView
+    <com.tzl.agriculture.view.VerticalTextview
         android:id="@+id/tv_bro"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textSize="@dimen/sp_15"
         android:lines="1"
         android:ellipsize="end"
-        android:text="特级农产品回馈客户3折..." />
+        />
 
     <TextView
         android:layout_width="wrap_content"

@@ -86,9 +86,13 @@ public abstract class BaseFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden){
+            //不可见
             OkHttp3Utils.desInstance();
         }
     }
+
+
+
 
     /**
      * 初始化布局
