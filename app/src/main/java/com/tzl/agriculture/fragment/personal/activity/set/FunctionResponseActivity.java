@@ -1,7 +1,9 @@
 package com.tzl.agriculture.fragment.personal.activity.set;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tzl.agriculture.R;
+import com.tzl.agriculture.model.SystemCallBackModel;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
@@ -49,7 +52,7 @@ public class FunctionResponseActivity extends SetBaseActivity implements View.On
 
     private BaseAdapter adapter;
 
-    private List<String> mDate = new ArrayList<>();
+    private List<SystemCallBackModel> mDate = new ArrayList<>();
 
     private String mType;
 
@@ -83,16 +86,22 @@ public class FunctionResponseActivity extends SetBaseActivity implements View.On
                     JSONArray array = object.optJSONArray("data");
                     for (int i=0;i<array.length();i++){
                         JSONObject object1 = (JSONObject) array.get(i);
-                        mDate.add(object1.optString("dictValue"));
+                        mDate.add(new SystemCallBackModel(object1.optString("dictValue"),false));
                     }
-                    adapter = new BaseAdapter<String>(FunctionResponseActivity.this,recyclerView,mDate,R.layout.item_checkbox) {
+                    adapter = new BaseAdapter<SystemCallBackModel>(FunctionResponseActivity.this,recyclerView,mDate,R.layout.item_checkbox) {
                         @Override
-                        public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
-                            holder.setText(R.id.cb_name,o);
+                        public void convert(Context mContext, BaseRecyclerHolder holder, SystemCallBackModel o) {
+                            holder.setText(R.id.cb_name,TextUtil.checkStr2Str(o.getName()));
+                            CheckBox checkBox= (CheckBox) holder.itemView.findViewById(R.id.cb_name);
+                            checkBox.setChecked(o.isSelect());
                             holder.getView(R.id.cb_name).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    mType = o;
+                                    mType = o.getName();
+                                    for(int i=0;i<mDate.size();i++){
+                                        mDate.get(i).setSelect(TextUtil.checkStr2Str(o.getName()).equals(mDate.get(i).getName()));
+                                    }
+                                    adapter.notifyDataSetChanged();
                                 }
                             });
                         }
@@ -117,13 +126,22 @@ public class FunctionResponseActivity extends SetBaseActivity implements View.On
             case R.id.tv_send:
                 send();
                 break;
-                default:break;
+            default:break;
         }
     }
 
     private void send() {
+        if(TextUtils.isEmpty(mType)){
+            ToastUtil.showShort(FunctionResponseActivity.this,"请选中反馈问题类型!");
+            return;
+        }
+        String s = etContent.getText().toString();
+        if(TextUtils.isEmpty(s)){
+            ToastUtil.showShort(FunctionResponseActivity.this,"请输入点反馈内容吧！");
+            return;
+        }
         Map<String,String>map = new HashMap<>();
-        map.put("content", TextUtil.checkStr2Str(etContent.getText().toString()));//内容
+        map.put("content", s);//内容
         //map.put("fullname","");//姓名
         //map.put("phone","");//手机号
         map.put("type",mType);//类型

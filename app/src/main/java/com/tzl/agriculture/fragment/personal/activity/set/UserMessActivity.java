@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +39,7 @@ import com.tzl.agriculture.util.CameraUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
+import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.util.UserData;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
@@ -113,7 +115,7 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
 
     @Override
     public void initView() {
-        String str = (String) SPUtils.instance(this,1).getkey("user","");
+        String str = (String) SPUtils.instance(this, 1).getkey("user", "");
         setTitle("基本信息");
         llNick.setOnClickListener(this);
         llHead.setOnClickListener(this);
@@ -121,11 +123,11 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
 
         userInfo = JsonUtil.string2Obj(str, UserInfo.class);
 
-        if (null!=userInfo){
+        if (null != userInfo) {
             tvNickName.setText(userInfo.getNickname());
             tvUserName.setText(userInfo.getUsername());
             draweeView.setImageURI(userInfo.getHeadUrl());
-            tvSex.setText(userInfo.getSex() == 1?"男":"女");
+            tvSex.setText(userInfo.getSex() == 1 ? "男" : "女");
             tvDate.setText(TextUtil.checkStr2Str(userInfo.getBirthday()));
         }
 
@@ -140,22 +142,22 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
 
     private void myRequetPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA}, 1);
-        }else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
+        } else {
             //Toast.makeText(this,"您已经申请了权限!",Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.ll_head:
                 showBottomDialog();
                 break;
             case R.id.ll_nick:
-                Intent intent = new Intent(this,SetTextActivity.class);
-                intent.putExtra("name",tvNickName.getText().toString());
-                startActivityForResult(intent,100);
+                Intent intent = new Intent(this, SetTextActivity.class);
+                intent.putExtra("name", tvNickName.getText().toString());
+                startActivityForResult(intent, 100);
                 break;
             case R.id.ll_sex:
                 showBottomDialogCs();
@@ -163,7 +165,8 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
             case R.id.tv_date:
                 showDatePickerDialog();
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
@@ -174,6 +177,9 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
         view.findViewById(R.id.takePhoto).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isCheckPerimiss()) {
+                    return;
+                }
                 openCamera();//拍照
                 dialog.dismiss();
             }
@@ -185,11 +191,40 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                 dialog.dismiss();
             }
         });
+        view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
         dialog.contentView(view)
                 .inDuration(200)
                 .outDuration(200)
                 .cancelable(true)
                 .show();
+    }
+
+    //请检擦权限
+    private boolean isCheckPerimiss() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.CAMERA) != PermissionChecker.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.CAMERA)) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.CAMERA},
+                        1);
+            } else {
+                //跳去打开权限
+                Intent intent = new Intent();
+                intent.setAction(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.parse("package:" + this.getPackageName()));
+                startActivity(intent);
+            }
+            return false;
+        }
+        return true;
     }
 
     private String sexStr = "";
@@ -202,11 +237,11 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
         TextView tvNv = view.findViewById(R.id.tv_sex_nv);
         TextView tvBm = view.findViewById(R.id.tv_sex_bm);
 
-        if (userInfo.getSex()==1){//男
+        if (userInfo.getSex() == 1) {//男
             tvNan.setBackgroundResource(R.drawable.shape_side_white);
-        }else if (userInfo.getSex()==0){//女
+        } else if (userInfo.getSex() == 0) {//女
             tvNv.setBackgroundResource(R.drawable.shape_side_white);
-        }else {
+        } else {
             tvBm.setBackgroundResource(R.drawable.shape_side_white);
         }
 
@@ -242,8 +277,8 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                tvSex.setText(Integer.parseInt(sexStr) == 1?"男":"女");
-                UserData.instance(UserMessActivity.this).updateUserInfo(getToken(),4,sexStr);
+                tvSex.setText(Integer.parseInt(sexStr) == 1 ? "男" : "女");
+                UserData.instance(UserMessActivity.this).updateUserInfo(getToken(), 4, sexStr);
             }
         });
         dialog.contentView(view)
@@ -255,13 +290,13 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
     }
 
     //日期选择
-    private   void showDatePickerDialog() {
+    private void showDatePickerDialog() {
         BasisTimesUtils.showDatePickerDialog(this, true, "", 2019, 1, 1,
                 new BasisTimesUtils.OnDatePickerListener() {
 
                     @Override
                     public void onConfirm(int year, int month, int dayOfMonth) {
-                        UserData.instance(UserMessActivity.this).updateUserInfo(getToken(),5,year + "-" + month + "-" + dayOfMonth);
+                        UserData.instance(UserMessActivity.this).updateUserInfo(getToken(), 5, year + "-" + month + "-" + dayOfMonth);
                         tvDate.setText(year + "-" + month + "-" + dayOfMonth);
                     }
 
@@ -271,7 +306,6 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                     }
                 }).setDayGone();
     }
-
 
 
     private static final int REQ_1 = 1;//打开相机
@@ -286,9 +320,14 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
 
     //打开相册方法
     private void openAlbum() {
-        Intent intent = new Intent(Intent.ACTION_PICK, null);
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(intent, REQ_2);
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK, null);
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            startActivityForResult(intent, REQ_2);
+        } catch (Throwable t) {
+            ToastUtil.showShort(this, "该设备不支持相册功能");
+        }
+
     }
 
 
@@ -346,9 +385,9 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == 100){
-            if (resultCode == 200){
-                if (data != null){
+        if (requestCode == 100) {
+            if (resultCode == 200) {
+                if (data != null) {
                     tvNickName.setText(data.getStringExtra("name"));
                 }
             }
@@ -436,10 +475,10 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
     }
 
 
-    private void loadUrl(final File file){
-        Map<String,Object>map = new HashMap<>();
-        map.put("file",file);
-        map.put("type","head-portrait");
+    private void loadUrl(final File file) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("file", file);
+        map.put("type", "head-portrait");
         OkHttp3Utils.getInstance(User.BASE).upLoadFile3(User.fileUpload, map, new GsonObjectCallback<String>(User.BASE) {
             @Override
             public void onUi(String result) {
@@ -447,8 +486,8 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                     JSONObject object = new JSONObject(result);
                     JSONObject dataObj = object.optJSONObject("data");
                     String url = dataObj.optString("url");
-                    if (StringUtils.isEmpty(url))return;
-                    UserData.instance(UserMessActivity.this).updateUserInfo(getToken(),1,url);
+                    if (StringUtils.isEmpty(url)) return;
+                    UserData.instance(UserMessActivity.this).updateUserInfo(getToken(), 1, url);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

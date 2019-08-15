@@ -41,6 +41,7 @@ import com.tzl.agriculture.model.ServerMo;
 import com.tzl.agriculture.model.UserInfo;
 import com.tzl.agriculture.util.DialogUtil;
 import com.tzl.agriculture.util.DialogUtilT;
+import com.tzl.agriculture.util.DownMediaUtils;
 import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
@@ -235,7 +236,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                         ToastUtil.showShort(getContext(),"获取信息失败");
                         return;
                     }
-                   showShareDialog();
+                    showShareDialog();
                 }
 
             }
@@ -245,8 +246,13 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     /**
      * 分享弹窗
      */
+    private DialogUtilT dialogUtilT;
+    private List<String> downImages=new ArrayList<>();
     private void showShareDialog() {
-        DialogUtilT dialogUtilT = new DialogUtilT<UserInfo>(getContext()) {
+        if(dialogUtilT!=null){
+            dialogUtilT.des();
+        }
+        dialogUtilT = new DialogUtilT<UserInfo>(getContext()) {
             @Override
             public void convert(BaseRecyclerHolder holder, UserInfo data) {
                 holder.getView(R.id.rl_bg).setBackgroundResource(R.mipmap.share_news);
@@ -258,7 +264,23 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 holder.getView(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        DownMediaUtils.getmDownMediaUtils(getContext()).setDownMediaLisenter(downImages, new DownMediaUtils.DownMediaLisenter() {
+                            @Override
+                            public void downCallBack(List<String> strings) {
+                                if(strings!=null&&strings.size()>0){
+                                    ToastUtil.showShort(getContext(),"保存成功");
+                                    dialogUtilT.des();
+                                }
+                            }
+                        });
+                    }
+                });
 
+                //取消分享
+                holder.getView(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogUtilT.des();
                     }
                 });
 
@@ -283,8 +305,11 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     if (object.optInt("code") == 0){
                         JSONObject dataObj = object.optJSONObject("data");
                         JSONObject shareObj = dataObj.optJSONObject("shareInfo");
-                        Glide.with(getContext()).load(shareObj.optString("qrCodeUrl")).into(imageView);
+                        String qrCodeUrl = shareObj.optString("qrCodeUrl");
+                        Glide.with(getContext()).load(qrCodeUrl).into(imageView);
                         tvCode.setText(shareObj.optString("inviteCode"));
+                        downImages.clear();
+                        downImages.add(qrCodeUrl);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
