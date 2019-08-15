@@ -56,11 +56,16 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
                 }
             }else {
                 //支付失败
+                Intent intent = new Intent(WXPayEntryActivity.this, OrderPayStatusActivity.class);
+                intent.putExtra("price", (String) SPUtils.instance(WXPayEntryActivity.this,1).getkey("price",""));
+                intent.putExtra("orderId",(String) SPUtils.instance(WXPayEntryActivity.this,1).getkey("orderId",""));
+                intent.putExtra("status",-1);
+                startActivity(intent);
                 finish();
                 if (OrderActivity.instance != null){
                     OrderActivity.instance.finish();
                 }
-                ToastUtil.showShort(this,"支付失败,查看一下重复的订单参数是否一致");
+//                ToastUtil.showShort(this,"支付失败,查看一下重复的订单参数是否一致");
             }
         }
     }

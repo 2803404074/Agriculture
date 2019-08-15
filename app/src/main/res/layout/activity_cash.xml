@@ -108,7 +108,7 @@
             android:id="@+id/tv_startCash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_green"
+            android:background="@drawable/shape_green_to"
             android:gravity="center"
             android:paddingVertical="@dimen/dp_7"
             android:text="提现"

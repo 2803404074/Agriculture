@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.AddressActivity;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
@@ -21,6 +22,7 @@ import com.tzl.agriculture.model.OrderMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
+import com.tzl.agriculture.util.WXPayUtils;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseFragment;
 import com.tzl.agriculture.view.BaseFragmentFromType;
@@ -51,6 +53,9 @@ public class OrderFragmentPage extends BaseFragmentFromType {
 
     @BindView(R.id.iv_tips)
     ImageView ivTips;
+
+    @BindView(R.id.spin_kit)
+    SpinKitView spinKitView;
 
     private RecyclerView recyclerView;
 
@@ -86,10 +91,10 @@ public class OrderFragmentPage extends BaseFragmentFromType {
 
                 //状态对应  需要显示的按钮
                 //  0 联系卖家，取消订单，付款
-                //  1 联系卖家，取消订单
-                //  2 联系卖家，评价
-                //  3 联系卖家，取消订单，查看物流
-                //  4 订单已评价
+                //                //  1 联系卖家，取消订单
+                //                //  2 联系卖家，评价
+                //                //  3 联系卖家，取消订单，查看物流
+                //                //  4 订单已评价
                 //  5 订单已取消
                 switch (o.getOrderStatus()) {
                     case 0:
@@ -145,6 +150,14 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                     @Override
                     public void onClick(View view) {
                         showTwo(o,0,"是否取消订单？");
+                    }
+                });
+
+                //支付
+                holder.getView(R.id.tv_fk).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                      payEryWX(o.getOrderId());
                     }
                 });
 
@@ -338,5 +351,64 @@ public class OrderFragmentPage extends BaseFragmentFromType {
             }
         });
     }
+
+    private void payEryWX(String orderId){
+        spinKitView.setVisibility(View.VISIBLE);
+        Map<String,String>map = new HashMap<>();
+        map.put("orderId",orderId);
+        OkHttp3Utils.getInstance(Mall.BASE).doPostJsonForObj(Mall.paySave, map, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optInt("code") == 0) {
+                        JSONObject dataObj = object.optJSONObject("data");
+                        toWXPay(dataObj.optJSONObject("WXPay"));
+                    }else {
+                        ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
+                    }
+                    spinKitView.setVisibility(View.GONE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        spinKitView.setVisibility(View.GONE);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                super.onFailure(call, e);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        spinKitView.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
+    }
+
+    private void toWXPay(JSONObject object) {
+        WXPayUtils.WXPayBuilder builder = new WXPayUtils.WXPayBuilder();
+        builder.setAppId(object.optString("appid"))
+                .setPartnerId(object.optString("partnerid"))
+                .setPrepayId(object.optString("prepayid"))
+                .setPackageValue(object.optString("package"))
+                .setNonceStr(object.optString("noncestr"))
+                .setTimeStamp(object.optString("timestamp"))
+                .setSign(object.optString("sign"))
+                .build().toWXPayNotSign(getContext());
+        ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("returnMsg"))+"正在打开微信");
+    }
+
+
 
 }

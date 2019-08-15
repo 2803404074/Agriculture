@@ -10,22 +10,24 @@
         android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_150"
         android:background="@drawable/shape_white_noframe"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_20">
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recy"
+            android:layout_marginTop="@dimen/dp_130"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_100" />
+             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_40"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -57,7 +59,8 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_150"
+        android:layout_height="@dimen/dp_290"
+        android:scaleType="fitXY"
         android:src="@mipmap/version_update" />
 
 
@@ -65,11 +68,14 @@
         android:id="@+id/tv_versionCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_110"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_220"
         android:text="发现新版本"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/sp_18" />
+
+
+
 
     <ImageView
         android:id="@+id/iv_close"

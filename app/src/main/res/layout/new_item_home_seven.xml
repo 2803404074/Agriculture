@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_marginHorizontal="@dimen/dp_10"
     android:background="@drawable/shape_white_noframe"
-    android:layout_marginBottom="@dimen/dp_5"
+    android:layout_marginVertical="@dimen/dp_5"
     android:layout_height="wrap_content">
 
    <androidx.recyclerview.widget.RecyclerView

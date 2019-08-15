@@ -82,9 +82,23 @@ public class DateUtil {
         return str;
     }
 
+    public static String dateToStr(Date date,String type) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(type);
+
+//        String a = simpleDateFormat2.format(date);
+
+        String str = simpleDateFormat.format(date);
+
+        return str;
+    }
 
     public static String getDateForNow() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH");
+        return simpleDateFormat.format(new Date());
+    }
+
+    public static String getDateForNow(String type) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(type);
         return simpleDateFormat.format(new Date());
     }
 

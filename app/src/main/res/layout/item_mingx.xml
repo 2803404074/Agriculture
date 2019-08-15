@@ -1,44 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <ImageView
-        android:padding="@dimen/dp_10"
-        android:layout_width="@dimen/dp_70"
-        android:layout_height="@dimen/dp_70"
-        android:src="@mipmap/ic_launcher"/>
-
-    <RelativeLayout
-        android:padding="@dimen/dp_10"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
+        <ImageView
+            android:id="@+id/iv_type"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/add" />
+
+        <RelativeLayout
+            android:id="@+id/rl_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="@dimen/dp_10">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/iv_see"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/tv_tvSName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:text="支付消费-xx店铺"
+                    android:textColor="@color/colorGri2" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tvSName"
+                    android:text="8月12日 21:27" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_see"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_money"
+                android:padding="@dimen/dp_5"
+                android:src="@mipmap/back_bold" />
+
             <TextView
-                android:id="@+id/tv_tvSName"
-                android:textColor="@color/colorGri2"
+                android:id="@+id/tv_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="支付消费-xx店铺"/>
-            <TextView
-                android:layout_below="@+id/tv_tvSName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="8月12日 21:27"/>
-        </LinearLayout>
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="-40"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:textSize="@dimen/sp_18"
-            android:text="-40"/>
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_see"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/dp_70"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:layout_height="match_parent"
+        android:text="--" />
+
+    <View
+        android:layout_marginLeft="@dimen/dp_70"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorGri3" />
 </LinearLayout>

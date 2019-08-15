@@ -415,7 +415,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 spinKitView.setVisibility(View.VISIBLE);
-                payEryWX();
+                payEryWX(orderId);
             }
         });
         dialog.contentView(view)/*加载视图*/
@@ -455,8 +455,10 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
     /**
      * 支付
      */
-    private void payEryWX(){
-        OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.paySave, "", getToken(), new GsonObjectCallback<String>(Mall.BASE) {
+    private void payEryWX(String orderId){
+        Map<String,String>map = new HashMap<>();
+        map.put("orderId",orderId);
+        OkHttp3Utils.getInstance(Mall.BASE).doPostJsonForObj(Mall.paySave, map, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
                 try {

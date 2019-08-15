@@ -266,7 +266,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             llMyJf.setVisibility(View.GONE);
             llMyJfTips.setVisibility(View.VISIBLE);
 
-            tvMyQi.setText("年卡权益");
+            tvMyQi.setVisibility(View.GONE);
             tvOpenTips.setText("暂未开通");
 
         }
@@ -397,7 +397,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                 showShareDialog(3);
                 break;
             case R.id.tv_mingx:
-                Intent intent1 = new Intent(this,null);
+                Intent intent1 = new Intent(this,MoneyDetailedActivity.class);
                 startActivity(intent1);
                 break;
             default:

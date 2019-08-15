@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/shape_white_noframe"
-    android:layout_marginVertical="@dimen/dp_5"
+    android:layout_marginTop="@dimen/dp_5"
     android:layout_marginHorizontal="@dimen/dp_10"
-    android:layout_marginBottom="@dimen/dp_5"
+    android:paddingHorizontal="@dimen/dp_5"
     android:id="@+id/ll_brocast">
 
 

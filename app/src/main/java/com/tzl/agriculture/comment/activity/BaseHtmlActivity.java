@@ -93,14 +93,7 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
                 new GsonObjectCallback<String>(Article.BASE) {
                     @Override
                     public void onUi(String result) {
-//                        try {
-//                            JSONObject object = new JSONObject(result);
-//                            ToastUtil.showShort(getContext(), "添加浏览量：" + TextUtil.checkStr2Str(object.optString("msg")));
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
                     }
-
                     @Override
                     public void onFailed(Call call, IOException e) {
                     }
@@ -109,6 +102,7 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
 
     private String getStyle(){
         return "<style>* {font-size:50px;line-height:80px;} p {color:#3B3B3B;} img {width:100%;height:100%}pre {font-size:9pt;line-height:12pt;font-family:Courier New,Arial;border:1px solid #ddd;border-left:5px solid #6CE26C;background:#f6f6f6;padding:5px;}</style>";
+        //return "<style>* {font-size:50px;line-height:80px;}</style>";
     }
 
     /**

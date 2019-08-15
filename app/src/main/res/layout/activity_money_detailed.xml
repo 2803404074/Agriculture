@@ -31,8 +31,7 @@
             android:padding="@dimen/dp_5"
             android:layout_marginTop="-5dp"
             android:layout_height="@dimen/dp_30"
-            android:src="@mipmap/back_black"
-            android:rotation="-90"/>
+            android:src="@mipmap/back_bold" />
         <LinearLayout
             android:layout_below="@+id/tv_date"
             android:layout_width="match_parent"
@@ -61,8 +60,17 @@
     </RelativeLayout>
 
 
+    <ImageView
+        android:id="@+id/iv_tips"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/null_data"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mx_recy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
 </LinearLayout>
