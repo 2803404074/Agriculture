@@ -1,11 +1,17 @@
 package Utils;
 
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
 
 import com.tohao.gxzt.myhttp.R;
 
@@ -325,7 +331,8 @@ public class OkHttp3Utils {
      * 参数二：保存文件的路径名
      * 参数三：保存文件的文件名
      */
-    public static void download(final Context context, final String url, final String saveDir) {
+    public void download(final Context context, final ProgressDialog pd , final String url, final String saveDir) {
+
         Request request = new Request.Builder().url(url).build();
         Call call = getOkHttpClient().newCall(request);
         call.enqueue(new Callback() {
@@ -333,10 +340,9 @@ public class OkHttp3Utils {
             public void onFailure(Call call, IOException e) {
                 Log.i("xxx", e.toString());
             }
-
+//storage/emulated/0/storage/emulated/0/downloadFile?bucketName=apk&fileName=c53c009fbebcf7442c6571d726e842b0.apk
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-
                 InputStream is = null;
                 byte[] buf = new byte[2048];
                 int len = 0;
@@ -345,28 +351,68 @@ public class OkHttp3Utils {
                     is = response.body().byteStream();
                     //apk保存路径
                     final String fileDir = isExistDir(saveDir);
+
+                    long readLength = 0;
+
+                    int curProgress = 0;
                     //文件
                     File file = new File(fileDir, getNameFromUrl(url));
+                    long  fileLength = file.length();
                     fos = new FileOutputStream(file);
                     while ((len = is.read(buf)) != -1) {
                         fos.write(buf, 0, len);
+                        fos.flush();
+                        readLength += len;
+                        curProgress = (int) (((float) readLength / fileLength) * 100);
+                        pd.setProgress(curProgress);
                     }
-                    fos.flush();
                     //apk下载完成后 调用系统的安装方法
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-                    context.startActivity(intent);
+                    applyIntallCheck(context,file);
+
+//                    Intent intent = new Intent(Intent.ACTION_VIEW);
+//                    Uri uri =  FileProvider.getUriForFile(context, "com.tzl.agriculture.fileprovider", file);
+//                    intent.setDataAndType(uri, "application/vnd.android.package-archive");
+//                    context.startActivity(intent);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    pd.dismiss();
+
+                    Log.e("FileLoad",e.getMessage());
                 } finally {
                     if (is != null) is.close();
                     if (fos != null) fos.close();
-
-
                 }
             }
         });
 
+    }
+
+    //检测手机版本
+    private static void applyIntallCheck(Context context,File file){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            boolean b = context.getPackageManager().canRequestPackageInstalls();
+            if (!b){//申请
+                requestPermissions(new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES},999);
+            }else {
+                installApk(context,file);
+            }
+        }else {
+            installApk(context,file);
+        }
+
+    }
+
+    private static void installApk(Context context,File file) {
+        if (file !=null){
+            Intent intent = new Intent();
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
+            context.startActivity(intent);
+        }
+    }
+
+    private static void requestPermissions(String[] strings, int i) {
     }
 
     /**

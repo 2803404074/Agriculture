@@ -14,6 +14,9 @@ public class User extends Base{
     //检测验证码
     public static String checkCode = "/api/basics/access/check/code";
 
+    //发送验证码
+    public static String sendSms = "/api/basics/access/send/sms";
+
     //检测用户是否存在(手机号)
     public static String checkPhone = "/api/basics/access/check/phone";
 
@@ -34,6 +37,18 @@ public class User extends Base{
 
     //获取用户信息2
     public static String getUserInfo2 = "/api/basics/user/current/info2";
+
+    //获取用户绑定的银行卡列表
+    public static String cartList = "/api/mall/tiebank-api/all/list";
+
+    //所有银行卡列表
+    public static String allCardList = "/api/mall/bank-api/all/list";
+
+    //添加银行卡
+    public static String addCard = "/api/mall/tiebank-api/save";
+
+    //提现
+    public static String postCash = "/api/mall/withdrawalInfo-api/save";
 
     //获取意见反馈类型列表
     public static String getType = "/api/basics/feedback/getType";

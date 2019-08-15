@@ -119,6 +119,7 @@
                                 android:textColor="@android:color/white"
                                 android:textStyle="bold" />
                             <TextView
+                                android:id="@+id/tv_mingx"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="明细"
@@ -216,6 +217,7 @@
                         android:textColor="@color/colorGri2"
                         android:gravity="center"
                         android:padding="@dimen/dp_5"
+                        android:textSize="@dimen/sp_12"
                         android:drawableTop="@mipmap/icon_sha"
                         android:layout_height="wrap_content"
                         android:text="分享有奖"/>
@@ -227,6 +229,7 @@
                         android:textColor="@color/colorGri2"
                         android:gravity="center"
                         android:padding="@dimen/dp_5"
+                        android:textSize="@dimen/sp_12"
                         android:drawableTop="@mipmap/icon_shouyi"
                         android:layout_height="wrap_content"
                         android:text="佣金收益"/>
@@ -238,6 +241,7 @@
                         android:textColor="@color/colorGri2"
                         android:gravity="center"
                         android:padding="@dimen/dp_5"
+                        android:textSize="@dimen/sp_12"
                         android:drawableTop="@mipmap/icon_zhekou"
                         android:layout_height="wrap_content"
                         android:text="专属折扣"/>
@@ -249,6 +253,7 @@
                         android:textColor="@color/colorGri2"
                         android:gravity="center"
                         android:padding="@dimen/dp_5"
+                        android:textSize="@dimen/sp_12"
                         android:drawableTop="@mipmap/icon_gift"
                         android:layout_height="wrap_content"
                         android:text="精美礼包"/>
@@ -271,7 +276,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_vip_yes"
-                android:paddingHorizontal="@dimen/dp_5"
+                android:paddingHorizontal="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -280,6 +285,7 @@
                     android:text="水果礼"
                     android:layout_centerVertical="true"
                     android:textSize="@dimen/sp_18"
+                    android:textStyle="bold"
                     android:textColor="#000"/>
 
                 <RelativeLayout

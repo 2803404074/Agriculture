@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:padding="@dimen/dp_10"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_70"
+        android:src="@mipmap/ic_launcher"/>
+
+    <RelativeLayout
+        android:padding="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_tvSName"
+                android:textColor="@color/colorGri2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支付消费-xx店铺"/>
+            <TextView
+                android:layout_below="@+id/tv_tvSName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8月12日 21:27"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/sp_18"
+            android:text="-40"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -59,8 +59,14 @@ public class Mall extends Base{
     //会员权益商品
     public static String vipGoods = "/api/mall/goods-api/page/list/vip";
 
+    //开通会员权益商品
+    public static String openVipGoods = "/api/mall/goods-api/page/list/openVip";
+
     //优惠券列表
     public static String minePage = "/api/basics/cardInfo/minePage";
+
+    //优惠券详细信息
+    public static String couponDetails = "/api/basics/cardInfo/apply/return/";
 
     //添加商品评论
     public static String commentSave = "/api/mall/goodsComment/appSave";

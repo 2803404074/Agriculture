@@ -144,33 +144,21 @@ public class DialogUtil {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.setAction(Intent.ACTION_VIEW);
 
-
                         if (Build.VERSION.SDK_INT >= 24) { // Android7.0及以上版本 Log.d("-->最新apk下载完毕","Android N及以上版本");
-
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
                             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
                             Uri contentUri = FileProvider.getUriForFile(context, "com.tzl.agriculture" + ".fileprovider", file);
-
                             //参数二:应用包名+".fileProvider"(和步骤二中的Manifest文件中的provider节点下的authorities对应)
-
                             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
 
                         } else {
-
                             // Android7.0以下版本 Log.d("-->最新apk下载完毕","Android N以下版本");
-
                             try {
                                 Runtime.getRuntime().exec("chmod 777 " + file.getCanonicalPath());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-
                             intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
-
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         }
 
                         context.startActivity(intent);

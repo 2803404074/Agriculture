@@ -94,6 +94,9 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
     @BindView(R.id.re_my_jl)
     RecyclerView reMyJl;//会员显示 我的奖励
 
+    @BindView(R.id.tv_mingx)
+    TextView tvMingx;//明细
+
     @BindView(R.id.tv_vip_no)
     ImageView tvBy;
 
@@ -149,6 +152,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         tvZszk.setOnClickListener(this);
         tvJmlb.setOnClickListener(this);
         ivOpen.setOnClickListener(this);
+        tvMingx.setOnClickListener(this);
 
         String user = (String) SPUtils.instance(this, 1).getkey("user", "");
         userInfo = JsonUtil.string2Obj(user, UserInfo.class);
@@ -391,6 +395,10 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                 break;
             case R.id.tv_jmlb:
                 showShareDialog(3);
+                break;
+            case R.id.tv_mingx:
+                Intent intent1 = new Intent(this,null);
+                startActivity(intent1);
                 break;
             default:
                 break;

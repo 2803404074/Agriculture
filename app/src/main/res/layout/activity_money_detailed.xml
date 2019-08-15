@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context=".fragment.vip.activity.MoneyDetailedActivity">
+
+    <include layout="@layout/toolbar_left_white_left"/>
+
+    <RelativeLayout
+        android:paddingVertical="@dimen/dp_10"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGri3">
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_17"
+            android:textColor="@color/colorGri2"
+            android:text="2019年8月"/>
+
+        <ImageView
+            android:id="@+id/iv_selectMonth"
+            android:layout_toRightOf="@+id/tv_date"
+            android:layout_width="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:layout_marginTop="-5dp"
+            android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/back_black"
+            android:rotation="-90"/>
+        <LinearLayout
+            android:layout_below="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支出￥"/>
+            <TextView
+                android:id="@+id/tv_payNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"/>
+            <TextView
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收入￥"/>
+            <TextView
+                android:id="@+id/tv_incomeNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mx_recy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
