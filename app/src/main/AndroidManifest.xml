@@ -7,6 +7,9 @@
     <uses-permission
         android:name="android.permission.WRITE_APN_SETTINGS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
 
     <uses-feature android:name="android.hardware.camera" /> <!-- 相机权限 -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 写入SD卡的权限：如果你希望保存相机拍照后的照片 -->
@@ -40,7 +43,8 @@
         android:roundIcon="@mipmap/application"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".fragment.vip.activity.MonthActivity"></activity>
+        <activity android:name=".main.WellComePageActivity" />
+        <activity android:name=".fragment.vip.activity.MonthActivity" />
         <activity android:name="camera.activity.CameraActivity" />
         <activity android:name=".mall.activity.ChinaGuActivity" />
         <activity android:name=".fragment.personal.activity.order.OrderSearchActivity" />
@@ -91,6 +95,13 @@
         <activity android:name=".fragment.xiangc.activity.BroadcastActivity" />
         <activity android:name=".mall.activity.GoodsDetailsActivity" />
         <activity android:name=".mall.activity.LimitedTimeActivity" />
+
+        <activity android:name=".fragment.vip.activity.AddCartActivity"/>
+        <activity android:name=".fragment.vip.activity.AddCartStatusActivity"/>
+        <activity android:name=".fragment.vip.activity.ChackCartActivity"/>
+        <activity android:name=".fragment.vip.activity.CashActivity"/>
+        <activity android:name=".fragment.vip.activity.CashStartActivity"/>
+
         <activity android:name=".main.WellcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -136,6 +147,16 @@
         <meta-data
             android:name="Mob-AppSecret"
             android:value="e3705b9e9f7ceb0eabffbdb590b39680" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.tzl.agriculture.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

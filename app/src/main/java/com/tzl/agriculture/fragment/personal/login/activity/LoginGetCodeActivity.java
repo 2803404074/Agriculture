@@ -80,7 +80,7 @@ public class LoginGetCodeActivity extends SetBaseActivity {
         Sprite ddd = new DoubleBounce();
         setTitle("验证码");
         phoneNumber = getIntent().getStringExtra("phone");
-        tvPhoneTips.setText("我们已将验证码发送至您"+phoneNumber+",请注意查收请注意查收");
+        tvPhoneTips.setText("我们已将验证码发送至您"+phoneNumber+",请注意查收");
 
         myCountDownTimer = new MyCountDownTimer(60000, 1000);
         myCountDownTimer.start();
@@ -189,6 +189,11 @@ public class LoginGetCodeActivity extends SetBaseActivity {
                         if (LoginActivity.instance!=null){
                             LoginActivity.instance.finish();
                         }
+                    }else {
+                        spinKitView.setVisibility(View.GONE);
+                        tvCheck.setBackgroundResource(R.drawable.shape_login_blue);
+                        tvCheck.setClickable(true);
+                        ToastUtil.showShort(LoginGetCodeActivity.this,TextUtil.checkStr2Str(object.optString("msg")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

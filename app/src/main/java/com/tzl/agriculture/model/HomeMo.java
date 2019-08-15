@@ -5,6 +5,7 @@ import java.util.List;
 
 public class HomeMo implements Serializable {
     private int position;
+    private int sort;//位置
     private List<BannerMo> advertiseList;
     private XiangcMo articleList;
 
@@ -15,6 +16,14 @@ public class HomeMo implements Serializable {
     private XchwGoods xchwModel;//乡村好物 模块数据
 
     public HomeMo() {
+    }
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
     }
 
     public XchwGoods getXchwModel() {

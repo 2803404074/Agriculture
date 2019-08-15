@@ -58,7 +58,7 @@ public class LimitedTimeActivity extends BaseActivity {
     ImageView ivBack;
 
     @BindView(R.id.tv_startSearch)
-    TextView tvSearch;
+    ImageView tvSearch;
 
     private SimpleFragmentPagerAdapter adapter;
     private List<Fragment> mFragments = new ArrayList<Fragment>();
@@ -131,6 +131,7 @@ public class LimitedTimeActivity extends BaseActivity {
                                 }
                                 adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), mFragments, tabTitle);
                                 viewPager.setAdapter(adapter);
+                                ((GoodsFragmentPage) adapter.getItem(0)).sendMessage();
                                 viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                                     @Override
                                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -151,6 +152,7 @@ public class LimitedTimeActivity extends BaseActivity {
 
                                 tabLayout.setupWithViewPager(viewPager);
                                 tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);//超过长度可滑动
+
                             } else {
                                 ToastUtil.showShort(LimitedTimeActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                             }

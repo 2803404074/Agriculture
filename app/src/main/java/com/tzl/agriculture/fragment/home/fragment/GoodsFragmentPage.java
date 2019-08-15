@@ -72,6 +72,12 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
         adapter = new BaseAdapter<GoodsMo>(getContext(), recyclerView, mData, R.layout.item_limited_time) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, GoodsMo o) {
+
+                //发现好物，不需要倒计时
+                if (type == 1){
+                    holder.getView(R.id.ll_gg).setVisibility(View.GONE);
+                }
+
                 holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                 holder.setText(R.id.tv_name, o.getGoodsName());
                 holder.setText(R.id.tv_price, o.getPrice());
@@ -191,7 +197,35 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
         downUtil.start(DateUtil.timeToStamp(data), new CountDownUtil.OnCountDownCallBack() {
             @Override
             public void onProcess(int day, int hour, int minute, int second) {
-                tvDate.setText(day + "天 " + hour + "时 " + minute + "分 " + second + "秒");
+                String strDay = "";
+                String strHour= "";
+                String strMinute = "";
+                String strSecond = "";
+
+                if (day<10){
+                    strDay = 0+String.valueOf(day);
+                }else {
+                    strDay = String.valueOf(day);
+                }
+
+                if (hour<10){
+                    strHour = 0+String.valueOf(hour);
+                }else {
+                    strHour = String.valueOf(hour);
+                }
+
+                if (minute<10){
+                    strMinute = 0+String.valueOf(minute);
+                }else {
+                    strMinute = String.valueOf(minute);
+                }
+
+                if (second<10){
+                    strSecond = 0+String.valueOf(second);
+                }else {
+                    strSecond = String.valueOf(second);
+                }
+                tvDate.setText(strDay + "天 " + strHour + "时 " + strMinute + "分 " + strSecond + "秒");
             }
             @Override
             public void onFinish() {

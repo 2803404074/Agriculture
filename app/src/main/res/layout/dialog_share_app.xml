@@ -8,6 +8,7 @@
     android:layout_height="wrap_content">
 
 
+
     <RelativeLayout
         android:id="@+id/rl_bg"
         android:layout_width="match_parent"
@@ -20,6 +21,14 @@
             android:layout_marginBottom="@dimen/dp_10"
             android:layout_width="@dimen/dp_180"
             android:layout_height="@dimen/dp_180"/>
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_5"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/camera_close"/>
     </RelativeLayout>
 
 
@@ -30,16 +39,13 @@
         android:paddingVertical="@dimen/dp_10"
         android:paddingHorizontal="@dimen/dp_10"
         android:orientation="horizontal">
-        <com.shehuan.niv.NiceImageView
+
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/nice_img"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:src="@mipmap/ic_launcher"
-            app:border_width="@dimen/dp_2"
-            android:scaleType="fitXY"
-            app:border_color="@color/colorYellow"
-            app:is_circle="true" />
-
+            fresco:roundAsCircle="true"
+            />
         <RelativeLayout
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"

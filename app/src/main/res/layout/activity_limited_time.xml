@@ -8,7 +8,7 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".mall.activity.LimitedTimeActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/dp_10"
@@ -20,33 +20,32 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:padding="@dimen/dp_5"
+            android:layout_centerVertical="true"
             android:src="@mipmap/back" />
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="限时购"
+           android:layout_toRightOf="@+id/back"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:textColor="#fff"
             android:textSize="@dimen/sp_15" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/tv_startSearch"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:padding="@dimen/dp_3"
+            android:src="@mipmap/search"/>
+    </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/tv_startSearch"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="@dimen/dp_20"
-        android:background="@drawable/shape_search_home"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:drawablePadding="@dimen/dp_10"
-        android:gravity="center|left"
-        android:hint="搜索商品" />
+
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/h_refreshLayout"
@@ -68,7 +67,6 @@
             android:orientation="vertical">
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
-                android:paddingVertical="@dimen/dp_5"
                 app:tabTextAppearance="@style/TabLayoutTextStyle"
                 android:background="@color/colorPrimaryDark"
                 app:tabTextColor="@color/colorGri"

@@ -2,6 +2,7 @@ package com.tzl.agriculture.util;
 
 import android.content.Context;
 
+import com.tzl.agriculture.baseresult.SPTAG;
 import com.tzl.agriculture.model.UserInfo;
 
 import org.json.JSONException;
@@ -79,7 +80,7 @@ public class UserData {
 
     //获取用户信息
     public UserInfo getUsreInfo(){
-        String str = (String) SPUtils.instance(context,1).getkey("user","");
+        String str = (String) SPUtils.instance(context,1).getkey(SPTAG.USER,"");
         return JsonUtil.string2Obj(str,UserInfo.class);
     }
 }

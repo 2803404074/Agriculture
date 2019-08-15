@@ -1,5 +1,7 @@
 package com.tzl.agriculture.fragment.vip.model;
 
+import java.util.List;
+
 /**
  * 优惠券
  *
@@ -169,5 +171,48 @@ public class CouponMo {
 
     public void setReceiveState(String receiveState) {
         this.receiveState = receiveState;
+    }
+
+
+
+    public static class CouponMoDetails{
+        private String cradNote;
+        private boolean platform;//true支持所有店铺，false指定店铺
+        private String endEffective;
+        private List<ShopList> shopList;
+
+        public String getCradNote() {
+            return cradNote;
+        }
+
+        public boolean isPlatform() {
+            return platform;
+        }
+
+        public String getEndEffective() {
+            return endEffective;
+        }
+
+        public List<ShopList> getShopList() {
+            return shopList;
+        }
+
+        public static class ShopList{
+            private String shopId;
+            private String shopName;
+            private String shopIcon;
+
+            public String getShopId() {
+                return shopId;
+            }
+
+            public String getShopName() {
+                return shopName;
+            }
+
+            public String getShopIcon() {
+                return shopIcon;
+            }
+        }
     }
 }

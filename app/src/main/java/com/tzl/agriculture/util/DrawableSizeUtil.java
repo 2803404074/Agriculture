@@ -64,4 +64,90 @@ public class DrawableSizeUtil<T> {
             }
         }
     }
+
+    public void setTop(int length, int with,T view, int resources){
+        Drawable drawableFirst = context.getResources().getDrawable(resources);
+        drawableFirst.setBounds(0, 0, length, with);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        if (view instanceof RadioButton) {
+            RadioButton radioButton = (RadioButton) view;
+            radioButton.setCompoundDrawables(null, drawableFirst, null, null);
+        }
+        if (view instanceof CheckBox) {
+            CheckBox checkBox = (CheckBox) view;
+            checkBox.setCompoundDrawables(null, drawableFirst, null, null);
+        }
+        if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            textView.setCompoundDrawables(null, drawableFirst, null, null);
+        }
+        if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            editText.setCompoundDrawables(null, drawableFirst, null, null);
+        }
+    }
+
+    public void setLeft(int length, int with,T view, int resources){
+        Drawable drawableFirst = context.getResources().getDrawable(resources);
+        drawableFirst.setBounds(0, 0, length, with);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        if (view instanceof RadioButton) {
+            RadioButton radioButton = (RadioButton) view;
+            radioButton.setCompoundDrawables(drawableFirst, null, null, null);
+        }
+        if (view instanceof CheckBox) {
+            CheckBox checkBox = (CheckBox) view;
+            checkBox.setCompoundDrawables(drawableFirst, null, null, null);
+        }
+        if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            textView.setCompoundDrawables(drawableFirst, null, null, null);
+        }
+        if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            editText.setCompoundDrawables(drawableFirst, null, null, null);
+        }
+    }
+
+
+    public void setRight(int length, int with,T view, int resources){
+        Drawable drawableFirst = context.getResources().getDrawable(resources);
+        drawableFirst.setBounds(0, 0, length, with);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        if (view instanceof RadioButton) {
+            RadioButton radioButton = (RadioButton) view;
+            radioButton.setCompoundDrawables(null,null , drawableFirst, null);
+        }
+        if (view instanceof CheckBox) {
+            CheckBox checkBox = (CheckBox) view;
+            checkBox.setCompoundDrawables(null,null , drawableFirst, null);
+        }
+        if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            textView.setCompoundDrawables(null,null , drawableFirst, null);
+        }
+        if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            editText.setCompoundDrawables(null,null , drawableFirst, null);
+        }
+    }
+
+
+    public void setBottom(int length, int with,T view, int resources){
+        Drawable drawableFirst = context.getResources().getDrawable(resources);
+        drawableFirst.setBounds(0, 0, length, with);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        if (view instanceof RadioButton) {
+            RadioButton radioButton = (RadioButton) view;
+            radioButton.setCompoundDrawables(null,null , null, drawableFirst);
+        }
+        if (view instanceof CheckBox) {
+            CheckBox checkBox = (CheckBox) view;
+            checkBox.setCompoundDrawables(null,null , null, drawableFirst);
+        }
+        if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            textView.setCompoundDrawables(null,null , null, drawableFirst);
+        }
+        if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            editText.setCompoundDrawables(null,null , null, drawableFirst);
+        }
+    }
 }

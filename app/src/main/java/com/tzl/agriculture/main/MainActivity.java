@@ -1,6 +1,9 @@
 package com.tzl.agriculture.main;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -21,40 +26,47 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.hanks.htextview.rainbow.RainbowTextView;
 import com.rey.material.app.BottomSheetDialog;
 import com.tzl.agriculture.R;
+import com.tzl.agriculture.application.AppManager;
 import com.tzl.agriculture.fragment.home.fragment.HomeFragment;
 import com.tzl.agriculture.fragment.personal.framgent.PersonFragment;
 import com.tzl.agriculture.fragment.xiangc.fragment.XiangcFragment;
+import com.tzl.agriculture.model.AppVersion;
 import com.tzl.agriculture.model.UserInfo;
+import com.tzl.agriculture.util.DialogUtil;
 import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
+import com.tzl.agriculture.view.BaseActivity;
 import com.tzl.agriculture.view.DoubleClickListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import config.App;
 import config.Base;
 import config.User;
 import okhttp3.Call;
 
+import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 import static com.mob.MobSDK.getContext;
 
-public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     public static MainActivity instance;
 
     //测试环境
     @BindView(R.id.htext)
     RainbowTextView tvSetAddress;
-
 
     @BindView(R.id.main_radiogrop)
     RadioGroup radioGroup;
@@ -75,17 +87,25 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private XiangcFragment fg_01;
     private PersonFragment fg_02;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        initView();
+    public void initData() {
+        checkVersion();
     }
 
-    private void initView() {
+    @Override
+    public int setLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initView() {
+
+        requestPower();
 
         getUserInfo();
+
+
 
         tvSetAddress.animateText("设置服务地址");
 
@@ -96,9 +116,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         radioButton_01.setChecked(true);
         radioButton_01.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         DrawableSizeUtil drawableSizeUtil = new DrawableSizeUtil(this);
-        drawableSizeUtil.setImgSize(60, 60, 1, radioButton_01, R.drawable.select_home);
-        drawableSizeUtil.setImgSize(60, 60, 1, radioButton_02, R.drawable.select_xc);
-        drawableSizeUtil.setImgSize(60, 60, 1, radioButton_03, R.drawable.select_my);
+        drawableSizeUtil.setImgSize(65, 65, 1, radioButton_01, R.drawable.select_home);
+        drawableSizeUtil.setImgSize(65, 65, 1, radioButton_02, R.drawable.select_xc);
+        drawableSizeUtil.setImgSize(65, 65, 1, radioButton_03, R.drawable.select_my);
 
 
         radioButton_01.setOnClickListener(new DoubleClickListener() {
@@ -109,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             }
         });
     }
+
+
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
@@ -204,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                finish();
+                AppManager.getAppManager().AppExit(this);
             }
             return true;
         }
@@ -422,6 +444,104 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 });
             }
         });
+    }
+
+
+
+    private void checkVersion(){
+        String version = "";
+        // 获取packagemanager的实例
+
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        try {
+            PackageManager packageManager = getPackageManager();
+            PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(),0);
+            version = packInfo.versionName;
+
+            Map<String,String>map = new HashMap<>();
+            map.put("version",version);
+            String str = JsonUtil.obj2String(map);
+            String token = (String) SPUtils.instance(this,1).getkey("token","");
+            OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.checkNewVersion, str, token, new GsonObjectCallback<String>(App.BASE) {
+                @Override
+                public void onUi(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        if (object.optInt("code") == 0){
+                            JSONObject dataObj = object.optJSONObject("data");
+
+                            //是否有新版本
+                            boolean hasNew = dataObj.optBoolean("hasNewVersion");
+                            //是否必须更新
+                            boolean mustUpdate = dataObj.optBoolean("mustUpdate");
+
+                            if (hasNew){
+                                String str = dataObj.optString("appAbout");
+                                AppVersion appVersion = JsonUtil.string2Obj(str, AppVersion.class);
+                                DialogUtil.init(MainActivity.this).showVersion(R.layout.dialog_version,mustUpdate,appVersion);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailed(Call call, IOException e) {
+
+                }
+            });
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogUtil.init(this).des();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        DialogUtil.init(this).des();
+    }
+
+    public void requestPower() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                //Toast.makeText(this, "需要读写权限，请打开设置开启对应的权限", Toast.LENGTH_LONG).show();
+            } else {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
+            }
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        String requestPermissionsResult = "";
+        if (requestCode == 1) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (grantResults[i] == PERMISSION_GRANTED) {
+                    requestPermissionsResult += permissions[i] + " 申请成功\n";
+                } else {
+                    requestPermissionsResult += permissions[i] + " 申请失败\n";
+                }
+            }
+        }
+        //Toast.makeText(this, requestPermissionsResult, Toast.LENGTH_SHORT).show();
     }
 }
 

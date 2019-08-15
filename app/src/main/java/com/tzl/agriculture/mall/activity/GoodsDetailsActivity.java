@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.rey.material.app.BottomSheetDialog;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.function.activity.MyCommentActivity;
+import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.util.BottomShowUtil;
 import com.tzl.agriculture.util.CountDownUtil;
@@ -39,6 +41,7 @@ import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.MyWebViewClient;
 import com.tzl.agriculture.util.ScreenUtils;
 import com.tzl.agriculture.util.ShareUtils;
+import com.tzl.agriculture.util.StatusBarUtil;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseActivity;
@@ -165,6 +168,16 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.tv_yf)
     TextView tvYf;//邮费
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
+    }
+
+
     @Override
     public int setLayout() {
         return R.layout.activity_goods_details;
@@ -172,6 +185,20 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void initView() {
+
+        //本activity需要沉浸式
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        //设置状态栏透明
+        StatusBarUtil.setTranslucentStatus(this);
+
+        //一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
+        //所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
+        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
+            //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
+            //这样半透明+白=灰, 状态栏的文字能看得清
+            StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorW));
+        }
+
         if (getIntent().getIntExtra("type",0) == 1){
             tvDh.setVisibility(View.VISIBLE);
             llDeatilsMenu.setVisibility(View.GONE);
@@ -215,7 +242,11 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                                 String str = object.optString("data");
                                 goodsDetailsMo = JsonUtil.string2Obj(str, GoodsDetailsMo.class);
                                 setMess();
-                            } else {
+                            } else if (object.optInt("code") == 0){
+                                Intent intent = new Intent(GoodsDetailsActivity.this, LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }else {
                                 ToastUtil.showShort(GoodsDetailsActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                             }
                         } catch (JSONException e) {
@@ -279,7 +310,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         tvBz.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoodsServicesStr()));
 
         //邮费
-        tvYf.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getFreeShipping()));
+        String yfStr = TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getFreeShipping());
+        tvYf.setText(yfStr.equals("0")? "包邮":getString(R.string.app_money)+yfStr);
 
         //评论数量
         tvCommentNum.setText(goodsDetailsMo.getGoodsCommentList()==null ? "0":String.valueOf(goodsDetailsMo.getGoodsCommentList().size()));
@@ -472,8 +504,9 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (goodsDetailsMo.getGoods().getPurchaseLimit()==1){
-                    ToastUtil.showShort(GoodsDetailsActivity.this,"该商品每人只限购一件哦");
+                int limitSize = goodsDetailsMo.getGoods().getPurchaseLimit();
+                if (limitSize>0 && limitSize<=Integer.parseInt(tvNum.getText().toString())){
+                    ToastUtil.showShort(GoodsDetailsActivity.this,"该商品每人只限购"+limitSize+"件哦");
                     return;
                 }
 

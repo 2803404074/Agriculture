@@ -1,7 +1,6 @@
 package com.tzl.agriculture.fragment.vip.activity;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.fragment.vip.model.CouponMo;
+import com.tzl.agriculture.util.DialogUtilT;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
 import com.tzl.agriculture.view.onLoadMoreListener;
 
-import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,6 +50,8 @@ public class CouponActivity extends SetBaseActivity {
 
     private List<CouponMo> mData = new ArrayList<>();
 
+    private CouponMo.CouponMoDetails couponMoDetails ;//优惠券详情
+
     private int page = 1;
 
     @Override
@@ -77,7 +78,6 @@ public class CouponActivity extends SetBaseActivity {
                 TextView tvTip = holder.getView(R.id.tv_tip);
 
                 int status = o.getCardState();
-                Log.e("niubi", "设置了" + status);
 
                 tvPrice.setTextColor(getResources().getColor(R.color.colorOrange));
                 tvPrice.setTextColor(getResources().getColor(R.color.colorOrange));
@@ -131,6 +131,58 @@ public class CouponActivity extends SetBaseActivity {
             }
         });
 
+        adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                DialogUtilT dialogUtilT = new DialogUtilT<CouponMo.CouponMoDetails>(CouponActivity.this) {
+                    @Override
+                    public void convert(BaseRecyclerHolder holder,CouponMo.CouponMoDetails details) {
+                        CouponMo couponMo = (CouponMo) adapter.getData().get(position);
+                        OkHttp3Utils.getInstance(Mall.BASE).doGet(Mall.couponDetails+couponMo.getCardId(), getToken(),new GsonObjectCallback<String>(Mall.BASE) {
+                            @Override
+                            public void onUi(String result) {
+                                try {
+                                    JSONObject object  = new JSONObject(result);
+                                    String str =  object.optString("data");
+                                    couponMoDetails = JsonUtil.string2Obj(str,CouponMo.CouponMoDetails.class);
+
+                                    holder.setText(R.id.tv_cTitle,couponMoDetails.getCradNote());
+
+                                    if (couponMoDetails.isPlatform()){
+                                        holder.getView(R.id.tv_all).setVisibility(View.VISIBLE);
+                                    }
+
+                                    holder.setText(R.id.tv_endTime,couponMoDetails.getEndEffective());
+
+
+                                    RecyclerView recyclerView = holder.getView(R.id.recy_dep);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(CouponActivity.this));
+                                    BaseAdapter adapter = new BaseAdapter<CouponMo.CouponMoDetails.ShopList>(CouponActivity.this,recyclerView,couponMoDetails.getShopList(),R.layout.item_img_text) {
+                                        @Override
+                                        public void convert(Context mContext, BaseRecyclerHolder holder, CouponMo.CouponMoDetails.ShopList o) {
+                                            holder.setImageByUrl(R.id.iv_img,o.getShopIcon());
+                                            holder.setText(R.id.tv_tips,o.getShopName());
+                                        }
+                                    };
+                                    recyclerView.setAdapter(adapter);
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailed(Call call, IOException e) {
+
+                            }
+                        });
+                    }
+                };
+                dialogUtilT.show2(R.layout.dialog_coupon_details,couponMoDetails);
+            }
+        });
+
     }
 
     @Override
@@ -148,10 +200,6 @@ public class CouponActivity extends SetBaseActivity {
                         JSONObject dataObj = object.optJSONObject("data");
                         String str = dataObj.optString("records");
                         mData = JsonUtil.string2Obj(str, List.class, CouponMo.class);
-
-                        for (int i = 0; i < mData.size(); i++) {
-                            Log.e("niubi", "状态:" + mData.get(i).getCardState());
-                        }
                         if (null != mData && mData.size() > 0) {
                             if (page > 1) {
                                 adapter.addAll(mData);

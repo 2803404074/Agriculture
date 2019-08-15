@@ -1,30 +1,30 @@
 package com.tzl.agriculture.fragment.home.fragment;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.shehuan.niv.NiceImageView;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.comment.activity.HtmlForStoryActivity;
 import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
@@ -40,20 +40,17 @@ import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
 import com.tzl.agriculture.mall.activity.LimitedTimeActivity;
 import com.tzl.agriculture.model.BannerMo;
 import com.tzl.agriculture.model.HomeMo;
-import com.tzl.agriculture.model.UserInfo;
 import com.tzl.agriculture.model.XiangcMo;
 import com.tzl.agriculture.util.BannerUtil;
+import com.tzl.agriculture.util.DialogUtil;
 import com.tzl.agriculture.util.JsonUtil;
-import com.tzl.agriculture.util.ScreenUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
-import com.tzl.agriculture.util.UserData;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseFragment;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
 import com.tzl.agriculture.view.VerticalTextview;
 
-import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,15 +64,18 @@ import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import cc.ibooker.zviewpagerlib.GeneralVpLayout;
-import config.App;
 import config.Article;
 import okhttp3.Call;
 
 public class HomeFragment extends BaseFragment {
-    private RefreshLayout mRefreshLayout;
-    private RecyclerView homeRecycler;
+
     private HomeAdapter homeAdapter;
-    private Context mContext;
+
+    @BindView(R.id.h_refreshLayout)
+    RefreshLayout mRefreshLayout;
+
+    @BindView(R.id.home_recycler)
+    RecyclerView homeRecycler;
 
     @BindView(R.id.iv_tips_show)
     ImageView ivTips;
@@ -105,6 +105,7 @@ public class HomeFragment extends BaseFragment {
         //注册广播
         registerBroadcast();
 
+        //搜索
         rlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,42 +114,38 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        mContext = HomeFragment.this.getContext();
-        mRefreshLayout = view.findViewById(R.id.h_refreshLayout);
         mRefreshLayout.setEnableHeaderTranslationContent(true);//内容偏移
         mRefreshLayout.setPrimaryColorsId(R.color.colorPrimaryDark, android.R.color.white);//主题颜色
-        homeRecycler = view.findViewById(R.id.home_recycler);
-        homeRecycler.setLayoutManager(new LinearLayoutManager(mContext));
+        homeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         homeRecycler.setItemAnimator(new DefaultItemAnimator());
 
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mData.clear();
-                setAdapter2();
                 initData();
             }
         });
-
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 //refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
-        setAdapter2();
+
+        setAdapter();
     }
 
+    //（播报）滚动文字
     private VerticalTextview tvBro;
 
 
-    private void setAdapter2() {
-
-        homeAdapter = new HomeAdapter(mContext) {
+    private void setAdapter() {
+        homeAdapter = new HomeAdapter(getContext()) {
             @Override
             public void convert(Context mContext, final BaseRecyclerHolder holder, int mType) {
 
-                if (mType == homeAdapter.mTypeZero) {
+                if (homeAdapter.getViewTypeForMyTask(mType) == homeAdapter.mTypeZero) {
                     List<String> mTitle = new ArrayList<>();
                     List<String> mUrl = new ArrayList<>();
                     List<BannerMo> bannerMos = mData.get(mType).getAdvertiseList();
@@ -160,7 +157,7 @@ public class HomeFragment extends BaseFragment {
                     BannerUtil util = new BannerUtil(context);
                     util.banner3(banner,bannerMos);
 
-                } else if (mType == homeAdapter.mTypeOne) {
+                } else if (homeAdapter.getViewTypeForMyTask(mType) == homeAdapter.mTypeOne) {
                     TextView tvTitle = holder.getView(R.id.tv_title);
                     tvTitle.setText(mData.get(mType).getArticleList().getTypeName());
                     TextUtil.setTextViewStyles(tvTitle);
@@ -194,7 +191,7 @@ public class HomeFragment extends BaseFragment {
                         textView.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
 
-                } else if (mType == homeAdapter.mTypeTow) {
+                } else if (homeAdapter.getViewTypeForMyTask(mType) == homeAdapter.mTypeTow) {
 
                     //获取限时购模块数据（限时购、拼团、特价）
                     List<HomeMo.LimitGoods> goodsList = mData.get(mType).getGoodsTypeList();
@@ -204,25 +201,28 @@ public class HomeFragment extends BaseFragment {
                     holder.setText(R.id.tv_xsg, limitGoods.getTypeName());
                     holder.setText(R.id.tv_xsg_tag, limitGoods.getTag());
 
-                    if (limitGoods.getGoodsList() != null && limitGoods.getGoodsList().size() > 0) {
-                        RecyclerView recyXsg = holder.getView(R.id.rv_xsg);
-                        recyXsg.setNestedScrollingEnabled(false);
-                        recyXsg.setLayoutManager(new GridLayoutManager(context,4));
-                        BaseAdapter adapter = new BaseAdapter<HomeMo.LimitGoods.GoodsList>(context,recyXsg,limitGoods.getGoodsList(),R.layout.img_view) {
-                            @Override
-                            public void convert(Context mContext, BaseRecyclerHolder holder, HomeMo.LimitGoods.GoodsList o) {
-                                holder.setImageByUrl(R.id.img,o.getPicUrl());
-                            }
-                        };
-                        recyXsg.setAdapter(adapter);
-                        adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                Intent intent = new Intent(getContext(), LimitedTimeActivity.class);
-                                startActivity(intent);
-                            }
-                        });
+                    TableLayout tab = holder.getView(R.id.tableLayout);
+
+                    int size = limitGoods.getGoodsList().size();
+
+                    //行数
+                    int rowSize = size/4;
+
+                    //控制行数
+                    for (int i = 0; i < rowSize; i++) {
+                        TableRow.LayoutParams params = new TableRow.LayoutParams(0, 170);//50 x 50
+                        params.weight = 1;
+                        TableRow tabRow = new TableRow(getContext());
+                        //控制列数
+                        for (int j = 0 ; j<size; j++){
+                            ImageView imageView = new ImageView(getContext());
+                            imageView.setLayoutParams(params);
+                            Glide.with(getContext()).load(limitGoods.getGoodsList().get(j).getPicUrl()).into(imageView);
+                            tabRow.addView(imageView);
+                        }
+                        tab.addView(tabRow);
                     }
+
                     //限时购点击
                     holder.getView(R.id.ll_xsg).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -231,7 +231,7 @@ public class HomeFragment extends BaseFragment {
                             startActivity(intent);
                         }
                     });
-                } else if (mType == homeAdapter.mTypeThree) {//播报
+                } else if (homeAdapter.getViewTypeForMyTask(mType) == homeAdapter.mTypeThree) {//播报
                     XiangcMo xiangcMo = mData.get(mType).getArticleList();
                     holder.setText(R.id.tv_title_bb, xiangcMo.getTypeName());
                     tvBro = holder.getView(R.id.tv_bro);
@@ -266,7 +266,7 @@ public class HomeFragment extends BaseFragment {
                         }
                     });
 
-                } else if (mType == homeAdapter.mTypeFour) {
+                } else if (homeAdapter.getViewTypeForMyTask(mType) == homeAdapter.mTypeFour) {
 
                     holder.getView(R.id.iv_new).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -283,14 +283,14 @@ public class HomeFragment extends BaseFragment {
                         }
                     });
 
-                } else if (mType == homeAdapter.mTypeFive) {//订单农业
+                } else if (homeAdapter.getViewTypeForMyTask(mType) == homeAdapter.mTypeFive) {//订单农业
                     holder.getView(R.id.iv_ddny).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             showTwo();
                         }
                     });
-                } else if (mType == homeAdapter.mTypeSix) {//乡村好物模块
+                } else if (homeAdapter.getViewTypeForMyTask(mType) == homeAdapter.mTypeSix) {//乡村好物模块
 
                     HomeMo.XchwGoods xchwModel = mData.get(mType).getXchwModel();
 
@@ -353,7 +353,7 @@ public class HomeFragment extends BaseFragment {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(getContext(), HtmlForXcActivity.class);
-                                intent.putExtra("articleId", goo.get(0).getArticleId());
+                                intent.putExtra("articleId", goo.get(1).getArticleId());
                                 startActivity(intent);
                             }
                         });
@@ -412,7 +412,7 @@ public class HomeFragment extends BaseFragment {
                         holder.setImageByUrl(R.id.iv_zgg_02, goo3.get(1).getPicUrl());
                     }
 
-                } else if (mType == homeAdapter.mTypeSeven) {//乡愁模块
+                } else if (homeAdapter.getViewTypeForMyTask(mType) == homeAdapter.mTypeSeven) {//乡愁模块
                     recyclerViewXc = holder.getView(R.id.recycler_seven);
                     recyclerViewXc.setLayoutManager(new LinearLayoutManager(getContext()));
                     adapterXc = new BaseAdapter<XiangcMo>(getContext(), recyclerViewXc, mData.get(mType).getArticleListXc(), R.layout.item_xiangc_title) {
@@ -458,7 +458,6 @@ public class HomeFragment extends BaseFragment {
                             }
                         }
                     };
-
                     recyclerViewXc.setAdapter(adapterXc);
                 }
             }
@@ -467,6 +466,7 @@ public class HomeFragment extends BaseFragment {
         homeRecycler.setAdapter(homeAdapter);
     }
 
+    //乡愁模块的列表
     private RecyclerView recyclerViewXc;
     private BaseAdapter adapterXc;
 
@@ -486,6 +486,7 @@ public class HomeFragment extends BaseFragment {
                         ivTips.setVisibility(View.GONE);
                         String str = object.optString("data");
                         mData = JsonUtil.string2Obj(str, List.class, HomeMo.class);
+
                         if (mData != null && mData.size() > 0) {
                             homeAdapter.update(mData);
                         }
@@ -540,59 +541,14 @@ public class HomeFragment extends BaseFragment {
     }
     //订单农业，扶贫厅 弹窗
     private void showTwo() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setIcon(R.mipmap.application).setTitle("趣乡服务")
-                .setMessage("敬请期待").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-        builder.create().show();
+       DialogUtil.init(getContext()).showTips();
     }
 
-    private AlertDialog dialog;
     /**
      * 新人礼包
      */
     private void showShareDialogNes() {
-
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_img, null, false);
-        view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog = new AlertDialog.Builder(getContext(),R.style.TransparentDialog).setView(view).create();
-//        ImageView img = view.findViewById(R.id.hxxq_img);
-//        img.setImageResource(R.mipmap.share_news_lb);
-        dialog.show();
-        //此处设置位置窗体大小，我这里设置为了手机屏幕宽度的3/4
-        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(getContext()) / 4 * 3), LinearLayout.LayoutParams.WRAP_CONTENT);
-    }
-
-    private void initDialogImg(ImageView imageView, TextView tvCode) {
-        OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.shareApp, "", getToken(), new GsonObjectCallback<String>(App.BASE) {
-            @Override
-            public void onUi(String result) {
-                try {
-                    JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == 0) {
-                        JSONObject dataObj = object.optJSONObject("data");
-                        JSONObject shareObj = dataObj.optJSONObject("shareInfo");
-                        Glide.with(getContext()).load(shareObj.optString("qrCodeUrl")).into(imageView);
-                        tvCode.setText(shareObj.optString("inviteCode"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailed(Call call, IOException e) {
-
-            }
-        });
+        DialogUtil.init(getContext()).show(R.layout.dialog_img);
     }
 
     @Override
@@ -618,8 +574,6 @@ public class HomeFragment extends BaseFragment {
             tvBro.startAutoScroll();
         }
     }
-
-
     private void registerBroadcast() {
         IntentFilter filter = new IntentFilter("android.intent.action.DOUBLE_ACTION");
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, filter);

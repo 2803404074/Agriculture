@@ -34,22 +34,6 @@
             android:padding="@dimen/dp_5"
             android:src="@mipmap/back"/>
 
-        <ImageView
-            android:layout_toLeftOf="@+id/tv_manage"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_gravity="center"
-            android:src="@mipmap/search"/>
-        <TextView
-            android:id="@+id/tv_manage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:text="管理"/>
-
     </RelativeLayout>
 
 

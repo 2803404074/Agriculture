@@ -118,7 +118,7 @@
             android:background="@null"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp_10"
-            android:text="http://192.168.1.140"/>
+            android:text="http://192.168.0.108"/>
 
         <TextView
             android:layout_width="wrap_content"

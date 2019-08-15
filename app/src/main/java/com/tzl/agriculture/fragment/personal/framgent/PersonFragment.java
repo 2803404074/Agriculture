@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shehuan.niv.NiceImageView;
 import com.tzl.agriculture.R;
+import com.tzl.agriculture.baseresult.SPTAG;
 import com.tzl.agriculture.fragment.personal.activity.ccb.activity.BrowseActivity;
 import com.tzl.agriculture.fragment.personal.activity.ccb.activity.CartActivity;
 import com.tzl.agriculture.fragment.personal.activity.ccb.activity.CollectionGoodsActivity;
@@ -37,12 +39,15 @@ import com.tzl.agriculture.fragment.vip.activity.VipActivity;
 import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.model.ServerMo;
 import com.tzl.agriculture.model.UserInfo;
+import com.tzl.agriculture.util.DialogUtil;
+import com.tzl.agriculture.util.DialogUtilT;
 import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ScreenUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
+import com.tzl.agriculture.util.UserData;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseFragment;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
@@ -203,6 +208,8 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, ServerMo o) {
                 holder.setText(R.id.tv_name,o.getTitle());
+                TextView textView = holder.getView(R.id.tv_name);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
                 holder.setImageResource(R.id.iv_img,o.getResources());
             }
         };
@@ -239,48 +246,32 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
      * 分享弹窗
      */
     private void showShareDialog() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_share_app,null,false);
-        final AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(view).create();
-
-        RelativeLayout relativeLayout = view.findViewById(R.id.rl_bg);
-        relativeLayout.setBackgroundResource(R.mipmap.share_news);
-
-        //头像
-        NiceImageView imageView = view.findViewById(R.id.nice_img);
-        Glide.with(getContext()).load(userInfo.getHeadUrl()).into(imageView);
-
-        //昵称
-        TextView tvName = view.findViewById(R.id.tv_name);
-        tvName.setText(userInfo.getNickname());
-
-        //二维码
-        ImageView img = view.findViewById(R.id.iv_img);
-
-        //邀请码
-        TextView tvCode = view.findViewById(R.id.tv_code);
-
-
-        initDialogImg(img,tvCode);
-
-        view.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+        DialogUtilT dialogUtilT = new DialogUtilT<UserInfo>(getContext()) {
             @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        view.findViewById(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void convert(BaseRecyclerHolder holder, UserInfo data) {
+                holder.getView(R.id.rl_bg).setBackgroundResource(R.mipmap.share_news);
+                SimpleDraweeView draweeView = holder.getView(R.id.nice_img);
+                draweeView.setImageURI(data.getHeadUrl());
+                holder.setText(R.id.tv_name,data.getNickname());
+
                 //保存图片
+                holder.getView(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
+                    }
+                });
 
+                //二维码
+                ImageView img = holder.getView(R.id.iv_img);
+                //邀请码
+                TextView tvCode = holder.getView(R.id.tv_code);
 
-
+                //网络获取
+                initDialogImg(img,tvCode);
             }
-        });
-        dialog.show();
-        //此处设置位置窗体大小，我这里设置为了手机屏幕宽度的3/4
-        dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(getContext())/4*3),LinearLayout.LayoutParams.WRAP_CONTENT);
+        };
+        dialogUtilT.show2(R.layout.dialog_share_app,userInfo);
     }
 
     private void initDialogImg(ImageView imageView,TextView tvCode) {
@@ -306,14 +297,12 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         });
     }
 
-
     private UserInfo userInfo;
 
     @Override
     protected void initData() {
 
     }
-
 
     private void getUserInfo(){
         //获取用户信息
@@ -341,7 +330,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     }else if (object.optInt("code") == -1){
                         ToastUtil.showShort(getContext(),TextUtil.checkStr2Str(object.optString("msg")));
                     }else {
-                        showTwo();
+                        DialogUtil.init(getContext()).showTipsForControl("登陆失败，请重新登陆");
                     }
 
                 } catch (JSONException e) {
@@ -375,9 +364,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         });
     }
 
-
-
-
     /**
      * 绑定用户数据
      */
@@ -386,40 +372,6 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             tvNickName.setText(userInfo.getNickname());
             headView.setImageURI(userInfo.getHeadUrl());
         }
-    }
-
-    //提示
-    private void showTwo() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setIcon(R.mipmap.application).setTitle("趣乡服务")
-                .setMessage("信息已过期，请重新登陆").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        Intent intent = new Intent(getContext(), LoginActivity.class);
-                        startActivity(intent);
-                        MainActivity.instance.finish();
-                    }
-                });
-        builder.setCancelable(false);
-        builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-                return false;
-            }
-        });
-        builder.create().show();
-    }
-
-    //
-    private void showTips() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setIcon(R.mipmap.application).setTitle("趣乡服务")
-                .setMessage("敬请期待").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-        builder.create().show();
     }
 
     @Override
@@ -448,7 +400,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 startActivity(intent1);
                 break;
             case R.id.ll_cart:
-                showTips();
+                DialogUtil.init(getContext()).showTips();
 //                Intent intent2 = new Intent(getContext(), CartActivity.class);
 //                startActivity(intent2);
                 break;

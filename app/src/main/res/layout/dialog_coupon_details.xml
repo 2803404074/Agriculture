@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_5"
+    android:background="@drawable/shape_white_noframe">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@drawable/smssdk_ic_popup_dialog_close"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/sp_21"
+            android:textColor="@color/colorOrange"
+            android:text="优惠券"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorGri2"
+        android:textSize="@dimen/sp_18"
+        android:text="使用说明"/>
+
+    <TextView
+        android:id="@+id/tv_cTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="----"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorGri2"
+        android:textSize="@dimen/sp_18"
+        android:text="过期时间"/>
+
+    <TextView
+        android:id="@+id/tv_endTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="---"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorGri2"
+        android:textSize="@dimen/sp_18"
+        android:text="支持该优惠券的店铺有："/>
+
+    <TextView
+        android:id="@+id/tv_all"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="支持所有店铺"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recy_dep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

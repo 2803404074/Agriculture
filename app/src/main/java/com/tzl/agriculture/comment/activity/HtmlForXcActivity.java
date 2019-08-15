@@ -254,6 +254,26 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
                 new GsonObjectCallback<String>(Article.BASE) {
                     @Override
                     public void onUi(String result) {
+                        try {
+                            JSONObject object = new JSONObject(result);
+                            if (object.optInt("code") == 0) {
+//                                if (isClick) {
+//                                    ToastUtil.showShort(HtmlForStoryActivity.this, tips + "成功,文章id=" + getIntent().getStringExtra("articleId"));
+//                                } else {
+//                                    ToastUtil.showShort(HtmlForStoryActivity.this, tips + "取消,文章id=" + getIntent().getStringExtra("articleId"));
+//                                }
+                            }else {
+                                ToastUtil.showShort(HtmlForXcActivity.this, "请求超时");
+
+                                if (s.equals("0")){
+                                    btDz.setChecked(false);
+                                }else {
+                                    btCollect.setChecked(false);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override

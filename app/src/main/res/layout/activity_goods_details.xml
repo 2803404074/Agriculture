@@ -19,14 +19,12 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:clipChildren="false"
-                android:weightSum="200">
+                android:background="@color/colorPrimaryDark">
 
                 <com.tzl.agriculture.view.ViewPagerTransform
                     android:id="@+id/viewpagerTransform"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_250"
+                    android:layout_height="@dimen/dp_360"
                     android:layout_centerHorizontal="true"
                     android:clipChildren="false" />
 
@@ -65,7 +63,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_10"
-                            android:text="原件"
+                            android:text="原价"
                             android:textColor="#fff" />
 
                         <TextView
@@ -460,15 +458,17 @@
         android:id="@+id/iv_back"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
-        android:layout_margin="@dimen/dp_5"
         android:padding="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_20"
         android:src="@mipmap/back" />
     <ImageView
         android:id="@+id/iv_share"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
-        android:layout_margin="@dimen/dp_5"
-        android:padding="@dimen/dp_5"
+        android:padding="@dimen/dp_3"
+        android:layout_marginRight="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_alignParentRight="true"
         android:src="@android:drawable/ic_menu_share" />
 

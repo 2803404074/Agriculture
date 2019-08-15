@@ -3,8 +3,7 @@
     网络请求使用okhttp。
     数据绑定使用 ButterKnife ，部分页面使用 databanding（mvvm）。
     屏幕已适配长度单位，在values/dimens   用法：@dimen/dp_5。
-    gradle没有统一依赖管理，新同事需要麻烦一下啦。
-    由于时间比较赶，本人只关注业务功能。内存、代码、性能等有待优化。
+    gradle没有统一依赖管理
 
 app:主工程目录
     application:应用入口。

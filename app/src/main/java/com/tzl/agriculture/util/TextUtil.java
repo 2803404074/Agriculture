@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.regex.Pattern;
+
 public class TextUtil {
 
     public static void setTextViewStyles(TextView text) {

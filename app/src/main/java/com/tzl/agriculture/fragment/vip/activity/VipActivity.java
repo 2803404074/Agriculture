@@ -161,13 +161,13 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             llMyJf.setVisibility(View.VISIBLE);
             llMyJfTips.setVisibility(View.GONE);
             ivOpen.setVisibility(View.GONE);
-            tvInvNow.setVisibility(View.GONE);
+            tvInvNow.setText("提现");
             tvOpenTips.setText(userInfo.getUsername());
 
             //获取积分信息
 
             reMyJl.setLayoutManager(new GridLayoutManager(this, 3));
-            getJl();
+
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setNestedScrollingEnabled(false);
@@ -255,7 +255,6 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                 }
             });
 
-
             tvInvNow.setVisibility(View.VISIBLE);
             tvBy.setVisibility(View.VISIBLE);
             rlVipYes.setVisibility(View.GONE);
@@ -265,8 +264,6 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
             tvMyQi.setText("年卡权益");
             tvOpenTips.setText("暂未开通");
-
-
 
         }
 
@@ -286,6 +283,17 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         });
 
 
+    }
+
+    public void tvYq(View view){
+        if (userInfo.getUserType() == 3){
+            //提现
+            Intent intent = new Intent(VipActivity.this,CashActivity.class);
+            intent.putExtra("money",tvJf.getText().toString());
+            startActivity(intent);
+        }else {
+            //邀请
+        }
     }
 
     private int page = 1;
@@ -330,6 +338,9 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                 public void onUi(String result) {
                     try {
                         JSONObject object = new JSONObject(result);
+
+                        if (object.optInt("code") != 0) return;
+
                         JSONObject dataObj = object.optJSONObject("data");
 
                         //月份
@@ -540,24 +551,9 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         }
     }
 
-    public Bitmap returnBitMap(String url){
-        URL myFileUrl = null;
-        Bitmap bitmap = null;
-        try {
-            myFileUrl = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        try {
-            HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
-            conn.setDoInput(true);
-            conn.connect();
-            InputStream is = conn.getInputStream();
-            bitmap = BitmapFactory.decodeStream(is);
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bitmap;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getJl();
     }
 }

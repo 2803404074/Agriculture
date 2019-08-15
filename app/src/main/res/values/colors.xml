@@ -13,6 +13,7 @@
     <color name="colorGri1">#F1F1F1</color>
     <color name="colorGrix">#F0F0F0</color>
     <color name="colorGri2">#3F3F3F</color>
+    <color name="colorblack">#000000</color>
     <color name="colorOrange">#EE7621</color>
     <color name="colorYellow">#EEEE00</color>
 
@@ -20,6 +21,6 @@
 
     <color name="colorTouming2">#00000000</color>
     <color name="colorGreen">#34b386</color>
-
+    <color name="colorGreen2">#00a795</color>
     <color name="colorGray">#fccc</color>
 </resources>

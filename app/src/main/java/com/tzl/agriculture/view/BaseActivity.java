@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.tzl.agriculture.application.AppManager;
 import com.tzl.agriculture.util.SPUtils;
 
 import butterknife.ButterKnife;
@@ -23,6 +24,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(setLayout());
         ButterKnife.bind(this);
+
+        AppManager.getAppManager().addActivity(this);
+
         initView();
         initData();
     }

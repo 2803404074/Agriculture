@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/rl_code"
             android:paddingHorizontal="@dimen/dp_10"
-            android:text="我们已将验证码发送至您xxxxx,请注意查收请注意查收"
+            android:text="我们已将验证码发送至您xxxxx,请注意查收"
             android:textColor="@color/colorGri2"
             android:textSize="@dimen/sp_18" />
 

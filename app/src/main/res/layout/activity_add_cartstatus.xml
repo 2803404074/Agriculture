@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".fragment.vip.activity.AddCartStatusActivity">
+
+    <include layout="@layout/toolbar_left_white_left"/>
+
+    <ImageView
+        android:layout_above="@+id/tv_status"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ok_status"/>
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorGri2"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="你已添加北部湾银行储蓄卡"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dp_7"
+        android:textSize="@dimen/sp_15"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="@dimen/dp_80"
+        android:textColor="@color/colorGreen2"
+        android:background="@drawable/shape_green_no"
+        android:text="完成" />
+</RelativeLayout>

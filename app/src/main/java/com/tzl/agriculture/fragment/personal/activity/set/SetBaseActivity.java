@@ -1,6 +1,5 @@
 package com.tzl.agriculture.fragment.personal.activity.set;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tzl.agriculture.R;
-import com.tzl.agriculture.mall.activity.OrderActivity;
+import com.tzl.agriculture.application.AppManager;
 import com.tzl.agriculture.util.SPUtils;
 
 import butterknife.BindView;
@@ -37,6 +36,9 @@ public abstract class SetBaseActivity extends AppCompatActivity {
         setContentView(setLayout());
 
         ButterKnife.bind(this);
+
+        AppManager.getAppManager().addActivity(this);
+
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

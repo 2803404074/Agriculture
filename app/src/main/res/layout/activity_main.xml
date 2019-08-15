@@ -39,6 +39,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:padding="@dimen/dp_3"
+                android:textSize="@dimen/sp_10"
                 android:drawableTop="@drawable/select_home"
                 android:text="首页" />
 
@@ -51,6 +52,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:padding="@dimen/dp_3"
+                android:textSize="@dimen/sp_10"
                 android:drawableTop="@drawable/select_xc"
                 android:text="乡愁" />
 
@@ -64,6 +66,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:padding="@dimen/dp_3"
+                android:textSize="@dimen/sp_10"
                 android:drawableTop="@drawable/select_my"
                 android:text="我的" />
         </RadioGroup>
@@ -71,10 +74,10 @@
 
         <com.hanks.htextview.rainbow.RainbowTextView
             android:id="@+id/htext"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:visibility="gone"
             android:text="设置服务地址"
             android:textSize="20sp"
             app:colorSpace="150dp"

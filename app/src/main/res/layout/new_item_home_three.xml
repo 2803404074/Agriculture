@@ -5,17 +5,15 @@
     android:orientation="horizontal"
     android:background="@drawable/shape_white_noframe"
     android:layout_marginVertical="@dimen/dp_5"
+    android:layout_marginHorizontal="@dimen/dp_10"
     android:layout_marginBottom="@dimen/dp_5"
-    android:paddingVertical="@dimen/dp_5"
-    android:paddingHorizontal="@dimen/dp_3"
-    android:layout_marginTop="@dimen/dp_1"
-    android:id="@+id/ll_brocast"
-    android:layout_marginHorizontal="@dimen/dp_10">
+    android:id="@+id/ll_brocast">
 
 
     <TextView
         android:id="@+id/tv_title_bb"
         android:textSize="@dimen/sp_18"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="播报" />
@@ -25,13 +23,13 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:text="[推荐]"
+        android:layout_gravity="center"
         android:textSize="@dimen/sp_15"
         android:textColor="@color/colorAccentButton" />
 
     <com.tzl.agriculture.view.VerticalTextview
         android:id="@+id/tv_bro"
-        android:layout_width="0dp"
-        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:lines="1"
@@ -43,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:text="|"
+        android:paddingBottom="@dimen/dp_5"
         android:gravity="center"
         android:textSize="@dimen/sp_18"
         android:layout_gravity="center"

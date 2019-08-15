@@ -44,40 +44,43 @@ public abstract class HomeAdapter extends RecyclerView.Adapter<BaseRecyclerHolde
         notifyDataSetChanged();
     }
 
+    public int getViewTypeForMyTask(int position){
+        return mData.get(position).getPosition();
+    }
+
     @NonNull
     @Override
     public BaseRecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layout = null;
+        int layout = 0;
         if (viewType == mTypeZero){
-            layout = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.new_item_home_zero, parent, false);
+            layout = R.layout.new_item_home_zero;
         }else if (viewType == mTypeOne){
-            layout = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.new_item_home_one, parent, false);
+            layout = R.layout.new_item_home_one;
         }else if (viewType == mTypeTow){
-            layout = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.new_item_home_tow, parent, false);
+            layout = R.layout.new_item_home_tow;
         }else if (viewType == mTypeThree){
-            layout = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.new_item_home_three, parent, false);
+            layout = R.layout.new_item_home_three;
         }else if (viewType == mTypeFour){
-            layout = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.new_item_home_four, parent, false);
+            layout = R.layout.new_item_home_four;
         }else if (viewType == mTypeFive){
-            layout = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.new_item_home_five, parent, false);
+            layout = R.layout.new_item_home_five;
         }else if (viewType == mTypeSix){
-            layout = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.new_item_home_six, parent, false);
+            layout = R.layout.new_item_home_six;
         }else if (viewType == mTypeSeven){
-            layout = LayoutInflater.from(parent.getContext()).
-                    inflate(R.layout.new_item_home_seven, parent, false);
+            layout = R.layout.new_item_home_seven;
         }
-        return BaseRecyclerHolder.getRecyclerHolder(mContext, layout);
+
+        if (layout == 0)return null;
+
+        View view = LayoutInflater.from(parent.getContext()).
+                inflate(layout, parent, false);
+
+        return BaseRecyclerHolder.getRecyclerHolder(mContext, view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseRecyclerHolder holder, int position) {
+        if (holder == null)return;
         if (null == holder.itemView.getTag()){
             holder.itemView.setTag(position);
             convert(mContext, holder,position);
@@ -87,23 +90,7 @@ public abstract class HomeAdapter extends RecyclerView.Adapter<BaseRecyclerHolde
     @Override
     public int getItemViewType(int position) {
         HomeMo homeMo = mData.get(position);
-        if (0 == homeMo.getPosition()) {
-            return mTypeZero;
-        }else if (1 == homeMo.getPosition()){
-            return mTypeOne;
-        }else if (2 == homeMo.getPosition()){
-            return mTypeTow;
-        }else if (3 == homeMo.getPosition()){
-            return mTypeThree;
-        }else if (4 == homeMo.getPosition()){
-            return mTypeFour;
-        }else if (5 == homeMo.getPosition()){
-            return mTypeFive;
-        }else if (6 == homeMo.getPosition()){
-            return mTypeSix;
-        }else {//if (7 == homeMo.getPosition())
-            return mTypeSeven;
-        }
+        return homeMo.getPosition();
     }
 
     @Override

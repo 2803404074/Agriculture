@@ -259,10 +259,18 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
                         try {
                             JSONObject object = new JSONObject(result);
                             if (object.optInt("code") == 0) {
-                                if (isClick) {
-                                    ToastUtil.showShort(HtmlForStoryActivity.this, tips + "成功,文章id=" + getIntent().getStringExtra("articleId"));
-                                } else {
-                                    ToastUtil.showShort(HtmlForStoryActivity.this, tips + "取消,文章id=" + getIntent().getStringExtra("articleId"));
+//                                if (isClick) {
+//                                    ToastUtil.showShort(HtmlForStoryActivity.this, tips + "成功,文章id=" + getIntent().getStringExtra("articleId"));
+//                                } else {
+//                                    ToastUtil.showShort(HtmlForStoryActivity.this, tips + "取消,文章id=" + getIntent().getStringExtra("articleId"));
+//                                }
+                            }else {
+                                ToastUtil.showShort(HtmlForStoryActivity.this, "请求超时");
+
+                                if (s.equals("0")){
+                                    btDz.setChecked(false);
+                                }else {
+                                    btCollect.setChecked(false);
                                 }
                             }
                         } catch (JSONException e) {
