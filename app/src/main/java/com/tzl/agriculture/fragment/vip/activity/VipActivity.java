@@ -297,6 +297,8 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             startActivity(intent);
         }else {
             //邀请
+            Intent intent = new Intent(this, ApplyActivity.class);
+            startActivity(intent);
         }
     }
 

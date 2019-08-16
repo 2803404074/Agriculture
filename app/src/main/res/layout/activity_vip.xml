@@ -176,7 +176,7 @@
                         android:background="@drawable/shape_white_noframe"
                         android:paddingHorizontal="@dimen/dp_10"
                         android:paddingVertical="@dimen/dp_5"
-                        android:text="立即邀请"
+                        android:text="立即开通"
                         android:textColor="@color/colorAccentButton"
                         android:textSize="@dimen/sp_15"
                         android:textStyle="bold"

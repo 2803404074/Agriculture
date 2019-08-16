@@ -190,7 +190,7 @@ public class ShoppingSelectView extends LinearLayout {
                 button.setPadding(padding, 0, padding, 0);
                 //设置margin属性，需传入LayoutParams否则会丢失原有的布局参数
                 MarginLayoutParams marginParams = new MarginLayoutParams(buttonParams);
-                marginParams.leftMargin = dip2px(context, buttonLeftMargin);
+                marginParams.rightMargin = dip2px(context, buttonLeftMargin);
                 marginParams.topMargin = dip2px(context, buttonTopMargin);
 
                 button.setLayoutParams(marginParams);

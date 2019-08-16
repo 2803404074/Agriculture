@@ -3,6 +3,8 @@ package com.tzl.agriculture.fragment.personal.activity.set;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.util.SPUtils;
+import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 
 import java.io.IOException;
@@ -60,6 +63,8 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
     @BindView(R.id.tv_address)
     TextView tvAddress;
 
+    @BindView(R.id.tv_versionCode)
+    TextView tvVersionCode;
     @Override
     public void backFinish() {
         finish();
@@ -86,6 +91,14 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
 
     @Override
     public void initData() {
+        try {
+            PackageManager packageManager = getPackageManager();
+            PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(),0);
+            String version = packInfo.versionName;
+            tvVersionCode.setText(TextUtil.checkStr2Str(version));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 

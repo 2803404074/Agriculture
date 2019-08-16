@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recy"
-            android:layout_marginTop="@dimen/dp_130"
+            android:layout_marginTop="@dimen/dp_100"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              />
@@ -27,8 +27,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_40"
+            android:layout_below="@+id/recy"
             android:gravity="center"
+            android:layout_marginTop="@dimen/dp_10"
             android:orientation="horizontal">
 
             <TextView
@@ -55,21 +56,20 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_15" />
         </LinearLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
 
     <ImageView
+        android:id="@+id/img_content"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_290"
-        android:scaleType="fitXY"
         android:src="@mipmap/version_update" />
-
-
     <TextView
         android:id="@+id/tv_versionCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_220"
+        android:layout_marginTop="@dimen/dp_210"
         android:text="发现新版本"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp_18" />

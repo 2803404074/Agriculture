@@ -37,6 +37,7 @@
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:layout_above="@+id/view_line"
         android:layout_below="@+id/ll_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -102,16 +103,26 @@
     </androidx.core.widget.NestedScrollView>
 
 
+    <View
+        android:id="@+id/view_line"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorGri2"/>
     <LinearLayout
-        android:layout_marginBottom="@dimen/dp_20"
+        android:id="@+id/ll_bottom"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:gravity="right"
+        android:paddingVertical="@dimen/dp_10"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:background="@color/colorW"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/tv_qxdd"
-            android:visibility="gone"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/dp_10"

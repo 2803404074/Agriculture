@@ -149,7 +149,7 @@ public class MoneyDetailedActivity extends SetBaseActivity implements View.OnCli
         Map<String,String>map = new HashMap<>();
         map.put("dateFormat",dateStr);
         //map.put("pageNum",String.valueOf(page));
-        map.put("userId","56");
+        //map.put("userId","56");
         OkHttp3Utils.getInstance(User.BASE).doPostJsonForObj(User.moneyDetail, map, getToken(),
                 new GsonObjectCallback<String>(User.BASE) {
             @Override
@@ -168,9 +168,9 @@ public class MoneyDetailedActivity extends SetBaseActivity implements View.OnCli
 
                         if (mData != null && mData.size()>0){
                             if (page == 1){
-                                adapter.addAll(mData);
-                            }else {
                                 adapter.updateData(mData);
+                            }else {
+                                adapter.addAll(mData);
                             }
 
                             ivTips.setVisibility(View.GONE);

@@ -10,6 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/ll_top"
+        android:padding="@dimen/dp_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -18,10 +19,12 @@
             android:layout_width="@dimen/dp_25"
             android:layout_height="@dimen/dp_25"
             android:padding="@dimen/dp_5"
+            android:layout_centerVertical="true"
             android:src="@mipmap/back_black" />
 
         <TextView
             android:id="@+id/tv_title"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/back"
             android:layout_toLeftOf="@+id/iv_share"
             android:layout_width="wrap_content"
@@ -38,6 +41,7 @@
             android:layout_height="@dimen/dp_30"
             android:layout_alignParentRight="true"
             android:padding="@dimen/dp_5"
+            android:layout_centerVertical="true"
             android:src="@android:drawable/ic_menu_share" />
     </RelativeLayout>
 
@@ -67,6 +71,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_mes"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_title"

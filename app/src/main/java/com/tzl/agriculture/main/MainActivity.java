@@ -459,7 +459,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             version = packInfo.versionName;
 
             Map<String,String>map = new HashMap<>();
-            map.put("version",version);
+            map.put("version","1.0.1");
             String str = JsonUtil.obj2String(map);
             String token = (String) SPUtils.instance(this,1).getkey("token","");
             OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.checkNewVersion, str, token, new GsonObjectCallback<String>(App.BASE) {
