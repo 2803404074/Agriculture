@@ -481,17 +481,32 @@
         android:paddingVertical="@dimen/dp_5"
         android:orientation="horizontal">
 
-        <com.sackcentury.shinebuttonlib.ShineButton
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
-            android:id="@+id/bt_collect"
-            android:layout_gravity="center"
-            android:layout_centerHorizontal="true"
-            app:btn_color="@android:color/darker_gray"
-            app:btn_fill_color="@color/colorOrange"
-            app:enable_flashing="true"
-            app:shine_size="40dp"
-            app:siShape="@raw/star"/>
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:orientation="vertical"
+             android:gravity="center"
+             android:id="@+id/ll_collect"
+             android:layout_marginTop="@dimen/dp_1"
+             android:layout_height="wrap_content">
+             <com.sackcentury.shinebuttonlib.ShineButton
+                 android:layout_width="@dimen/dp_20"
+                 android:layout_height="@dimen/dp_20"
+                 android:id="@+id/bt_collect"
+                 android:layout_gravity="center"
+                 android:layout_centerHorizontal="true"
+                 app:btn_color="@android:color/darker_gray"
+                 app:btn_fill_color="@color/colorOrange"
+                 app:enable_flashing="true"
+                 app:shine_size="40dp"
+                 app:siShape="@raw/star"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/sp_12"
+                    android:text="收藏"
+                    android:layout_height="wrap_content" />
+
+         </LinearLayout>
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"

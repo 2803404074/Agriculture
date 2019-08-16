@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -44,6 +43,7 @@ import com.tzl.agriculture.model.XiangcMo;
 import com.tzl.agriculture.util.BannerUtil;
 import com.tzl.agriculture.util.DialogUtil;
 import com.tzl.agriculture.util.JsonUtil;
+import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseAdapter;
@@ -462,6 +462,10 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         };
+        List<HomeMo> dt= (List<HomeMo>) SPUtils.instance(getContext(),1).getObjectByInput("home_data_index");
+        if(dt!=null&&dt.size()>0){
+            mData.addAll(dt);
+        }
         homeAdapter.setmData(mData);
         homeRecycler.setAdapter(homeAdapter);
     }

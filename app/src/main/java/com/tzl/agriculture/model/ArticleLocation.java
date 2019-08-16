@@ -1,9 +1,11 @@
 package com.tzl.agriculture.model;
 
+import java.io.Serializable;
+
 /**
  * 地区
  */
-public class ArticleLocation {
+public class ArticleLocation implements Serializable {
     private String localId;
     private String articleId;
     private String provinceStr;

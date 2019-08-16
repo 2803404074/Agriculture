@@ -1,12 +1,9 @@
 package com.tzl.agriculture.util;
 
-import android.app.Activity;
 import android.content.Context;
 
-import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
 public class ShareUtils {
     private static ShareUtils shareUtils;
@@ -18,7 +15,7 @@ public class ShareUtils {
 
     public static ShareUtils getInstance(Context mContext){
         if (shareUtils == null){
-            shareUtils = new ShareUtils(mContext);
+            shareUtils = new ShareUtils(mContext.getApplicationContext());
         }
         return shareUtils;
     }

@@ -1,22 +1,19 @@
 package com.tzl.agriculture.main;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.ImageView;
+import android.text.TextUtils;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
-import com.tzl.agriculture.model.UserInfo;
+import com.tzl.agriculture.model.HomeMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.StatusBarUtil;
-import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,9 +21,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
+import config.Article;
 import config.User;
 import okhttp3.Call;
 
@@ -35,6 +36,8 @@ public class WellcomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //获取首页数据
+        getHomeData();
         StatusBarUtil.setRootViewFitsSystemWindows(this, true);
         //设置状态栏透明
         StatusBarUtil.setTranslucentStatus(this);
@@ -85,7 +88,7 @@ public class WellcomActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        ToastUtil.showShort(WellcomActivity.this,"您的信息已过期，请重新登陆");
+                        ToastUtil.showShort(WellcomActivity.this, "您的信息已过期，请重新登陆");
                         Intent intent = new Intent(WellcomActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
@@ -94,12 +97,13 @@ public class WellcomActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailed(Call call, IOException e) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showShort(WellcomActivity.this,"网络异常");
+                        ToastUtil.showShort(WellcomActivity.this, "网络异常");
                         Intent intent = new Intent(WellcomActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -107,18 +111,59 @@ public class WellcomActivity extends AppCompatActivity {
                     }
                 });
             }
+
             @Override
             public void onFailure(Call call, IOException e) {
                 super.onFailure(call, e);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showShort(WellcomActivity.this,"网络异常");
+                        ToastUtil.showShort(WellcomActivity.this, "网络异常");
                         Intent intent = new Intent(WellcomActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }
                 });
+            }
+        });
+
+    }
+
+    private void getHomeData() {
+        String token = (String) SPUtils.instance(this, 1).getkey("token", "");
+        if (TextUtils.isEmpty(token)) {
+            return;
+        }
+        Map<String, String> map = new HashMap<>();
+        map.put("typeId", "4");
+        map.put("positionCode", "home_head");
+        map.put("category", "0");
+        String str = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(Article.BASE).doPostJson2(Article.home, str, token, new GsonObjectCallback<String>(Article.BASE) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optInt("code") == 0) {
+                        String str = object.optString("data");
+                        List<HomeMo> mData = JsonUtil.string2Obj(str, List.class, HomeMo.class);
+
+                        if (mData != null && mData.size() > 0) {
+                            SPUtils.instance(WellcomActivity.this,1).putObjectByInput("home_data_index",mData);
+                        }
+                    }
+                } catch (JSONException e) {
+
+                }
+
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
             }
         });
     }

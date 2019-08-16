@@ -1,7 +1,6 @@
 package com.tzl.agriculture.mall.activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
@@ -23,8 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -34,7 +31,6 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.function.activity.MyCommentActivity;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.model.GoodsDetailsMo;
-import com.tzl.agriculture.util.BottomShowUtil;
 import com.tzl.agriculture.util.CountDownUtil;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.JsonUtil;
@@ -63,6 +59,7 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
+import butterknife.OnClick;
 import config.Article;
 import config.Mall;
 import okhttp3.Call;
@@ -218,12 +215,12 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         llServer.setOnClickListener(this);
         llComment.setOnClickListener(this);
 
-        btCollect.setOnCheckStateChangeListener(new ShineButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(View view, boolean checked) {
-                collection();
-            }
-        });
+    }
+
+
+    @OnClick({R.id.ll_collect,R.id.bt_collect})
+    public void onTextClick(View view){
+        collection();
     }
 
 

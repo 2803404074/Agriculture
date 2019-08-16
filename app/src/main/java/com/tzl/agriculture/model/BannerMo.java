@@ -1,11 +1,11 @@
 package com.tzl.agriculture.model;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * 轮播图
  */
-public class BannerMo {
+public class BannerMo implements Serializable {
 
     private String adId;
 

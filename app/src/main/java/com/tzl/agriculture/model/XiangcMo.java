@@ -2,13 +2,13 @@ package com.tzl.agriculture.model;
 
 import com.tzl.agriculture.baseresult.BaseResponse;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 乡愁---文章详细类
  */
-public class XiangcMo extends BaseResponse {
+public class XiangcMo extends BaseResponse implements Serializable {
 
     private String typeId;
     private String typeName;
@@ -32,7 +32,7 @@ public class XiangcMo extends BaseResponse {
     }
 
     //文章列表
-    public static class Article {
+    public static class Article implements Serializable {
         private String articleId;
         private String typeId;
         private String category;

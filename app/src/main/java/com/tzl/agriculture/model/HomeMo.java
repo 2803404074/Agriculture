@@ -77,7 +77,7 @@ public class HomeMo implements Serializable {
     /**
      * 限时购模块
      */
-    public static class LimitGoods{
+    public static class LimitGoods implements Serializable{
         private String typeName;//模块标题
         private String tag;//模块描述
         private List<GoodsList> goodsList;//商品列表
@@ -116,7 +116,7 @@ public class HomeMo implements Serializable {
             this.goodsList = goodsList;
         }
 
-        public static class GoodsList{
+        public static class GoodsList implements Serializable{
             private String picUrl;
             private String goodsId;
             private String articleId;//去旅游的文章id
@@ -152,7 +152,7 @@ public class HomeMo implements Serializable {
      * 乡村好物模块
      */
 
-    public static class XchwGoods{
+    public static class XchwGoods implements Serializable{
         private String modelName;
         private String modelTag;
         private List<LimitGoods> goodsTypeList;

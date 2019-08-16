@@ -1,9 +1,14 @@
 package com.tzl.agriculture.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
+import android.util.Base64;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Map;
 
 /**
@@ -38,7 +43,7 @@ public class SPUtils {
 
     public static SPUtils instance(Context context, int type){
         if (null == spUtils){
-            return new SPUtils(context,type);
+            return new SPUtils(context.getApplicationContext(),type);
         }
         return spUtils;
     }
@@ -111,4 +116,55 @@ public class SPUtils {
     public Map<String, ?> getAll() {
         return sharedPreferences.getAll();
     }
+
+
+    /**
+     * 存储对象----序列化 --私密数据
+     */
+    public String putObjectByInput(String key, Object obj) {
+        if (obj == null) {//判断对象是否为空
+            return "";
+        }
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = null;
+            oos = new ObjectOutputStream(baos);
+            oos.writeObject(obj);
+            // 将对象放到OutputStream中
+            // 将对象转换成byte数组，并将其进行base64编码
+            String objectStr = new String(Base64.encode(baos.toByteArray(), Base64.DEFAULT));
+            baos.close();
+            oos.close();
+            put(key, objectStr);
+            return objectStr;
+        } catch (Throwable t) {
+
+        }
+        return "";
+    }
+
+    /**
+     * 获取对象---序列化---私密数据
+     */
+    public Object getObjectByInput(String key) {
+        String wordBase64 = sharedPreferences.getString(key,"");
+        // 将base64格式字符串还原成byte数组
+        if (TextUtils.isEmpty(wordBase64)) {
+            return null;
+        }
+        try {
+            byte[] objBytes = Base64.decode(wordBase64.getBytes(), Base64.DEFAULT);
+            ByteArrayInputStream bais = new ByteArrayInputStream(objBytes);
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            // 将byte数组转换成product对象
+            Object obj = ois.readObject();
+            bais.close();
+            ois.close();
+            return obj;
+        } catch (Throwable t) {
+
+        }
+        return null;
+    }
+
 }

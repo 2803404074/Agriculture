@@ -80,19 +80,6 @@ public class UpLoadIdentifyActivity extends SetBaseActivity {
     @Override
     public void initView() {
         setTitle("身份上传");
-        tvZm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-        tvFm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                identityBack();
-            }
-        });
-
     }
 
 
@@ -103,7 +90,7 @@ public class UpLoadIdentifyActivity extends SetBaseActivity {
         }else if(view.getId()==R.id.tv_zm||view.getId()==R.id.iv_zm){
             identityPositive();
         }else if(view.getId()==R.id.tv_fm||view.getId()==R.id.iv_fm){
-            identityPositive();
+            identityBack();
         }
     }
 
