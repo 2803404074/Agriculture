@@ -68,6 +68,9 @@ public class User extends Base{
     //删除地址
     public static String deleteAddress = "/api/basics/harvest/myDelete/";
 
+    //设置默认地址
+    public static String addDefault = "/api/basics/harvest/myDefault/";
+
     //新增/修改地址
     public static String saveAddress = "/api/basics/harvest/save";
 }
