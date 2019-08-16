@@ -400,7 +400,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.setWebViewClient(new MyWebViewClient(webView));
-        webView.getSettings().setDefaultZoom(HtmlStyleUtil.getZoomDensity(this));
+        //webView.getSettings().setDefaultZoom(HtmlStyleUtil.getZoomDensity(this));
         webView.getSettings().setDomStorageEnabled(true);
         webView.loadDataWithBaseURL(null, HtmlStyleUtil.pingHtml(html), "text/html","utf-8", null);
     }

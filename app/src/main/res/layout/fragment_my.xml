@@ -97,7 +97,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="--"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_14"
                             android:textColor="#fff" />
 
                         <TextView
@@ -105,7 +105,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="收藏"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_14"
                             android:textColor="#fff" />
                     </LinearLayout>
 
@@ -123,7 +123,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="--"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_14"
                             android:textColor="#fff" />
 
                         <TextView
@@ -131,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="购物车"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_14"
                             android:textColor="#fff" />
                     </LinearLayout>
 
@@ -148,7 +148,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="--"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_14"
                             android:textColor="#fff" />
 
                         <TextView
@@ -156,7 +156,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="浏览记录"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_14"
                             android:textColor="#fff" />
                     </LinearLayout>
                 </LinearLayout>
@@ -185,7 +185,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:textSize="@dimen/sp_13"
-                        android:text="邀请好友可得最高返利"
+                        android:text="可得最高返利"
                         android:textColor="@android:color/white" />
 
 
@@ -221,7 +221,7 @@
                     android:drawableTop="@mipmap/my_dfk"
                     android:drawablePadding="@dimen/dp_3"
                     android:gravity="center"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/sp_14"
                     android:text="待付款" />
 
                 <TextView
@@ -232,7 +232,7 @@
                     android:drawableTop="@mipmap/my_dsh"
                     android:drawablePadding="@dimen/dp_3"
                     android:gravity="center"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/sp_14"
                     android:text="待收货" />
 
                 <TextView
@@ -243,7 +243,7 @@
                     android:drawableTop="@mipmap/my_dpj"
                     android:drawablePadding="@dimen/dp_3"
                     android:gravity="center"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/sp_14"
                     android:text="待评价" />
 
                 <TextView
@@ -254,7 +254,7 @@
                     android:drawableTop="@mipmap/my_sh"
                     android:drawablePadding="@dimen/dp_3"
                     android:gravity="center"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/sp_14"
                     android:text="售后" />
 
                 <TextView
@@ -265,7 +265,7 @@
                     android:drawableTop="@mipmap/my_wddd"
                     android:drawablePadding="@dimen/dp_3"
                     android:gravity="center"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/sp_14"
                     android:text="我的订单" />
             </LinearLayout>
 
@@ -282,7 +282,7 @@
                     android:layout_margin="@dimen/dp_10"
                     android:text="功能与服务"
                     android:textColor="@color/colorGri2"
-                    android:textSize="21sp" />
+                    android:textSize="@dimen/sp_16" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_menu"

@@ -27,6 +27,6 @@ public class AgricultureApplication extends Application {
         //微信
         api = WXAPIFactory.createWXAPI(this,APP_ID,true);
         api.registerApp(APP_ID);
-        CrashHandlerUtils.getInstance().init(this);
+        //CrashHandlerUtils.getInstance().init(this);
     }
 }

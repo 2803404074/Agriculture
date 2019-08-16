@@ -348,7 +348,15 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                     if (object.optInt("code") == 0) {
                         JSONObject dataObj = object.optJSONObject("data");
 
-
+                        //是否是兑换
+                        boolean isExchange = dataObj.optBoolean("isExchange");
+                        if (isExchange){//如果是兑换直接跳转订单详情
+                            Intent intent = new Intent(OrderActivity.this,OrderDetailsActivity.class);
+                            intent.putExtra("orderId",dataObj.optString("orderId"));
+                            startActivity(intent);
+                            spinKitView.setVisibility(View.GONE);
+                            return;
+                        }
                         if (dataObj.optBoolean("status")){
 
                             showBottomDialog(dataObj.optString("orderId"));

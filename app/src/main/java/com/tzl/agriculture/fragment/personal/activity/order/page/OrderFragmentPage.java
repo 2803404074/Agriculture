@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.AddressActivity;
@@ -19,6 +21,10 @@ import com.tzl.agriculture.mall.activity.OrderActivity;
 import com.tzl.agriculture.mall.activity.OrderDetailsActivity;
 import com.tzl.agriculture.mall.activity.StartCommentActivity;
 import com.tzl.agriculture.model.OrderMo;
+import com.tzl.agriculture.model.UserInfo;
+import com.tzl.agriculture.model.WlMo;
+import com.tzl.agriculture.util.DialogUtilT;
+import com.tzl.agriculture.util.DownMediaUtils;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
@@ -44,6 +50,7 @@ import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import config.Article;
 import config.Mall;
+import config.User;
 import okhttp3.Call;
 
 /**
@@ -69,6 +76,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
 
     public OrderFragmentPage() {
     }
+
     public OrderFragmentPage(int position) {
         this.mSerial = position;
     }
@@ -117,7 +125,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(getContext(), StartCommentActivity.class);
-                                intent.putExtra("orderId",o.getOrderId());
+                                intent.putExtra("orderId", o.getOrderId());
                                 startActivity(intent);
                             }
                         });
@@ -132,9 +140,10 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                         tvQrsh.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                showTwo(o,1,"是否确认收货？");
+                                showTwo(o, 1, "是否确认收货？");
                             }
                         });
+
 
                         break;
                     case 4:
@@ -149,7 +158,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                 holder.getView(R.id.tv_qxdd).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showTwo(o,0,"是否取消订单？");
+                        showTwo(o, 0, "是否取消订单？");
                     }
                 });
 
@@ -157,10 +166,17 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                 holder.getView(R.id.tv_fk).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                      payEryWX(o.getOrderId());
+                        payEryWX(o.getOrderId());
                     }
                 });
 
+                //查看物流
+                holder.getView(R.id.tv_ckwl).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showLogistics(o.getOrderId());
+                    }
+                });
 
 
                 //订单商品
@@ -202,6 +218,86 @@ public class OrderFragmentPage extends BaseFragmentFromType {
         });
     }
 
+
+    private DialogUtilT dialogUtilT;
+
+    private void showLogistics(String orderId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", orderId);
+        OkHttp3Utils.getInstance(User.BASE).doPostJsonForObj(User.wlFind, map, getToken(),
+                new GsonObjectCallback<String>(User.BASE) {
+                    @Override
+                    public void onUi(String result) {
+                        try {
+                            JSONObject object = new JSONObject(result);
+                            if (object.optInt("code") == 0) {
+                                JSONObject dataObj = object.optJSONObject("data");
+
+                                //图片
+                                String picUrl = dataObj.optString("picUrl");
+
+                                //状态
+                                String stateName = dataObj.optString("stateName");
+
+                                //商品名称
+                                String goodsName = dataObj.optString("goodsName");
+
+                                //快递名称
+                                String dtName = dataObj.optString("dtName");
+
+                                //快递号
+                                String dtNum = dataObj.optString("dtNum");
+
+
+                                //详情
+                                JSONObject kdInfoObj = dataObj.optJSONObject("kdInfo");
+                                String str = kdInfoObj.optString("detail");
+                                List<WlMo> mData = JsonUtil.string2Obj(str, List.class, WlMo.class);
+                                if (mData !=null && mData.size()>0){
+                                    mData.get(0).setFist(true);
+                                }
+                                dialogUtilT = new DialogUtilT<String>(getContext()) {
+                                    @Override
+                                    public void convert(BaseRecyclerHolder holder, String data) {
+                                        holder.setText(R.id.tv_status, stateName);
+                                        holder.setImageByUrl(R.id.iv_goods, picUrl);
+                                        holder.setText(R.id.tv_name, goodsName);
+                                        holder.setText(R.id.tv_wl, dtName + ":" + dtNum);
+                                        //列表
+                                        RecyclerView recyclerView = holder.getView(R.id.recy);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                        BaseAdapter adapter = new BaseAdapter<WlMo>(getContext(), recyclerView, mData, R.layout.item_logistics) {
+                                            @Override
+                                            public void convert(Context mContext, BaseRecyclerHolder holder, WlMo o) {
+                                                if (o.isFist()) {
+                                                    holder.getView(R.id.v_line_top).setVisibility(View.INVISIBLE);
+                                                    holder.setImageResource(R.id.iv_status, R.drawable.round_check_active);
+                                                } else {
+                                                    holder.getView(R.id.v_line_top).setVisibility(View.VISIBLE);
+                                                    holder.setImageResource(R.id.iv_status, R.drawable.round_check_selected);
+                                                }
+
+                                                holder.setText(R.id.tv_date, o.getTimeFormat());
+                                                holder.setText(R.id.tv_details, o.getRemark());
+                                            }
+                                        };
+                                        recyclerView.setAdapter(adapter);
+                                    }
+                                };
+                                dialogUtilT.show2(R.layout.dialog_logistics, "");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(Call call, IOException e) {
+
+                    }
+                });
+    }
+
     @Override
     protected void setDate(boolean isLoad) {
         Map<String, String> map = new HashMap<>();
@@ -220,11 +316,11 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                         if (null != mData && mData.size() > 0) {
                             adapter.updateData(mData);
                         }
-                        if (adapter.getData() == null || adapter.getData().size() == 0){
+                        if (adapter.getData() == null || adapter.getData().size() == 0) {
                             ivTips.setVisibility(View.VISIBLE);
                         }
                     } else {
-                        ToastUtil.showShort(getContext(), "错误代码:"+object.optInt("code"));
+                        ToastUtil.showShort(getContext(), "错误代码:" + object.optInt("code"));
                         getActivity().finish();
                     }
 
@@ -238,7 +334,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (adapter.getData() == null || adapter.getData().size() == 0){
+                        if (adapter.getData() == null || adapter.getData().size() == 0) {
                             ivTips.setVisibility(View.VISIBLE);
                         }
                     }
@@ -251,7 +347,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (adapter.getData() == null || adapter.getData().size() == 0){
+                        if (adapter.getData() == null || adapter.getData().size() == 0) {
                             ivTips.setVisibility(View.VISIBLE);
                         }
                     }
@@ -261,22 +357,22 @@ public class OrderFragmentPage extends BaseFragmentFromType {
     }
 
 
-
     /**
      * 取消订单
+     *
      * @param orderMo
      */
-    private void cancelOrder(OrderMo orderMo){
-        Map<String,String>map = new HashMap<>();
-        map.put("orderId",orderMo.getOrderId());
+    private void cancelOrder(OrderMo orderMo) {
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", orderMo.getOrderId());
         String str = JsonUtil.obj2String(map);
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.cancelOrder, str, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == 0){
-                        ToastUtil.showShort(getContext(),"取消成功");
+                    if (object.optInt("code") == 0) {
+                        ToastUtil.showShort(getContext(), "取消成功");
                         mData.remove(orderMo);
                         adapter.updateData(mData);
                         sendMessage();
@@ -295,19 +391,20 @@ public class OrderFragmentPage extends BaseFragmentFromType {
 
 
     /**
-     *  提示
+     * 提示
+     *
      * @param orderMo
-     * @param index 0 取消订单，1确认收货
+     * @param index   0 取消订单，1确认收货
      */
-    private void showTwo(OrderMo orderMo , int index,String tips) {
+    private void showTwo(OrderMo orderMo, int index, String tips) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setIcon(R.mipmap.application).setTitle("趣乡服务")
                 .setMessage(tips).setPositiveButton("是", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (index == 0){
+                        if (index == 0) {
                             cancelOrder(orderMo);
                         }
-                        if (index == 1){
+                        if (index == 1) {
                             qrsh(orderMo);
                         }
                     }
@@ -323,19 +420,20 @@ public class OrderFragmentPage extends BaseFragmentFromType {
 
     /**
      * 确认收货
+     *
      * @param orderMo
      */
-    private void qrsh(OrderMo orderMo){
-        Map<String,String>map = new HashMap<>();
-        map.put("orderId",orderMo.getOrderId());
+    private void qrsh(OrderMo orderMo) {
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", orderMo.getOrderId());
         String str = JsonUtil.obj2String(map);
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.receivingOrder, str, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == 0){
-                        ToastUtil.showShort(getContext(),"收货成功");
+                    if (object.optInt("code") == 0) {
+                        ToastUtil.showShort(getContext(), "收货成功");
                         mData.remove(orderMo);
                         adapter.updateData(mData);
                         sendMessage();
@@ -352,10 +450,10 @@ public class OrderFragmentPage extends BaseFragmentFromType {
         });
     }
 
-    private void payEryWX(String orderId){
+    private void payEryWX(String orderId) {
         spinKitView.setVisibility(View.VISIBLE);
-        Map<String,String>map = new HashMap<>();
-        map.put("orderId",orderId);
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", orderId);
         OkHttp3Utils.getInstance(Mall.BASE).doPostJsonForObj(Mall.paySave, map, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
@@ -364,7 +462,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                     if (object.optInt("code") == 0) {
                         JSONObject dataObj = object.optJSONObject("data");
                         toWXPay(dataObj.optJSONObject("WXPay"));
-                    }else {
+                    } else {
                         ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
                     }
                     spinKitView.setVisibility(View.GONE);
@@ -406,9 +504,8 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                 .setTimeStamp(object.optString("timestamp"))
                 .setSign(object.optString("sign"))
                 .build().toWXPayNotSign(getContext());
-        ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("returnMsg"))+"正在打开微信");
+        ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("returnMsg")) + "正在打开微信");
     }
-
 
 
 }

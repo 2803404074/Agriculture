@@ -14,6 +14,7 @@
         android:id="@+id/iv_img"/>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_price"
         android:layout_marginTop="@dimen/dp_3"
         android:layout_gravity="center"

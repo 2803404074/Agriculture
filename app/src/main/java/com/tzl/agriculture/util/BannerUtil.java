@@ -128,7 +128,7 @@ public class BannerUtil<T> {
         @Override
         public void UpdateUI(Context context, int position, BannerMo data) {
             // 加载数据
-            Glide.with(context).load(data.getUrl()).apply(
+            Glide.with(context.getApplicationContext()).load(data.getUrl()).apply(
                     RequestOptions.bitmapTransform(
                             new RoundedCorners(20))).into(imageView);
 

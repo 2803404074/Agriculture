@@ -100,6 +100,7 @@ public class CouponActivity extends SetBaseActivity {
                     case 2:
                         tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
                         tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
+                        tvTip.setTextColor(getResources().getColor(R.color.colorGri2));
                         tvTip.setBackgroundResource(R.drawable.shape_login_whi_no);
                         tvTip.setClickable(false);
                         tvTip.setText("已过期");

@@ -211,7 +211,7 @@ public class HomeFragment extends BaseFragment {
                         @Override
                         public void convert(Context mContext, BaseRecyclerHolder holder, HomeMo.LimitGoods.GoodsList o) {
                             holder.setImageByUrl(R.id.iv_img,o.getPicUrl());
-                            holder.setText(R.id.tv_price,getResources().getString(R.string.app_money,o.getPrice()));
+                            holder.setText(R.id.tv_price,getResources().getString(R.string.app_money_home,o.getPrice()));
                         }
                     };
                     recyclerView.setAdapter(adapter);
@@ -582,11 +582,19 @@ public class HomeFragment extends BaseFragment {
         IntentFilter filter = new IntentFilter("android.intent.action.DOUBLE_ACTION");
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, filter);
     }
+    private void desBroadcast() {
+        if (null == receiver)return;
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
+    }
+    @Override
+    public void onDestroy() {
+        desBroadcast();
+        super.onDestroy();
+    }
 
     private class MessageBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-
             if (intent.getAction().equals("android.intent.action.DOUBLE_ACTION")){
                 homeRecycler.scrollToPosition(0);
                 mRefreshLayout.setEnableRefresh(true);

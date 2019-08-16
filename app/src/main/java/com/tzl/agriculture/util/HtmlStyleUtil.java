@@ -33,7 +33,7 @@ public class HtmlStyleUtil {
                 "    <meta content=\"yes\" name=\"apple-mobile-web-app-capable\" />\n" +
                 "    <meta content=\"black\" name=\"apple-mobile-web-app-status-bar-style\" />\n" +
                 "    <meta content=\"telephone=no\" name=\"format-detection\" />\n" +
-                "</head><style> img{ max-width:100%; height:auto}</style><body>" + html + "</body></html>";
+                "</head><style> img{ max-width:100%;vertical-align: middle; height:auto} video{ max-width:100%; height:auto} iframe{ max-width:100%; height:auto}</style><body>" + html + "</body></html>";
     }
 
 }

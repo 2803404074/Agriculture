@@ -23,6 +23,9 @@
         android:paddingVertical="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_10"
         android:hint="收货人"
+        android:lines="1"
+        android:maxLength="10"
+        android:singleLine="true"
         android:textColor="@color/colorGri2"
         android:textSize="@dimen/sp_16" />
 
@@ -39,6 +42,10 @@
         android:paddingVertical="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_10"
         android:hint="手机号"
+        android:lines="1"
+        android:maxLength="11"
+        android:inputType="phone"
+        android:singleLine="true"
         android:textColor="@color/colorGri2"
         android:textSize="@dimen/sp_16" />
 
@@ -67,10 +74,12 @@
         android:id="@+id/et_jd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:lines="1"
         android:background="@android:color/white"
         android:paddingVertical="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_10"
         android:hint="街道"
+
         android:textColor="@color/colorGri2"
         android:textSize="@dimen/sp_16" />
 
@@ -87,6 +96,8 @@
         android:paddingVertical="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_10"
         android:hint="详细地址"
+        android:gravity="top|left"
+        android:lines="2"
         android:textColor="@color/colorGri2"
         android:textSize="@dimen/sp_16" />
 

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">趣味乡村</string>
-    <string name="app_money">¥%S</string>
+    <string name="app_money">¥</string>
+    <string name="app_money_home">¥%S</string>
 </resources>
