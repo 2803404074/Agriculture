@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,13 +28,8 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.AddressActivity;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.fragment.vip.model.CouponMo;
-import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.model.AddressMo;
-import com.tzl.agriculture.model.CommentMo;
-import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.model.OrderMo;
-import com.tzl.agriculture.util.BottomShowUtil;
-import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.MyTextChangedListener;
 import com.tzl.agriculture.util.SPUtils;
@@ -44,7 +38,6 @@ import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.util.WXPayUtils;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
-import com.tzl.agriculture.wxapi.WXPayEntryActivity;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
@@ -319,7 +312,6 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.orther_ok:
-                spinKitView.setVisibility(View.VISIBLE);
                 commit();
                 break;
             case R.id.orther_set_address:
@@ -340,6 +332,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
             showTwo();
             return;
         }
+        spinKitView.setVisibility(View.VISIBLE);
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", 0);//1购物车购买
         map.put("remarksUser", JsonUtil.obj2String(mapMess));
@@ -349,6 +342,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.save, str, token, new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
+                spinKitView.setVisibility(View.GONE);
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.optInt("code") == 0) {
@@ -369,7 +363,6 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                         ToastUtil.showShort(OrderActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                     }
 
-                    spinKitView.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -462,6 +455,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
         OkHttp3Utils.getInstance(Mall.BASE).doPostJsonForObj(Mall.paySave, map, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
+                spinKitView.setVisibility(View.GONE);
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.optInt("code") == 0) {
@@ -470,7 +464,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                     }else {
                         ToastUtil.showShort(OrderActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                     }
-                    spinKitView.setVisibility(View.GONE);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
