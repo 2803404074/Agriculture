@@ -50,6 +50,9 @@ public class User extends Base{
     //提现
     public static String postCash = "/api/mall/withdrawalInfo-api/save";
 
+    //获取用户明细
+    public static String moneyDetail = "/api/basics/member/option/detail";
+
     //获取意见反馈类型列表
     public static String getType = "/api/basics/feedback/getType";
 

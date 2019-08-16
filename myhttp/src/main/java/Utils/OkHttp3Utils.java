@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
+import com.google.gson.Gson;
 import com.tohao.gxzt.myhttp.R;
 
 import java.io.File;
@@ -324,6 +325,17 @@ public class OkHttp3Utils {
         call.enqueue(callback);
     }
 
+    public  void doPostJsonForObj(String url, Object o,String token, Callback callback) {
+        Gson gson = new Gson();
+        String str = gson.toJson(o);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), str);
+        //拼接地址
+        String path = BASE_PATH+url;
+        Request request = new Request.Builder().url(path).addHeader("Authentication","dGVybWluYWwtYXBw").addHeader("token",token).post(requestBody).build();
+
+        Call call = getOkHttpClient().newCall(request);
+        call.enqueue(callback);
+    }
 
     /**
      * 下载文件 以流的形式把apk写入的指定文件 得到file后进行安装
