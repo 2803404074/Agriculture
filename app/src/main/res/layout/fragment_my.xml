@@ -33,7 +33,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_210"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp_18"
                 android:background="@mipmap/my_bg">
 
                 <LinearLayout
@@ -80,6 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ll_head"
+                    android:id="@+id/ll_1"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -160,9 +162,10 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_below="@+id/ll_1"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp_18"
                     android:layout_alignParentBottom="true"
                     android:layout_marginHorizontal="@dimen/dp_30"
                     android:orientation="horizontal">
@@ -172,6 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="邀请好友|"
+                        android:textSize="@dimen/sp_14"
                         android:textColor="@android:color/white"
                         android:textStyle="bold" />
 
@@ -179,13 +183,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/sp_13"
                         android:text="邀请好友可得最高返利"
                         android:textColor="@android:color/white" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1px"
-                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/tv_share"
