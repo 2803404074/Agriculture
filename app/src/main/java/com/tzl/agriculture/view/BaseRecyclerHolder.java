@@ -97,7 +97,7 @@ public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
      * 设置图片
      */
     public BaseRecyclerHolder setImageByUrl(int viewId, String url) {
-        Glide.with(context).load(url + "").apply(
+        Glide.with(context.getApplicationContext()).load(url + "").apply(
                 RequestOptions.bitmapTransform(
                         new RoundedCorners(10))).into((ImageView) getView(viewId));
         return this;

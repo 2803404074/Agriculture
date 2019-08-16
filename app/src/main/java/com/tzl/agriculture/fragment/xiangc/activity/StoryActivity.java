@@ -3,6 +3,7 @@ package com.tzl.agriculture.fragment.xiangc.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,7 +42,7 @@ public class StoryActivity extends SetBaseActivity {
     RecyclerView recyclerView;
 
     @BindView(R.id.tv_search)
-    TextView tvSearch;
+    LinearLayout tvSearch;
     private StoryAdapter adapter;
     private List<XiangcMo.Article> mData = new ArrayList<>();
 

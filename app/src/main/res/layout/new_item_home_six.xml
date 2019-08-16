@@ -9,7 +9,6 @@
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:layout_marginTop="10dp"
        android:paddingVertical="10dp"
        android:background="@drawable/shape_white_noframe"
        android:orientation="vertical">
@@ -17,12 +16,13 @@
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:paddingHorizontal="@dimen/dp_5"
           android:orientation="horizontal">
          <TextView
              android:id="@+id/tv_xchw_name"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:textSize="25sp"
+             android:textSize="@dimen/sp_21"
              android:textStyle="bold"
              android:textColor="@color/colorGri2"
              android:text="发现好物"/>
@@ -31,7 +31,7 @@
              android:layout_gravity="center"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_marginLeft="20dp"
+             android:layout_marginLeft="@dimen/dp_20"
              android:text="享受生活    回味童年"/>
       </LinearLayout>
 
@@ -55,6 +55,7 @@
                 android:id="@+id/tv_find"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_12"
                 android:textColor="@color/colorAccentButton"
                 android:text="发现好货"/>
 
@@ -63,6 +64,7 @@
                 android:layout_below="@+id/tv_find"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_12"
                 android:text="享 5 折 优 惠"/>
             <LinearLayout
                 android:layout_marginTop="@dimen/dp_5"
@@ -102,12 +104,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="去旅游"
+                android:textSize="@dimen/sp_12"
                 android:textColor="@color/colorAccentButton" />
             <TextView
                 android:id="@+id/tv_mess02"
                 android:layout_below="@+id/tv_find02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_12"
                 android:text="享 5 折 优 惠"/>
             <LinearLayout
                 android:layout_marginTop="@dimen/dp_5"

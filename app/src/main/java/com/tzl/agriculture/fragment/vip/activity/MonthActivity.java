@@ -36,7 +36,6 @@ import okhttp3.Call;
 
 public class MonthActivity extends SetBaseActivity {
 
-
     @BindView(R.id.month_recy)
     RecyclerView recyclerView;
 
@@ -75,7 +74,7 @@ public class MonthActivity extends SetBaseActivity {
 
                 tvGG.setBackgroundResource(R.drawable.shape_login_blue_no);
 
-                holder.setText(R.id.tv_price,o.getPrice());
+                holder.setText(R.id.tv_price,o.getOriginalPrice());
             }
         };
         recyclerView.setAdapter(adapter);
@@ -113,7 +112,6 @@ public class MonthActivity extends SetBaseActivity {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailed(Call call, IOException e) {
 

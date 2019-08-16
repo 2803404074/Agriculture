@@ -43,10 +43,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
     }
 
     public void addAll(List<T> data) {
+
         mDatas.addAll(data);
         notifyDataSetChanged();
     }
-
     public void addAll2(T data) {
         mDatas.add(0, data);
         notifyDataSetChanged();

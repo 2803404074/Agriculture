@@ -14,13 +14,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -33,6 +31,7 @@ import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.util.CountDownUtil;
 import com.tzl.agriculture.util.DateUtil;
+import com.tzl.agriculture.util.HtmlStyleUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.MyWebViewClient;
 import com.tzl.agriculture.util.ScreenUtils;
@@ -226,6 +225,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void initData() {
+
         Map<String, String> map = new HashMap<>();
         map.put("goodsId", getIntent().getStringExtra("goodsId"));
         String str = JsonUtil.obj2String(map);
@@ -267,9 +267,6 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         int type = getIntent().getIntExtra("type",0);
 
         if (type == 0 || !StringUtils.isEmpty(goodsDetailsMo.getGoods().getSpikeEndTime())){//限时购  -- 隐藏兑换，显示倒计时,显示购买
-
-
-
             int isSpike = goodsDetailsMo.getGoods().getIsSpike();
             if (isSpike == 0){
                 llDateDown.setVisibility(View.VISIBLE);
@@ -283,7 +280,9 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
         } else if (type == 1){//会员兑换  -- 隐藏倒计时，显示兑换,隐藏购买
             tvDh.setVisibility(View.VISIBLE);//兑换视图
-            llDeatilsMenu.setVisibility(View.GONE);//购买视图
+            //llDeatilsMenu.setVisibility(View.GONE);//购买视图
+            btCollect.setVisibility(View.GONE);
+            tvBuy.setVisibility(View.GONE);
             llDateDown.setVisibility(View.GONE);//倒计时视图
             tvDh.setOnClickListener(this);
         }else{//普通、开会员     -- 隐藏倒计时，隐藏兑换，显示购买
@@ -315,7 +314,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
         //评论头像
         if (goodsDetailsMo.getGoodsCommentList() != null && goodsDetailsMo.getGoodsCommentList().size()>0){
-            Glide.with(this).load(goodsDetailsMo.getGoodsCommentList().get(0).getHeadUrl()).into(ivHead);
+            Glide.with(getApplicationContext()).load(goodsDetailsMo.getGoodsCommentList().get(0).getHeadUrl()).into(ivHead);
             tvComName.setText(goodsDetailsMo.getGoodsCommentList().get(0).getNickname());
             tvComMess.setText(goodsDetailsMo.getGoodsCommentList().get(0).getContent());
 
@@ -332,7 +331,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
         //店铺logo
         if (!GoodsDetailsActivity.this.isFinishing()) {
-            Glide.with(this).load(goodsDetailsMo.getGoods().getLogoIcon()).into(ivDepHead);
+            Glide.with(getApplicationContext()).load(goodsDetailsMo.getGoods().getLogoIcon()).into(ivDepHead);
 
         }
         //店铺名称
@@ -371,7 +370,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                     view = View.inflate(container.getContext(), R.layout.img_fragment, null);
                     final ImageView iv = view.findViewById(R.id.hxxq_img);
                     imgList.add((ImageView) view.findViewById(R.id.hxxq_img));
-                    Glide.with(container.getContext()).asBitmap()
+                    Glide.with(getApplicationContext()).asBitmap()
                             .load(img)
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
@@ -401,7 +400,9 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.setWebViewClient(new MyWebViewClient(webView));
-        webView.loadData(html, "text/html", "UTF-8");
+        webView.getSettings().setDefaultZoom(HtmlStyleUtil.getZoomDensity(this));
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.loadDataWithBaseURL(null, HtmlStyleUtil.pingHtml(html), "text/html","utf-8", null);
     }
 
     @Override
@@ -761,11 +762,5 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 llDeatilsMenu.setVisibility(View.GONE);
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Glide.with(getApplicationContext()).pauseRequests();
     }
 }

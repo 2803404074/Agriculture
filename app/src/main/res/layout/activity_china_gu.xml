@@ -34,19 +34,25 @@
 
     </LinearLayout>
 
-
-    <TextView
+    <LinearLayout
         android:id="@+id/tv_startSearch"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_height="wrap_content"
         android:background="@drawable/shape_search_home"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:drawablePadding="@dimen/dp_10"
-        android:gravity="center|left"
-        android:hint="搜索商品" />
+        android:layout_marginHorizontal="@dimen/dp_20">
+        <ImageView
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
+            android:src="@mipmap/search"
+            android:padding="@dimen/dp_5"/>
+      <TextView
+          android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="搜索商品" />
+    </LinearLayout>
+
+
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/h_refreshLayout"

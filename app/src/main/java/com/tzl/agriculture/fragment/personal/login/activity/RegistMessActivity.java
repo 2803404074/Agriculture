@@ -174,7 +174,7 @@ public class RegistMessActivity extends SetBaseActivity {
                             LoginActivity.instance.finish();
                         }
                     }else {
-                        ToastUtil.showShort(RegistMessActivity.this,"请求失败，请检查您的网络");
+                        ToastUtil.showShort(RegistMessActivity.this,TextUtil.checkStr2Str(object.optString("msg")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -3,6 +3,7 @@ package com.tzl.agriculture.util;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.view.View;
 import android.widget.TextView;
 
 import org.apache.commons.lang.StringUtils;

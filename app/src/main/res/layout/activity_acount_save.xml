@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="实名认证"
                 android:textColor="@color/colorGri2"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_15"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,9 +35,9 @@
        <ImageView
            android:layout_alignParentRight="true"
            android:layout_centerVertical="true"
-           android:layout_width="30dp"
-           android:layout_height="30dp"
-           android:padding="@dimen/dp_2"
+           android:layout_width="@dimen/dp_25"
+           android:layout_height="@dimen/dp_25"
+           android:padding="@dimen/dp_5"
            android:rotation="180"
            android:src="@mipmap/back_black"/>
     </RelativeLayout>
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="账号关联"
                 android:textColor="@color/colorGri2"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_15"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,9 +67,9 @@
         <ImageView
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="@dimen/dp_2"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:padding="@dimen/dp_5"
             android:rotation="180"
             android:src="@mipmap/back_black"/>
     </RelativeLayout>
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="修改/绑定手机号"
                 android:textColor="@color/colorGri2"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_15"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,9 +99,9 @@
         <ImageView
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="@dimen/dp_2"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:padding="@dimen/dp_5"
             android:rotation="180"
             android:src="@mipmap/back_black"/>
     </RelativeLayout>
@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:text="设备管理"
                 android:textColor="@color/colorGri2"
-                android:textSize="@dimen/sp_18"/>
+                android:textSize="@dimen/sp_15"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,9 +131,9 @@
         <ImageView
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="@dimen/dp_2"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:padding="@dimen/dp_5"
             android:rotation="180"
             android:src="@mipmap/back_black"/>
     </RelativeLayout>

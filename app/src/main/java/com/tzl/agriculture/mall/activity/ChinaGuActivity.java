@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -61,7 +62,7 @@ public class ChinaGuActivity extends BaseActivity implements View.OnClickListene
     RefreshLayout mRefreshLayout;
 
     @BindView(R.id.tv_startSearch)
-    TextView tvSearch;
+    LinearLayout tvSearch;
 
     @BindView(R.id.tv_sheng)
     TextView tvProvince;
@@ -120,6 +121,7 @@ public class ChinaGuActivity extends BaseActivity implements View.OnClickListene
                 holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                 holder.setText(R.id.tv_name, o.getGoodsName());
                 holder.setText(R.id.tv_price, o.getPrice());
+                holder.getView(R.id.ll_gg).setVisibility(View.INVISIBLE);
 
                 TextView tvMarketPrice = holder.getView(R.id.tv_marketPrice);
                 tvMarketPrice.setText(o.getOriginalPrice());
@@ -230,6 +232,12 @@ public class ChinaGuActivity extends BaseActivity implements View.OnClickListene
 
         view.findViewById(R.id.tv_ok).setVisibility(View.GONE);
 
+        view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
         addressAdapter = new BaseAdapter<AddressCode>(this, recyclerView, addressCodeList, R.layout.item_zgg_address_text) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, AddressCode o) {

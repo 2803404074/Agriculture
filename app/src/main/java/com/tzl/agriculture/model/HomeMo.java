@@ -119,7 +119,12 @@ public class HomeMo implements Serializable {
         public static class GoodsList implements Serializable{
             private String picUrl;
             private String goodsId;
+            private String price;
             private String articleId;//去旅游的文章id
+
+            public String getPrice() {
+                return price;
+            }
 
             public String getArticleId() {
                 return articleId;

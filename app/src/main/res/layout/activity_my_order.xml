@@ -16,18 +16,28 @@
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:id="@+id/tv_search"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_gravity="center"
             android:background="@drawable/broadcast_search_gray"
-            android:drawableLeft="@android:drawable/ic_menu_search"
-            android:drawablePadding="@dimen/dp_10"
-            android:gravity="center|left"
-            android:hint="搜索订单" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:padding="@dimen/dp_5"
+                android:src="@mipmap/search"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="搜索订单" />
+        </LinearLayout>
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"

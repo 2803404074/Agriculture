@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.tzl.agriculture.util.HtmlStyleUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.MyWebViewClient;
 import com.tzl.agriculture.util.SPUtils;
@@ -68,7 +69,7 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.setWebViewClient(new MyWebViewClient(webView));
-        webView.loadDataWithBaseURL(null, pingHtml(html), "text/html","utf-8", null);
+        webView.loadDataWithBaseURL(null, HtmlStyleUtil.pingHtml(html), "text/html","utf-8", null);
 
         //webView.loadData(html, "text/html", "UTF-8");
         //webView.getSettings().setTextZoom(300);
@@ -98,24 +99,6 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
                     public void onFailed(Call call, IOException e) {
                     }
                 });
-    }
-
-    private String getStyle(){
-        return "<style>* {font-size:50px;line-height:80px;} p {color:#3B3B3B;} img {width:100%;height:100%}pre {font-size:9pt;line-height:12pt;font-family:Courier New,Arial;border:1px solid #ddd;border-left:5px solid #6CE26C;background:#f6f6f6;padding:5px;}</style>";
-        //return "<style>* {font-size:50px;line-height:80px;}</style>";
-    }
-
-    private String pingHtml(String html){
-        return  "<!DOCTYPE html>\n" +
-                "<html lang=\"zh\">\n" +
-                "\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=no\" />\n" +
-                "    <meta content=\"yes\" name=\"apple-mobile-web-app-capable\" />\n" +
-                "    <meta content=\"black\" name=\"apple-mobile-web-app-status-bar-style\" />\n" +
-                "    <meta content=\"telephone=no\" name=\"format-detection\" />\n" +
-                "</head><body>"+html+"</body></html>";
     }
 
     /**

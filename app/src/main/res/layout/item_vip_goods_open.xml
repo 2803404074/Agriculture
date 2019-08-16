@@ -59,7 +59,7 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="398"
+                android:text="0.00"
                 android:textColor="@color/colorOrange" />
 
             <View

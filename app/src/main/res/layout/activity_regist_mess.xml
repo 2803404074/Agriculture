@@ -140,11 +140,12 @@
             android:textSize="@dimen/sp_15"
             android:textColor="@color/colorGri2"/>
         <EditText
-            android:hint="请填写邀请您的用户邀请码(选填) "
+            android:hint="请填写邀请您的用户邀请码"
             android:id="@+id/invCode"
             android:textSize="@dimen/sp_15"
             android:background="@null"
             android:padding="@dimen/dp_5"
+            android:maxLength="10"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

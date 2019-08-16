@@ -2,6 +2,7 @@ package com.tzl.agriculture.fragment.personal.activity.order;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -31,7 +32,7 @@ public class MyOrderActivity extends SetBaseActivity implements View.OnClickList
     ViewPager viewPager;
 
     @BindView(R.id.tv_search)
-    TextView tvSearch;
+    LinearLayout tvSearch;
 
     private SimpleFragmentPagerAdapter adapter;
 

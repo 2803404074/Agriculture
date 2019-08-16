@@ -57,12 +57,9 @@
                     android:text="感受他们的历史"/>
             </LinearLayout>
 
-            <TableLayout
-                android:id="@+id/tableLayout"
-                android:shrinkColumns="*"
-                android:layout_marginTop="@dimen/dp_5"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recy_limit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </TableLayout>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 </LinearLayout>

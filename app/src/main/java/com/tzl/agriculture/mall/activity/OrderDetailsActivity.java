@@ -228,7 +228,7 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                 tvFk.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                tvQxdd.setVisibility(View.VISIBLE);
+                //tvQxdd.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 tvPj.setVisibility(View.VISIBLE);

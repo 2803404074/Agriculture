@@ -29,6 +29,7 @@ import com.tzl.agriculture.comment.activity.HtmlForStoryActivity;
 import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
 import com.tzl.agriculture.fragment.home.activity.SearchActivity;
 import com.tzl.agriculture.fragment.home.util.HomeAdapter;
+import com.tzl.agriculture.fragment.personal.activity.order.OrderSearchActivity;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.fragment.vip.activity.VipActivity;
 import com.tzl.agriculture.fragment.xiangc.activity.BroadcastActivity;
@@ -179,8 +180,11 @@ public class HomeFragment extends BaseFragment {
                         holder.getView(R.id.iv_h_one).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(getContext(), HtmlForStoryActivity.class);
-                                intent.putExtra("articleId", article.get(0).getArticleId());
+//                                Intent intent = new Intent(getContext(), HtmlForStoryActivity.class);
+//                                intent.putExtra("articleId", article.get(0).getArticleId());
+//                                startActivity(intent);
+                                Intent intent = new Intent(getContext(), StoryActivity.class);
+                                intent.putExtra("typeId", mData.get(mType).getArticleList().getTypeId());
                                 startActivity(intent);
                             }
                         });
@@ -195,33 +199,29 @@ public class HomeFragment extends BaseFragment {
 
                     //获取限时购模块数据（限时购、拼团、特价）
                     List<HomeMo.LimitGoods> goodsList = mData.get(mType).getGoodsTypeList();
-
                     //获取限时购数据
                     HomeMo.LimitGoods limitGoods = goodsList.get(0);
                     holder.setText(R.id.tv_xsg, limitGoods.getTypeName());
                     holder.setText(R.id.tv_xsg_tag, limitGoods.getTag());
 
-                    TableLayout tab = holder.getView(R.id.tableLayout);
-
-                    int size = limitGoods.getGoodsList().size();
-
-                    //行数
-                    int rowSize = size/4;
-
-                    //控制行数
-                    for (int i = 0; i < rowSize; i++) {
-                        TableRow.LayoutParams params = new TableRow.LayoutParams(0, 170);//50 x 50
-                        params.weight = 1;
-                        TableRow tabRow = new TableRow(getContext());
-                        //控制列数
-                        for (int j = 0 ; j<size; j++){
-                            ImageView imageView = new ImageView(getContext());
-                            imageView.setLayoutParams(params);
-                            Glide.with(getContext()).load(limitGoods.getGoodsList().get(j).getPicUrl()).into(imageView);
-                            tabRow.addView(imageView);
+                    RecyclerView recyclerView = holder.getView(R.id.recy_limit);
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+                    BaseAdapter adapter = new BaseAdapter<HomeMo.LimitGoods.GoodsList>(getContext(),
+                            recyclerView,limitGoods.getGoodsList(),R.layout.img_goods_text) {
+                        @Override
+                        public void convert(Context mContext, BaseRecyclerHolder holder, HomeMo.LimitGoods.GoodsList o) {
+                            holder.setImageByUrl(R.id.iv_img,o.getPicUrl());
+                            holder.setText(R.id.tv_price,getResources().getString(R.string.app_money,o.getPrice()));
                         }
-                        tab.addView(tabRow);
-                    }
+                    };
+                    recyclerView.setAdapter(adapter);
+                    adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Intent intent = new Intent(getContext(), LimitedTimeActivity.class);
+                            startActivity(intent);
+                        }
+                    });
 
                     //限时购点击
                     holder.getView(R.id.ll_xsg).setOnClickListener(new View.OnClickListener() {

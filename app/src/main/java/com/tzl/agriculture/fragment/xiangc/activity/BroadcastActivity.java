@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,7 +48,7 @@ public class BroadcastActivity extends AppCompatActivity implements View.OnClick
     @BindView(R.id.ivBack)
     ImageView ivBack;
     @BindView(R.id.tv_search)
-    TextView tvSearch;
+    LinearLayout tvSearch;
 
     private NewsAdapter adapter;
     private List<XiangcMo.Article> mData = new ArrayList<>();

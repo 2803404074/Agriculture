@@ -508,6 +508,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                         Intent intent = new Intent(OrderActivity.this, AddressActivity.class);
                         intent.putExtra("type", 1);
                         startActivityForResult(intent, 100);
+                        spinKitView.setVisibility(View.GONE);
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override

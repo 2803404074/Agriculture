@@ -24,7 +24,7 @@
         android:paddingLeft="@dimen/dp_10"
         android:hint="收货人"
         android:textColor="@color/colorGri2"
-        android:textSize="@dimen/sp_21" />
+        android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
         android:paddingLeft="@dimen/dp_10"
         android:hint="手机号"
         android:textColor="@color/colorGri2"
-        android:textSize="@dimen/sp_21" />
+        android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
         android:paddingLeft="@dimen/dp_10"
         android:hint="省/市/县"
         android:textColor="@color/colorGri2"
-        android:textSize="@dimen/sp_21" />
+        android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"
@@ -72,7 +72,7 @@
         android:paddingLeft="@dimen/dp_10"
         android:hint="街道"
         android:textColor="@color/colorGri2"
-        android:textSize="@dimen/sp_21" />
+        android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"
@@ -88,7 +88,7 @@
         android:paddingLeft="@dimen/dp_10"
         android:hint="详细地址"
         android:textColor="@color/colorGri2"
-        android:textSize="@dimen/sp_21" />
+        android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"
@@ -110,7 +110,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:text="地址标签"
             android:textColor="@color/colorGri2"
-            android:textSize="@dimen/sp_21" />
+            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:id="@+id/tv_tag"
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/sp_15"
+            android:textSize="@dimen/sp_16"
             android:text="家"/>
 
         <ImageView
@@ -152,7 +152,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:text="设为默认"
             android:textColor="@color/colorGri2"
-            android:textSize="@dimen/sp_21" />
+            android:textSize="@dimen/sp_16" />
 
         <View
             android:layout_width="0dp"

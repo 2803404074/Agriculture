@@ -4,21 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:id="@+id/tv_search"
+    android:background="@drawable/broadcast_search_gray"
+    android:orientation="horizontal">
 
-
+<ImageView
+    android:layout_width="@dimen/dp_28"
+    android:layout_height="@dimen/dp_28"
+    android:padding="@dimen/dp_3"
+    android:src="@mipmap/search"/>
     <TextView
-        android:id="@+id/tv_search"
-        android:layout_width="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_height="35dp"
-        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="搜搜品牌故事"
-        android:drawablePadding="@dimen/dp_10"
-        android:gravity="center|left"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:background="@drawable/broadcast_search_gray"
         android:layout_gravity="center"
         />
 

@@ -106,7 +106,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                     case 1:
                         tvStatus.setText("等待卖家发货");
                         holder.getView(R.id.tv_lxmj).setVisibility(View.VISIBLE);
-                        holder.getView(R.id.tv_qxdd).setVisibility(View.VISIBLE);
+                        //holder.getView(R.id.tv_qxdd).setVisibility(View.VISIBLE);
                         break;
                     case 2:
                         tvStatus.setText("订单完成");

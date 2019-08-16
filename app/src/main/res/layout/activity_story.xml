@@ -12,8 +12,9 @@
     <include layout="@layout/toolbar_left_white"/>
 
     <include layout="@layout/search_demo"
-        android:layout_marginVertical="@dimen/dp_7"
+        android:layout_marginVertical="@dimen/dp_5"
         android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/dp_20"
         android:layout_height="wrap_content" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

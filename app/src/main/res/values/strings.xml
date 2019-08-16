@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">趣味乡村</string>
-    <string name="app_money">￥</string>
+    <string name="app_money">¥%S</string>
 </resources>

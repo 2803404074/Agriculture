@@ -162,6 +162,7 @@ public class CouponActivity extends SetBaseActivity {
                                         public void convert(Context mContext, BaseRecyclerHolder holder, CouponMo.CouponMoDetails.ShopList o) {
                                             holder.setImageByUrl(R.id.iv_img,o.getShopIcon());
                                             holder.setText(R.id.tv_tips,o.getShopName());
+                                            holder.getView(R.id.v_line).setVisibility(View.GONE);
                                         }
                                     };
                                     recyclerView.setAdapter(adapter);

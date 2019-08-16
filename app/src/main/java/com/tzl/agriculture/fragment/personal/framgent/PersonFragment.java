@@ -181,11 +181,11 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         });
 
         DrawableSizeUtil sizeUtil = new DrawableSizeUtil(getContext());
-        sizeUtil.setImgSize(69,69,1,tvDfk,R.mipmap.my_dfk);
-        sizeUtil.setImgSize(69,69,1,tvDsh,R.mipmap.my_dsh);
-        sizeUtil.setImgSize(69,69,1,tvDpj,R.mipmap.my_dpj);
-        sizeUtil.setImgSize(69,69,1,tvSh,R.mipmap.my_sh);
-        sizeUtil.setImgSize(69,69,1,tvMyOrder,R.mipmap.my_wddd);
+        sizeUtil.setImgSize(50,50,1,tvDfk,R.mipmap.my_dfk);
+        sizeUtil.setImgSize(50,50,1,tvDsh,R.mipmap.my_dsh);
+        sizeUtil.setImgSize(50,50,1,tvDpj,R.mipmap.my_dpj);
+        sizeUtil.setImgSize(50,50,1,tvSh,R.mipmap.my_sh);
+        sizeUtil.setImgSize(50,50,1,tvMyOrder,R.mipmap.my_wddd);
 
         ivSet.setOnClickListener(this);
         llSc.setOnClickListener(this);
@@ -270,6 +270,8 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                                 if(strings!=null&&strings.size()>0){
                                     ToastUtil.showShort(getContext(),"保存成功");
                                     dialogUtilT.des();
+                                }else {
+                                    ToastUtil.showShort(getContext(),"保存失败");
                                 }
                             }
                         });

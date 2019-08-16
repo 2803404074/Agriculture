@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@drawable/shape_white_noframe"
-    android:layout_marginTop="@dimen/dp_5"
+    android:background="@android:color/white"
     android:layout_marginHorizontal="@dimen/dp_10"
+    android:paddingVertical="@dimen/dp_5"
     android:paddingHorizontal="@dimen/dp_5"
     android:id="@+id/ll_brocast">
 

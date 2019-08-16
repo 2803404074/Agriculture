@@ -10,8 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="广西"
-        android:background="@drawable/shape_side_white"
-        android:textSize="@dimen/sp_18"
+        android:background="@android:color/white"
+        android:textSize="@dimen/sp_16"
         android:padding="@dimen/dp_5"
         android:textColor="@color/colorPrimaryDark"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorGri3"/>
+
 </LinearLayout>
