@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
@@ -31,7 +29,6 @@ import com.tzl.agriculture.fragment.home.fragment.HomeFragment;
 import com.tzl.agriculture.fragment.personal.framgent.PersonFragment;
 import com.tzl.agriculture.fragment.xiangc.fragment.XiangcFragment;
 import com.tzl.agriculture.model.AppVersion;
-import com.tzl.agriculture.model.UserInfo;
 import com.tzl.agriculture.util.DialogUtil;
 import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
@@ -51,14 +48,12 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import config.App;
 import config.Base;
 import config.User;
 import okhttp3.Call;
 
 import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
-import static com.mob.MobSDK.getContext;
 
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
@@ -459,7 +454,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             version = packInfo.versionName;
 
             Map<String,String>map = new HashMap<>();
-            map.put("version","1.0.1");
+            map.put("version",version+"");
             String str = JsonUtil.obj2String(map);
             String token = (String) SPUtils.instance(this,1).getkey("token","");
             OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.checkNewVersion, str, token, new GsonObjectCallback<String>(App.BASE) {

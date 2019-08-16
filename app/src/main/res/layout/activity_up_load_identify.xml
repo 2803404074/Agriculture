@@ -1,73 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorGri"
     tools:context=".fragment.personal.activity.set.UpLoadIdentifyActivity">
 
-    <include layout="@layout/toolbar_left_white"/>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorGri2"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginVertical="@dimen/dp_20"
-        android:text="拍摄/上传您的二代身份证"/>
+        android:layout_height="match_parent"
+        android:background="@color/colorGri"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/iv_zm"
-            android:layout_width="@dimen/dp_250"
-            android:layout_height="@dimen/dp_150"
-            android:scaleType="fitXY"
-            android:src="@mipmap/my_sfzm"/>
+        <include layout="@layout/toolbar_left_white" />
+
         <TextView
-            android:id="@+id/tv_zm"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_20"
+            android:gravity="center"
+            android:text="拍摄/上传您的二代身份证"
+            android:textColor="@color/colorGri2"
+            android:textStyle="bold" />
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点击拍摄/上传人面像"
-            android:drawableTop="@mipmap/my_pz"/>
-    </RelativeLayout>
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dp_5">
+
+            <ImageView
+                android:id="@+id/iv_zm"
+                android:layout_width="@dimen/dp_250"
+                android:layout_height="@dimen/dp_150"
+                android:scaleType="fitXY"
+                android:src="@mipmap/my_sfzm" />
+
+            <TextView
+                android:id="@+id/tv_zm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:drawableTop="@mipmap/my_pz"
+                android:text="点击拍摄/上传人面像" />
+        </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/iv_fm"
-            android:layout_width="@dimen/dp_250"
-            android:layout_height="@dimen/dp_150"
-            android:scaleType="fitXY"
-            android:src="@mipmap/my_sfzbm"/>
-        <TextView
-            android:id="@+id/tv_fm"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点击拍摄/上传国徽面"
-            android:drawableTop="@mipmap/my_pz"/>
-    </RelativeLayout>
+            android:layout_gravity="center">
 
-    <View
-        android:layout_width="1px"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-    <TextView
+            <ImageView
+                android:id="@+id/iv_fm"
+                android:layout_width="@dimen/dp_250"
+                android:layout_height="@dimen/dp_150"
+                android:scaleType="fitXY"
+                android:src="@mipmap/my_sfzbm" />
+
+            <TextView
+                android:id="@+id/tv_fm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:drawableTop="@mipmap/my_pz"
+                android:text="点击拍摄/上传国徽面" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_load"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/yinying_shape"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_20"
+            android:text="提交审核"
+            android:textColor="@color/colorGri2"
+            android:textSize="@dimen/sp_16" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp_10"
+            android:text="信息仅用于身份验证，趣乡将保障您的信息安全。" />
+    </LinearLayout>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        style="@style/SpinKitView.Large.Circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/dp_10"
-        android:text="信息仅用于身份验证，趣乡将保障您的信息安全。"/>
-</LinearLayout>
+        android:layout_centerVertical="true"
+        app:SpinKit_Color="@color/colorPrimaryDark" />
+</RelativeLayout>

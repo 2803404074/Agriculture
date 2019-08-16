@@ -73,4 +73,10 @@ public class User extends Base{
 
     //新增/修改地址
     public static String saveAddress = "/api/basics/harvest/save";
+
+    //获取实名认证状态
+    public static  String  getIdentity="/api/basics/identityVerification/getIdentity";
+
+    //提交认证材料
+    public static String uploadIdentiy="/api/basics/identityVerification/commit";
 }
