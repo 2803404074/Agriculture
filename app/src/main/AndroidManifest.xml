@@ -43,6 +43,7 @@
         android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@mipmap/application"
         android:supportsRtl="true"
+        tools:replace="android:name"
         android:theme="@style/AppTheme">
         <activity android:name=".fragment.vip.activity.MoneyDetailedActivity"></activity>
         <activity android:name=".main.WellComePageActivity" />

@@ -9,13 +9,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.shehuan.niv.NiceImageView;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.main.MainActivity;
-import com.tzl.agriculture.util.DialogUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
@@ -25,7 +22,6 @@ import java.io.IOException;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
-import config.Article;
 import config.User;
 import okhttp3.Call;
 
@@ -111,10 +107,8 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
                 startActivity(intent1);
                 break;
             case R.id.tv_account_save:
-                DialogUtil.init(this).showTips();
-
-//                Intent intent2 = new Intent(this, AccountSaveActivity.class);
-//                startActivity(intent2);
+                Intent intent2 = new Intent(this, AccountSaveActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.tv_function_response:
                 Intent intent3 = new Intent(this, FunctionResponseActivity.class);

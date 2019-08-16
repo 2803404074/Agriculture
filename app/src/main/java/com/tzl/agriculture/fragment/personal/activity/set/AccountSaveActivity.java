@@ -1,14 +1,13 @@
 package com.tzl.agriculture.fragment.personal.activity.set;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.tzl.agriculture.R;
+import com.tzl.agriculture.util.DialogUtil;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 账户安全页面
@@ -64,14 +63,26 @@ public class AccountSaveActivity extends SetBaseActivity implements View.OnClick
                 startActivity(intent1);
                 break;
             case R.id.rl_accountRelation:
+                if(true){
+                    DialogUtil.init(this).showTips();
+                    return;
+                }
                 Intent intent2 = new Intent(AccountSaveActivity.this, AccountRelationActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.rl_bindPhone:
+                if(true){
+                    DialogUtil.init(this).showTips();
+                    return;
+                }
                 Intent intent3 = new Intent(AccountSaveActivity.this, BindPhoneActivity.class);
                 startActivity(intent3);
                 break;
             case R.id.rl_device_manage:
+                if(true){
+                    DialogUtil.init(this).showTips();
+                    return;
+                }
                 Intent intent4 = new Intent(AccountSaveActivity.this, DeviceManageActivity.class);
                 startActivity(intent4);
                 break;
