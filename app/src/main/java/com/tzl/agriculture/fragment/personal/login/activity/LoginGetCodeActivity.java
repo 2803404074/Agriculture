@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.R;
+import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
@@ -79,6 +82,10 @@ public class LoginGetCodeActivity extends SetBaseActivity {
         instance = this;
         Sprite ddd = new DoubleBounce();
         setTitle("验证码");
+
+        tvCheck.setBackgroundResource(R.drawable.shape_login_blue_hide);
+        tvCheck.setClickable(false);
+
         phoneNumber = getIntent().getStringExtra("phone");
         tvPhoneTips.setText("我们已将验证码发送至您"+phoneNumber+",请注意查收");
 
@@ -88,6 +95,18 @@ public class LoginGetCodeActivity extends SetBaseActivity {
         tvCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (StringUtils.isEmpty(etCode.getText().toString())){
+                    ToastUtil.showShort(LoginGetCodeActivity.this,"请输入验证码");
+                    return;
+                }
+                if (etCode.getText().length()<6){
+                    ToastUtil.showShort(LoginGetCodeActivity.this,"验证码错误");
+                    return;
+                }
+
+
+
                 spinKitView.setVisibility(View.VISIBLE);
                 spinKitView.setIndeterminateDrawable(ddd);
                 tvCheck.setBackgroundResource(R.drawable.shape_login_blue_hide);
@@ -104,6 +123,26 @@ public class LoginGetCodeActivity extends SetBaseActivity {
             @Override
             public void onClick(View v) {
                 getCodeMeth();
+            }
+        });
+
+        etCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!StringUtils.isEmpty(etCode.getText().toString()) && etCode.getText().length()>=6){
+                    tvCheck.setBackgroundResource(R.drawable.shape_login_blue);
+                    tvCheck.setClickable(true);
+                }
             }
         });
     }
@@ -275,6 +314,8 @@ public class LoginGetCodeActivity extends SetBaseActivity {
             tvReGet.setText("重新获取");
             //设置可点击
             tvReGet.setClickable(true);
+
+
         }
     }
 }

@@ -80,7 +80,14 @@ public class RegistMessActivity extends SetBaseActivity {
             public void onClick(View view) {
                 if (StringUtils.isEmpty(etNickName.getText().toString())){
                     ToastUtil.showShort(RegistMessActivity.this,"请设置您的昵称");
+                    return;
                 }
+
+                if (StringUtils.isEmpty(tvInvCode.getText().toString())){
+                    ToastUtil.showShort(RegistMessActivity.this,"请填写邀请码");
+                    return;
+                }
+
                 regist();
             }
         });
@@ -88,8 +95,12 @@ public class RegistMessActivity extends SetBaseActivity {
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                boolean isOpen = imm.isActive();
+                if (isOpen){
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+
 
                 //时间选择器
                 pvTime1 = new TimePickerView.Builder(RegistMessActivity.this, new TimePickerView.OnTimeSelectListener() {

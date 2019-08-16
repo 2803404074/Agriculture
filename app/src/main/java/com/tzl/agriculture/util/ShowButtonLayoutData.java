@@ -31,7 +31,7 @@ public class ShowButtonLayoutData<T> {
 
     public void updata(){
         this.data.clear();
-        setData();
+        layout.removeAllViews();
     }
 
 
@@ -57,6 +57,7 @@ public class ShowButtonLayoutData<T> {
                 }
             });
             layout.addView(view);
+
         }
     }
 }

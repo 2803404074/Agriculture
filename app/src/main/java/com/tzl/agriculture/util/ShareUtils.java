@@ -49,7 +49,9 @@ public class ShareUtils {
         // 启动分享GUI
         oks.show(mContext);
 
-        oks.setCallback(listener);
+        PlatformActionListener platformActionListener = oks.getCallback();
+
+        oks.setCallback(platformActionListener);
 
     }
 }

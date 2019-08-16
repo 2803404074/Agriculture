@@ -147,7 +147,8 @@ public class AddressActivity extends SetBaseActivity {
         tvDefault.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dialog.dismiss();
+                setDefault(o);
             }
         });
 
@@ -167,11 +168,47 @@ public class AddressActivity extends SetBaseActivity {
     }
 
     /**
+     * 设置默认地址
+     */
+    private void setDefault(AddressMo addressMo){
+        OkHttp3Utils.getInstance(User.BASE).doPostJsonForObj(User.addDefault+addressMo.getHarvestId(), "", getToken(),
+                new GsonObjectCallback<String>(User.BASE) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optInt("code") == 0){
+                        initData();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
      * 删除地址
      */
     private void addressDelete(String harvestId) {
-        String token = (String) SPUtils.instance(this, 1).getkey("token", "");
-        OkHttp3Utils.getInstance(Article.BASE).doPostJson2(User.deleteAddress + harvestId, "", token, new GsonObjectCallback<String>(Article.BASE) {
+        OkHttp3Utils.getInstance(Article.BASE).doPostJson2(User.deleteAddress + harvestId, "", getToken(), new GsonObjectCallback<String>(Article.BASE) {
             @Override
             public void onUi(String result) {
                 try {
@@ -179,14 +216,12 @@ public class AddressActivity extends SetBaseActivity {
                     if (object.optInt("code") == 0) {
                         ToastUtil.showShort(AddressActivity.this, "删除成功");
                     } else {
-                        ToastUtil.showShort(AddressActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
+                        ToastUtil.showShort(AddressActivity.this, TextUtil.checkStr2Str(object.optString("网络繁忙")));
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailed(Call call, IOException e) {
 
@@ -209,7 +244,9 @@ public class AddressActivity extends SetBaseActivity {
                         JSONObject dataObj = object.optJSONObject("data");
                         String str = dataObj.optString("records");
                         mData = JsonUtil.string2Obj(str, List.class, AddressMo.class);
-
+                        if (mData.size() == 1){
+                            mData.get(0).setIsDefault(1);
+                        }
                         adapter.updateData(mData);
                     } else {
                         ToastUtil.showShort(AddressActivity.this, TextUtil.checkStr2Str(object.optString("msg")));

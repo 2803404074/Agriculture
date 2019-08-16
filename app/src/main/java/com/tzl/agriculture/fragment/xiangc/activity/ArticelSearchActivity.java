@@ -79,6 +79,9 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
     @BindView(R.id.tv_clea)
     TextView tvClea;
 
+
+    private ShowButtonLayoutData historyView;//历史搜索
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +107,7 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
         String history = (String) SPUtils.instance(this,1).getkey("history","");
         HistList = JsonUtil.string2Obj(history,List.class,String.class);
         if(null == HistList){
+            tvClea.setVisibility(View.GONE);
             HistList = new ArrayList<>();
         }
 
@@ -117,7 +121,7 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
 //        });
 
         //历史搜索
-        ShowButtonLayoutData data2 = new ShowButtonLayoutData<String>(this, historyLayout, HistList, new ShowButtonLayoutData.MyClickListener() {
+        historyView = new ShowButtonLayoutData<String>(this, historyLayout, HistList, new ShowButtonLayoutData.MyClickListener() {
             @Override
             public void clickListener(View v,  double arg1,double arg2) {
                 String tag = (String) v.getTag();
@@ -125,7 +129,7 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
             }
         });
         //data1.setData();
-        data2.setData();
+        historyView.setData();
 
         tvStart.setOnClickListener(this);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -273,7 +277,8 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
                 getHttp(editText.getText().toString());
                 break;
             case R.id.tv_clea:
-                SPUtils.instance(this,1).remove("historyGoods");
+                SPUtils.instance(this,1).remove("history");
+                historyView.updata();
                 break;
                 default:break;
         }

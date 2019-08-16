@@ -15,6 +15,7 @@ import com.shehuan.niv.NiceImageView;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.main.MainActivity;
+import com.tzl.agriculture.util.DialogUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
@@ -110,8 +111,10 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
                 startActivity(intent1);
                 break;
             case R.id.tv_account_save:
-                Intent intent2 = new Intent(this, AccountSaveActivity.class);
-                startActivity(intent2);
+                DialogUtil.init(this).showTips();
+
+//                Intent intent2 = new Intent(this, AccountSaveActivity.class);
+//                startActivity(intent2);
                 break;
             case R.id.tv_function_response:
                 Intent intent3 = new Intent(this, FunctionResponseActivity.class);

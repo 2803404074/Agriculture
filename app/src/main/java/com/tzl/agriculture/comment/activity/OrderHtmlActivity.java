@@ -1,6 +1,8 @@
 package com.tzl.agriculture.comment.activity;
 
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,6 +13,7 @@ import com.sackcentury.shinebuttonlib.ShineButton;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.model.XiangcMo;
 import com.tzl.agriculture.util.JsonUtil;
+import com.tzl.agriculture.util.MyWebViewClient;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ShareUtils;
 import com.tzl.agriculture.util.TextUtil;
@@ -62,14 +65,28 @@ public class OrderHtmlActivity extends BaseHtmlActivity {
                 finish();
             }
         });
-
-        String str = getIntent().getStringExtra("html");
-
-        setWebView(webView,spinKitView,str);
     }
 
     @Override
     public void initData() {
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);// 有网络时采用缓存
+        webView.getSettings().setUserAgentString(System.getProperty("http.agent"));
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
+        webView.getSettings().setAppCacheEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.setWebViewClient(new MyWebViewClient(webView));
+        webView.loadUrl(getIntent().getStringExtra("html"));
 
+        webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                if (progress == 100) {
+                    //加载完成
+                    spinKitView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 }

@@ -166,6 +166,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                 holder.setText(R.id.tv_goodsNum, "共" + o.getGoodsListBo().size() + "件");
 
                 EditText editText = holder.getView(R.id.et_mess);
+
                 editText.addTextChangedListener(new MyTextChangedListener(holder, o.getShopId(), mapMess));
 
                 //小计

@@ -88,7 +88,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.tv_clea)
     TextView tvClea;
 
-    private ShowButtonLayoutData data2;
+    private ShowButtonLayoutData historyView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +112,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         String historyGoods = (String) SPUtils.instance(this,1).getkey("historyGoods","");
         HistList = JsonUtil.string2Obj(historyGoods,List.class,String.class);
         if(null == HistList){
+            tvClea.setVisibility(View.GONE);
             HistList = new ArrayList<>();
         }
 
@@ -127,7 +128,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         Collections.reverse(HistList);
 
         //历史搜索
-        data2 = new ShowButtonLayoutData<String>(this, historyLayout, HistList, new ShowButtonLayoutData.MyClickListener() {
+        historyView = new ShowButtonLayoutData<String>(this, historyLayout, HistList, new ShowButtonLayoutData.MyClickListener() {
             @Override
             public void clickListener(View v,  double arg1,double arg2) {
                 String tag = (String) v.getTag();
@@ -135,7 +136,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
         //data1.setData();
-        data2.setData();
+        historyView.setData();
 
         tvStart.setOnClickListener(this);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -225,7 +226,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.tv_clea:
                 SPUtils.instance(SearchActivity.this,1).remove("historyGoods");
-                data2.updata();
+                historyView.updata();
                 break;
             default:break;
         }

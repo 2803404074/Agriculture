@@ -211,6 +211,7 @@ public class ShoppingSelectView extends LinearLayout {
 
     private String lastStr = "";
     private void startJs() {
+        lastStr = "";
         for (int i = 0; i < sunArr.length; i++) {
             //只有一个规格
             if (sunArr.length == 1) {
