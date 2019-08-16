@@ -87,6 +87,7 @@
         <TextView
             android:id="@+id/tv_lxmj"
             android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/dp_10"
@@ -111,7 +112,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/dp_10"
             android:paddingVertical="@dimen/dp_3"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:textColor="@color/colorPrimaryDark"
             android:background="@drawable/shape_login_blue_no"
             android:text="付款"/>
@@ -123,12 +124,13 @@
             android:background="@drawable/shape_login_blue_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dp_3"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:textColor="@color/colorPrimaryDark"
             android:text="评价"/>
         <TextView
             android:id="@+id/tv_ckwl"
             android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:paddingHorizontal="@dimen/dp_10"
             android:paddingVertical="@dimen/dp_3"
             android:background="@drawable/shape_login_whi_no"

@@ -119,15 +119,14 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
 
     @Override
     protected void setDate(boolean isLoad) {
+        Map<String, String> map = new HashMap<>();
         String url = "";
         if (type == 1){//发现好物
             url = Mall.fxhwList;
+            map.put("shopTypeId", getCtype());
         }else {
             url = Mall.xsgList;
         }
-
-        Map<String, String> map = new HashMap<>();
-        map.put("shopTypeId", getCtype());
         map.put("pageNum", String.valueOf(page));
         String str = JsonUtil.obj2String(map);
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(url, str, getToken(), new GsonObjectCallback<String>(Mall.BASE) {

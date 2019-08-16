@@ -98,6 +98,10 @@ public class LimitedTimeActivity extends BaseActivity {
             tvTitle.setText("发现好物");
         }
 
+        if (mType == 0){
+            tabLayout.setVisibility(View.GONE);
+        }
+
 
         tvSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +132,10 @@ public class LimitedTimeActivity extends BaseActivity {
                                     fragmentPage.setTabPos(i, mList.get(i).getShopTypeId());//第几页，和第几页的id
                                     mFragments.add(fragmentPage);
                                     tabTitle.add(mList.get(i).getName());
+
+                                    if (mType == 0){
+                                        break;
+                                    }
                                 }
                                 adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), mFragments, tabTitle);
                                 viewPager.setAdapter(adapter);

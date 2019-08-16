@@ -243,7 +243,7 @@ public class HomeFragment extends BaseFragment {
                         textList.add(article.get(i).getTitle());
                     }
                     tvBro.setTextList(textList);
-                    tvBro.setText(18, 5, getResources().getColor(R.color.colorGri2));//设置属性
+                    tvBro.setText(15, 5, getResources().getColor(R.color.colorGri2));//设置属性
                     tvBro.setTextStillTime(5000);//设置停留时长间隔
                     tvBro.setAnimTime(500);//设置进入和退出的时间间隔
                     tvBro.startAutoScroll();

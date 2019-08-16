@@ -30,7 +30,7 @@
     <com.tzl.agriculture.view.VerticalTextview
         android:id="@+id/tv_bro"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:lines="1"
         android:layout_gravity="center_vertical"
@@ -54,6 +54,6 @@
         android:layout_height="wrap_content"
         android:text="更多"
         android:layout_gravity="center"
-        android:textSize="@dimen/sp_18"
+        android:textSize="@dimen/sp_15"
         android:textColor="@color/colorGri2" />
 </LinearLayout>
