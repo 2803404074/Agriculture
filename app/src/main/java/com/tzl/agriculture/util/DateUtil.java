@@ -32,6 +32,24 @@ public class DateUtil {
         }
     }
 
+    public static String stampToDateMoth(String s) {
+        Date dateDay= null;
+        String str = "";
+        try {
+            dateDay = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(s);
+
+            String day = new SimpleDateFormat("yyyy-MM-dd").format(dateDay);
+
+            String date = new SimpleDateFormat("HH:mm:ss").format(dateDay);
+
+            str = day+"\n"+date;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
     /**
      * 日期转时间戳
      * @param timers

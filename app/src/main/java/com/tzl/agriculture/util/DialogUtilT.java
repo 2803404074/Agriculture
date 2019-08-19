@@ -65,6 +65,34 @@ public abstract class DialogUtilT<T> extends DialogUtil{
         dialog.getWindow().setWindowAnimations(R.style.dialog_animation);
     }
 
+
+    /**
+     *
+     * @param layout
+     * @param data
+     * @param x   x * y
+     * @param y
+     */
+    public void show2(int layout,T data,int x,int y) {
+        View view = LayoutInflater.from(getContext()).inflate(layout, null, false);
+        BaseRecyclerHolder holder = BaseRecyclerHolder.getRecyclerHolder(getContext(), view);
+        convert(holder,data);
+        view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog = new AlertDialog.Builder(getContext(), R.style.TransparentDialog).setView(view).create();
+
+        dialog.show();
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (ScreenUtils.getScreenWidth(getContext()) / x * y);
+        params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(params);
+        dialog.getWindow().setWindowAnimations(R.style.dialog_animation);
+    }
+
     public void des(){
         if (dialog != null){
             dialog.dismiss();

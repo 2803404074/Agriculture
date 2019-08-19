@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".fragment.personal.activity.ccb.activity.BrowseActivity">
 
 
     <RelativeLayout
         android:padding="@dimen/dp_3"
+        android:id="@+id/rl_toolbar"
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -40,6 +40,7 @@
 
     <ImageView
         android:id="@+id/iv_tips"
+        android:layout_centerVertical="true"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +48,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recy"
+        android:layout_below="@+id/rl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
-</LinearLayout>
+</RelativeLayout>

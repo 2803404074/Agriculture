@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:paddingVertical="@dimen/dp_3"
+    android:id="@+id/rl_toolbar"
     tools:context=".fragment.xiangc.activity.StoryActivity">
 
 

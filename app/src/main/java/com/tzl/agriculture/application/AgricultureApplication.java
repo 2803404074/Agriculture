@@ -6,10 +6,13 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tzl.agriculture.baseresult.SPTAG;
 import com.tzl.agriculture.util.CrashHandlerUtils;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
- * 牛逼
+ *
  */
 public class AgricultureApplication extends Application {
 
@@ -28,5 +31,9 @@ public class AgricultureApplication extends Application {
         api = WXAPIFactory.createWXAPI(this,APP_ID,true);
         api.registerApp(APP_ID);
         //CrashHandlerUtils.getInstance().init(this);
+
+        //极光推送
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 }

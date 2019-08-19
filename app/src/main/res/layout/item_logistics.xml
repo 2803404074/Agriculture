@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:gravity="center"
     android:paddingHorizontal="@dimen/dp_5"
     android:layout_height="@dimen/dp_80">
 
@@ -10,23 +9,15 @@
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_30"
-        android:gravity="center"
         android:textSize="@dimen/sp_8"
-        android:text="11:12 11:12"/>
+        android:gravity="center"
+        android:text="2019-08-15 11:22:00"/>
 
     <LinearLayout
-        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginHorizontal="@dimen/dp_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <View
-            android:id="@+id/v_line_top"
-            android:layout_width="2px"
-            android:layout_gravity="center"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/szxx_back"/>
         <ImageView
             android:id="@+id/iv_status"
             android:layout_width="@dimen/dp_30"
@@ -44,11 +35,11 @@
         android:id="@+id/tv_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center|left"
-        android:lines="3"
+        android:gravity="center|left|top"
+        android:paddingTop="@dimen/dp_6"
         android:textSize="@dimen/sp_12"
         android:ellipsize="end"
         android:paddingHorizontal="@dimen/dp_5"
-        android:text="---------"/>
+        android:text="啊啊啊啊"/>
 
 </LinearLayout>

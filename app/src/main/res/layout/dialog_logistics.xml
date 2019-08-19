@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:background="@drawable/shape_green_noframe"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/shape_green_noframe"
+
         android:orientation="vertical">
 
         <RelativeLayout
@@ -70,12 +70,18 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-
-    <ImageView
+    <LinearLayout
         android:id="@+id/iv_close"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/dp_10"
-        android:src="@drawable/smssdk_ic_popup_dialog_close"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_10"
+            android:src="@mipmap/camera_close"/>
+    </LinearLayout>
+
+
 </LinearLayout>

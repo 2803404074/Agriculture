@@ -23,6 +23,7 @@ import com.tzl.agriculture.mall.activity.StartCommentActivity;
 import com.tzl.agriculture.model.OrderMo;
 import com.tzl.agriculture.model.UserInfo;
 import com.tzl.agriculture.model.WlMo;
+import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.DialogUtilT;
 import com.tzl.agriculture.util.DownMediaUtils;
 import com.tzl.agriculture.util.JsonUtil;
@@ -174,6 +175,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                 holder.getView(R.id.tv_ckwl).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        spinKitView.setVisibility(View.VISIBLE);
                         showLogistics(o.getOrderId());
                     }
                 });
@@ -248,7 +250,6 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                                 //快递号
                                 String dtNum = dataObj.optString("dtNum");
 
-
                                 //详情
                                 JSONObject kdInfoObj = dataObj.optJSONObject("kdInfo");
                                 String str = kdInfoObj.optString("detail");
@@ -270,30 +271,48 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                                             @Override
                                             public void convert(Context mContext, BaseRecyclerHolder holder, WlMo o) {
                                                 if (o.isFist()) {
-                                                    holder.getView(R.id.v_line_top).setVisibility(View.INVISIBLE);
+                                                    //holder.getView(R.id.v_line_top).setVisibility(View.INVISIBLE);
                                                     holder.setImageResource(R.id.iv_status, R.drawable.round_check_active);
                                                 } else {
-                                                    holder.getView(R.id.v_line_top).setVisibility(View.VISIBLE);
+                                                    //holder.getView(R.id.v_line_top).setVisibility(View.VISIBLE);
                                                     holder.setImageResource(R.id.iv_status, R.drawable.round_check_selected);
                                                 }
 
-                                                holder.setText(R.id.tv_date, o.getTimeFormat());
+                                                holder.setText(R.id.tv_date,DateUtil.stampToDateMoth(o.getTimeFormat()));
                                                 holder.setText(R.id.tv_details, o.getRemark());
                                             }
                                         };
                                         recyclerView.setAdapter(adapter);
                                     }
                                 };
-                                dialogUtilT.show2(R.layout.dialog_logistics, "");
+                                dialogUtilT.show2(R.layout.dialog_logistics, "",6,5);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+                        spinKitView.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onFailed(Call call, IOException e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                spinKitView.setVisibility(View.GONE);
+                            }
+                        });
+                    }
 
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        super.onFailure(call, e);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                spinKitView.setVisibility(View.GONE);
+                            }
+                        });
                     }
                 });
     }

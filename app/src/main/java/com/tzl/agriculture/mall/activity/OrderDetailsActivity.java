@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,9 +32,13 @@ import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.model.AddressMo;
 import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.model.OrderMo;
+import com.tzl.agriculture.model.WlMo;
 import com.tzl.agriculture.util.BottomShowUtil;
+import com.tzl.agriculture.util.DateUtil;
+import com.tzl.agriculture.util.DialogUtilT;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
+import com.tzl.agriculture.util.StatusBarUtil;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.util.WXPayUtils;
@@ -53,6 +58,7 @@ import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import config.Mall;
+import config.User;
 import okhttp3.Call;
 
 public class OrderDetailsActivity extends SetBaseActivity implements View.OnClickListener {
@@ -140,7 +146,28 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarUtil.setRootViewFitsSystemWindows(this, false);
+    }
+
+    @Override
     public void initView() {
+
+
+        //本activity需要沉浸式
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        //设置状态栏透明
+        StatusBarUtil.setTranslucentStatus(this);
+
+        //一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
+        //所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
+        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
+            //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
+            //这样半透明+白=灰, 状态栏的文字能看得清
+            StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorW));
+        }
+
         setTitle("订单详情");
 
         llLickDep.setOnClickListener(this);
@@ -164,6 +191,7 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
         tvQxdd.setOnClickListener(this);
         tvPj.setOnClickListener(this);
         tvCkwl.setOnClickListener(this);
+        tvQrsh.setOnClickListener(this);
     }
 
     @Override
@@ -234,7 +262,7 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                 tvPj.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                tvQxdd.setVisibility(View.VISIBLE);
+                tvQrsh.setVisibility(View.VISIBLE);
                 tvCkwl.setVisibility(View.VISIBLE);
                 break;
             case 4:
@@ -254,14 +282,188 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                 payEryWX(orderId);
                 break;
             case R.id.tv_qxdd:
+                showTwo(0,"是否取消订单？");
                 break;
             case R.id.tv_pj:
                 break;
             case R.id.tv_ckwl:
+                showLogistics(orderId);
+                break;
+            case R.id.tv_qrsh:
+                showTwo(1, "是否确认收货？");
                 break;
             default:
                 break;
         }
+    }
+
+    private void showTwo(int index, String tips) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setIcon(R.mipmap.application).setTitle("趣乡服务")
+                .setMessage(tips).setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (index == 0) {
+                            //取消订单
+                            cancelOrder();
+                        }
+                        if (index == 1) {
+                            qrsh();
+                        }
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //ToDo: 你想做的事情
+                        dialogInterface.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+    private void qrsh() {
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", orderId);
+        String str = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.receivingOrder, str, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optInt("code") == 0) {
+                        ToastUtil.showShort(OrderDetailsActivity.this, "收货成功");
+                        getOrderMess();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+
+            }
+        });
+    }
+
+    private void cancelOrder() {
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", orderId);
+        String str = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.cancelOrder, str, getToken(), new GsonObjectCallback<String>(Mall.BASE) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optInt("code") == 0) {
+                        ToastUtil.showShort(OrderDetailsActivity.this, "取消成功");
+                        getOrderMess();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+
+            }
+        });
+    }
+
+
+
+    private DialogUtilT dialogUtilT;
+    private void showLogistics(String orderId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", orderId);
+        OkHttp3Utils.getInstance(User.BASE).doPostJsonForObj(User.wlFind, map, getToken(),
+                new GsonObjectCallback<String>(User.BASE) {
+                    @Override
+                    public void onUi(String result) {
+                        try {
+                            JSONObject object = new JSONObject(result);
+                            if (object.optInt("code") == 0) {
+                                JSONObject dataObj = object.optJSONObject("data");
+
+                                //图片
+                                String picUrl = dataObj.optString("picUrl");
+
+                                //状态
+                                String stateName = dataObj.optString("stateName");
+
+                                //商品名称
+                                String goodsName = dataObj.optString("goodsName");
+
+                                //快递名称
+                                String dtName = dataObj.optString("dtName");
+
+                                //快递号
+                                String dtNum = dataObj.optString("dtNum");
+
+                                //详情
+                                JSONObject kdInfoObj = dataObj.optJSONObject("kdInfo");
+                                String str = kdInfoObj.optString("detail");
+                                List<WlMo> mData = JsonUtil.string2Obj(str, List.class, WlMo.class);
+                                if (mData !=null && mData.size()>0){
+                                    mData.get(0).setFist(true);
+                                }
+                                dialogUtilT = new DialogUtilT<String>(getApplicationContext()) {
+                                    @Override
+                                    public void convert(BaseRecyclerHolder holder, String data) {
+                                        holder.setText(R.id.tv_status, stateName);
+                                        holder.setImageByUrl(R.id.iv_goods, picUrl);
+                                        holder.setText(R.id.tv_name, goodsName);
+                                        holder.setText(R.id.tv_wl, dtName + ":" + dtNum);
+                                        //列表
+                                        RecyclerView recyclerView = holder.getView(R.id.recy);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                        BaseAdapter adapter = new BaseAdapter<WlMo>(getContext(), recyclerView, mData, R.layout.item_logistics) {
+                                            @Override
+                                            public void convert(Context mContext, BaseRecyclerHolder holder, WlMo o) {
+                                                if (o.isFist()) {
+                                                    //holder.getView(R.id.v_line_top).setVisibility(View.INVISIBLE);
+                                                    holder.setImageResource(R.id.iv_status, R.drawable.round_check_active);
+                                                } else {
+                                                    //holder.getView(R.id.v_line_top).setVisibility(View.VISIBLE);
+                                                    holder.setImageResource(R.id.iv_status, R.drawable.round_check_selected);
+                                                }
+
+                                                holder.setText(R.id.tv_date, DateUtil.stampToDateMoth(o.getTimeFormat()));
+                                                holder.setText(R.id.tv_details, o.getRemark());
+                                            }
+                                        };
+                                        recyclerView.setAdapter(adapter);
+                                    }
+                                };
+                                dialogUtilT.show2(R.layout.dialog_logistics, "",6,5);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        spinKitView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onFailed(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                spinKitView.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        super.onFailure(call, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                spinKitView.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                });
     }
 
 
@@ -376,7 +578,7 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
 
     private void getOrderMess(){
         Map<String, String> map = new HashMap<>();
-        map.put("orderId", getIntent().getStringExtra("orderId"));
+        map.put("orderId", orderId == null?getIntent().getStringExtra("orderId"):orderId);
         String str = JsonUtil.obj2String(map);
         String token = (String) SPUtils.instance(this, 1).getkey("token", "");
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.orderInfo, str, token, new GsonObjectCallback<String>(Mall.BASE) {

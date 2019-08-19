@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,35 +27,49 @@ import com.hanks.htextview.rainbow.RainbowTextView;
 import com.rey.material.app.BottomSheetDialog;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.application.AppManager;
+import com.tzl.agriculture.baseresult.SPTAG;
+import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
 import com.tzl.agriculture.fragment.home.fragment.HomeFragment;
 import com.tzl.agriculture.fragment.personal.framgent.PersonFragment;
+import com.tzl.agriculture.fragment.vip.activity.VipActivity;
 import com.tzl.agriculture.fragment.xiangc.fragment.XiangcFragment;
+import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
+import com.tzl.agriculture.mall.activity.OrderDetailsActivity;
 import com.tzl.agriculture.model.AppVersion;
+import com.tzl.agriculture.model.UserInfo;
 import com.tzl.agriculture.util.DialogUtil;
 import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
+import com.tzl.agriculture.util.UserData;
 import com.tzl.agriculture.view.BaseActivity;
 import com.tzl.agriculture.view.DoubleClickListener;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
+import cn.jpush.android.api.JPushInterface;
 import config.App;
 import config.Base;
 import config.User;
 import okhttp3.Call;
 
 import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
+import static com.tzl.agriculture.baseresult.SPTAG.articleType;
+import static com.tzl.agriculture.baseresult.SPTAG.goodsType;
+import static com.tzl.agriculture.baseresult.SPTAG.orderType;
 
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
@@ -94,13 +110,42 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!StringUtils.isEmpty(getIntent().getStringExtra("typeId"))){
+            int code = getIntent().getIntExtra("code",0);
+            if (code != 0){
+                Intent intent = null;
+                if (code == articleType){
+                    intent = new Intent(this, HtmlForXcActivity.class);
+                    intent.putExtra("articleId",getIntent().getStringExtra("typeId"));
+                }else if (code == goodsType){
+                    intent = new Intent(this, GoodsDetailsActivity.class);
+                    intent.putExtra("goodsId",getIntent().getStringExtra("typeId"));
+                }else if (code == orderType){
+                    intent = new Intent(this, OrderDetailsActivity.class);
+                    intent.putExtra("orderId",getIntent().getStringExtra("typeId"));
+                }else {
+                    intent = new Intent(this, VipActivity.class);
+                }
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
     public void initView() {
 
+        UserInfo data = UserData.instance(this).getUsreInfo();
+        JPushInterface.setAlias(this, SPTAG.SEQUENCE,String.valueOf(data.getUserId()));
+
+        if (data.getUserType() == 3){
+            Set<String>strings = new HashSet<>();
+            strings.add("vip");
+            JPushInterface.setTags(this,SPTAG.SEQUENCE,strings);
+        }
         requestPower();
-
         getUserInfo();
-
-
 
         tvSetAddress.animateText("设置服务地址");
 
