@@ -21,7 +21,9 @@
             android:layout_height="@dimen/dp_28"
             android:layout_centerHorizontal="true"
             app:tabGravity="fill"
+            app:tabTextAppearance="@style/TabLayoutTextStyleCollect"
             app:tabIndicatorColor="@android:color/white"
+            android:background="@android:color/transparent"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@android:color/white"
             app:tabTextColor="@color/colorGri">

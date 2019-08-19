@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -13,7 +12,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,27 +20,18 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.rey.material.app.BottomSheetDialog;
-import com.shehuan.niv.NiceImageView;
 import com.tzl.agriculture.R;
-import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
-import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.model.UserInfo;
 import com.tzl.agriculture.util.BasisTimesUtils;
-import com.tzl.agriculture.util.BottomShowUtil;
 import com.tzl.agriculture.util.CameraUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.util.UserData;
-import com.tzl.agriculture.view.BaseAdapter;
-import com.tzl.agriculture.view.BaseRecyclerHolder;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
@@ -142,7 +131,7 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
 
     private void myRequetPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         } else {
             //Toast.makeText(this,"您已经申请了权限!",Toast.LENGTH_SHORT).show();
         }
@@ -208,20 +197,12 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
     private boolean isCheckPerimiss() {
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.CAMERA) != PermissionChecker.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
+
+            ActivityCompat.requestPermissions(
                     this,
-                    Manifest.permission.CAMERA)) {
-                ActivityCompat.requestPermissions(
-                        this,
-                        new String[]{Manifest.permission.CAMERA},
-                        1);
-            } else {
-                //跳去打开权限
-                Intent intent = new Intent();
-                intent.setAction(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                intent.setData(Uri.parse("package:" + this.getPackageName()));
-                startActivity(intent);
-            }
+                    new String[]{Manifest.permission.CAMERA},
+                    3);
+
             return false;
         }
         return true;
@@ -471,6 +452,24 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                     Toast.makeText(this, "申请失败", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case 3:
+                if (grantResults.length > 0 && grantResults[0] != PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.CAMERA)) {
+                        ActivityCompat.requestPermissions(
+                                this,
+                                new String[]{Manifest.permission.CAMERA},
+                                3);
+                    } else {
+                        //跳去打开权限
+                        Intent intent = new Intent();
+                        intent.setAction(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + this.getPackageName()));
+                        startActivity(intent);
+                    }
+                }
+                break;
         }
     }
 
@@ -487,6 +486,7 @@ public class UserMessActivity extends SetBaseActivity implements View.OnClickLis
                     JSONObject dataObj = object.optJSONObject("data");
                     String url = dataObj.optString("url");
                     if (StringUtils.isEmpty(url)) return;
+                    SPUtils.instance(UserMessActivity.this,1).put("user_head_url",url);
                     UserData.instance(UserMessActivity.this).updateUserInfo(getToken(), 1, url);
                 } catch (JSONException e) {
                     e.printStackTrace();

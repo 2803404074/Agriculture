@@ -18,7 +18,7 @@ public class ToastUtil {
      */
     public static Toast showShort(Context context, CharSequence message) {
         if (null == toast) {
-            toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
         } else {
             toast.setText(message);
         }

@@ -62,6 +62,7 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
 
     @BindView(R.id.tv_versionCode)
     TextView tvVersionCode;
+
     @Override
     public void backFinish() {
         finish();
@@ -77,7 +78,7 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
     public void initView() {
         setTitle("设置");
         tvNickName.setText(getIntent().getStringExtra("name"));
-        draweeView.setImageURI(getIntent().getStringExtra("head"));
+        SPUtils.instance(SettingActivity.this,1).put("user_head_url",getIntent().getStringExtra("head"));
         llMes.setOnClickListener(this);
         tvAccountSave.setOnClickListener(this);
         tvFunctionResponse.setOnClickListener(this);
@@ -90,13 +91,20 @@ public class SettingActivity extends SetBaseActivity implements View.OnClickList
     public void initData() {
         try {
             PackageManager packageManager = getPackageManager();
-            PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(),0);
+            PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(), 0);
             String version = packInfo.versionName;
             tvVersionCode.setText(TextUtil.checkStr2Str(version));
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String url = (String) SPUtils.instance(this, 1).getkey("user_head_url", "");
+        draweeView.setImageURI(url);
     }
 
     @Override

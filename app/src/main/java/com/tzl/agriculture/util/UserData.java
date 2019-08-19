@@ -28,7 +28,7 @@ public class UserData {
     }
     public static UserData instance(Context context){
         if (null == userData){
-            return new UserData(context);
+            return new UserData(context.getApplicationContext());
         }
         return userData;
     }

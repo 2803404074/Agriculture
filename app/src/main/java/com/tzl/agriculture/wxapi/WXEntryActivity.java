@@ -4,22 +4,26 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
-import com.tzl.agriculture.R;
 import com.tzl.agriculture.application.AgricultureApplication;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.fragment.personal.login.activity.PhoneRegistActivity;
 import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ToastUtil;
+
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
+
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import config.User;
@@ -58,6 +62,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         Log.d("wechat", "onResp");
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
+                if(resp.getType()== ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){
+                    finish();
+                    return;
+                }
                 //ToastUtil.showShort(WXEntryActivity.this, "请求成功");
                 String code = ((SendAuth.Resp) resp).code;
                 getAccessToken(code);
@@ -72,6 +80,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 break;
             default:
                 //发送返回
+                finish();
                 break;
         }
     }

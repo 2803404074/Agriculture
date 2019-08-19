@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:lines="1"
             android:ellipsize="end"
-            android:text="题标题标题标题标题标题标题"
+            tools:text="题标题标题标题标题标题标题"
             android:textColor="@color/colorGri2"
             android:textSize="@dimen/sp_19" />
         <ImageView
@@ -161,7 +161,7 @@
                         android:layout_below="@+id/bt_star"
                         android:layout_centerHorizontal="true"
                         android:padding="@dimen/dp_2"
-                        android:text="120"
+                        android:text="0"
                         android:textColor="@color/colorGri2" />
                 </LinearLayout>
 
@@ -191,7 +191,7 @@
                         android:layout_gravity="center"
                         android:layout_toRightOf="@+id/bt_heart"
                         android:padding="@dimen/dp_2"
-                        android:text="211"
+                        android:text="0"
                         android:textColor="@color/colorGri2" />
                 </LinearLayout>
 

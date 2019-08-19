@@ -486,6 +486,8 @@
             android:layout_width="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
             android:id="@+id/ll_collect"
             android:layout_marginTop="@dimen/dp_1"
             android:layout_height="wrap_content">
@@ -499,12 +501,15 @@
                 app:btn_fill_color="@color/colorOrange"
                 app:enable_flashing="true"
                 app:shine_size="40dp"
+                android:clickable="false"
                 app:siShape="@raw/star"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/sp_12"
                 android:text="收藏"
+                android:textColor="@color/colorHs2"
+                android:id="@+id/text_collect"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

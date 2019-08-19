@@ -21,7 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,8 +85,20 @@ public class CollectionGoodsFragment extends BaseFragment {
 
     private int page = 1;
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+    }
+
     @Override
     protected void initData() {
+
+    }
+
+
+    private void getData(){
         Map<String, String> map = new HashMap<>();
         map.put("pageNum", String.valueOf(page));
         map.put("searchType", "goods");// "goods",  "shop"
@@ -104,12 +115,15 @@ public class CollectionGoodsFragment extends BaseFragment {
                                 String str = dataObj.optString("goodsList");
                                 mData = JsonUtil.string2Obj(str, List.class, GoodsMin.class);
                                 if (null != mData && mData.size() > 0) {
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    ivTips.setVisibility(View.GONE);
                                     if (page == 1) {
                                         adapter.updateData(mData);
                                     } else {
                                         adapter.addAll(mData);
                                     }
                                 } else {
+                                    recyclerView.setVisibility(View.GONE);
                                     ivTips.setVisibility(View.VISIBLE);
                                 }
                             }

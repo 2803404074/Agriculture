@@ -3,9 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+
+        <item name="colorPrimary">#008577</item>
+        <item name="colorPrimaryDark">#00574B</item>
+        <item name="colorAccent">#008577</item>
     </style>
 
     <style name="ActionSheetDialogStyle">
@@ -19,6 +23,10 @@
     <!--tabLayout字体大小-->
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">@dimen/sp_15</item>
+    </style>
+
+    <style name="TabLayoutTextStyleCollect">
+        <item name="android:textSize">@dimen/sp_21</item>
     </style>
 
 

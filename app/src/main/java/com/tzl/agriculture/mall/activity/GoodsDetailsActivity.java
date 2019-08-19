@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -132,6 +133,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.bt_collect)
     ShineButton btCollect;
 
+    private boolean isCollect;  //是否已经收藏
+
     @BindView(R.id.ll_comment)
     LinearLayout llComment;//评论数量区域内容
 
@@ -164,6 +167,9 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.tv_yf)
     TextView tvYf;//邮费
+
+    @BindView(R.id.text_collect)
+    TextView mTextViewCollect;
 
 
 
@@ -206,6 +212,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
 
         btCollect.init(this); //收藏
+        btCollect.setEnabled(false);
+        btCollect.setClickable(false);
         ivBack.setOnClickListener(this);
         ivShare.setOnClickListener(this);
         //tvAddCart.setOnClickListener(this);
@@ -217,7 +225,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    @OnClick({R.id.ll_collect,R.id.bt_collect})
+    @OnClick({R.id.ll_collect})
     public void onTextClick(View view){
         collection();
     }
@@ -292,10 +300,9 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         }
 
         //是否已收藏该商品
-        if (!StringUtils.isEmpty(goodsDetailsMo.getGoods().getAlreadyCollect()) &&
-                goodsDetailsMo.getGoods().getAlreadyCollect().equals("true")){
-            btCollect.setChecked(true);
-        }
+        isCollect=!StringUtils.isEmpty(goodsDetailsMo.getGoods().getAlreadyCollect()) &&
+                goodsDetailsMo.getGoods().getAlreadyCollect().equals("true");
+        setCollect(isCollect,false);
 
         tvMarketPrice.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getOriginalPrice()));
         tvMarketPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
@@ -344,6 +351,13 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         if (goodsDetailsMo.getGoods().getGallerys() != null && goodsDetailsMo.getGoods().getGallerys().size() > 0) {
             setViewPagerAdapter(goodsDetailsMo.getGoods().getGallerys());
         }
+    }
+
+    //修改收藏颜色大小
+    private void setCollect(boolean isCollect,boolean isClick){
+        System.out.println("isCollect = [" + isCollect + "]");
+        btCollect.setChecked(isCollect,isClick);
+        mTextViewCollect.setTextColor(ContextCompat.getColor(GoodsDetailsActivity.this,isCollect?R.color.colorOrange:R.color.colorHs2));
     }
 
     private volatile List<ImageView> imgList = new ArrayList<>();
@@ -697,16 +711,22 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.toOptionGoods, str, getToken(this), new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
+                System.out.println("result = [" + result + "]");
                 try {
                     JSONObject object = new JSONObject(result);
-                    ToastUtil.showShort(GoodsDetailsActivity.this,TextUtil.checkStr2Str(object.optString("msg")));
+                    if(object.optInt("code") == 0){
+                        isCollect=!isCollect;
+                        setCollect(isCollect,true);
+                    }else{
+                        ToastUtil.showShort(GoodsDetailsActivity.this,TextUtil.checkStr2Str(object.optString("msg")));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
             @Override
             public void onFailed(Call call, IOException e) {
-
+                System.out.println("call = [" + call + "], e = [" + e + "]");
             }
         });
     }
