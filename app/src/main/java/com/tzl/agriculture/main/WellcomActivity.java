@@ -56,6 +56,13 @@ public class WellcomActivity extends AppCompatActivity implements View.OnClickLi
             super.dispatchMessage(msg);
             switch (msg.what) {
                 case 0x100:
+                   String v= (String) SPUtils.instance(WellcomActivity.this,1).getkey("guide_version","");
+                   if(TextUtils.isEmpty(v)||!v.equals(getVersion())){
+                       Intent intent=new Intent(WellcomActivity.this,WellComePageActivity.class);
+                       startActivity(intent);
+                       finish();
+                       return;
+                   }
                     String isLogin = (String) SPUtils.instance(WellcomActivity.this, 1).getkey("token", "");
                     if (!StringUtils.isEmpty(isLogin)) {
 

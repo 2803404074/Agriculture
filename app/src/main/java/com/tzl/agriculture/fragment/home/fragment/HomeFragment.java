@@ -147,6 +147,7 @@ public class HomeFragment extends BaseFragment {
                 case "0":
                     Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
                     intent.putExtra("goodsId",main_link);
+                    intent.putExtra("type",2);
                     startActivity(intent);
                     break;
                 case "1":

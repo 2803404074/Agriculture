@@ -35,6 +35,10 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="Guide" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 
     <style name="TransparentDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@color/colorTouming2</item>

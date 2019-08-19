@@ -56,7 +56,11 @@
         android:theme="@style/AppThemes"
         tools:replace="android:name">
         <activity android:name=".fragment.vip.activity.MoneyDetailedActivity"></activity>
-        <activity android:name=".main.WellComePageActivity" />
+        <activity
+            android:name=".main.WellComePageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Guide" />
         <activity android:name=".fragment.vip.activity.MonthActivity" />
         <activity android:name="camera.activity.CameraActivity" />
         <activity android:name=".mall.activity.ChinaGuActivity" />
@@ -115,7 +119,8 @@
         <activity android:name=".fragment.vip.activity.CashStartActivity" />
         <activity
             android:name=".main.WellcomActivity"
-            android:theme="@style/Splash" android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -182,7 +187,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".application.PushService"
+        <service
+            android:name=".application.PushService"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">
@@ -194,7 +200,7 @@
         <receiver
             android:name=".application.JPushReceiver"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
                 <category android:name="com.tzl.agriculture" />
