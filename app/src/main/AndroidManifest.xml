@@ -53,8 +53,8 @@
         android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@mipmap/application"
         android:supportsRtl="true"
-        tools:replace="android:name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppThemes"
+        tools:replace="android:name">
         <activity android:name=".fragment.vip.activity.MoneyDetailedActivity"></activity>
         <activity android:name=".main.WellComePageActivity" />
         <activity android:name=".fragment.vip.activity.MonthActivity" />
@@ -113,7 +113,9 @@
         <activity android:name=".fragment.vip.activity.ChackCartActivity" />
         <activity android:name=".fragment.vip.activity.CashActivity" />
         <activity android:name=".fragment.vip.activity.CashStartActivity" />
-        <activity android:name=".main.WellcomActivity">
+        <activity
+            android:name=".main.WellcomActivity"
+            android:theme="@style/Splash" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -172,13 +174,11 @@
 
         <!--分享配置-->
         <activity
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:name="com.mob.tools.MobUIShell" >
+            android:name="com.mob.tools.MobUIShell"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
-                <action
-                    android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category
-                    android:name="android.intent.category.DEFAULT" />
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

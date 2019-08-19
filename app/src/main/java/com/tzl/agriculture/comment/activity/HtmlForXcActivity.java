@@ -1,14 +1,10 @@
 package com.tzl.agriculture.comment.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.sackcentury.shinebuttonlib.ShineButton;
@@ -33,8 +29,6 @@ import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
 import config.Article;
 import okhttp3.Call;
 
@@ -89,6 +83,8 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
      */
     @Override
     public void initView() {
+        SPUtils.instance(this,1).remove("main_type");
+        SPUtils.instance(this,1).remove("main_link");
         setAndroidNativeLightStatusBar(true);
         setStatusColor(R.color.colorW);
 

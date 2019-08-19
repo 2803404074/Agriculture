@@ -4,12 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -27,9 +25,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.comment.activity.HtmlForStoryActivity;
 import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
+import com.tzl.agriculture.comment.activity.OrderHtmlActivity;
 import com.tzl.agriculture.fragment.home.activity.SearchActivity;
 import com.tzl.agriculture.fragment.home.util.HomeAdapter;
-import com.tzl.agriculture.fragment.personal.activity.order.OrderSearchActivity;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.fragment.vip.activity.VipActivity;
 import com.tzl.agriculture.fragment.xiangc.activity.BroadcastActivity;
@@ -135,6 +133,34 @@ public class HomeFragment extends BaseFragment {
         });
 
         setAdapter();
+
+        //跳转
+        toJump();
+    }
+
+    private void toJump() {
+        String main_type = (String) SPUtils.instance(getContext(), 1).getkey("main_type", "");
+        String main_link = (String) SPUtils.instance(getContext(), 1).getkey("main_link", "");
+        if (!TextUtils.isEmpty(main_type) && !TextUtils.isEmpty(main_link)) {
+            ///0：商品，1：文章，2：外链
+            switch (main_type) {
+                case "0":
+                    Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
+                    intent.putExtra("goodsId",main_link);
+                    startActivity(intent);
+                    break;
+                case "1":
+                    Intent intent1 = new Intent(getContext(), HtmlForXcActivity.class);
+                    intent1.putExtra("articleId",main_link);
+                    startActivity(intent1);
+                    break;
+                case "2":
+                    Intent intent2=new Intent(getContext(), OrderHtmlActivity.class);
+                    intent2.putExtra("html",main_link);
+                    startActivity(intent2);
+                    break;
+            }
+        }
     }
 
     //（播报）滚动文字
@@ -156,7 +182,7 @@ public class HomeFragment extends BaseFragment {
                     }
                     GeneralVpLayout<BannerMo> banner = holder.getView(R.id.banner);
                     BannerUtil util = new BannerUtil(context);
-                    util.banner3(banner,bannerMos);
+                    util.banner3(banner, bannerMos);
 
                 } else if (homeAdapter.getViewTypeForMyTask(mType) == homeAdapter.mTypeOne) {
                     TextView tvTitle = holder.getView(R.id.tv_title);
@@ -205,13 +231,13 @@ public class HomeFragment extends BaseFragment {
                     holder.setText(R.id.tv_xsg_tag, limitGoods.getTag());
 
                     RecyclerView recyclerView = holder.getView(R.id.recy_limit);
-                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
                     BaseAdapter adapter = new BaseAdapter<HomeMo.LimitGoods.GoodsList>(getContext(),
-                            recyclerView,limitGoods.getGoodsList(),R.layout.img_goods_text) {
+                            recyclerView, limitGoods.getGoodsList(), R.layout.img_goods_text) {
                         @Override
                         public void convert(Context mContext, BaseRecyclerHolder holder, HomeMo.LimitGoods.GoodsList o) {
-                            holder.setImageByUrl(R.id.iv_img,o.getPicUrl());
-                            holder.setText(R.id.tv_price,getResources().getString(R.string.app_money_home,o.getPrice()));
+                            holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
+                            holder.setText(R.id.tv_price, getResources().getString(R.string.app_money_home, o.getPrice()));
                         }
                     };
                     recyclerView.setAdapter(adapter);
@@ -251,8 +277,8 @@ public class HomeFragment extends BaseFragment {
                     tvBro.setOnItemClickListener(new VerticalTextview.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position) {
-                            Intent intent = new Intent(getContext(),HtmlForStoryActivity.class);
-                            intent.putExtra("articleId",article.get(position).getArticleId());
+                            Intent intent = new Intent(getContext(), HtmlForStoryActivity.class);
+                            intent.putExtra("articleId", article.get(position).getArticleId());
                             startActivity(intent);
                         }
                     });
@@ -462,8 +488,8 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         };
-        List<HomeMo> dt= (List<HomeMo>) SPUtils.instance(getContext(),1).getObjectByInput("home_data_index");
-        if(dt!=null&&dt.size()>0){
+        List<HomeMo> dt = (List<HomeMo>) SPUtils.instance(getContext(), 1).getObjectByInput("home_data_index");
+        if (dt != null && dt.size() > 0) {
             mData.addAll(dt);
         }
         homeAdapter.setmData(mData);
@@ -543,9 +569,10 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
+
     //订单农业，扶贫厅 弹窗
     private void showTwo() {
-       DialogUtil.init(getContext()).showTips();
+        DialogUtil.init(getContext()).showTips();
     }
 
     /**
@@ -558,7 +585,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (tvBro != null){
+        if (tvBro != null) {
             tvBro.startAutoScroll();
         }
     }
@@ -566,7 +593,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onStop() {
         super.onStop();
-        if (tvBro != null){
+        if (tvBro != null) {
             tvBro.stopAutoScroll();
         }
     }
@@ -574,18 +601,21 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (tvBro != null){
+        if (tvBro != null) {
             tvBro.startAutoScroll();
         }
     }
+
     private void registerBroadcast() {
         IntentFilter filter = new IntentFilter("android.intent.action.DOUBLE_ACTION");
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, filter);
     }
+
     private void desBroadcast() {
-        if (null == receiver)return;
+        if (null == receiver) return;
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
+
     @Override
     public void onDestroy() {
         desBroadcast();
@@ -595,7 +625,7 @@ public class HomeFragment extends BaseFragment {
     private class MessageBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("android.intent.action.DOUBLE_ACTION")){
+            if (intent.getAction().equals("android.intent.action.DOUBLE_ACTION")) {
                 homeRecycler.scrollToPosition(0);
                 mRefreshLayout.setEnableRefresh(true);
             }

@@ -36,7 +36,7 @@
             android:textSize="@dimen/sp_21"
             android:textColor="@color/colorGri2"
             android:gravity="center"
-            android:text="标题标标题标题标题标题"/>
+            tools:text="标题标标题标题标题标题"/>
 
         <ImageView
             android:id="@+id/iv_share"
@@ -102,7 +102,7 @@
                     android:textColor="@color/colorGri2"
                     android:padding="@dimen/dp_2"
                     android:layout_centerHorizontal="true"
-                    android:text="120"/>
+                    tools:text="110"/>
             </LinearLayout>
 
             <LinearLayout
@@ -130,7 +130,7 @@
                     android:textColor="@color/colorGri2"
                     android:padding="@dimen/dp_2"
                     android:layout_gravity="center"
-                    android:text="211"/>
+                    tools:text="110"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

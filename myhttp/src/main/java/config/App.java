@@ -26,5 +26,8 @@ public class App extends Base{
     //月份商品列表
     public static String monthInfo = "/api/mall/memberGoods-api/info";
 
+    //启动页修改
+    public static String appads = "/api/article/advertise-api/startupAdvertise";
+
 
 }

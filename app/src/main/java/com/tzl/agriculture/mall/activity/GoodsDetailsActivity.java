@@ -14,12 +14,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -35,6 +37,7 @@ import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.HtmlStyleUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.MyWebViewClient;
+import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ScreenUtils;
 import com.tzl.agriculture.util.ShareUtils;
 import com.tzl.agriculture.util.StatusBarUtil;
@@ -176,6 +179,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SPUtils.instance(this,1).remove("main_type");
+        SPUtils.instance(this,1).remove("main_link");
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
 
@@ -726,7 +731,6 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
             }
             @Override
             public void onFailed(Call call, IOException e) {
-                System.out.println("call = [" + call + "], e = [" + e + "]");
             }
         });
     }
