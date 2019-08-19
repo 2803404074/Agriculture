@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
@@ -159,10 +160,12 @@ public class JPushReceiver extends JPushMessageReceiver {
         NotificationCompat.Builder notification =
                 new NotificationCompat.Builder(context, channelID);
 
+        //Uri sound=Uri.parse("android.resource://com.tzl.agriculture/" + R.raw.show );
         notification.setAutoCancel(true)
                 .setContentText(message)
                 .setContentTitle("趣味乡村推送")
                 .setSmallIcon(R.mipmap.application)
+                /*.setSound()*/
                 .setDefaults(Notification.DEFAULT_ALL);
 
         notificationManager.notify((int)(System.currentTimeMillis()/1000), notification.build());
