@@ -155,7 +155,6 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                             ivTips.setVisibility(View.VISIBLE);
                         }
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

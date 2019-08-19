@@ -10,7 +10,6 @@
     <RelativeLayout
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -21,6 +20,7 @@
             android:layout_height="@dimen/dp_28"
             android:layout_centerHorizontal="true"
             app:tabGravity="fill"
+            android:layout_marginVertical="@dimen/dp_5"
             app:tabTextAppearance="@style/TabLayoutTextStyleCollect"
             app:tabIndicatorColor="@android:color/white"
             android:background="@android:color/transparent"
@@ -30,10 +30,10 @@
         </com.google.android.material.tabs.TabLayout>
         <ImageView
             android:id="@+id/back"
-            android:layout_gravity="center"
+            android:layout_centerVertical="true"
             android:layout_width="@dimen/dp_28"
             android:layout_height="@dimen/dp_28"
-            android:padding="@dimen/dp_5"
+            android:padding="@dimen/dp_6"
             android:src="@mipmap/back"/>
 
     </RelativeLayout>

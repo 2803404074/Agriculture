@@ -54,6 +54,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recy"
+        android:overScrollMode="never"
         android:paddingHorizontal="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

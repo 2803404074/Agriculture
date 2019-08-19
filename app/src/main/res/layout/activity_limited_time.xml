@@ -11,14 +11,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/dp_10"
-        android:paddingVertical="@dimen/dp_10"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
             android:padding="@dimen/dp_5"
             android:layout_centerVertical="true"
             android:src="@mipmap/back" />
@@ -32,7 +30,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:textColor="#fff"
-            android:textSize="@dimen/sp_15" />
+            android:textSize="@dimen/sp_18" />
 
         <ImageView
             android:id="@+id/tv_startSearch"
@@ -41,6 +39,7 @@
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
             android:padding="@dimen/dp_3"
+            android:layout_marginRight="@dimen/dp_5"
             android:src="@mipmap/search"/>
     </RelativeLayout>
 
@@ -72,6 +71,7 @@
                 app:tabTextColor="@color/colorGri"
                 app:tabSelectedTextColor="#fff"
                 android:layout_width="match_parent"
+                android:paddingBottom="@dimen/dp_5"
                 android:layout_height="wrap_content">
             </com.google.android.material.tabs.TabLayout>
 

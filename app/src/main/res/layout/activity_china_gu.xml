@@ -17,9 +17,9 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="@dimen/dp_5"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:padding="@dimen/dp_6"
             android:src="@mipmap/back" />
 
         <TextView

@@ -1,4 +1,4 @@
-package com.tzl.agriculture.bean;
+package com.tzl.agriculture.model;
 
 public class VipCommodity {
 

@@ -26,7 +26,7 @@
     </style>
 
     <style name="TabLayoutTextStyleCollect">
-        <item name="android:textSize">@dimen/sp_21</item>
+        <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
 

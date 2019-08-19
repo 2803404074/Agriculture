@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/iv_img"
-        android:layout_width="@dimen/dp_120"
-        android:layout_height="@dimen/dp_120" />
+        android:layout_width="@dimen/dp_110"
+        android:layout_height="@dimen/dp_110" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="---"
             android:paddingHorizontal="@dimen/dp_5"
-            android:textSize="@dimen/sp_18"
+            android:textSize="@dimen/sp_14"
             android:lines="2"
             android:ellipsize="end"
             android:textColor="@color/colorGri2" />
@@ -61,6 +61,7 @@
            android:layout_weight="1"/>
         <LinearLayout
             android:id="@+id/ll_price"
+            android:paddingHorizontal="@dimen/dp_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -94,6 +95,7 @@
                 android:paddingVertical="@dimen/dp_3"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:textColor="#fff"
+                android:textSize="@dimen/sp_8"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@drawable/shape_login_blue"/>

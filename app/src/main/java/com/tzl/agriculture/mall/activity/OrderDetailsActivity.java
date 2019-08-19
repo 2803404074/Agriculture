@@ -373,6 +373,7 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
 
     private DialogUtilT dialogUtilT;
     private void showLogistics(String orderId) {
+        spinKitView.setVisibility(View.VISIBLE);
         Map<String, String> map = new HashMap<>();
         map.put("orderId", orderId);
         OkHttp3Utils.getInstance(User.BASE).doPostJsonForObj(User.wlFind, map, getToken(),
@@ -435,6 +436,8 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                                     }
                                 };
                                 dialogUtilT.show2(R.layout.dialog_logistics, "",6,5);
+                            }else {
+                                showTwo(3,"暂无物流信息，请稍后再试~");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

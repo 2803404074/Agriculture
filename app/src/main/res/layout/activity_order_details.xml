@@ -20,7 +20,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:layout_width="@dimen/dp_28"
             android:layout_height="@dimen/dp_28"
-            android:padding="@dimen/dp_5"
+            android:padding="@dimen/dp_6"
             android:src="@mipmap/back"/>
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_28"
             android:layout_marginTop="@dimen/dp_20"
-            android:textSize="@dimen/sp_21"
+            android:textSize="@dimen/sp_18"
             android:gravity="center"
             android:textColor="@color/colorW"
             android:text="标题"/>

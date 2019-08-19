@@ -69,7 +69,7 @@
                     <TextView
                         android:layout_width="@dimen/dp_70"
                         android:layout_height="wrap_content"
-                        android:text="销售顾问:"
+                        android:text="扶贫大使:"
                         android:gravity="right"
                         android:textColor="@android:color/white"/>
                     <TextView
@@ -280,12 +280,14 @@
 
             <ImageView
                 android:id="@+id/tv_vip_no"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
                 android:src="@mipmap/vip_qnsg"/>
 
             <RelativeLayout
                 android:id="@+id/rl_vip_yes"
+                android:visibility="gone"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -321,6 +323,7 @@
             </RelativeLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recy"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

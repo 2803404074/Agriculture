@@ -3,8 +3,6 @@ package com.tzl.agriculture.fragment.vip.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,9 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.shehuan.niv.NiceImageView;
 import com.tzl.agriculture.R;
-import com.tzl.agriculture.bean.VipCommodity;
+import com.tzl.agriculture.model.VipCommodity;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
 import com.tzl.agriculture.model.GoodsMo;
@@ -38,10 +35,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -161,7 +154,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
         if (userInfo.getUserType() == 3) {
             tvBy.setVisibility(View.GONE);
-            rlVipYes.setVisibility(View.VISIBLE);
+            //rlVipYes.setVisibility(View.VISIBLE);
             llMyJf.setVisibility(View.VISIBLE);
             llMyJfTips.setVisibility(View.GONE);
             ivOpen.setVisibility(View.GONE);
@@ -260,8 +253,8 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             });
 
             tvInvNow.setVisibility(View.VISIBLE);
-            tvBy.setVisibility(View.VISIBLE);
-            rlVipYes.setVisibility(View.GONE);
+            //tvBy.setVisibility(View.VISIBLE);
+            //rlVipYes.setVisibility(View.GONE);
 
             llMyJf.setVisibility(View.GONE);
             llMyJfTips.setVisibility(View.VISIBLE);

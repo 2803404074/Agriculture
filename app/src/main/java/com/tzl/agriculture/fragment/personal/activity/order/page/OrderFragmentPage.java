@@ -286,6 +286,8 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                                     }
                                 };
                                 dialogUtilT.show2(R.layout.dialog_logistics, "",6,5);
+                            }else {
+                                showTwo(null,3,"暂无物流信息,请稍后再试~");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -11,7 +11,7 @@
         android:layout_height="@dimen/dp_150"
         android:paddingHorizontal="20dp"
         android:orientation="horizontal"
-        android:background="@color/colorPrimaryDark">
+        android:background="@drawable/list_style_theme_top">
 
         <LinearLayout
             android:id="@+id/ll_search"

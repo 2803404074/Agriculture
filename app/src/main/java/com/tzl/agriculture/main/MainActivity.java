@@ -136,14 +136,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     public void initView() {
 
-        UserInfo data = UserData.instance(this).getUsreInfo();
-        JPushInterface.setAlias(this, SPTAG.SEQUENCE,String.valueOf(data.getUserId()));
-
-        if (data.getUserType() == 3){
-            Set<String>strings = new HashSet<>();
-            strings.add("vip");
-            JPushInterface.setTags(this,SPTAG.SEQUENCE,strings);
-        }
         requestPower();
         getUserInfo();
 
@@ -455,6 +447,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                     if (object.optInt("code") == 0){
                         JSONObject dataObj = object.optJSONObject("data");
                         String str = dataObj.optString("user");
+                        UserInfo userInfo = JsonUtil.string2Obj(str,UserInfo.class);
+                        JPushInterface.setAlias(MainActivity.this, SPTAG.SEQUENCE,String.valueOf(userInfo.getUserId()));
+                        if (userInfo.getUserType() == 3){
+                            Set<String>strings = new HashSet<>();
+                            strings.add("vip");
+                            JPushInterface.setTags(MainActivity.this,SPTAG.SEQUENCE,strings);
+                        }
                         SPUtils.instance(getContext(),1).put("user",str);
                     }else if (object.optInt("code") == -1){
                         ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));

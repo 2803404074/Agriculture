@@ -340,6 +340,7 @@ public class ChinaGuActivity extends BaseActivity implements View.OnClickListene
                         mData = JsonUtil.string2Obj(str, List.class, GoodsMo.class);
                         if (mData != null) {
                             if (page == 1) {
+                                if (mData.size() == 0)ToastUtil.showShort(ChinaGuActivity.this,"该区域暂未上架内容哦");
                                 adapter.updateData(mData);
                             } else {
                                 adapter.addAll(mData);
