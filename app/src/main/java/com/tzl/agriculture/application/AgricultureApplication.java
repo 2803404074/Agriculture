@@ -2,6 +2,8 @@ package com.tzl.agriculture.application;
 
 import android.app.Application;
 
+import androidx.multidex.MultiDex;
+
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -34,6 +36,14 @@ public class AgricultureApplication extends Application {
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
     }
+
+
+    @Override
+    protected void attachBaseContext(android.content.Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
 
 
 }

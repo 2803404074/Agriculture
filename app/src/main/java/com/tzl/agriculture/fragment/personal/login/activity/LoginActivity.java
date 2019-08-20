@@ -1,15 +1,11 @@
 package com.tzl.agriculture.fragment.personal.login.activity;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -23,7 +19,6 @@ import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseActivity;
 
-import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,8 +29,6 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
 import config.User;
 import okhttp3.Call;
 
@@ -181,6 +174,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         OkHttp3Utils.getInstance(User.BASE).doPostJson(User.checkPhone, strJson, new GsonObjectCallback<String>(User.BASE) {
             @Override
             public void onUi(String result) {
+                System.out.println("result = [" + result + "]");
+                spinKitView.setVisibility(View.GONE);
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.optInt("code") == 401) {
@@ -208,7 +203,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             tvNext.setClickable(true);
                         }
                     }
-                    spinKitView.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -216,7 +210,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onFailed(Call call, IOException e) {
-
+                System.out.println("call = [" + call + "], e = [" + e + "]");
+                spinKitView.setVisibility(View.GONE);
             }
         });
     }

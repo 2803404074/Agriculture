@@ -32,15 +32,15 @@
         android:layout_width="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/dp_10"
-        android:text="5 跳过"
+        android:text="5s 跳过"
         android:visibility="gone"
         android:id="@+id/text_time"
         android:paddingRight="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_10"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorWhite"
         android:textSize="@dimen/sp_12"
-        android:background="@drawable/shape_ad_time"
+        android:background="@drawable/shape_ad_black_time"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>

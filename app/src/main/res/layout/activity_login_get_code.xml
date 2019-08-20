@@ -38,6 +38,10 @@
 
             <EditText
                 android:id="@+id/et_code"
+                android:inputType="phone"
+                android:singleLine="true"
+                android:lines="1"
+                android:maxLength="11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

@@ -27,6 +27,10 @@
             android:id="@+id/et_phone"
             android:background="@null"
             android:padding="@dimen/dp_5"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:lines="1"
             android:hint="请输入手机号"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

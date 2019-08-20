@@ -82,7 +82,7 @@ public class WellcomActivity extends AppCompatActivity implements View.OnClickLi
                         return;
                     }
                     total--;
-                    text_time.setText(total + " 跳过");
+                    text_time.setText(total + "s 跳过");
                     sendEmptyMessageDelayed(0x101, 1000);
                     break;
             }
