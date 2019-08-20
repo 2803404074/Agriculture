@@ -175,7 +175,7 @@ public class ChackCartActivity extends SetBaseActivity {
 
         adapter = new BaseAdapter<BankMo>(this,recyclerView,mDate,R.layout.item_img_text) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, BankMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, BankMo o) {
                 holder.setImageByUrl(R.id.iv_img,o.getBankLogo());
                 holder.setText(R.id.tv_tips,o.getBankName());
             }

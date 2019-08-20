@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
-import com.tzl.agriculture.mall.activity.OrderDetailsActivity;
 import com.tzl.agriculture.model.GoodsMo;
 import com.tzl.agriculture.util.CountDownUtil;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.JsonUtil;
-import com.tzl.agriculture.util.TextUtil;
-import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseFragmentFromType;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
@@ -71,7 +68,7 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BaseAdapter<GoodsMo>(getContext(), recyclerView, mData, R.layout.item_limited_time) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, GoodsMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,GoodsMo o) {
 
                 //发现好物，不需要倒计时
                 if (type == 1){

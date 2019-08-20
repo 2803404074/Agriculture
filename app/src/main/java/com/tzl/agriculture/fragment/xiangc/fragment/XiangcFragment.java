@@ -125,7 +125,7 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
 
         adapter = new BaseAdapter<XiangcMo>(getContext(), xRecycler, mData, R.layout.item_xiangc_title) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, XiangcMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, XiangcMo o) {
 
                 //文章类型标题
                 holder.setText(R.id.tv_title, o.getTypeName());
@@ -146,7 +146,7 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
                     recyclerView.setLayoutManager(manager);
                     BaseAdapter adapterx = new BaseAdapter<XiangcMo.Article>(getContext(), recyclerView, o.getArticleInfoList(), R.layout.item_xiangc_children) {
                         @Override
-                        public void convert(Context mContext, BaseRecyclerHolder holder, XiangcMo.Article o) {
+                        public void convert(Context mContext, BaseRecyclerHolder holder,int position, XiangcMo.Article o) {
                             holder.setImageByUrl(R.id.iv_img, o.getCoverImgurl());
                             holder.setText(R.id.tv_title, "" + o.getTitle());
                             if (null != o.getArticleLocation()) {

@@ -599,7 +599,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         BaseAdapter adapter = new BaseAdapter<GoodsDetailsMo.GoodsAttributes>(
                 GoodsDetailsActivity.this, recyclerView, mDate, R.layout.item_text_cs) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, GoodsDetailsMo.GoodsAttributes o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, GoodsDetailsMo.GoodsAttributes o) {
                 holder.setText(R.id.tv_key, o.getAttribute());
                 holder.setText(R.id.tv_value, o.getValue());
             }
@@ -640,7 +640,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         BaseAdapter adapter = new BaseAdapter<GoodsDetailsMo.GoodsServices>(
                 GoodsDetailsActivity.this, recyclerView, mDate, R.layout.item_home_goods_server) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, GoodsDetailsMo.GoodsServices o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,GoodsDetailsMo.GoodsServices o) {
                 holder.setText(R.id.tv_serverName, o.getGoodServiceName());
                 holder.setText(R.id.tv_serverDesc, o.getGoodServiceDesc());
             }

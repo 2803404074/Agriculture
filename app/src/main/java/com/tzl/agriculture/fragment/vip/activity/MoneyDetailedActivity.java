@@ -2,21 +2,16 @@ package com.tzl.agriculture.fragment.vip.activity;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bigkoo.pickerview.TimePickerView;
-import com.rey.material.app.BottomSheetDialog;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
-import com.tzl.agriculture.fragment.personal.login.activity.RegistMessActivity;
 import com.tzl.agriculture.fragment.vip.model.MingxMo;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.JsonUtil;
@@ -98,7 +93,7 @@ public class MoneyDetailedActivity extends SetBaseActivity implements View.OnCli
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BaseAdapter<MingxMo.Option>(this,recyclerView,mData,R.layout.item_mingx) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, MingxMo.Option o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, MingxMo.Option o) {
 
                 TextView textView = holder.getView(R.id.tv_money);
                 if (o.getOptionType() == 0){

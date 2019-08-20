@@ -73,7 +73,7 @@ public class CouponActivity extends SetBaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BaseAdapter<CouponMo>(this, recyclerView, mData, R.layout.item_coupon) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, CouponMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,CouponMo o) {
                 TextView tvPrice = holder.getView(R.id.tv_price);
                 TextView tvTip = holder.getView(R.id.tv_tip);
 
@@ -160,7 +160,7 @@ public class CouponActivity extends SetBaseActivity {
                                     recyclerView.setLayoutManager(new LinearLayoutManager(CouponActivity.this));
                                     BaseAdapter adapter = new BaseAdapter<CouponMo.CouponMoDetails.ShopList>(CouponActivity.this,recyclerView,couponMoDetails.getShopList(),R.layout.item_img_text) {
                                         @Override
-                                        public void convert(Context mContext, BaseRecyclerHolder holder, CouponMo.CouponMoDetails.ShopList o) {
+                                        public void convert(Context mContext, BaseRecyclerHolder holder, int position,CouponMo.CouponMoDetails.ShopList o) {
                                             holder.setImageByUrl(R.id.iv_img,o.getShopIcon());
                                             holder.setText(R.id.tv_tips,o.getShopName());
                                             holder.getView(R.id.v_line).setVisibility(View.GONE);

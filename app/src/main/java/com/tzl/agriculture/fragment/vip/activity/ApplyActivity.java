@@ -95,7 +95,7 @@ public class ApplyActivity extends SetBaseActivity implements View.OnClickListen
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new BaseAdapter<GoodsMo>(this,recyclerView,mData,R.layout.item_vip_goods_open) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, GoodsMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, GoodsMo o) {
                 holder.setImageByUrl(R.id.nice_img,TextUtil.checkStr2Str(o.getPicUrl()));
                 holder.setText(R.id.tv_title,""+o.getGoodsName());
                 holder.setText(R.id.tv_gg, TextUtil.checkStr2Str(o.getCategoryName()));

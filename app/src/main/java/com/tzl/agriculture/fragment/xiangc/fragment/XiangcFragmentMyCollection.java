@@ -49,7 +49,7 @@ public class XiangcFragmentMyCollection extends BaseFragmentFromType {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BaseAdapter<XiangcMo.Article>(getContext(),recyclerView,mData,R.layout.item_xiangc_colleciton) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, XiangcMo.Article o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, XiangcMo.Article o) {
                 holder.setImageByUrl(R.id.iv_img,o.getCoverImgurl());
                 holder.setText(R.id.tv_title,o.getTitle());
                 holder.setText(R.id.tv_date,o.getCreateTime());

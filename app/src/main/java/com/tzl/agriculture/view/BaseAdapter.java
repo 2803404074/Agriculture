@@ -52,6 +52,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
         notifyDataSetChanged();
     }
 
+    public void addData(T data) {
+        mDatas.add( data);
+        notifyDataSetChanged();
+    }
+
+    public void setData(T data,int index) {
+        mDatas.set(index, data);
+        notifyDataSetChanged();
+    }
+
     public void addAll3(T data, int index) {
         mDatas.add(index, data);
         notifyDataSetChanged();
@@ -89,7 +99,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
         if (getItemViewType(position) == TYPE_NORMAL) {
             //这里加载数据的时候要注意，是从position-1开始，因为position==0已经被header占用了
             if (mHeadView != null) {
-                convert(mContext, holder, mDatas.get(position - 1));
+                convert(mContext, holder,position-1, mDatas.get(position - 1));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -99,7 +109,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
                     }
                 });
             } else {
-                convert(mContext, holder, mDatas.get(position));
+                convert(mContext, holder,position, mDatas.get(position));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -141,7 +151,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
         return position;
     }
 
-    public abstract void convert(Context mContext, BaseRecyclerHolder holder, T t);
+    public abstract void convert(Context mContext, BaseRecyclerHolder holder,int position, T t);
 
     @Override
     public int getItemCount() {

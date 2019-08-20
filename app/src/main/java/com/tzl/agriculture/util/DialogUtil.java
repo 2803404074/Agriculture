@@ -1,6 +1,5 @@
 package com.tzl.agriculture.util;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,16 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,10 +28,6 @@ import java.io.File;
 import java.io.IOException;
 
 import Utils.DownloadUtil;
-import Utils.OkHttp3Utils;
-import config.App;
-
-import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class DialogUtil {
 
@@ -97,7 +88,7 @@ public class DialogUtil {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         BaseAdapter adapter = new BaseAdapter<String>(context, recyclerView, appVersion.getRemarkList(), R.layout.item_text) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, String o) {
                 TextView tvTips = holder.getView(R.id.tv_tips);
                 tvTips.setText(o);
                 tvTips.setTextColor(context.getResources().getColor(R.color.colorGri2));

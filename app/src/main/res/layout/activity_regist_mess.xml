@@ -118,7 +118,7 @@
             android:textSize="@dimen/sp_15"
             android:textColor="@color/colorGri2"/>
         <TextView
-            android:hint="您的出生你年月"
+            android:hint="您的出生年月"
             android:id="@+id/tv_date"
             android:textSize="@dimen/sp_15"
             android:background="@null"

@@ -76,7 +76,7 @@ public class MyCommentActivity extends SetBaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BaseAdapter<CommentMo>(this,recyclerView,mData,R.layout.item_my_comment) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, CommentMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, CommentMo o) {
 
                 SimpleDraweeView draweeView = holder.getView(R.id.drawee_img);
                 draweeView.setImageURI(o.getHeadUrl());
@@ -98,7 +98,7 @@ public class MyCommentActivity extends SetBaseActivity {
                 recySun.setLayoutManager(new GridLayoutManager(MyCommentActivity.this,3));
                 BaseAdapter adapterx = new BaseAdapter<String>(MyCommentActivity.this,recySun,o.getImgList(),R.layout.img_fragment) {
                     @Override
-                    public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
+                    public void convert(Context mContext, BaseRecyclerHolder holder, int position,String o) {
                         holder.setImageByUrl(R.id.hxxq_img,o);
                     }
                 };

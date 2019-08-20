@@ -236,7 +236,7 @@ public class HomeFragment extends BaseFragment {
                     BaseAdapter adapter = new BaseAdapter<HomeMo.LimitGoods.GoodsList>(getContext(),
                             recyclerView, limitGoods.getGoodsList(), R.layout.img_goods_text) {
                         @Override
-                        public void convert(Context mContext, BaseRecyclerHolder holder, HomeMo.LimitGoods.GoodsList o) {
+                        public void convert(Context mContext, BaseRecyclerHolder holder, int position,HomeMo.LimitGoods.GoodsList o) {
                             holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                             holder.setText(R.id.tv_price, getResources().getString(R.string.app_money_home, o.getPrice()));
                         }
@@ -444,7 +444,7 @@ public class HomeFragment extends BaseFragment {
                     recyclerViewXc.setLayoutManager(new LinearLayoutManager(getContext()));
                     adapterXc = new BaseAdapter<XiangcMo>(getContext(), recyclerViewXc, mData.get(mType).getArticleListXc(), R.layout.item_xiangc_title) {
                         @Override
-                        public void convert(Context mContext, BaseRecyclerHolder holder, XiangcMo o) {
+                        public void convert(Context mContext, BaseRecyclerHolder holder, int position,XiangcMo o) {
                             //文章类型标题
                             holder.setText(R.id.tv_title, o.getTypeName());
                             //文章类型简述
@@ -464,7 +464,7 @@ public class HomeFragment extends BaseFragment {
                                 recyclerView.setLayoutManager(manager);
                                 BaseAdapter adapterx = new BaseAdapter<XiangcMo.Article>(getContext(), recyclerView, o.getArticleInfoList(), R.layout.item_xiangc_children) {
                                     @Override
-                                    public void convert(Context mContext, BaseRecyclerHolder holder, XiangcMo.Article o) {
+                                    public void convert(Context mContext, BaseRecyclerHolder holder,int position, XiangcMo.Article o) {
                                         holder.setImageByUrl(R.id.iv_img, o.getCoverImgurl());
                                         holder.setText(R.id.tv_title, "" + o.getTitle());
                                         if (null != o.getArticleLocation()) {

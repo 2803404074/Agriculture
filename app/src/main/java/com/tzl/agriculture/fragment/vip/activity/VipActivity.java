@@ -170,7 +170,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             recyclerView.setNestedScrollingEnabled(false);
             adapter = new BaseAdapter<GoodsMo>(this, recyclerView, mData, R.layout.item_vip_goods_buy) {
                 @Override
-                public void convert(Context mContext, BaseRecyclerHolder holder, GoodsMo o) {
+                public void convert(Context mContext, BaseRecyclerHolder holder,int position, GoodsMo o) {
                     holder.setImageByUrl(R.id.nick_img, o.getPicUrl());
                     holder.setText(R.id.tv_title, o.getGoodsName());
                     holder.getView(R.id.tv_gg).setVisibility(View.GONE);
@@ -196,7 +196,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
             adapter = new BaseAdapter<VipCommodity>(this,recyclerView,vipCommodityLists,R.layout.item_vip_commodity_adapter) {
                 @Override
-                public void convert(Context mContext, BaseRecyclerHolder holder, VipCommodity o) {
+                public void convert(Context mContext, BaseRecyclerHolder holder,int position, VipCommodity o) {
                     switch (o.getMonth()){
                         case 1:
                             holder.setImageResource(R.id.iv_month,R.mipmap.month_1);
@@ -457,7 +457,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                     }
                     BaseAdapter adapter = new BaseAdapter<Tips>(VipActivity.this, reMyJl, list, R.layout.item_vip_tips) {
                         @Override
-                        public void convert(Context mContext, BaseRecyclerHolder holder, Tips o) {
+                        public void convert(Context mContext, BaseRecyclerHolder holder,int position, Tips o) {
                             holder.setText(R.id.tv_name, o.getName());
                             holder.setText(R.id.tv_value, o.getValue());
                         }

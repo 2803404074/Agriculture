@@ -60,7 +60,7 @@ public class MonthActivity extends SetBaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BaseAdapter<GoodsMo>(this,recyclerView,mData,R.layout.item_vip_goods_open) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, GoodsMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, GoodsMo o) {
 
                 holder.getView(R.id.tv_kt).setVisibility(View.GONE);
 

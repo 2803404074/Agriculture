@@ -90,7 +90,7 @@ public class FunctionResponseActivity extends SetBaseActivity implements View.On
                     }
                     adapter = new BaseAdapter<SystemCallBackModel>(FunctionResponseActivity.this,recyclerView,mDate,R.layout.item_checkbox) {
                         @Override
-                        public void convert(Context mContext, BaseRecyclerHolder holder, SystemCallBackModel o) {
+                        public void convert(Context mContext, BaseRecyclerHolder holder, int position,SystemCallBackModel o) {
                             holder.setText(R.id.cb_name,TextUtil.checkStr2Str(o.getName()));
                             CheckBox checkBox= (CheckBox) holder.itemView.findViewById(R.id.cb_name);
                             checkBox.setChecked(o.isSelect());

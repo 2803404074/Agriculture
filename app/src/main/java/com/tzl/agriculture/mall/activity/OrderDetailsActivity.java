@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,13 +26,9 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.rey.material.app.BottomSheetDialog;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
-import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
-import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.model.AddressMo;
-import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.model.OrderMo;
 import com.tzl.agriculture.model.WlMo;
-import com.tzl.agriculture.util.BottomShowUtil;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.DialogUtilT;
 import com.tzl.agriculture.util.JsonUtil;
@@ -176,7 +171,7 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
         recyclerView.setNestedScrollingEnabled(false);
         adapter = new BaseAdapter<OrderMo.GoodsThis>(this, recyclerView, list, R.layout.item_my_order_goods) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo.GoodsThis o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,OrderMo.GoodsThis o) {
                 holder.setText(R.id.tv_title, o.getGoodsName());
                 holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                 holder.setText(R.id.tv_gg, o.getGoodsSpecs());
@@ -285,6 +280,9 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                 showTwo(0,"是否取消订单？");
                 break;
             case R.id.tv_pj:
+                Intent intent=new Intent(this,StartCommentActivity.class);
+                intent.putExtra("orderId",orderId+"");
+                startActivity(intent);
                 break;
             case R.id.tv_ckwl:
                 showLogistics(orderId);
@@ -419,7 +417,7 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                         BaseAdapter adapter = new BaseAdapter<WlMo>(getContext(), recyclerView, mData, R.layout.item_logistics) {
                                             @Override
-                                            public void convert(Context mContext, BaseRecyclerHolder holder, WlMo o) {
+                                            public void convert(Context mContext, BaseRecyclerHolder holder,int position, WlMo o) {
                                                 if (o.isFist()) {
                                                     //holder.getView(R.id.v_line_top).setVisibility(View.INVISIBLE);
                                                     holder.setImageResource(R.id.iv_status, R.drawable.round_check_active);

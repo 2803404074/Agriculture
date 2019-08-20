@@ -210,7 +210,7 @@ public class CashActivity extends SetBaseActivity {
 
         adapter = new BaseAdapter<CatMo>(CashActivity.this, recyclerView, mData, R.layout.item_card) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, CatMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, CatMo o) {
                 CheckBox checkBox = holder.getView(R.id.cb_check);
                 holder.setImageByUrl(R.id.iv_img, o.getBankLogo());
                 holder.setText(R.id.tv_cardName, o.getBankName() + "(" + TextUtil.checkStr2Str(o.getBankNum()) + ")");

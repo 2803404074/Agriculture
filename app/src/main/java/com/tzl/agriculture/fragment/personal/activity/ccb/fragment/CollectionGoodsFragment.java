@@ -58,7 +58,7 @@ public class CollectionGoodsFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BaseAdapter<GoodsMin>(getContext(), recyclerView, mData, R.layout.item_limited_time) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, GoodsMin o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, GoodsMin o) {
 
                 holder.getView(R.id.ll_price).setVisibility(View.GONE);//隐藏价钱
                 holder.getView(R.id.ll_gg).setVisibility(View.GONE);//隐藏规格

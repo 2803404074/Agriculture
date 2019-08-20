@@ -8,30 +8,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.tzl.agriculture.R;
-import com.tzl.agriculture.fragment.personal.activity.set.AddressActivity;
-import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
-import com.tzl.agriculture.mall.activity.OrderActivity;
 import com.tzl.agriculture.mall.activity.OrderDetailsActivity;
 import com.tzl.agriculture.mall.activity.StartCommentActivity;
 import com.tzl.agriculture.model.OrderMo;
-import com.tzl.agriculture.model.UserInfo;
 import com.tzl.agriculture.model.WlMo;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.DialogUtilT;
-import com.tzl.agriculture.util.DownMediaUtils;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.util.WXPayUtils;
 import com.tzl.agriculture.view.BaseAdapter;
-import com.tzl.agriculture.view.BaseFragment;
 import com.tzl.agriculture.view.BaseFragmentFromType;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
 
@@ -43,13 +35,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
-import config.Article;
 import config.Mall;
 import config.User;
 import okhttp3.Call;
@@ -89,7 +78,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BaseAdapter<OrderMo>(getContext(), recyclerView, mData, R.layout.item_my_order_dep) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, OrderMo o) {
 
                 holder.setText(R.id.tv_depName, o.getShopName());
                 TextView tvStatus = holder.getView(R.id.tv_status);
@@ -186,7 +175,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                 recy.setLayoutManager(new LinearLayoutManager(mContext));
                 BaseAdapter adapterx = new BaseAdapter<OrderMo.GoodsThis>(mContext, recy, o.getGoodsListBo(), R.layout.item_my_order_goods) {
                     @Override
-                    public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo.GoodsThis o) {
+                    public void convert(Context mContext, BaseRecyclerHolder holder,int position, OrderMo.GoodsThis o) {
                         holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                         holder.setText(R.id.tv_title, o.getGoodsName());
                         holder.setText(R.id.tv_price, getString(R.string.app_money) + o.getGoodsPrice());
@@ -269,7 +258,7 @@ public class OrderFragmentPage extends BaseFragmentFromType {
                                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                         BaseAdapter adapter = new BaseAdapter<WlMo>(getContext(), recyclerView, mData, R.layout.item_logistics) {
                                             @Override
-                                            public void convert(Context mContext, BaseRecyclerHolder holder, WlMo o) {
+                                            public void convert(Context mContext, BaseRecyclerHolder holder,int position, WlMo o) {
                                                 if (o.isFist()) {
                                                     //holder.getView(R.id.v_line_top).setVisibility(View.INVISIBLE);
                                                     holder.setImageResource(R.id.iv_status, R.drawable.round_check_active);

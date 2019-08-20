@@ -1,9 +1,8 @@
 package com.tzl.agriculture.fragment.personal.login.activity;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,9 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
@@ -35,8 +31,6 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
 import config.User;
 import okhttp3.Call;
 
@@ -90,7 +84,6 @@ public class PhoneRegistActivity extends SetBaseActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
 
         spinner.setAdapter(adapter);
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -120,6 +113,11 @@ public class PhoneRegistActivity extends SetBaseActivity {
                 }
             }
         });
+
+        String p=getIntent().getStringExtra("phone");
+        if(!TextUtils.isEmpty(p)&&p.length()<=11){
+            etPhone.setText(p);
+        }
 
         //发送验证码
         tvNext.setOnClickListener(new View.OnClickListener() {

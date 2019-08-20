@@ -1,17 +1,11 @@
 package com.tzl.agriculture.fragment.personal.framgent;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.util.TypedValue;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,20 +17,15 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.shehuan.niv.NiceImageView;
 import com.tzl.agriculture.R;
-import com.tzl.agriculture.baseresult.SPTAG;
 import com.tzl.agriculture.fragment.personal.activity.ccb.activity.BrowseActivity;
-import com.tzl.agriculture.fragment.personal.activity.ccb.activity.CartActivity;
 import com.tzl.agriculture.fragment.personal.activity.ccb.activity.CollectionGoodsActivity;
 import com.tzl.agriculture.fragment.personal.activity.function.activity.MyCommentActivity;
 import com.tzl.agriculture.fragment.personal.activity.order.MyOrderActivity;
 import com.tzl.agriculture.fragment.personal.activity.set.SettingActivity;
 import com.tzl.agriculture.fragment.personal.activity.set.UserMessActivity;
-import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.fragment.vip.activity.CouponActivity;
 import com.tzl.agriculture.fragment.vip.activity.VipActivity;
-import com.tzl.agriculture.main.MainActivity;
 import com.tzl.agriculture.model.ServerMo;
 import com.tzl.agriculture.model.UserInfo;
 import com.tzl.agriculture.util.DialogUtil;
@@ -45,10 +34,8 @@ import com.tzl.agriculture.util.DownMediaUtils;
 import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
-import com.tzl.agriculture.util.ScreenUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
-import com.tzl.agriculture.util.UserData;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseFragment;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
@@ -64,8 +51,6 @@ import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import config.App;
-import config.Article;
-import config.Base;
 import config.User;
 import okhttp3.Call;
 
@@ -198,7 +183,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         tvMyOrder.setOnClickListener(this);
 
         mData.add(new ServerMo("员工中心",R.mipmap.gn_ygzx));
-        mData.add(new ServerMo("新人福利",R.mipmap.gn_fl));
+        mData.add(new ServerMo("优惠券",R.mipmap.gn_fl));
         mData.add(new ServerMo("我的评价",R.mipmap.gn_wdpl));
         mData.add(new ServerMo("分享APP",R.mipmap.gn_fx));
 
@@ -207,7 +192,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         BaseAdapter adapter = new BaseAdapter<ServerMo>(getContext(),
                 recyclerView,mData,R.layout.share_item) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, ServerMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, ServerMo o) {
                 holder.setText(R.id.tv_name,o.getTitle());
                 TextView textView = holder.getView(R.id.tv_name);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);

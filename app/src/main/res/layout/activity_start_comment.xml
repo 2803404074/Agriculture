@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,6 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/ll_1"
         android:orientation="horizontal">
 
         <include layout="@layout/toolbar_left_white_left"
@@ -22,45 +23,58 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:layout_below="@+id/ll_1"
+        android:id="@+id/ll_2"
         android:layout_marginVertical="@dimen/sp_15"
         android:layout_marginHorizontal="@dimen/dp_10"
         android:background="@drawable/shape_white_noframe"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_200">
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
         <EditText
             android:id="@+id/et_mess"
             android:layout_width="match_parent"
             android:background="@null"
-            android:padding="@dimen/dp_3"
-            android:layout_marginTop="@dimen/dp_5"
+            android:lines="4"
+            android:lineSpacingExtra="@dimen/dp_2"
+            android:gravity="left"
+            android:padding="@dimen/dp_5"
             android:layout_marginHorizontal="@dimen/dp_5"
             android:hint="宝贝满足你的期待了吗？说说你的心得吧~"
             android:layout_height="wrap_content" />
 
-
-        <TextView
-            android:background="@drawable/xibk"
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="添加图片"
-            android:padding="@dimen/dp_10"
-            android:layout_margin="@dimen/dp_10"
-            android:layout_alignParentBottom="true"
-            android:drawableTop="@android:drawable/ic_menu_camera"
-            />
-    </RelativeLayout>
+            android:id="@+id/recycler_view"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
     <TextView
+        android:layout_below="@+id/ll_2"
         android:id="@+id/tv_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dp_10"
         android:textSize="@dimen/sp_18"
-        android:padding="@dimen/dp_3"
+        android:padding="@dimen/dp_5"
         android:gravity="center"
         android:layout_gravity="right"
         android:background="@drawable/shape_white_noframe"
         android:textColor="@color/colorPrimaryDark"
         android:text="发布"/>
-</LinearLayout>
+
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        app:SpinKit_Color="@color/colorPrimaryDark" />
+
+</RelativeLayout>

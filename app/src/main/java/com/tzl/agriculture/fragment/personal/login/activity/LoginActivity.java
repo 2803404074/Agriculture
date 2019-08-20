@@ -77,6 +77,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, PhoneRegistActivity.class);
+                intent.putExtra("phone",TextUtil.checkStr2Str(etPhone.getText().toString()));
                 startActivity(intent);
             }
         });

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tzl.agriculture.R;
-import com.tzl.agriculture.fragment.personal.activity.order.MyOrderActivity;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
@@ -65,7 +64,7 @@ public class OrderPayStatusActivity extends SetBaseActivity implements View.OnCl
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         adapter = new BaseAdapter<String>(this,recyclerView,mData,R.layout.img_recommend_goods) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, String o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,String o) {
 
             }
         };

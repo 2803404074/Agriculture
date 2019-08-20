@@ -1,10 +1,5 @@
 package com.tzl.agriculture.fragment.home.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,19 +12,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.shehuan.niv.NiceImageView;
 import com.tzl.agriculture.R;
-import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
-import com.tzl.agriculture.fragment.xiangc.activity.ArticelSearchActivity;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
-import com.tzl.agriculture.mall.activity.OrderDetailsActivity;
-import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.model.GoodsMo;
-import com.tzl.agriculture.model.XiangcMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ShowButtonLayoutData;
-import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
@@ -50,7 +43,6 @@ import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import config.Article;
 import config.Mall;
 import okhttp3.Call;
 
@@ -163,7 +155,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BaseAdapter<GoodsMo>(this,recyclerView,mData,R.layout.item_vip_goods_buy) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, GoodsMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,GoodsMo o) {
                 NiceImageView niceImageView = holder.getView(R.id.nick_img);
                 niceImageView.setCornerRadius(5);
                 holder.setImageByUrl(R.id.nick_img,o.getPicUrl());

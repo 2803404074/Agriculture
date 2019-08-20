@@ -1,38 +1,29 @@
 package com.tzl.agriculture.mall.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.rey.material.app.BottomSheetDialog;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.home.activity.SearchActivity;
-import com.tzl.agriculture.fragment.personal.activity.order.OrderSearchActivity;
-import com.tzl.agriculture.mall.adapter.ChinaGuSpannerAdapter;
 import com.tzl.agriculture.model.AddressCode;
-import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.model.GoodsMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.ScreenUtils;
-import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseActivity;
 import com.tzl.agriculture.view.BaseAdapter;
@@ -117,7 +108,7 @@ public class ChinaGuActivity extends BaseActivity implements View.OnClickListene
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BaseAdapter<GoodsMo>(getContext(), recyclerView, mData, R.layout.item_limited_time) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, GoodsMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, GoodsMo o) {
                 holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                 holder.setText(R.id.tv_name, o.getGoodsName());
                 holder.setText(R.id.tv_price, o.getPrice());
@@ -240,7 +231,7 @@ public class ChinaGuActivity extends BaseActivity implements View.OnClickListene
         });
         addressAdapter = new BaseAdapter<AddressCode>(this, recyclerView, addressCodeList, R.layout.item_zgg_address_text) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, AddressCode o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,AddressCode o) {
                 holder.setText(R.id.tv_tips, o.getName());
             }
         };

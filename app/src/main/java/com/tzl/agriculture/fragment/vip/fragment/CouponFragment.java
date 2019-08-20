@@ -54,7 +54,7 @@ public class CouponFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BaseAdapter<CouponMo>(getContext(),recyclerView,mData,R.layout.item_coupon) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, CouponMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, CouponMo o) {
                 TextView tvPrice = holder.getView(R.id.tv_price);
                 TextView tvTip = holder.getView(R.id.tv_tip);
                 switch (o.getCardState()){

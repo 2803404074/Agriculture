@@ -67,7 +67,7 @@ public class AddressActivity extends SetBaseActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         adapter = new BaseAdapter<AddressMo>(this, recyclerView, mData, R.layout.item_address) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, AddressMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,AddressMo o) {
                 if (o.getIsDefault() == 1) {
                     holder.setText(R.id.tv_Mr, "默认");
                 }

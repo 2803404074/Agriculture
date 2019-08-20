@@ -123,7 +123,7 @@ public class ShareDialog {
 
         BaseAdapter adapter = new BaseAdapter<ShareItem>(mContext, recyclerView, mData, R.layout.share_item) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, ShareItem o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, ShareItem o) {
                 holder.setText(R.id.tv_name, o.getName());
                 holder.setImageResource(R.id.iv_img, o.getResources());
             }

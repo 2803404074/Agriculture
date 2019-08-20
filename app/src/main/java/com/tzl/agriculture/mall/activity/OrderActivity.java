@@ -150,7 +150,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
 
         adapter = new BaseAdapter<OrderMo>(this, recyclerView, orderMo, R.layout.item_order_dep) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, OrderMo o) {
 
                 holder.setText(R.id.tv_depName, o.getShopName());
                 holder.setText(R.id.tv_kd, o.getDistribution());
@@ -171,7 +171,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                 recyclerViewSun.setLayoutManager(new LinearLayoutManager(OrderActivity.this));
                 BaseAdapter adapterx = new BaseAdapter<OrderMo.GoodsThis>(OrderActivity.this, recyclerViewSun, o.getGoodsListBo(), R.layout.item_my_order_goods) {
                     @Override
-                    public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo.GoodsThis o) {
+                    public void convert(Context mContext, BaseRecyclerHolder holder,int position, OrderMo.GoodsThis o) {
                         holder.setText(R.id.tv_title, o.getGoodsName());
                         holder.setText(R.id.tv_price, o.getGoodsPrice());
                         holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
@@ -194,7 +194,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
         adapterYhq = new BaseAdapter<CouponMo>(OrderActivity.this,
                 recyclerYhq,couponMos,R.layout.item_coupon_limit) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, CouponMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,CouponMo o) {
 
                 if (o.getConsumeType() == 1) {//1抵扣，price显示价钱
                     holder.setText(R.id.tv_type, "满减券");

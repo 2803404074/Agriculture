@@ -1,9 +1,5 @@
 package com.tzl.agriculture.fragment.xiangc.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.comment.activity.HtmlForXcActivity;
-import com.tzl.agriculture.fragment.home.activity.SearchActivity;
 import com.tzl.agriculture.model.XiangcMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
@@ -156,7 +155,7 @@ public class ArticelSearchActivity extends AppCompatActivity implements View.OnC
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         adapter = new BaseAdapter<XiangcMo.Article>(this,recyclerView,mData,R.layout.item_xiangc_children) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, XiangcMo.Article o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,XiangcMo.Article o) {
                 holder.setImageByUrl(R.id.iv_img,o.getCoverImgurl());
                 holder.setText(R.id.tv_title,""+o.getTitle());
                // holder.setText(R.id.tv_address,o.getArticleLocation().getProvinceStr()+o.getArticleLocation().getCityStr());

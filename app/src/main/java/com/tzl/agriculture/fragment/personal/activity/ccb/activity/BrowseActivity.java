@@ -2,17 +2,14 @@ package com.tzl.agriculture.fragment.personal.activity.ccb.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tzl.agriculture.R;
-import com.tzl.agriculture.fragment.personal.activity.function.activity.MyCommentActivity;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
 import com.tzl.agriculture.model.GoodsMin;
 import com.tzl.agriculture.util.JsonUtil;
@@ -33,7 +30,6 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import config.Mall;
 import okhttp3.Call;
 
@@ -66,7 +62,7 @@ public class BrowseActivity extends BaseActivity implements View.OnClickListener
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BaseAdapter<GoodsMin>(this,recyclerView,mData,R.layout.item_limited_time) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, GoodsMin o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, GoodsMin o) {
 
                 holder.getView(R.id.ll_price).setVisibility(View.GONE);//隐藏价钱
                 holder.getView(R.id.ll_gg).setVisibility(View.GONE);//隐藏规格

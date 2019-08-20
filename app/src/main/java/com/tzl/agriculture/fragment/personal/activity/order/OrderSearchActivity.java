@@ -98,7 +98,7 @@ public class OrderSearchActivity extends BaseActivity implements View.OnClickLis
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BaseAdapter<OrderMo>(getContext(), recyclerView, mData, R.layout.item_my_order_dep) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, OrderMo o) {
 
                 holder.setText(R.id.tv_depName, o.getShopName());
                 TextView tvStatus = holder.getView(R.id.tv_status);
@@ -152,7 +152,7 @@ public class OrderSearchActivity extends BaseActivity implements View.OnClickLis
                 recy.setLayoutManager(new LinearLayoutManager(mContext));
                 BaseAdapter adapterx = new BaseAdapter<OrderMo.GoodsThis>(mContext, recy, o.getGoodsListBo(), R.layout.item_my_order_goods) {
                     @Override
-                    public void convert(Context mContext, BaseRecyclerHolder holder, OrderMo.GoodsThis o) {
+                    public void convert(Context mContext, BaseRecyclerHolder holder,int position, OrderMo.GoodsThis o) {
                         holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                         holder.setText(R.id.tv_title, o.getGoodsName());
                         holder.setText(R.id.tv_price, getString(R.string.app_money) + o.getGoodsPrice());
