@@ -203,14 +203,12 @@ public class StartCommentActivity extends SetBaseActivity implements View.OnClic
                 }
             }
         }
-        System.out.println(m.toString());
         Map<String, String> map = new HashMap<>();
         map.put("content", editText.getText().toString());
         map.put("imgUrl", m.toString());
         map.put("orderId", getIntent().getStringExtra("orderId"));
         String str = JsonUtil.obj2String(map);
         String token = (String) SPUtils.instance(this, 1).getkey("token", "");
-        System.out.println(str);
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.commentSave, str, token, new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
@@ -374,13 +372,13 @@ public class StartCommentActivity extends SetBaseActivity implements View.OnClic
             case REQ_2: {
                 if (resultCode == RESULT_OK) {
                     imageUri = data.getData();
-                    startPhotoZoom(data.getData());
+                    startPhotoZoom(imageUri);
                 }
                 break;
             }
             case REQ_4: {
                 if (resultCode == RESULT_OK) {
-                    path = Uri2StringPathUtil.getRealPathFromURI(this, imageUri);
+                    path = Uri2StringPathUtil.getRealPathFromURI(this, data.getData());
                     loadUrl(new File(path));
                 }
                 break;
