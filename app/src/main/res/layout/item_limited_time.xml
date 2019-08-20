@@ -38,6 +38,12 @@
             android:ellipsize="end"
             android:textColor="@color/colorGri2" />
 
+        <com.tzl.agriculture.view.ShowButtonLayout
+            android:id="@+id/labelLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.tzl.agriculture.view.ShowButtonLayout>
+
         <LinearLayout
             android:id="@+id/ll_gg"
             android:paddingHorizontal="@dimen/dp_5"

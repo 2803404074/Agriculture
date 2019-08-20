@@ -16,9 +16,11 @@ import com.tzl.agriculture.model.GoodsMo;
 import com.tzl.agriculture.util.CountDownUtil;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.JsonUtil;
+import com.tzl.agriculture.util.ShowButtonLayoutData;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseFragmentFromType;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
+import com.tzl.agriculture.view.ShowButtonLayout;
 import com.tzl.agriculture.view.onLoadMoreListener;
 
 import org.apache.commons.lang.StringUtils;
@@ -74,6 +76,11 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 if (type == 1){
                     holder.getView(R.id.ll_gg).setVisibility(View.GONE);
                 }
+                //标签
+                ShowButtonLayout labelLayout = holder.getView(R.id.labelLayout);
+                ShowButtonLayoutData showButtonLayoutData = new ShowButtonLayoutData<String>(getContext(), labelLayout, o.getGoodsLabelList(),null);
+                showButtonLayoutData.setData();
+
 
                 holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                 holder.setText(R.id.tv_name, o.getGoodsName());

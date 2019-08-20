@@ -1,6 +1,7 @@
 package com.tzl.agriculture.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 商品列表模型
@@ -13,6 +14,7 @@ public class GoodsMo implements Serializable {
     private String categoryId;
     private String picUrl;
     private String goodsPic;
+    private List<String>goodsLabelList;
     private String spikeStartTime;
     private String spikeEndTime;
     private String shopName;
@@ -20,6 +22,10 @@ public class GoodsMo implements Serializable {
     private String price;
 
     public GoodsMo() {
+    }
+
+    public List<String> getGoodsLabelList() {
+        return goodsLabelList;
     }
 
     public String getGoodsPic() {
