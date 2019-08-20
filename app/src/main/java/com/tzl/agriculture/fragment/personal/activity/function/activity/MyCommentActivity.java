@@ -12,7 +12,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.model.CommentMo;
-import com.tzl.agriculture.model.GoodsDetailsMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.view.BaseAdapter;
@@ -21,7 +20,6 @@ import com.tzl.agriculture.view.onLoadMoreListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Comment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -133,6 +131,7 @@ public class MyCommentActivity extends SetBaseActivity {
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(utl, str, token, new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
+                System.out.println("result = [" + result + "]");
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.optInt("code") == 0){
@@ -153,12 +152,14 @@ public class MyCommentActivity extends SetBaseActivity {
                         }
                     }
                 } catch (JSONException e) {
+                    System.out.println("result = [" + result + "]");
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailed(Call call, IOException e) {
+                System.out.println("call = [" + call + "], e = [" + e + "]");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -169,6 +170,7 @@ public class MyCommentActivity extends SetBaseActivity {
 
             @Override
             public void onFailure(Call call, IOException e) {
+                System.out.println("call = [" + call + "], e = [" + e + "]");
                 super.onFailure(call, e);runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

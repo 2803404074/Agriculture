@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: cn.smssdk:ShortMessageSDKGUI:3.3.2@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3429d8550a5232f4766489dec9bfbb93/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3429d8550a5232f4766489dec9bfbb93/res" />
+      <root url="file://E:/gradle-5.5/repository/caches/transforms-2/files-2.1/162510d23a698b87460641622e18b262/res" />
+      <root url="jar://E:/gradle-5.5/repository/caches/transforms-2/files-2.1/162510d23a698b87460641622e18b262/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

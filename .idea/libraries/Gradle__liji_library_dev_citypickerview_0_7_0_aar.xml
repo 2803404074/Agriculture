@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: liji.library.dev:citypickerview:0.7.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/43697d147d810b408a5454be3473fd71/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/43697d147d810b408a5454be3473fd71/res" />
+      <root url="file://E:/gradle-5.5/repository/caches/transforms-2/files-2.1/6cb46e2a7414a1363e2a699efa928f01/res" />
+      <root url="jar://E:/gradle-5.5/repository/caches/transforms-2/files-2.1/6cb46e2a7414a1363e2a699efa928f01/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/liji.library.dev/citypickerview/0.7.0/2f195e870bf5b55b5abbeb4d93a05261feab4078/citypickerview-0.7.0-sources.jar!/" />
+      <root url="jar://E:/gradle-5.5/repository/caches/modules-2/files-2.1/liji.library.dev/citypickerview/0.7.0/2f195e870bf5b55b5abbeb4d93a05261feab4078/citypickerview-0.7.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

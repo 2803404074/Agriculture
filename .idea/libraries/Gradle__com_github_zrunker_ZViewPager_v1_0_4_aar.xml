@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.zrunker:ZViewPager:v1.0.4@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4fd349057b2d337fbfebfa1d0bb18cf5/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4fd349057b2d337fbfebfa1d0bb18cf5/jars/classes.jar!/" />
+      <root url="file://E:/gradle-5.5/repository/caches/transforms-2/files-2.1/963d121f6606109ef9a4b7f8b0ab5f04/res" />
+      <root url="jar://E:/gradle-5.5/repository/caches/transforms-2/files-2.1/963d121f6606109ef9a4b7f8b0ab5f04/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

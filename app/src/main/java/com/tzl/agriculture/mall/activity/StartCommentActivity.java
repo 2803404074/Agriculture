@@ -195,21 +195,22 @@ public class StartCommentActivity extends SetBaseActivity implements View.OnClic
     }
 
     private void sendMess() {
+        List<String> m=new ArrayList<>();
         if (mPath.size() > 0) {
-            if (mPath.contains("")) {
-                for (int i = 0; i < mPath.size(); i++) {
-                    if ("".equals(mPath.get(i))) {
-                        mPath.remove(i);
-                    }
+            for(int i=0;i<mPath.size();i++){
+                if(!"".equals(mPath.get(i))){
+                    m.add("\""+mPath.get(i)+"\"");
                 }
             }
         }
-        Map<String, Object> map = new HashMap<>();
+        System.out.println(m.toString());
+        Map<String, String> map = new HashMap<>();
         map.put("content", editText.getText().toString());
-        map.put("imgUrl", mPath);
+        map.put("imgUrl", m.toString());
         map.put("orderId", getIntent().getStringExtra("orderId"));
         String str = JsonUtil.obj2String(map);
         String token = (String) SPUtils.instance(this, 1).getkey("token", "");
+        System.out.println(str);
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.commentSave, str, token, new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
@@ -417,7 +418,6 @@ public class StartCommentActivity extends SetBaseActivity implements View.OnClic
         OkHttp3Utils.getInstance(User.BASE).upLoadFile3(User.fileUpload, map, new GsonObjectCallback<String>(User.BASE) {
             @Override
             public void onUi(String result) {
-                System.out.println("result = [" + result + "]");
                 mSpinKitView.setVisibility(View.GONE);
                 try {
                     JSONObject object = new JSONObject(result);
@@ -441,7 +441,6 @@ public class StartCommentActivity extends SetBaseActivity implements View.OnClic
 
             @Override
             public void onFailed(Call call, IOException e) {
-                System.out.println("call = [" + call + "], e = [" + e + "]");
                 mSpinKitView.setVisibility(View.GONE);
                 ToastUtil.showShort(StartCommentActivity.this, "异常数据");
             }
