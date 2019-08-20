@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 
 /**
  * 商城模块的收藏
+ * 更新
  */
 public class CollectionGoodsActivity extends AppCompatActivity {
 
