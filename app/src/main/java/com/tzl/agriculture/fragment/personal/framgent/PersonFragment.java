@@ -182,7 +182,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         tvSh.setOnClickListener(this);
         tvMyOrder.setOnClickListener(this);
 
-        mData.add(new ServerMo("员工中心",R.mipmap.gn_ygzx));
+        mData.add(new ServerMo("个人中心",R.mipmap.gn_ygzx));
         mData.add(new ServerMo("优惠券",R.mipmap.gn_fl));
         mData.add(new ServerMo("我的评价",R.mipmap.gn_wdpl));
         mData.add(new ServerMo("分享APP",R.mipmap.gn_fx));
