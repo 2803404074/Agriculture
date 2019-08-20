@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -35,7 +36,8 @@ public class CollectionGoodsActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     private SimpleFragmentPagerAdapter adapter;
-
+    private CollectionGoodsFragment goodsFragment1;
+    private CollectionDepFragment goodsFragment2;
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private List<String> tabTitle = new ArrayList<String>();
     @Override
@@ -52,17 +54,38 @@ public class CollectionGoodsActivity extends AppCompatActivity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if(goodsFragment1!=null){
+                    boolean isFinish = goodsFragment1.onKeyDown(KeyEvent.KEYCODE_BACK, null);
+                    goodsFragment1.isEdit = false;
+                    if (isFinish){
+                        finish();
+                    }
+                }else {
+                    finish();
+                }
             }
         });
-        CollectionGoodsFragment goodsFragment1 = new CollectionGoodsFragment();
+        goodsFragment1 = new CollectionGoodsFragment();
         mFragments.add(goodsFragment1);
-        CollectionDepFragment goodsFragment2 = new CollectionDepFragment();
+        goodsFragment2 = new CollectionDepFragment();
         mFragments.add(goodsFragment2);
 
         adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), mFragments, tabTitle);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);//超过长度可滑动
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(goodsFragment1!=null){
+            if (goodsFragment1.isEdit){
+                boolean isFinish = goodsFragment1.onKeyDown(keyCode, event);
+                goodsFragment1.isEdit = false;
+                return !isFinish;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

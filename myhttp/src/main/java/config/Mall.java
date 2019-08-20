@@ -53,6 +53,9 @@ public class Mall extends Base{
     //收藏商品
     public static String toOptionGoods ="/api/mall/goodsOption/toOptionGoods";
 
+    //批量删除收藏商品
+    public static String removeGoodsCollention ="/api/mall/goodsOption/removeGoodsCollention";
+
     //商品搜索
     public static String searchGoods = "/api/mall/goods-api/page/list/all";
 

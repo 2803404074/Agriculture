@@ -10,8 +10,26 @@ public class GoodsMin implements Serializable {
     private String goodsName;
     private String picUrl;
     private String collectionNum;
+    private boolean isHind;
+    private boolean isCheck;
 
     public GoodsMin() {
+    }
+
+    public boolean isHind() {
+        return isHind;
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
+
+    public void setHind(boolean hind) {
+        isHind = hind;
     }
 
     public String getGoodsId() {

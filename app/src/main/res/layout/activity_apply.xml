@@ -26,7 +26,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_190"
-                android:background="@mipmap/menber_beij">
+                android:background="@mipmap/menber_bg_new">
 
                 <ImageView
                     android:layout_above="@+id/ll_tag"
@@ -42,8 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_80"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginHorizontal="@dimen/dp_30"
-                    android:background="@mipmap/menber_bg"
+                    android:layout_marginHorizontal="@dimen/dp_20"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/dp_20">
 
@@ -56,10 +55,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="398 金牌顾问"
+                            android:text="398 扶贫大使"
                             android:textStyle="bold"
-                            android:textSize="@dimen/sp_15"
-                            android:textColor="@color/colorYellow" />
+                            android:textSize="@dimen/sp_18"
+                            android:textColor="@color/colorPrimaryDark" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -68,16 +67,17 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="并成为"
-                                android:textColor="@android:color/white"
+                                android:text="多种权益"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/colorPrimaryDark"
                                 android:textStyle="bold" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="金牌顾问"
+                                android:text="任您领取"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/sp_15"
-                                android:textColor="@color/colorYellow"/>
+                                android:textColor="@color/colorMonth"/>
                         </LinearLayout>
 
 
@@ -98,11 +98,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@drawable/shape_white_noframe"
-                        android:paddingHorizontal="@dimen/dp_10"
+                        android:background="@drawable/list_style_theme_shape"
+                        android:paddingHorizontal="@dimen/dp_20"
                         android:paddingVertical="@dimen/dp_5"
                         android:text="立即开通"
-                        android:textColor="@color/colorAccentButton"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/sp_9"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -172,13 +172,13 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_20"
                     android:src="@mipmap/vip_cwxs"/>
 
                 <View
-                    android:layout_marginHorizontal="@dimen/dp_10"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_1"
+                    android:layout_marginVertical="@dimen/dp_5"
                     android:background="@color/colorGri"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recy_vip"

@@ -7,6 +7,16 @@
     android:layout_marginVertical="@dimen/dp_5"
     android:layout_height="wrap_content">
 
+    <CheckBox
+        android:id="@+id/cb_check"
+        android:padding="@dimen/dp_5"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
+        android:button="@null"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:background="@drawable/radio_select"/>
+
     <ImageView
         android:id="@+id/iv_img"
         android:layout_width="@dimen/dp_110"
@@ -95,7 +105,7 @@
                 android:paddingVertical="@dimen/dp_3"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:textColor="#fff"
-                android:textSize="@dimen/sp_8"
+                android:textSize="@dimen/sp_10"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@drawable/shape_login_blue"/>

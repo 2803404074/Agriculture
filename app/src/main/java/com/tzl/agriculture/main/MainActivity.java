@@ -143,10 +143,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         instance = MainActivity.this;
         tvSetAddress.setOnClickListener(this);
-        fragmentManager = getSupportFragmentManager();
-        radioGroup.setOnCheckedChangeListener(this);
-        radioButton_01.setChecked(true);
-        radioButton_01.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+
         DrawableSizeUtil drawableSizeUtil = new DrawableSizeUtil(this);
         drawableSizeUtil.setImgSize(65, 65, 1, radioButton_01, R.drawable.select_home);
         drawableSizeUtil.setImgSize(65, 65, 1, radioButton_02, R.drawable.select_xc);
@@ -498,7 +496,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             version = packInfo.versionName;
 
             Map<String,String>map = new HashMap<>();
-            map.put("version",version+"");
+            map.put("version",version+"");//
             String str = JsonUtil.obj2String(map);
             String token = (String) SPUtils.instance(this,1).getkey("token","");
             OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.checkNewVersion, str, token, new GsonObjectCallback<String>(App.BASE) {
@@ -511,6 +509,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
                             //是否有新版本
                             boolean hasNew = dataObj.optBoolean("hasNewVersion");
+
                             //是否必须更新
                             boolean mustUpdate = dataObj.optBoolean("mustUpdate");
 
@@ -518,6 +517,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                                 String str = dataObj.optString("appAbout");
                                 AppVersion appVersion = JsonUtil.string2Obj(str, AppVersion.class);
                                 DialogUtil.init(MainActivity.this).showVersion(R.layout.dialog_version,mustUpdate,appVersion);
+                            }
+                            //强制更新，不加载
+                            if (!mustUpdate){
+                                fragmentManager = getSupportFragmentManager();
+                                radioGroup.setOnCheckedChangeListener(MainActivity.this);
+                                radioButton_01.setChecked(true);
+                                radioButton_01.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                             }
                         }
                     } catch (JSONException e) {

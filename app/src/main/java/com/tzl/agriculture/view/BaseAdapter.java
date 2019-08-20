@@ -108,6 +108,17 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
                         }
                     }
                 });
+
+
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        if (mLongItemClickListener != null){
+                            mLongItemClickListener.onLongItemClick(view, position - 1);
+                        }
+                        return false;
+                    }
+                });
             } else {
                 convert(mContext, holder,position, mDatas.get(position));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +128,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseRecyclerHo
                             mItemClickListener.onItemClick(v, position);
                         }
 
+                    }
+                });
+
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        if (mLongItemClickListener != null){
+                            mLongItemClickListener.onLongItemClick(view, position);
+                        }
+                        return false;
                     }
                 });
 
