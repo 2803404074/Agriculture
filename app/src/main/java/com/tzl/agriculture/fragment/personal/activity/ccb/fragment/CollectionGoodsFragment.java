@@ -41,6 +41,7 @@ import okhttp3.Call;
 
 /**
  * 商品收藏fragment
+ * 更新
  */
 public class CollectionGoodsFragment extends BaseFragment {
 
