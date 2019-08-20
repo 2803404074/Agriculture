@@ -103,11 +103,18 @@ public class CashActivity extends SetBaseActivity {
                     return;
                 }
 
-                if (Double.valueOf(etCashNumber.getText().toString())>dMoney){
-                    ToastUtil.showShort(CashActivity.this, "余额不足");
-                    return;
+                if (!StringUtils.isEmpty(etCashNumber.getText().toString())){
+                    double price = Double.valueOf(etCashNumber.getText().toString());
+                    if(price>=100 && price%100==0){
+                        if (price>dMoney){
+                            ToastUtil.showShort(CashActivity.this, "余额不足");
+                        }else {
+                            showQuit(etCashNumber.getText().toString());
+                        }
+                    }else {
+                        ToastUtil.showShort(CashActivity.this, "请提现以100为整倍数的金额，如100，200，300....");
+                    }
                 }
-                showQuit(etCashNumber.getText().toString());
             }
         });
 

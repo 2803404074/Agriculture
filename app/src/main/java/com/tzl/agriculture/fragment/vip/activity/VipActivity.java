@@ -3,6 +3,7 @@ package com.tzl.agriculture.fragment.vip.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -154,7 +155,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
         if (userInfo.getUserType() == 3) {
             tvBy.setVisibility(View.GONE);
-            //rlVipYes.setVisibility(View.VISIBLE);
+            rlVipYes.setVisibility(View.VISIBLE);
             llMyJf.setVisibility(View.VISIBLE);
             llMyJfTips.setVisibility(View.GONE);
             ivOpen.setVisibility(View.GONE);
@@ -253,8 +254,8 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             });
 
             tvInvNow.setVisibility(View.VISIBLE);
-            //tvBy.setVisibility(View.VISIBLE);
-            //rlVipYes.setVisibility(View.GONE);
+            tvBy.setVisibility(View.VISIBLE);
+            rlVipYes.setVisibility(View.GONE);
 
             llMyJf.setVisibility(View.GONE);
             llMyJfTips.setVisibility(View.VISIBLE);
@@ -452,7 +453,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                     List<Tips> list = JsonUtil.string2Obj(str, List.class, Tips.class);
                     if (list != null) {
                         Tips tips = list.get(list.size() - 1);
-                        tvJf.setText(tips.getValue());
+                        tvJf.setText(TextUtil.checkStr2Num(tips.getValue()));
                         list.remove(list.size() - 1);
                     }
                     BaseAdapter adapter = new BaseAdapter<Tips>(VipActivity.this, reMyJl, list, R.layout.item_vip_tips) {

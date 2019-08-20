@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class HomeMo implements Serializable {
-    private int position;
+    private int position;//0-7,
     private int sort;//位置
     private List<BannerMo> advertiseList;
     private XiangcMo articleList;
