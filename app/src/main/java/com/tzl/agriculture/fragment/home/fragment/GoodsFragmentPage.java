@@ -79,6 +79,7 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 //标签
                 ShowButtonLayout labelLayout = holder.getView(R.id.labelLayout);
                 ShowButtonLayoutData showButtonLayoutData = new ShowButtonLayoutData<String>(getContext(), labelLayout, o.getGoodsLabelList(),null);
+                showButtonLayoutData.setView(R.layout.text_view_red);
                 showButtonLayoutData.setData();
 
 
@@ -152,7 +153,6 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                             if (adapter.getData() == null || adapter.getData().size() == 0){
                                 ivTips.setVisibility(View.VISIBLE);
                             }
-                            //ToastUtil.showShort(getContext(), TextUtil.checkStr2Str(object.optString("msg")));
                         }
                     } else {
                         if (adapter.getData() == null || adapter.getData().size() == 0){
@@ -165,6 +165,7 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
             }
             @Override
             public void onFailed(Call call, IOException e) {
+                if (getActivity() == null)return;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -178,6 +179,7 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
             @Override
             public void onFailure(Call call, IOException e) {
                 super.onFailure(call, e);
+                if (getActivity() == null)return;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

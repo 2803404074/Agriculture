@@ -34,12 +34,18 @@ public class ShowButtonLayoutData<T> {
         layout.removeAllViews();
     }
 
+    public void setView(int layout){
+        this.layoutView = layout;
+    }
+
+    private int layoutView = -1;
 
     public void setData() {
+        if (null == data)return;
         TextView views[] = new TextView[data.size()];
         //热门数据源
         for (int i = 0; i < data.size(); i++) {
-            final TextView view = (TextView) LayoutInflater.from(context).inflate(R.layout.hot_search_tv, layout, false);
+            final TextView view = (TextView) LayoutInflater.from(context).inflate(layoutView == -1?R.layout.hot_search_tv :layoutView, layout, false);
             if (data.get(i) instanceof String){
                 view.setText((String)data.get(i));
                 view.setTag(data.get(i));

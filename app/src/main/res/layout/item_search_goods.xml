@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/shape_white_noframe"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_3"
+    android:layout_marginVertical="@dimen/dp_5"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/cb_check"
+        android:padding="@dimen/dp_5"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
+        android:button="@null"
+        android:visibility="gone"
+        android:enabled="false"
+        android:clickable="false"
+        android:layout_gravity="center"
+        android:background="@drawable/radio_select"/>
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="@dimen/dp_110"
+        android:layout_height="@dimen/dp_110" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:textSize="@dimen/sp_14"
+            android:lines="2"
+            android:ellipsize="end"
+            android:textColor="@color/colorGri2" />
+
+        <com.tzl.agriculture.view.ShowButtonLayout
+            android:id="@+id/labelLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.tzl.agriculture.view.ShowButtonLayout>
+
+        <TextView
+            android:id="@+id/tv_collection_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_5"
+            android:visibility="gone"
+            android:text="收藏数量"/>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="0dp"
+           android:layout_weight="1"/>
+        <LinearLayout
+            android:id="@+id/ll_price"
+            android:paddingHorizontal="@dimen/dp_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccentButton"
+                android:text="@string/app_money"/>
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/colorAccentButton"
+                android:text="29.9"/>
+            <TextView
+                android:id="@+id/tv_marketPrice"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="59.9"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="立即购买"
+                android:paddingVertical="@dimen/dp_3"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:textColor="#fff"
+                android:textSize="@dimen/sp_10"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/shape_login_blue"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.tzl.agriculture.R;
+import com.tzl.agriculture.fragment.home.activity.SearchActivity;
 import com.tzl.agriculture.model.VipCommodity;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
@@ -28,9 +29,11 @@ import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ScreenUtils;
+import com.tzl.agriculture.util.ShowButtonLayoutData;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
+import com.tzl.agriculture.view.ShowButtonLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -172,6 +175,12 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             adapter = new BaseAdapter<GoodsMo>(this, recyclerView, mData, R.layout.item_vip_goods_buy) {
                 @Override
                 public void convert(Context mContext, BaseRecyclerHolder holder,int position, GoodsMo o) {
+                    //标签
+                    ShowButtonLayout labelLayout = holder.getView(R.id.labelLayout);
+                    ShowButtonLayoutData showButtonLayoutData = new ShowButtonLayoutData<String>(VipActivity.this, labelLayout, o.getGoodsLabelList(),null);
+                    showButtonLayoutData.setView(R.layout.text_view_red);
+                    showButtonLayoutData.setData();
+
                     holder.setImageByUrl(R.id.nick_img, o.getPicUrl());
                     holder.setText(R.id.tv_title, o.getGoodsName());
                     holder.getView(R.id.tv_gg).setVisibility(View.GONE);

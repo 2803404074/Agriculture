@@ -42,13 +42,11 @@
             android:text="无敌水果无敌水果超级无敌水果" />
 
 
-        <TextView
-            android:id="@+id/tv_by"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_login_blue_no"
-            android:paddingHorizontal="@dimen/dp_10"
-            android:text="包邮" />
+        <com.tzl.agriculture.view.ShowButtonLayout
+            android:id="@+id/labelLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.tzl.agriculture.view.ShowButtonLayout>
 
         <View
             android:layout_width="1px"

@@ -2,6 +2,7 @@ package com.tzl.agriculture.fragment.home.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -153,19 +154,26 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new BaseAdapter<GoodsMo>(this,recyclerView,mData,R.layout.item_vip_goods_buy) {
+        adapter = new BaseAdapter<GoodsMo>(this,recyclerView,mData,R.layout.item_search_goods) {
             @Override
             public void convert(Context mContext, BaseRecyclerHolder holder, int position,GoodsMo o) {
-                NiceImageView niceImageView = holder.getView(R.id.nick_img);
-                niceImageView.setCornerRadius(5);
-                holder.setImageByUrl(R.id.nick_img,o.getPicUrl());
+                //标签
+                ShowButtonLayout labelLayout = holder.getView(R.id.labelLayout);
+                ShowButtonLayoutData showButtonLayoutData = new ShowButtonLayoutData<String>(SearchActivity.this, labelLayout, o.getGoodsLabelList(),null);
+                showButtonLayoutData.setView(R.layout.text_view_red);
+                showButtonLayoutData.setData();
 
-                holder.getView(R.id.tv_by).setVisibility(View.GONE);
-                holder.getView(R.id.tv_dh).setVisibility(View.GONE);
-                holder.getView(R.id.tv_gg).setVisibility(View.GONE);
 
-                holder.setText(R.id.tv_title,""+o.getGoodsName());
-                holder.setText(R.id.tv_price,o.getPrice());
+                holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
+
+                holder.setText(R.id.tv_name, o.getGoodsName());
+
+                holder.setText(R.id.tv_price, o.getPrice());
+
+                TextView tvMarketPrice = holder.getView(R.id.tv_marketPrice);
+                tvMarketPrice.setText(o.getOriginalPrice());
+                tvMarketPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
+
             }
         };
         adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
