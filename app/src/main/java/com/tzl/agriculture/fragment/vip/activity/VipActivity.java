@@ -126,7 +126,8 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
     private UserInfo userInfo;
 
     private List<VipCommodity> vipCommodityLists = new ArrayList<>();;
-
+    private List<Tips> mlist=new ArrayList<>();
+    private  BaseAdapter adapterVips;
 
 
     @Override
@@ -401,6 +402,14 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             });
         }
 
+        adapterVips = new BaseAdapter<Tips>(VipActivity.this, reMyJl, mlist, R.layout.item_vip_tips) {
+            @Override
+            public void convert(Context mContext, BaseRecyclerHolder holder,int position, Tips o) {
+                holder.setText(R.id.tv_name, o.getName());
+                holder.setText(R.id.tv_value, o.getValue());
+            }
+        };
+        reMyJl.setAdapter(adapterVips);
 
     }
 
@@ -478,6 +487,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.rewards, "", token, new GsonObjectCallback<String>(App.BASE) {
             @Override
             public void onUi(String result) {
+                System.out.println("result = [" + result + "]");
                 try {
                     JSONObject object = new JSONObject(result);
                     String str = object.optString("data");
@@ -486,15 +496,8 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
                         Tips tips = list.get(list.size() - 1);
                         tvJf.setText(TextUtil.checkStr2Num(tips.getValue()));
                         list.remove(list.size() - 1);
+                        adapterVips.updateData(list);
                     }
-                    BaseAdapter adapter = new BaseAdapter<Tips>(VipActivity.this, reMyJl, list, R.layout.item_vip_tips) {
-                        @Override
-                        public void convert(Context mContext, BaseRecyclerHolder holder,int position, Tips o) {
-                            holder.setText(R.id.tv_name, o.getName());
-                            holder.setText(R.id.tv_value, o.getValue());
-                        }
-                    };
-                    reMyJl.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

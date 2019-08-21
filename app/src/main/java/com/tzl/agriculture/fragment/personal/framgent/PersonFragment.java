@@ -286,6 +286,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         OkHttp3Utils.getInstance(App.BASE).doPostJson2(User.shareAppToPic, "", getToken(), new GsonObjectCallback<String>(App.BASE) {
             @Override
             public void onUi(String result) {
+                System.out.println("result = [" + result + "]");
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.optInt("code") == 0){
@@ -303,7 +304,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             }
             @Override
             public void onFailed(Call call, IOException e) {
-
+                System.out.println("call = [" + call + "], e = [" + e + "]");
             }
         });
     }
