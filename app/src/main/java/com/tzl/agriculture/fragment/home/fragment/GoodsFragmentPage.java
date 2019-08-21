@@ -51,7 +51,7 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
     private RecyclerView recyclerView;
 
     private BaseAdapter adapter;
-    private List<GoodsMo> mData = new ArrayList<>();
+    private volatile List<GoodsMo> mData = new ArrayList<>();
 
     @Override
     protected int initLayout() {
@@ -60,26 +60,28 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
 
     public GoodsFragmentPage() {
     }
+
     public GoodsFragmentPage(int type) {
         this.type = type;
     }
 
     private int type;
+
     @Override
     protected void initView(View view) {
         recyclerView = view.findViewById(R.id.recy);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BaseAdapter<GoodsMo>(getContext(), recyclerView, mData, R.layout.item_limited_time) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, int position,GoodsMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position, GoodsMo o) {
 
                 //发现好物，不需要倒计时
-                if (type == 1){
+                if (type == 1) {
                     holder.getView(R.id.ll_gg).setVisibility(View.GONE);
                 }
                 //标签
                 ShowButtonLayout labelLayout = holder.getView(R.id.labelLayout);
-                ShowButtonLayoutData showButtonLayoutData = new ShowButtonLayoutData<String>(getContext(), labelLayout, o.getGoodsLabelList(),null);
+                ShowButtonLayoutData showButtonLayoutData = new ShowButtonLayoutData<String>(getContext(), labelLayout, o.getGoodsLabelList(), null);
                 showButtonLayoutData.setView(R.layout.text_view_red);
                 showButtonLayoutData.setData();
 
@@ -93,10 +95,10 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 TextView tvMarketPrice = holder.getView(R.id.tv_marketPrice);
 
                 tvMarketPrice.setText(o.getOriginalPrice());
-                tvMarketPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
+                tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
                 TextView tvDate = holder.getView(R.id.tv_date);
-                dowTime(o.getSpikeEndTime(),tvDate);
+                dowTime(o.getSpikeEndTime(), tvDate, position);
             }
         };
         recyclerView.setAdapter(adapter);
@@ -114,8 +116,8 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 GoodsMo goodsMo = (GoodsMo) adapter.getData().get(position);
                 Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
                 intent.putExtra("goodsId", goodsMo.getGoodsId());
-                if (type == 1){
-                    intent.putExtra("type",2);
+                if (type == 1) {
+                    intent.putExtra("type", 2);
                 }
 
                 startActivity(intent);
@@ -129,10 +131,10 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
     protected void setDate(boolean isLoad) {
         Map<String, String> map = new HashMap<>();
         String url = "";
-        if (type == 1){//发现好物
+        if (type == 1) {//发现好物
             url = Mall.fxhwList;
             map.put("shopTypeId", getCtype());
-        }else {
+        } else {
             url = Mall.xsgList;
         }
         map.put("pageNum", String.valueOf(page));
@@ -152,13 +154,13 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                             } else {
                                 adapter.updateData(mData);
                             }
-                        }else {
-                            if (adapter.getData() == null || adapter.getData().size() == 0){
+                        } else {
+                            if (adapter.getData() == null || adapter.getData().size() == 0) {
                                 ivTips.setVisibility(View.VISIBLE);
                             }
                         }
                     } else {
-                        if (adapter.getData() == null || adapter.getData().size() == 0){
+                        if (adapter.getData() == null || adapter.getData().size() == 0) {
                             ivTips.setVisibility(View.VISIBLE);
                         }
                     }
@@ -166,13 +168,14 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailed(Call call, IOException e) {
-                if (getActivity() == null)return;
+                if (getActivity() == null) return;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (adapter.getData() == null || adapter.getData().size() == 0){
+                        if (adapter.getData() == null || adapter.getData().size() == 0) {
                             ivTips.setVisibility(View.VISIBLE);
                         }
                     }
@@ -182,11 +185,11 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
             @Override
             public void onFailure(Call call, IOException e) {
                 super.onFailure(call, e);
-                if (getActivity() == null)return;
+                if (getActivity() == null) return;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (adapter.getData() == null || adapter.getData().size() == 0){
+                        if (adapter.getData() == null || adapter.getData().size() == 0) {
                             ivTips.setVisibility(View.VISIBLE);
                         }
                     }
@@ -195,8 +198,8 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
         });
     }
 
-    private void dowTime(String data,TextView tvDate) {
-        if (StringUtils.isEmpty(data) || data.equals("null")){
+    private void dowTime(String data, TextView tvDate, int position) {
+        if (StringUtils.isEmpty(data) || data.equals("null")) {
             tvDate.setText("活动已结束");
             return;
         }
@@ -205,37 +208,40 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
             @Override
             public void onProcess(int day, int hour, int minute, int second) {
                 String strDay = "";
-                String strHour= "";
+                String strHour = "";
                 String strMinute = "";
                 String strSecond = "";
 
-                if (day<10){
-                    strDay = 0+String.valueOf(day);
-                }else {
+                if (day < 10) {
+                    strDay = 0 + String.valueOf(day);
+                } else {
                     strDay = String.valueOf(day);
                 }
 
-                if (hour<10){
-                    strHour = 0+String.valueOf(hour);
-                }else {
+                if (hour < 10) {
+                    strHour = 0 + String.valueOf(hour);
+                } else {
                     strHour = String.valueOf(hour);
                 }
 
-                if (minute<10){
-                    strMinute = 0+String.valueOf(minute);
-                }else {
+                if (minute < 10) {
+                    strMinute = 0 + String.valueOf(minute);
+                } else {
                     strMinute = String.valueOf(minute);
                 }
 
-                if (second<10){
-                    strSecond = 0+String.valueOf(second);
-                }else {
+                if (second < 10) {
+                    strSecond = 0 + String.valueOf(second);
+                } else {
                     strSecond = String.valueOf(second);
                 }
                 tvDate.setText(strDay + "天 " + strHour + "时 " + strMinute + "分 " + strSecond + "秒");
             }
+
             @Override
             public void onFinish() {
+                mData.remove(position);
+                adapter.updateData(mData);
                 tvDate.setText("活动已结束");
             }
         });
