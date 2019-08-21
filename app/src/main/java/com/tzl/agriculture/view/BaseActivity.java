@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tzl.agriculture.application.AppManager;
+import com.tzl.agriculture.util.LoaddingUtils;
 import com.tzl.agriculture.util.SPUtils;
 
 import butterknife.ButterKnife;
@@ -31,6 +32,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
+    private LoaddingUtils mLoaddingUtils;
+    public void setLoaddingView(boolean isLoadding){
+        if(mLoaddingUtils==null){
+            mLoaddingUtils=new LoaddingUtils(this);
+        }
+        if(isLoadding){
+            mLoaddingUtils.show();
+        }else{
+            mLoaddingUtils.dismiss();
+        }
+    }
+
     public abstract void initView();
 
     public abstract void initData();
@@ -51,6 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
+        setLoaddingView(false);
         super.onDestroy();
     }
 

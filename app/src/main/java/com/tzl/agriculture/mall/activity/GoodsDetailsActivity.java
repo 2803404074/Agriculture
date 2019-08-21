@@ -165,9 +165,6 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.ll_dateDown)
     LinearLayout llDateDown;//倒计时视图，只有限时购显示
 
-    @BindView(R.id.spin_kit)
-    SpinKitView spinKitView;
-
     @BindView(R.id.tv_yf)
     TextView tvYf;//邮费
 
@@ -475,9 +472,6 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         dialog = new BottomSheetDialog(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_goods_gg, null);
 
-        SpinKitView spinK = view.findViewById(R.id.spin_kit);
-
-
         view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -561,8 +555,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                     ToastUtil.showShort(GoodsDetailsActivity.this,"产品已售完或超过购买库存数量");
                     return;
                 }
-                spinK.setVisibility(View.VISIBLE);
-                quitOrder(spinK,productId, tvNum.getText().toString());
+                quitOrder(productId, tvNum.getText().toString());
 
             }
         });
@@ -654,14 +647,14 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     //确认订单
-    private void quitOrder(SpinKitView spinK,String productId, String num) {
+    private void quitOrder(String productId, String num) {
         if (selectView != null){
             if (StringUtils.isEmpty(selectView.getProductId())){
                 ToastUtil.showShort(this,"请选择规格");
-                spinK.setVisibility(View.GONE);
                 return;
             }
         }
+        setLoaddingView(true);
         Map<String, String> map = new HashMap<>();
         map.put("specsIds", productId);
         map.put("goodsNum", num);
@@ -669,6 +662,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.saveConfirm, str, getToken(this), new GsonObjectCallback<String>(Article.BASE) {
             @Override
             public void onUi(String result) {
+                setLoaddingView(false);
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.optInt("code") == 0) {
@@ -677,7 +671,6 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                     } else {
                         ToastUtil.showShort(GoodsDetailsActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                     }
-                    spinK.setVisibility(View.GONE);
                     dialog.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -689,7 +682,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        spinK.setVisibility(View.GONE);
+                        setLoaddingView(false);
                     }
                 });
             }
@@ -700,7 +693,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        spinK.setVisibility(View.GONE);
+                        setLoaddingView(false);
                     }
                 });
             }

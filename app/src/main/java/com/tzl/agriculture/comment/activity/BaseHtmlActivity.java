@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.tzl.agriculture.util.HtmlStyleUtil;
 import com.tzl.agriculture.util.JsonUtil;
+import com.tzl.agriculture.util.LoaddingUtils;
 import com.tzl.agriculture.util.MyWebViewClient;
 import com.tzl.agriculture.util.SPUtils;
 
@@ -37,6 +38,8 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
 
     private WebView webView;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,19 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
         initView();
         initData();
     }
+
+    private LoaddingUtils mLoaddingUtils;
+    public void setLoaddingView(boolean isLoadding){
+        if(mLoaddingUtils==null){
+            mLoaddingUtils=new LoaddingUtils(mContext);
+        }
+        if(isLoadding){
+            mLoaddingUtils.show();
+        }else{
+            mLoaddingUtils.dismiss();
+        }
+    }
+
 
 
     public abstract int setLayout();
@@ -156,6 +172,7 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        setLoaddingView(false);
         if (null != webView) {
             webView.destroy();
         }
