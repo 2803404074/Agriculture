@@ -98,6 +98,7 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
                 TextView tvDate = holder.getView(R.id.tv_date);
+                if(type!=1)
                 dowTime(o.getSpikeEndTime(), tvDate, position,holder);
             }
         };

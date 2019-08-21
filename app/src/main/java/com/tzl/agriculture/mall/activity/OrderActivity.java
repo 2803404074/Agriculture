@@ -145,8 +145,8 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
             s2="0";
         }
         try {
-            BigDecimal bigDecimal=new BigDecimal(Double.valueOf(s1));
-           return bigDecimal.add(new BigDecimal(Double.valueOf(s2))).doubleValue()+"";
+            BigDecimal bigDecimal=new BigDecimal(s1);
+           return bigDecimal.add(new BigDecimal(s2))+"";
         }catch (Throwable t){
 
         }
