@@ -14,7 +14,8 @@ public class GoodsMo implements Serializable {
     private String categoryId;
     private String picUrl;
     private String goodsPic;
-    private List<String>goodsLabelList;
+    private String salesVolume;//销量
+    private List<String>goodsLabelList;//标签
     private String spikeStartTime;
     private String spikeEndTime;
     private String shopName;
@@ -22,6 +23,10 @@ public class GoodsMo implements Serializable {
     private String price;
 
     public GoodsMo() {
+    }
+
+    public String getSalesVolume() {
+        return salesVolume;
     }
 
     public List<String> getGoodsLabelList() {

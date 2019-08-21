@@ -32,6 +32,8 @@ public class UserInfo implements Serializable {
 
     private String age;
 
+    private int grade;//1白银，2铂金，3扶贫大使
+
     private String birthday;
 
     private String height;//身高
@@ -47,6 +49,10 @@ public class UserInfo implements Serializable {
     private String information;
 
     public UserInfo() {
+    }
+
+    public int getGrade() {
+        return grade;
     }
 
     public int getUserId() {

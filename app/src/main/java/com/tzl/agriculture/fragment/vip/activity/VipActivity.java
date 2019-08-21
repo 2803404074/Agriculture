@@ -67,11 +67,18 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
     @BindView(R.id.drawee_img)
     SimpleDraweeView draweeView;
 
-    @BindView(R.id.tv_phone)
-    TextView tvPhone;
+//    @BindView(R.id.tv_phone)
+//    TextView tvPhone;
 
-    @BindView(R.id.tv_openTips)
-    TextView tvOpenTips;
+//    @BindView(R.id.tv_openTips)
+//    TextView tvOpenTips;
+
+    @BindView(R.id.iv_status)
+    ImageView ivStatus;//vip等级图片
+
+    @BindView(R.id.tv_name)
+    TextView tvName;//vip等级图片
+
 
     @BindView(R.id.tv_invNow)
     TextView tvInvNow;//立即邀请
@@ -121,6 +128,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
     private List<VipCommodity> vipCommodityLists = new ArrayList<>();;
 
 
+
     @Override
     public void backFinish() {
         finish();
@@ -133,7 +141,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
     @Override
     public void initView() {
-        setTitle("员工中心");
+        setTitle("个人中心");
         setStatusColor(R.color.colorW);
         setAndroidNativeLightStatusBar(true);
 
@@ -154,16 +162,28 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         String user = (String) SPUtils.instance(this, 1).getkey("user", "");
         userInfo = JsonUtil.string2Obj(user, UserInfo.class);
         draweeView.setImageURI(userInfo.getHeadUrl());
-        tvPhone.setText(userInfo.getPhone());
+        tvName.setText(userInfo.getNickname());
+        //tvPhone.setText(userInfo.getPhone());
+        if (userInfo.getUserType() == 3) {//用户类型
 
-        if (userInfo.getUserType() == 3) {
+            //vip类型
+            if (userInfo.getGrade() == 1){//白银
+                ivStatus.setImageResource(R.mipmap.vip_byhy);
+            }
+            if (userInfo.getGrade() == 2){//铂金
+                ivStatus.setImageResource(R.mipmap.vip_bjhy);
+            }
+            if (userInfo.getGrade() == 3){//扶贫大使
+                ivStatus.setImageResource(R.mipmap.vip_fpds);
+            }
+
             tvBy.setVisibility(View.GONE);
             rlVipYes.setVisibility(View.VISIBLE);
             llMyJf.setVisibility(View.VISIBLE);
             llMyJfTips.setVisibility(View.GONE);
             ivOpen.setVisibility(View.GONE);
             tvInvNow.setText("提现");
-            tvOpenTips.setText(userInfo.getUsername());
+            //tvOpenTips.setText(userInfo.getUsername());
 
             //获取积分信息
 
@@ -203,74 +223,76 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
 
         } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-            adapter = new BaseAdapter<VipCommodity>(this,recyclerView,vipCommodityLists,R.layout.item_vip_commodity_adapter) {
-                @Override
-                public void convert(Context mContext, BaseRecyclerHolder holder,int position, VipCommodity o) {
-                    switch (o.getMonth()){
-                        case 1:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_1);
-                            break;
-                        case 2:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_2);
-                            break;
-                        case 3:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_3);
-                            break;
-                        case 4:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_4);
-                            break;
-                        case 5:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_5);
-                            break;
-                        case 6:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_6);
-                            break;
-                        case 7:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_7);
-                            break;
-                        case 8:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_8);
-                            break;
-                        case 9:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_9);
-                            break;
-                        case 10:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_10);
-                            break;
-                        case 11:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_11);
-                            break;
-                        case 12:
-                            holder.setImageResource(R.id.iv_month,R.mipmap.month_12);
-                            break;
 
-                    }
-
-                    holder.setImageByUrl(R.id.iv_commodity_img,o.getPicUrl());
-
-                }
-            };
-            recyclerView.setAdapter(adapter);
-
-            adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                   Intent intent = new Intent(VipActivity.this,MonthActivity.class);
-                   intent.putExtra("monthNumber",vipCommodityLists.get(position).getMonth());
-                   startActivity(intent);
-                }
-            });
+            ivStatus.setVisibility(View.GONE);
+//            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+//            adapter = new BaseAdapter<VipCommodity>(this,recyclerView,vipCommodityLists,R.layout.item_vip_commodity_adapter) {
+//                @Override
+//                public void convert(Context mContext, BaseRecyclerHolder holder,int position, VipCommodity o) {
+//                    switch (o.getMonth()){
+//                        case 1:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_1);
+//                            break;
+//                        case 2:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_2);
+//                            break;
+//                        case 3:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_3);
+//                            break;
+//                        case 4:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_4);
+//                            break;
+//                        case 5:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_5);
+//                            break;
+//                        case 6:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_6);
+//                            break;
+//                        case 7:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_7);
+//                            break;
+//                        case 8:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_8);
+//                            break;
+//                        case 9:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_9);
+//                            break;
+//                        case 10:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_10);
+//                            break;
+//                        case 11:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_11);
+//                            break;
+//                        case 12:
+//                            holder.setImageResource(R.id.iv_month,R.mipmap.month_12);
+//                            break;
+//
+//                    }
+//
+//                    holder.setImageByUrl(R.id.iv_commodity_img,o.getPicUrl());
+//
+//                }
+//            };
+//            recyclerView.setAdapter(adapter);
+//
+//            adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(View view, int position) {
+//                   Intent intent = new Intent(VipActivity.this,MonthActivity.class);
+//                   intent.putExtra("monthNumber",vipCommodityLists.get(position).getMonth());
+//                   startActivity(intent);
+//                }
+//            });
 
             tvInvNow.setVisibility(View.VISIBLE);
-            tvBy.setVisibility(View.VISIBLE);
+            tvBy.setVisibility(View.GONE);
             rlVipYes.setVisibility(View.GONE);
 
             llMyJf.setVisibility(View.GONE);
             llMyJfTips.setVisibility(View.VISIBLE);
 
             tvMyQi.setVisibility(View.GONE);
-            tvOpenTips.setText("暂未开通");
+            //tvOpenTips.setText("暂未开通");
 
         }
 
@@ -312,30 +334,31 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
         if (userInfo.getUserType() == 2) {
 
-            String token = (String) SPUtils.instance(VipActivity.this, 1).getkey("token", "");
-
-            Map<String,String>map = new HashMap<>();
-            String str = JsonUtil.obj2String(map);
-            OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.sNoVipGoodsList, str,token, new GsonObjectCallback<String>(App.BASE) {
-                @Override
-                public void onUi(String result) {
-                    try {
-
-                        JSONObject object = new JSONObject(result);
-                        String str = object.optString("data");
-                        List<VipCommodity> vipCommodityList = JsonUtil.string2Obj(str, List.class, VipCommodity.class);
-                        adapter.updateData(vipCommodityList);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailed(Call call, IOException e) {
-
-                }
-            });
+//
+//            String token = (String) SPUtils.instance(VipActivity.this, 1).getkey("token", "");
+//
+//            Map<String,String>map = new HashMap<>();
+//            String str = JsonUtil.obj2String(map);
+//            OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.sNoVipGoodsList, str,token, new GsonObjectCallback<String>(App.BASE) {
+//                @Override
+//                public void onUi(String result) {
+//                    try {
+//
+//                        JSONObject object = new JSONObject(result);
+//                        String str = object.optString("data");
+//                        List<VipCommodity> vipCommodityList = JsonUtil.string2Obj(str, List.class, VipCommodity.class);
+//                        adapter.updateData(vipCommodityList);
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailed(Call call, IOException e) {
+//
+//                }
+//            });
 
         } else if (userInfo.getUserType() == 3) {
             Map<String, String> map = new HashMap<>();

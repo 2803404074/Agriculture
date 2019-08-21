@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="他乡游"
             android:layout_marginHorizontal="@dimen/dp_5"
-            android:textSize="@dimen/sp_21"
+            android:textSize="@dimen/sp_18"
             android:textStyle="bold"
             android:textColor="@color/colorGri2"/>
 
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/sp_15"
+            android:textSize="@dimen/sp_12"
             android:layout_marginLeft="@dimen/dp_20"
             android:text="享受生活·回味童年"/>
     </LinearLayout>

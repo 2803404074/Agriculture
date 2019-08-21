@@ -37,7 +37,26 @@
                     android:layout_height="@dimen/dp_65"
                     fresco:roundAsCircle="true" />
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_name"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_above="@+id/iv_status"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@android:color/white"
+                    android:text="----"/>
+
+                <ImageView
+                    android:id="@+id/iv_status"
+                    android:layout_marginVertical="@dimen/dp_5"
+                    android:layout_above="@+id/ll_ljkt"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/vip_fpds"/>
+
+             <!--   <LinearLayout
                     android:id="@+id/ll_ph"
                     android:layout_below="@+id/drawee_img"
                     android:layout_centerHorizontal="true"
@@ -80,10 +99,11 @@
                         android:lines="1"
                         android:layout_marginLeft="@dimen/dp_3"
                         android:textColor="@android:color/white"/>
-                </LinearLayout>
+                </LinearLayout>-->
 
 
                 <LinearLayout
+                    android:id="@+id/ll_ljkt"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_80"
                     android:layout_alignParentBottom="true"
@@ -149,7 +169,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="水果年卡"
+                            android:text="扶贫大使"
                             android:textSize="@dimen/sp_21"
                             android:textStyle="bold"
                             android:textColor="@color/colorYellow" />
@@ -157,7 +177,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="连续12个月免费领取水果！"
+                            android:text="享受更多特权"
                             android:textColor="@android:color/white"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -280,6 +300,7 @@
 
             <ImageView
                 android:id="@+id/tv_vip_no"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
                 android:src="@mipmap/vip_qnsg"/>
@@ -292,7 +313,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="水果礼"
+                    android:text="扶贫专区"
                     android:layout_centerVertical="true"
                     android:textSize="@dimen/sp_18"
                     android:textStyle="bold"

@@ -17,6 +17,7 @@ import com.tzl.agriculture.util.CountDownUtil;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.ShowButtonLayoutData;
+import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseFragmentFromType;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
@@ -82,6 +83,8 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 showButtonLayoutData.setView(R.layout.text_view_red);
                 showButtonLayoutData.setData();
 
+                //销量
+                holder.setText(R.id.salesNum, TextUtil.checkStr2Num(o.getSalesVolume()));
 
                 holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                 holder.setText(R.id.tv_name, o.getGoodsName());
