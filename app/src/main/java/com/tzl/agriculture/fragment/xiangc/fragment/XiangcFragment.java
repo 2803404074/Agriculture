@@ -101,7 +101,7 @@ public class XiangcFragment extends BaseFragment implements View.OnClickListener
         //tvMore.setOnClickListener(this);
 
         mRefreshLayout.setEnableHeaderTranslationContent(true);//内容偏移
-        mRefreshLayout.setPrimaryColorsId(R.color.colorPrimaryDark, android.R.color.white);//主题颜色
+        mRefreshLayout.setPrimaryColorsId(android.R.color.transparent, android.R.color.white);//主题颜色
         xRecycler.setNestedScrollingEnabled(false);
         xRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         xRecycler.setItemAnimator(new DefaultItemAnimator());
