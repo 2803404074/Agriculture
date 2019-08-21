@@ -520,6 +520,7 @@ public class HomeFragment extends BaseFragment {
 
                         if (mData != null && mData.size() > 0) {
                             homeAdapter.update(mData);
+                            SPUtils.instance(getContext(),1).putObjectByInput("home_data_index",mData);
                         }
                     } else if (object.optInt("code") == 502 || object.optInt("code") == 501) {
                         Intent intent = new Intent(getActivity(), LoginActivity.class);

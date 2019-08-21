@@ -3,12 +3,15 @@ package com.tzl.agriculture.fragment.vip.fragment;
 import android.content.Context;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tzl.agriculture.R;
+import com.tzl.agriculture.fragment.vip.activity.CouponActivity;
 import com.tzl.agriculture.fragment.vip.model.CouponMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.TextUtil;
@@ -52,45 +55,62 @@ public class CouponFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BaseAdapter<CouponMo>(getContext(),recyclerView,mData,R.layout.item_coupon) {
+        adapter = new BaseAdapter<CouponMo>(getContext(), recyclerView, mData, R.layout.item_coupon) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder,int position, CouponMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position,CouponMo o) {
                 TextView tvPrice = holder.getView(R.id.tv_price);
                 TextView tvTip = holder.getView(R.id.tv_tip);
-                switch (o.getCardState()){
-                    case 0:
+                TextView tv_mess = holder.getView(R.id.tv_mess);
+                TextView text_flag = holder.getView(R.id.text_flag);
+                TextView tv_type = holder.getView(R.id.tv_type);
+                ImageView image_top = holder.getView(R.id.image_top);
 
+                int status = o.getCardState();
+
+                tvPrice.setTextColor(getResources().getColor(R.color.colorCoupon));
+
+                tvTip.setBackgroundResource(R.mipmap.pic_conpon_no_use_bg);
+                tvTip.setClickable(false);
+                tvTip.setText("未使用");
+
+                switch (status) {
+                    case 0:
                         break;
                     case 1:
-                        tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
-                        tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
-                        tvTip.setBackgroundResource(R.drawable.shape_login_whi_no);
-                        tvTip.setClickable(false);
+                        tvPrice.setTextColor(getResources().getColor(R.color.colorGray));
+                        tv_mess.setTextColor(getResources().getColor(R.color.colorGray));
+                        text_flag.setTextColor(getResources().getColor(R.color.colorGray));
+                        image_top.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_coupon_top_used));
+
+                        tvTip.setBackgroundResource(R.mipmap.pic_coupon_used_bg);
+                        tv_type.setBackgroundResource(R.mipmap.pic_coupoe_used_quan);
                         tvTip.setText("已使用");
                         break;
                     case 2:
-                        tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
-                        tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
-                        tvTip.setBackgroundResource(R.drawable.shape_login_whi_no);
-                        tvTip.setClickable(false);
+                        tvPrice.setTextColor(getResources().getColor(R.color.colorGray));
+                        tv_mess.setTextColor(getResources().getColor(R.color.colorGray));
+                        text_flag.setTextColor(getResources().getColor(R.color.colorGray));
+                        image_top.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_coupon_top_used));
+
+                        tvTip.setBackgroundResource(R.mipmap.pic_coupon_used_bg);
+                        tv_type.setBackgroundResource(R.mipmap.pic_coupoe_used_quan);
                         tvTip.setText("已过期");
                         break;
-                        default:break;
+                    default:
+                        break;
                 }
-                if (o.getConsumeType() == 1){//满减
-                    holder.setText(R.id.tv_price,o.getAmount());
-                    holder.setText(R.id.tv_name,o.getCradName());
-                    holder.setText(R.id.tv_endTime,o.getEndEffective());
-                    holder.setText(R.id.tv_mess,o.getCradNote());
-                }else {//折扣
-                    holder.setText(R.id.tv_type,"折扣券\t"+ TextUtil.checkStr2Str(o.getDiscount()));
-                    holder.setText(R.id.tv_price,"0");
-                    holder.setText(R.id.tv_name,o.getCradName());
-                    holder.setText(R.id.tv_endTime,o.getEndEffective());
-                    holder.setText(R.id.tv_mess,o.getCradNote());
+                if (o.getConsumeType() == 1) {//满减
+                    holder.setText(R.id.tv_price, o.getAmount());
+                    holder.setText(R.id.tv_name, o.getCradName());
+                    holder.setText(R.id.tv_endTime, o.getEndEffective());
+                    holder.setText(R.id.tv_mess, o.getCradNote());
+                } else {//折扣
+                    holder.setText(R.id.tv_type, "折扣券\t" + TextUtil.checkStr2Str(o.getDiscount()));
+                    holder.setText(R.id.tv_price, "0");
+                    holder.setText(R.id.tv_name, o.getCradName());
+                    holder.setText(R.id.tv_endTime, o.getEndEffective());
+                    holder.setText(R.id.tv_mess, o.getCradNote());
                 }
-
-
             }
         };
         recyclerView.setAdapter(adapter);

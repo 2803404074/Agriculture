@@ -82,4 +82,7 @@ public class User extends Base{
 
     //提交认证材料
     public static String uploadIdentiy="/api/basics/identityVerification/commit";
+
+    //分享
+    public static String shareAppToPic="/api/app/appAbout-api/shareAppToPic";
 }

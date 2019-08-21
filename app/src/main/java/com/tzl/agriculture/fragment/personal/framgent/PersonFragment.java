@@ -241,10 +241,9 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void convert(BaseRecyclerHolder holder, UserInfo data) {
                 holder.getView(R.id.rl_bg).setBackgroundResource(R.mipmap.share_news);
+              //  holder.setText(R.id.tv_name,data.getNickname());
                 SimpleDraweeView draweeView = holder.getView(R.id.nice_img);
                 draweeView.setImageURI(data.getHeadUrl());
-                holder.setText(R.id.tv_name,data.getNickname());
-
                 //保存图片
                 holder.getView(R.id.tv_save).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -284,7 +283,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initDialogImg(ImageView imageView,TextView tvCode) {
-        OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.shareApp, "", getToken(), new GsonObjectCallback<String>(App.BASE) {
+        OkHttp3Utils.getInstance(App.BASE).doPostJson2(User.shareAppToPic, "", getToken(), new GsonObjectCallback<String>(App.BASE) {
             @Override
             public void onUi(String result) {
                 try {

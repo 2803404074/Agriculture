@@ -24,5 +24,7 @@
     <color name="colorGreen">#34b386</color>
     <color name="colorGreen2">#00a795</color>
     <color name="colorGray">#fccc</color>
+    <color name="colorGray3">#805C5C5C</color>
+    <color name="colorCoupon">#61C6D0</color>
     <color name="colorGray2">#faaa</color>
 </resources>

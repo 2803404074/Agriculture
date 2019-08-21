@@ -1,13 +1,16 @@
 package com.tzl.agriculture.fragment.vip.activity;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.imageutils.BitmapUtil;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.fragment.vip.model.CouponMo;
@@ -76,33 +79,40 @@ public class CouponActivity extends SetBaseActivity {
             public void convert(Context mContext, BaseRecyclerHolder holder, int position,CouponMo o) {
                 TextView tvPrice = holder.getView(R.id.tv_price);
                 TextView tvTip = holder.getView(R.id.tv_tip);
+                TextView tv_mess = holder.getView(R.id.tv_mess);
+                TextView text_flag = holder.getView(R.id.text_flag);
+                TextView tv_type = holder.getView(R.id.tv_type);
+                ImageView image_top = holder.getView(R.id.image_top);
 
                 int status = o.getCardState();
 
-                tvPrice.setTextColor(getResources().getColor(R.color.colorOrange));
-                tvPrice.setTextColor(getResources().getColor(R.color.colorOrange));
-                tvTip.setBackgroundResource(R.drawable.shape_login_orange);
+                tvPrice.setTextColor(getResources().getColor(R.color.colorCoupon));
+
+                tvTip.setBackgroundResource(R.mipmap.pic_conpon_no_use_bg);
                 tvTip.setClickable(false);
-                tvTip.setTextColor(getResources().getColor(R.color.colorW));
                 tvTip.setText("未使用");
 
                 switch (status) {
                     case 0:
                         break;
                     case 1:
-                        tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
-                        tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
-                        tvTip.setBackgroundResource(R.drawable.shape_login_whi_no);
-                        tvTip.setClickable(false);
-                        tvTip.setTextColor(getResources().getColor(R.color.colorTouming));
+                        tvPrice.setTextColor(getResources().getColor(R.color.colorGray));
+                        tv_mess.setTextColor(getResources().getColor(R.color.colorGray));
+                        text_flag.setTextColor(getResources().getColor(R.color.colorGray));
+                        image_top.setBackground(ContextCompat.getDrawable(CouponActivity.this,R.drawable.shape_coupon_top_used));
+
+                        tvTip.setBackgroundResource(R.mipmap.pic_coupon_used_bg);
+                        tv_type.setBackgroundResource(R.mipmap.pic_coupoe_used_quan);
                         tvTip.setText("已使用");
                         break;
                     case 2:
-                        tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
-                        tvPrice.setTextColor(getResources().getColor(R.color.colorGri2));
-                        tvTip.setTextColor(getResources().getColor(R.color.colorGri2));
-                        tvTip.setBackgroundResource(R.drawable.shape_login_whi_no);
-                        tvTip.setClickable(false);
+                        tvPrice.setTextColor(getResources().getColor(R.color.colorGray));
+                        tv_mess.setTextColor(getResources().getColor(R.color.colorGray));
+                        text_flag.setTextColor(getResources().getColor(R.color.colorGray));
+                        image_top.setBackground(ContextCompat.getDrawable(CouponActivity.this,R.drawable.shape_coupon_top_used));
+
+                        tvTip.setBackgroundResource(R.mipmap.pic_coupon_used_bg);
+                        tv_type.setBackgroundResource(R.mipmap.pic_coupoe_used_quan);
                         tvTip.setText("已过期");
                         break;
                     default:
@@ -182,6 +192,7 @@ public class CouponActivity extends SetBaseActivity {
                     }
                 };
                 dialogUtilT.show2(R.layout.dialog_coupon_details,couponMoDetails);
+                dialogUtilT.setDialogWidth(0.8f);
             }
         });
 

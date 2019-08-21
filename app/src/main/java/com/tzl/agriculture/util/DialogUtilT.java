@@ -65,6 +65,14 @@ public abstract class DialogUtilT<T> extends DialogUtil{
         dialog.getWindow().setWindowAnimations(R.style.dialog_animation);
     }
 
+    public void setDialogWidth(float w){
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int) (ScreenUtils.getScreenWidth(getContext()) *w);
+        params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(params);
+        dialog.getWindow().setWindowAnimations(R.style.dialog_animation);
+    }
+
 
     /**
      *

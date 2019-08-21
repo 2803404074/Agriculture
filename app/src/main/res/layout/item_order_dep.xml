@@ -1,103 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_marginBottom="@dimen/dp_10"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_5"
     android:background="@drawable/shape_white_noframe"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_depName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_15"
-        android:text="朝阳店"/>
+        android:text="朝阳店"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:textColor="@color/colorGri2"
+        android:textSize="@dimen/sp_15" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recy_sun"
-        android:layout_marginVertical="@dimen/dp_3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_3"></androidx.recyclerview.widget.RecyclerView>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_20"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+           >
+
             <TextView
-                android:textColor="@color/colorGri2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_13"
-                android:text="邮费"/>
+                android:text="邮费"
+                android:textColor="@color/colorGri2"
+                android:textSize="@dimen/sp_13" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="1px"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/tv_kd"
-                android:textColor="@color/colorGri2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_13"
-                android:text="快递   免邮"/>
+                android:text="快递   免邮"
+                android:textColor="@color/colorGri2"
+                android:textSize="@dimen/sp_13" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_10"
             android:layout_marginVertical="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_20"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+           >
+
             <TextView
-                android:textColor="@color/colorGri2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_13"
-                android:text="开具发票"/>
+                android:text="开具发票"
+                android:textColor="@color/colorGri2"
+                android:textSize="@dimen/sp_13" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="1px"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/tv_fp"
-                android:textColor="@color/colorGri2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="@dimen/sp_13"
-                android:text="本次不具备开发票"/>
+                android:text="本次不具备开发票"
+                android:textColor="@color/colorGri2"
+                android:textSize="@dimen/sp_13" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_20"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+           >
+
             <TextView
-                android:textColor="@color/colorGri2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_13"
-                android:text="订单备注"/>
+                android:text="订单备注"
+                android:textColor="@color/colorGri2"
+                android:textSize="@dimen/sp_13" />
+
             <EditText
                 android:id="@+id/et_mess"
-                android:textColor="@color/colorGri2"
                 android:layout_width="0dp"
-                android:paddingLeft="@dimen/dp_20"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_13"
+                android:layout_weight="1"
                 android:background="@null"
-                android:hint="选填"/>
+                android:hint="选填"
+                android:paddingLeft="@dimen/dp_20"
+                android:textColor="@color/colorGri2"
+                android:textSize="@dimen/sp_13" />
         </LinearLayout>
 
 
@@ -106,10 +116,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
         android:gravity="right"
-        android:padding="@dimen/dp_5"
-        android:layout_marginTop="@dimen/dp_20"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_5">
+
         <TextView
             android:id="@+id/tv_goodsNum"
             android:layout_width="wrap_content"
@@ -117,26 +128,26 @@
             android:hint="共1件" />
 
         <TextView
-            android:layout_marginLeft="@dimen/dp_10"
-            android:textColor="@color/colorGri2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_15"
-            android:text="小计:"/>
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="小计:"
+            android:textColor="@color/colorGri2"
+            android:textSize="@dimen/sp_15" />
 
         <TextView
-            android:textColor="@color/colorOrange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_15"
-            android:text="@string/app_money"/>
+            android:text="@string/app_money"
+            android:textColor="@color/colorOrange"
+            android:textSize="@dimen/sp_15" />
 
         <TextView
             android:id="@+id/tv_depPrice"
-            android:textColor="@color/colorOrange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_15"
-            android:text="65.0"/>
+            android:text="65.0"
+            android:textColor="@color/colorOrange"
+            android:textSize="@dimen/sp_15" />
     </LinearLayout>
 </LinearLayout>

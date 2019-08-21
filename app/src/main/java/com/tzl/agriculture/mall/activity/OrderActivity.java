@@ -7,11 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,18 +67,9 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
     @BindView(R.id.recy)
     RecyclerView recyclerView;
 
-    @BindView(R.id.recy_yhq)
-    RecyclerView recyclerYhq;
 
-    private BaseAdapter adapterYhq;
-    private List<CouponMo> couponMos = new ArrayList<>();
-
-
-    @BindView(R.id.tv_yhq_status)
-    TextView tvYhqSize;
-
-    @BindView(R.id.tv_youh)
-    TextView tvYouh;
+    @BindView(R.id.ll_coupon)
+    LinearLayout mLinearLayoutCoupon;
 
     private BaseAdapter adapter;
 
@@ -101,8 +95,8 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
     @BindView(R.id.or_money_count)
     TextView tvTotalPrice;
 
-    @BindView(R.id.orther_set_address)
-    ImageView ivSetAddress;
+    @BindView(R.id.or_is_address)
+    LinearLayout ivSetAddress;
 
     @Override
     public void backFinish() {
@@ -131,6 +125,32 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                 }
                 break;
         }
+    }
+    //设置优惠券
+    private void setTextCoupon(String ...stringsArp){
+       TextView m1= (TextView) mLinearLayoutCoupon.getChildAt(0);
+       TextView m2= (TextView) mLinearLayoutCoupon.getChildAt(1);
+       TextView m3= (TextView) mLinearLayoutCoupon.getChildAt(2);
+        m2.setVisibility(TextUtils.isEmpty(stringsArp[2])?View.GONE:View.VISIBLE);
+        m1.setText(Html.fromHtml("店铺优惠\t\t\t\t\t"+"<font color='#8A8888'>"+stringsArp[0]+"张优惠券，共优惠"+stringsArp[1]+"元</font>"));
+        m2.setText(Html.fromHtml("会员优惠\t\t\t\t\t"+"<font color='#8A8888'>折扣优惠"+stringsArp[2]+"元</font>"));
+        m3.setText("优惠总额\t\t\t\t\t共计"+stringsArp[3]+"元");
+    }
+
+    //精确数据
+    private String getTotalCoupon(String s1,String s2){
+        if(TextUtils.isEmpty(s1)){
+            s1="0";
+        }   if(TextUtils.isEmpty(s2)){
+            s2="0";
+        }
+        try {
+            BigDecimal bigDecimal=new BigDecimal(Double.valueOf(s1));
+           return bigDecimal.add(new BigDecimal(Double.valueOf(s2))).doubleValue()+"";
+        }catch (Throwable t){
+
+        }
+        return "0";
     }
 
     @Override
@@ -175,7 +195,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                         holder.setText(R.id.tv_title, o.getGoodsName());
                         holder.setText(R.id.tv_price, o.getGoodsPrice());
                         holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
-                        holder.setText(R.id.tv_num, "X" + o.getGoodsNum());
+                        holder.setText(R.id.tv_num, "x" + o.getGoodsNum());
                         holder.setText(R.id.tv_gg, o.getGoodsSpecs());
                     }
                 };
@@ -184,35 +204,8 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
 
         };
         recyclerView.setAdapter(adapter);
-
-
-        //优惠券
-        LinearLayoutManager manager = new LinearLayoutManager(OrderActivity.this);
-        manager.setOrientation(RecyclerView.HORIZONTAL);
-        recyclerYhq.setLayoutManager(manager);
-
-        adapterYhq = new BaseAdapter<CouponMo>(OrderActivity.this,
-                recyclerYhq,couponMos,R.layout.item_coupon_limit) {
-            @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, int position,CouponMo o) {
-
-                if (o.getConsumeType() == 1) {//1抵扣，price显示价钱
-                    holder.setText(R.id.tv_type, "满减券");
-                    holder.setText(R.id.tv_price, o.getAmount());
-                    holder.setText(R.id.tv_name, o.getCradName());
-                    holder.setText(R.id.tv_endTime, o.getEndEffective());
-                    holder.setText(R.id.tv_mess, o.getCradNote());
-                } else {//折扣  price显示折扣
-                    holder.setText(R.id.tv_type, "折扣券\t" + TextUtil.checkStr2Str(o.getDiscount()));
-                    holder.setText(R.id.tv_price, "0");
-                    holder.setText(R.id.tv_name, o.getCradName());
-                    holder.setText(R.id.tv_endTime, o.getEndEffective());
-                    holder.setText(R.id.tv_mess, o.getCradNote());
-                }
-            }
-        };
-        recyclerYhq.setAdapter(adapterYhq);
         tvCommit.setOnClickListener(this);
+
     }
 
     @Override
@@ -234,6 +227,8 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                         //地址
                         String harvest = dataObj.optString("harvest");
                         addressMo = JsonUtil.string2Obj(harvest, AddressMo.class);
+                        //设置地址
+                        setAddress();
 
                         //店铺商品列表
                         String shopList = dataObj.optString("shopList");
@@ -243,43 +238,24 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
                         JSONObject couponBosObj = dataObj.optJSONObject("couponBos");
 
                         //优惠券数量
-                        tvYhqSize.setText(TextUtil.checkStr2Str(couponBosObj.optString("useCouponNum")));
-
+                       String total=couponBosObj.optString("useCouponNum");
+                        String deductedAmount= couponBosObj.optString("deductedAmount");
                         String member = couponBosObj.optString("member");
                         if (!TextUtils.isEmpty(member)){
                             if (member.equals("true")){//是会员
                                 String memberAmount = couponBosObj.optString("memberAmount");
                                 //订单已优惠（整个页面的）
-                                tvYouh.setText(TextUtil.checkStr2Str("原价："+
-                                        couponBosObj.optString("totalAmount")+"，已优惠"+couponBosObj.optString("deductedAmount")+"元 ，会员折扣优惠" + memberAmount +"元。"));
+                                setTextCoupon(total,deductedAmount,memberAmount,getTotalCoupon(memberAmount,deductedAmount));
                             }else{
                                 //订单已优惠（整个页面的）
-                                tvYouh.setText(TextUtil.checkStr2Str("原价："+
-                                        couponBosObj.optString("totalAmount")+"，已优惠"+couponBosObj.optString("deductedAmount")+"元"));
+                                setTextCoupon(total,deductedAmount,"",getTotalCoupon("0",deductedAmount));
                             }
                         }else{
                             //订单已优惠（整个页面的）
-                            tvYouh.setText(TextUtil.checkStr2Str("原价："+
-                                    couponBosObj.optString("totalAmount")+"，已优惠"+couponBosObj.optString("deductedAmount")+"元"));
+                            setTextCoupon(total,deductedAmount,"",getTotalCoupon("0",deductedAmount));
                         }
-
-                        //订单已优惠（整个页面的）
-//                        tvYouh.setText(TextUtil.checkStr2Str("原价："+
-//                                couponBosObj.optString("totalAmount")+"，已优惠"+couponBosObj.optString("deductedAmount")+"元"));
-
                         //整个订单需要支付的金额
                         tvTotalPrice.setText(TextUtil.checkStr2Str(couponBosObj.optString("paymentAmount")));
-
-                        //优惠券列表
-                        String couponsStr = couponBosObj.optString("coupons");
-                        couponMos = JsonUtil.string2Obj(couponsStr, List.class, CouponMo.class);
-                        if (couponMos !=null){
-                            adapterYhq.updateData(couponMos);
-                        }
-
-                        //设置地址
-                        setAddress();
-
                         //设置商品
                         adapter.updateData(orderMo);
 
@@ -314,7 +290,7 @@ public class OrderActivity extends SetBaseActivity implements View.OnClickListen
             case R.id.orther_ok:
                 commit();
                 break;
-            case R.id.orther_set_address:
+            case R.id.or_is_address:
                 Intent intent = new Intent(OrderActivity.this, AddressActivity.class);
                 intent.putExtra("type", 1);
                 startActivityForResult(intent, 100);
