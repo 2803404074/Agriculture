@@ -125,7 +125,7 @@ public class WellcomActivity extends AppCompatActivity implements View.OnClickLi
                                 public void downCallBack(List<String> strings) {
                                     if (ContextCompat.checkSelfPermission(WellcomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == 0 && strings != null && strings.size() > 0) {
                                         mStrings.addAll(strings);
-                                        Glide.with(WellcomActivity.this).load(strings.get(0) + "").into(mImageView);
+                                        Glide.with(getApplicationContext()).load(strings.get(0) + "").into(mImageView);
                                         text_time.setVisibility(View.VISIBLE);
                                         if (mHandler != null)
                                             mHandler.sendEmptyMessageDelayed(0x101, 1000);
@@ -282,6 +282,7 @@ public class WellcomActivity extends AppCompatActivity implements View.OnClickLi
             mHandler.removeMessages(0x101);
         }
         DownMediaUtils.getmDownMediaUtils(this).deteleAllFile(mStrings);
+        OkHttp3Utils.desInstance();
         super.onDestroy();
     }
 

@@ -126,13 +126,19 @@
 
             </RelativeLayout>
 
+            <com.tzl.agriculture.view.ShowButtonLayout
+                android:id="@+id/labelLayout"
+                android:layout_marginVertical="@dimen/dp_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.tzl.agriculture.view.ShowButtonLayout>
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/dp_10"
-                android:paddingVertical="@dimen/dp_10"
-                android:text="--"
+                android:text="啊实打实的"
+                android:paddingBottom="@dimen/dp_5"
                 android:textColor="@color/colorGri2"
                 android:textSize="@dimen/sp_18" />
 
@@ -162,11 +168,19 @@
 
                 <TextView
                     android:id="@+id/tv_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="--"
                     android:textSize="@dimen/sp_15" />
+
+                <TextView
+                    android:text="月销--"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_salesNum"/>
             </LinearLayout>
 
             <View

@@ -98,7 +98,7 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
                 TextView tvDate = holder.getView(R.id.tv_date);
-                dowTime(o.getSpikeEndTime(), tvDate, position);
+                dowTime(o.getSpikeEndTime(), tvDate, position,holder);
             }
         };
         recyclerView.setAdapter(adapter);
@@ -119,7 +119,6 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
                 if (type == 1) {
                     intent.putExtra("type", 2);
                 }
-
                 startActivity(intent);
             }
         });
@@ -198,7 +197,7 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
         });
     }
 
-    private void dowTime(String data, TextView tvDate, int position) {
+    private void dowTime(String data, TextView tvDate, int position,BaseRecyclerHolder holder) {
         if (StringUtils.isEmpty(data) || data.equals("null")) {
             tvDate.setText("活动已结束");
             return;
@@ -240,8 +239,9 @@ public class GoodsFragmentPage extends BaseFragmentFromType {
 
             @Override
             public void onFinish() {
-                mData.remove(position);
-                adapter.updateData(mData);
+                holder.getView(R.id.tv_buy).setBackgroundResource(R.drawable.shape_login_blue_hide);
+                holder.itemView.setClickable(false);
+                holder.itemView.setEnabled(false);
                 tvDate.setText("活动已结束");
             }
         });

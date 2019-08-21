@@ -37,24 +37,35 @@
                     android:layout_height="@dimen/dp_65"
                     fresco:roundAsCircle="true" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_name"
-                    android:textSize="@dimen/sp_12"
-                    android:layout_above="@+id/iv_status"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@android:color/white"
-                    android:text="----"/>
-
-                <ImageView
-                    android:id="@+id/iv_status"
-                    android:layout_marginVertical="@dimen/dp_5"
+                    android:orientation="vertical"
                     android:layout_above="@+id/ll_ljkt"
+                    android:gravity="center"
                     android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/vip_fpds"/>
+                    android:layout_below="@+id/drawee_img">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_name"
+                       android:layout_marginTop="@dimen/dp_5"
+                        android:textSize="@dimen/sp_12"
+                        android:layout_above="@+id/iv_status"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/white"
+                        android:text="---"/>
+
+                    <ImageView
+                        android:id="@+id/iv_status"
+                        android:layout_marginVertical="@dimen/dp_5"
+                        android:layout_above="@+id/ll_ljkt"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/vip_fpds"/>
+                </LinearLayout>
+
 
              <!--   <LinearLayout
                     android:id="@+id/ll_ph"

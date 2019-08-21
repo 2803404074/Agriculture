@@ -164,19 +164,16 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         draweeView.setImageURI(userInfo.getHeadUrl());
         tvName.setText(userInfo.getNickname());
         //tvPhone.setText(userInfo.getPhone());
-        if (userInfo.getUserType() == 3) {//用户类型
 
-            //vip类型
-            if (userInfo.getGrade() == 1){//白银
-                ivStatus.setImageResource(R.mipmap.vip_byhy);
-            }
-            if (userInfo.getGrade() == 2){//铂金
-                ivStatus.setImageResource(R.mipmap.vip_bjhy);
-            }
-            if (userInfo.getGrade() == 3){//扶贫大使
-                ivStatus.setImageResource(R.mipmap.vip_fpds);
-            }
-
+        //vip类型
+        if (userInfo.getGrade() == 1){//白银
+            ivStatus.setImageResource(R.mipmap.vip_byhy);
+        }
+        if (userInfo.getGrade() == 2){//铂金
+            ivStatus.setImageResource(R.mipmap.vip_bjhy);
+        }
+        if (userInfo.getGrade() == 3) {//用户类型
+            ivStatus.setImageResource(R.mipmap.vip_fpds);
             tvBy.setVisibility(View.GONE);
             rlVipYes.setVisibility(View.VISIBLE);
             llMyJf.setVisibility(View.VISIBLE);
@@ -224,7 +221,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 
         } else {
 
-            ivStatus.setVisibility(View.GONE);
+            //ivStatus.setVisibility(View.GONE);
 //            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
 //            adapter = new BaseAdapter<VipCommodity>(this,recyclerView,vipCommodityLists,R.layout.item_vip_commodity_adapter) {
 //                @Override
@@ -311,11 +308,13 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
             }
         });
 
-
+        if (userInfo.getGrade()!=1 && userInfo.getGrade()!=2&&userInfo.getGrade()!=3){
+            ivStatus.setVisibility(View.GONE);
+        }
     }
 
     public void tvYq(View view){
-        if (userInfo.getUserType() == 3){
+        if (userInfo.getGrade() == 3){
             //提现
             Intent intent = new Intent(VipActivity.this,CashActivity.class);
             intent.putExtra("money",tvJf.getText().toString());
@@ -360,7 +359,7 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
 //                }
 //            });
 
-        } else if (userInfo.getUserType() == 3) {
+        } else if (userInfo.getGrade() == 3) {
             Map<String, String> map = new HashMap<>();
             map.put("pageNum", String.valueOf(page));
             String str = JsonUtil.obj2String(map);

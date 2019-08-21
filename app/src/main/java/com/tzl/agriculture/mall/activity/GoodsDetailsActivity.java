@@ -40,6 +40,7 @@ import com.tzl.agriculture.util.MyWebViewClient;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ScreenUtils;
 import com.tzl.agriculture.util.ShareUtils;
+import com.tzl.agriculture.util.ShowButtonLayoutData;
 import com.tzl.agriculture.util.StatusBarUtil;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
@@ -47,6 +48,7 @@ import com.tzl.agriculture.view.BaseActivity;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
 import com.tzl.agriculture.view.ShoppingSelectView;
+import com.tzl.agriculture.view.ShowButtonLayout;
 import com.tzl.agriculture.view.ViewPagerTransform;
 
 import org.apache.commons.lang.StringUtils;
@@ -172,7 +174,11 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     TextView mTextViewCollect;
 
 
+    @BindView(R.id.tv_salesNum)
+    TextView tvSalesNum;
 
+    @BindView(R.id.labelLayout)
+    ShowButtonLayout labelLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -314,6 +320,14 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         tvAddress.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getShipAddress()));
         tvBz.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoodsServicesStr()));
 
+        //标签
+        ShowButtonLayoutData showButtonLayoutData = new ShowButtonLayoutData<String>(getContext(), labelLayout, goodsDetailsMo.getGoods().getGoodsLabelList(), null);
+        showButtonLayoutData.setView(R.layout.text_view_red);
+        showButtonLayoutData.setData();
+
+        //销量
+        tvSalesNum.setText(TextUtil.checkStr2Num(goodsDetailsMo.getGoods().getSalesVolume()));
+
         //邮费
         String yfStr = TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getFreeShipping());
         tvYf.setText(yfStr.equals("0")? "包邮":getString(R.string.app_money)+yfStr);
@@ -336,8 +350,6 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
         //评论用户名
         //评论内容
-
-
         //店铺logo
         if (!GoodsDetailsActivity.this.isFinishing()) {
             Glide.with(getApplicationContext()).load(goodsDetailsMo.getGoods().getLogoIcon()).into(ivDepHead);

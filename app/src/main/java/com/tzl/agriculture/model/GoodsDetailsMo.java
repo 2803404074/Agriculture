@@ -77,6 +77,8 @@ public class GoodsDetailsMo {
     public static class Goods{
         private String goodsShareUrl;//分享跳转连接
         private int number;//库存
+        private String salesVolume;//销量
+        private List<String>goodsLabelList;//标签
         private String shopTypeId;
         private String goodsName;
         private String goodsId;
@@ -95,6 +97,13 @@ public class GoodsDetailsMo {
         private int purchaseLimit;//限购，0无线，1限购一件
         private String freeShipping;//邮费
 
+        public String getSalesVolume() {
+            return salesVolume;
+        }
+
+        public List<String> getGoodsLabelList() {
+            return goodsLabelList;
+        }
 
         public int getPurchaseLimit() {
             return purchaseLimit;
