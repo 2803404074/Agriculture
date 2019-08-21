@@ -12,7 +12,7 @@ public class CouponMo {
     private String typeId;
     private String category;
     private String userId;
-    private String shopIds;
+    private String shopIds; //不为空店铺券  为空全平台
     private String goodsIds;
     private String goodsCateids;
     private String cradName;

@@ -2,6 +2,7 @@ package com.tzl.agriculture.fragment.vip.activity;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -83,7 +84,12 @@ public class CouponActivity extends SetBaseActivity {
                 TextView text_flag = holder.getView(R.id.text_flag);
                 TextView tv_type = holder.getView(R.id.tv_type);
                 ImageView image_top = holder.getView(R.id.image_top);
-
+                TextView text_flag2 = holder.getView(R.id.text_flag2);
+                if(!TextUtils.isEmpty(o.getShopIds())||!TextUtils.isEmpty(o.getGoodsIds())){
+                    text_flag2.setText("店铺券");
+                }else{
+                    text_flag2.setText("全平台");
+                }
                 int status = o.getCardState();
 
                 tvPrice.setTextColor(getResources().getColor(R.color.colorCoupon));
