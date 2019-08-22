@@ -254,20 +254,44 @@ public class OrderDetailsActivity extends SetBaseActivity implements View.OnClic
             case 0:
                 tvQxdd.setVisibility(View.VISIBLE);
                 tvFk.setVisibility(View.VISIBLE);
+                tvPj.setVisibility(View.GONE);
+                tvQrsh.setVisibility(View.GONE);
+                tvCkwl.setVisibility(View.GONE);
                 break;
             case 1:
-                //tvQxdd.setVisibility(View.VISIBLE);
+                tvPj.setVisibility(View.GONE);
+                tvQrsh.setVisibility(View.GONE);
+                tvCkwl.setVisibility(View.GONE);
+                tvQxdd.setVisibility(View.GONE);
+                tvFk.setVisibility(View.GONE);
                 break;
             case 2:
                 tvPj.setVisibility(View.VISIBLE);
+                tvQrsh.setVisibility(View.GONE);
+                tvCkwl.setVisibility(View.GONE);
+                tvQxdd.setVisibility(View.GONE);
+                tvFk.setVisibility(View.GONE);
                 break;
             case 3:
                 tvQrsh.setVisibility(View.VISIBLE);
                 tvCkwl.setVisibility(View.VISIBLE);
+                tvQxdd.setVisibility(View.GONE);
+                tvFk.setVisibility(View.GONE);
+                tvPj.setVisibility(View.GONE);
                 break;
             case 4:
+                tvPj.setVisibility(View.GONE);
+                tvQrsh.setVisibility(View.GONE);
+                tvCkwl.setVisibility(View.GONE);
+                tvQxdd.setVisibility(View.GONE);
+                tvFk.setVisibility(View.GONE);
                 break;
             case 5:
+                tvPj.setVisibility(View.GONE);
+                tvQrsh.setVisibility(View.GONE);
+                tvCkwl.setVisibility(View.GONE);
+                tvQxdd.setVisibility(View.GONE);
+                tvFk.setVisibility(View.GONE);
                 break;
         }
     }

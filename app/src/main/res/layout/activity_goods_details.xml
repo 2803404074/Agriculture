@@ -89,6 +89,7 @@
                     <LinearLayout
                         android:id="@+id/ll_dateDown"
                         android:layout_gravity="right"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -137,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/dp_10"
-                android:text="啊实打实的"
+                tools:text="啊实打实的"
                 android:paddingBottom="@dimen/dp_5"
                 android:textColor="@color/colorGri2"
                 android:textSize="@dimen/sp_18" />
@@ -342,7 +343,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="5"
+                    android:text="0"
                     android:textColor="@color/colorGri2"
                     android:textSize="@dimen/sp_15" />
 
@@ -377,6 +378,7 @@
                 android:id="@+id/rl_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:paddingHorizontal="@dimen/dp_10">
 
                 <ImageView
@@ -420,7 +422,7 @@
                     android:layout_width="@dimen/dp_50"
                     android:layout_height="@dimen/dp_50"
                     android:padding="@dimen/dp_5"
-                    android:src="@mipmap/ic_launcher" />
+                     />
 
                 <TextView
                     android:id="@+id/tv_dep_go"
@@ -440,7 +442,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/iv_dep_head"
-                    android:text="乡村果农直发"
+                    tools:text="乡村果农直发"
                     android:layout_centerVertical="true"
                     android:textColor="@color/colorGri2"
                     android:textSize="@dimen/sp_18" />

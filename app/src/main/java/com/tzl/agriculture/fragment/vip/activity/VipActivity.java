@@ -454,18 +454,23 @@ public class VipActivity extends SetBaseActivity implements View.OnClickListener
         dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(this) / 4 * 3), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
-
+    private List<QyTcMo> qyTcMos;
     private void initDialogImg(ImageView imageView, int index) {
+        if(qyTcMos!=null&&index<qyTcMos.size()){
+            Glide.with(VipActivity.this.getApplicationContext()).load(TextUtil.checkStr2Str(qyTcMos.get(index).getContUrl())).into(imageView);
+            return;
+        }
         String token = (String) SPUtils.instance(this, 1).getkey("token", "");
         OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.interests, "", token, new GsonObjectCallback<String>(App.BASE) {
             @Override
             public void onUi(String result) {
+                System.out.println("result = [" + result + "]");
                 try {
                     JSONObject object = new JSONObject(result);
                     String data = object.optString("data");
-                    List<QyTcMo> qyTcMos = JsonUtil.string2Obj(data, List.class, QyTcMo.class);
+                    qyTcMos = JsonUtil.string2Obj(data, List.class, QyTcMo.class);
                     if (null != qyTcMos && index < qyTcMos.size()) {
-                        Glide.with(VipActivity.this).load(TextUtil.checkStr2Str(qyTcMos.get(index).getContUrl())).into(imageView);
+                        Glide.with(VipActivity.this.getApplicationContext()).load(TextUtil.checkStr2Str(qyTcMos.get(index).getContUrl())).into(imageView);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

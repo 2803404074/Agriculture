@@ -192,6 +192,19 @@
 -dontwarn com.tzl.agriculture.baseresult.**
 -keep class com.tzl.agriculture.baseresult.** { *; }
 
+
+#不混淆成员vip内部实体
+-keep class com.tzl.agriculture.fragment.vip.activity.VipActivity$* {
+    *;
+}#不混淆成员内部实体
+-keep class com.tzl.agriculture.fragment.xiangc.activity.XiangcMyActivity$* {
+    *;
+}#不混淆成员内部实体
+-keep class com.tzl.agriculture.mall.activity.LimitedTimeActivity$* {
+    *;
+}
+
+
 -dontwarn com.tzl.agriculture.fragment.personal.activity.ccb.entity.**
 -keep class com.tzl.agriculture.fragment.personal.activity.ccb.entity.** { *; }
 
@@ -245,6 +258,10 @@
 #glide
 -dontwarn com.bumptech.glide.**
 -keep class com.bumptech.glide.**{*;}
+
+#glide
+-dontwarn androidx.multidex.**
+-keep class androidx.multidex.**{*;}
 
 
 #谷歌view

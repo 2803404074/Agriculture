@@ -432,7 +432,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.tv_dpj:
                 Intent intent6 = new Intent(getContext(), MyOrderActivity.class);
-                intent6.putExtra("position",3);
+                intent6.putExtra("position",4);
                 startActivity(intent6);
                 break;
             case R.id.tv_sh:
