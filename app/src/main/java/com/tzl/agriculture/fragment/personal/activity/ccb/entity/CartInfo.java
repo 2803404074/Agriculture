@@ -120,12 +120,12 @@ public class CartInfo {
                 this.ischeck = ischeck;
             }
 
-            public String getItemid() {
+            public String getGoodsId() {
                 return goodsId;
             }
 
-            public void setItemid(String itemid) {
-                this.goodsId = itemid;
+            public void setGoodsId(String goodsId) {
+                this.goodsId = goodsId;
             }
 
             public String getSpecifications() {

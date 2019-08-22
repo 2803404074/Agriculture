@@ -1,7 +1,5 @@
 package com.tzl.agriculture.util;
 
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -10,7 +8,7 @@ public class MyWebViewClient extends WebViewClient {
     private WebCallBack webCallBack;
 
     public interface WebCallBack{
-        void err(WebResourceError error);
+        void err(String error);
     }
 
     public void setWebCallBack(WebCallBack webCallBack){
@@ -44,9 +42,4 @@ public class MyWebViewClient extends WebViewClient {
                 "})()");
     }
 
-    @Override
-    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-        super.onReceivedError(view, request, error);
-            webCallBack.err(error);
-    }
 }

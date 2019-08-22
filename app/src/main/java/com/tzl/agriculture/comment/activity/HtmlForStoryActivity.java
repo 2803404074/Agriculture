@@ -65,9 +65,6 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
     @BindView(R.id.tv_dz_num)
     TextView tvDzNum;
 
-    @BindView(R.id.spin_kit)
-    SpinKitView spinKitView;
-
     @BindView(R.id.bt_collect)
     ShineButton btCollect;
 
@@ -92,6 +89,9 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
 
     @Override
     public void initView() {
+
+        setLoaddingView(true);
+
         Map<String, String> map = new HashMap<>();
         map.put("articleId", getIntent().getStringExtra("articleId"));
         String str = JsonUtil.obj2String(map);
@@ -118,7 +118,7 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                spinKitView.setVisibility(View.GONE);
+                                setLoaddingView(false);
                             }
                         });
                     }
@@ -129,7 +129,7 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                spinKitView.setVisibility(View.GONE);
+                                setLoaddingView(false);
                             }
                         });
                     }
@@ -201,7 +201,7 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
             llCollection.setBackgroundResource(R.drawable.shape_login_orange_no);
             btCollect.setChecked(true);
         }
-        setWebView(webView, spinKitView, article.getContent());
+        setWebView(webView, article.getContent());
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

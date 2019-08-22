@@ -53,6 +53,7 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
     }
 
     private LoaddingUtils mLoaddingUtils;
+
     public void setLoaddingView(boolean isLoadding){
         if(mLoaddingUtils==null){
             mLoaddingUtils=new LoaddingUtils(mContext);
@@ -76,7 +77,7 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
         return this.mContext;
     }
 
-    public void setWebView(WebView webViewx, SpinKitView spinKitView, String html) {
+    public void setWebView(WebView webViewx, String html) {
         this.webView = webViewx;
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setUseWideViewPort(true);
@@ -89,8 +90,8 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
         MyWebViewClient webViewClient = new MyWebViewClient(webView);
         webViewClient.setWebCallBack(new MyWebViewClient.WebCallBack() {
             @Override
-            public void err(WebResourceError error) {
-                spinKitView.setVisibility(View.GONE);
+            public void err(String error) {
+                setLoaddingView(false);
                 ToastUtil.showShort(mContext,"网络异常");
             }
         });
@@ -105,7 +106,7 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress == 100) {
                     //加载完成
-                    spinKitView.setVisibility(View.GONE);
+                    setLoaddingView(false);
                 }
             }
         });

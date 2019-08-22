@@ -1,6 +1,7 @@
 package com.tzl.agriculture.fragment.personal.activity.ccb.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.ccb.cartinter.OnClickAddCloseListenter;
 import com.tzl.agriculture.fragment.personal.activity.ccb.cartinter.OnClickListenterModel;
 import com.tzl.agriculture.fragment.personal.activity.ccb.entity.CartInfo;
+import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +65,13 @@ public class ListBaseAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         viewHolder.cbChild.setChecked(list.get(position).ischeck());
         viewHolder.tvChild.setText(list.get(position).getTitle());
         viewHolder.textView.setText("¥ " + list.get(position).getPrice());
@@ -74,6 +83,16 @@ public class ListBaseAdapter extends BaseAdapter {
                 onClickListenterModel.onItemClick(viewHolder.cbChild.isChecked(), v, positionO, position);
             }
         });
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, GoodsDetailsActivity.class);
+                intent.putExtra("type",2);
+                intent.putExtra("goodsId",list.get(position).getGoodsId());
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
     // CheckBox2接口的方法
@@ -82,6 +101,8 @@ public class ListBaseAdapter extends BaseAdapter {
     public void setOnClickListenterModel(OnClickListenterModel listener) {
         this.onClickListenterModel = listener;
     }
+
+
     // 数量接口的方法
     private OnClickAddCloseListenter onClickAddCloseListenter = null;
     public void setOnClickAddCloseListenter(OnClickAddCloseListenter listener) {

@@ -43,9 +43,6 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
     @BindView(R.id.tv_title)
     TextView textView;
 
-    @BindView(R.id.spin_kit)
-    SpinKitView spinKitView;
-
     @BindView(R.id.back)
     ImageView ivBack;
 
@@ -83,6 +80,9 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
      */
     @Override
     public void initView() {
+
+        setLoaddingView(true);
+
         SPUtils.instance(this,1).remove("main_type");
         SPUtils.instance(this,1).remove("main_link");
         setAndroidNativeLightStatusBar(true);
@@ -97,6 +97,7 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
                     @Override
                     public void onUi(String result) {
                         try {
+                            setLoaddingView(false);
                             JSONObject object = new JSONObject(result);
                             if (object.optInt("code") == 0) {
                                 JSONObject dataObj = object.optJSONObject("data");
@@ -111,6 +112,23 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
 
                     @Override
                     public void onFailed(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setLoaddingView(false);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        super.onFailure(call, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setLoaddingView(false);
+                            }
+                        });
                     }
                 });
 
@@ -177,7 +195,7 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
             btCollect.setChecked(true);
         }
 
-        setWebView(webView, spinKitView, article.getContent());
+        setWebView(webView, article.getContent());
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
