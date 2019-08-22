@@ -24,9 +24,6 @@ public class OrderHtmlActivity extends BaseHtmlActivity {
     @BindView(R.id.back)
     ImageView ivBack;
 
-    @BindView(R.id.spin_kit)
-    SpinKitView spinKitView;
-
     @Override
     public int setLayout() {
         return R.layout.activity_html_orther;
@@ -37,6 +34,7 @@ public class OrderHtmlActivity extends BaseHtmlActivity {
      */
     @Override
     public void initView() {
+        setLoaddingView(true);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +63,7 @@ public class OrderHtmlActivity extends BaseHtmlActivity {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress == 100) {
                     //加载完成
-                    spinKitView.setVisibility(View.GONE);
+                    setLoaddingView(false);
                 }
             }
         });

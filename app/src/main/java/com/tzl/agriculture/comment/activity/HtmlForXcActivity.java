@@ -116,6 +116,7 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
                             @Override
                             public void run() {
                                 setLoaddingView(false);
+                                ivShare.setEnabled(false);
                             }
                         });
                     }
@@ -127,6 +128,7 @@ public class HtmlForXcActivity extends BaseHtmlActivity {
                             @Override
                             public void run() {
                                 setLoaddingView(false);
+                                ivShare.setEnabled(false);
                             }
                         });
                     }

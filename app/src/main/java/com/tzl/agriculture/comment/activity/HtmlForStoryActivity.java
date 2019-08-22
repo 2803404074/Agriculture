@@ -107,6 +107,8 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
                                 String str = dataObj.optString("articleInfo");
                                 article = JsonUtil.string2Obj(str, XiangcMo.Article.class);
                                 setViewData(article);
+                            }else {
+                                setLoaddingView(false);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -119,6 +121,7 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
                             @Override
                             public void run() {
                                 setLoaddingView(false);
+                                ivShare.setEnabled(false);
                             }
                         });
                     }
@@ -130,6 +133,7 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
                             @Override
                             public void run() {
                                 setLoaddingView(false);
+                                ivShare.setEnabled(false);
                             }
                         });
                     }
