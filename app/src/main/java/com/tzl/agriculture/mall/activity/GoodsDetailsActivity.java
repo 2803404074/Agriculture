@@ -220,6 +220,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         } else {
             tvDh.setVisibility(View.GONE);
             llDeatilsMenu.setVisibility(View.VISIBLE);
+
         }
 
 

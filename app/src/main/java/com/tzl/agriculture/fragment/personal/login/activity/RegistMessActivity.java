@@ -147,7 +147,7 @@ public class RegistMessActivity extends SetBaseActivity {
         map.put("phone",getIntent().getStringExtra("phone"));
         map.put("nickName",etNickName.getText().toString());
         map.put("sex",radioGroup.getCheckedRadioButtonId() == R.id.rb_n ? "男":"女");
-        map.put("age",tvDate.getText().toString());
+        map.put("birthday",tvDate.getText().toString());
         map.put("invCode", TextUtil.checkStr2Str(tvInvCode.getText().toString()));
 
         map.put("headUrl",getIntent().getStringExtra("imgUrl"));

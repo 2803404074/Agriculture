@@ -8,6 +8,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tzl.agriculture.util.CrashHandlerUtils;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -30,7 +31,7 @@ public class AgricultureApplication extends Application {
         //微信
         api = WXAPIFactory.createWXAPI(this,APP_ID,true);
         api.registerApp(APP_ID);
-        //CrashHandlerUtils.getInstance().init(this);
+        CrashHandlerUtils.getInstance().init(this);
 
         //极光推送
         JPushInterface.setDebugMode(true);
