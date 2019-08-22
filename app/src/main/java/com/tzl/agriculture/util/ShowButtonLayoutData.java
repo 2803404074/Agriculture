@@ -58,7 +58,9 @@ public class ShowButtonLayoutData<T> {
                 public void onClick(View v) {
                     //String tag = (String) v.getTag();
                     if(data.get(finalI) instanceof String){
-                        mListener.clickListener(v,0,0);
+                        if (mListener != null){
+                            mListener.clickListener(v,0,0);
+                        }
                     }
                 }
             });

@@ -40,6 +40,7 @@
 
         <com.tzl.agriculture.view.ShowButtonLayout
             android:id="@+id/labelLayout"
+            android:paddingHorizontal="@dimen/dp_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </com.tzl.agriculture.view.ShowButtonLayout>
