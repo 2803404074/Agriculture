@@ -31,7 +31,7 @@ import Utils.DownloadUtil;
 
 public class DialogUtil {
 
-    private static DialogUtil dialogUtil;
+    private  DialogUtil dialogUtil;
 
     private AlertDialog dialog;
 
@@ -43,13 +43,6 @@ public class DialogUtil {
 
     public DialogUtil(Context context) {
         this.context = context;
-    }
-
-    public static DialogUtil init(Context context) {
-        if (dialogUtil == null) {
-            dialogUtil = new DialogUtil(context);
-        }
-        return dialogUtil;
     }
 
     /**
@@ -88,7 +81,7 @@ public class DialogUtil {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         BaseAdapter adapter = new BaseAdapter<String>(context, recyclerView, appVersion.getRemarkList(), R.layout.item_text) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder,int position, String o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position, String o) {
                 TextView tvTips = holder.getView(R.id.tv_tips);
                 tvTips.setText(o);
                 tvTips.setTextColor(context.getResources().getColor(R.color.colorGri2));
@@ -149,7 +142,7 @@ public class DialogUtil {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
+                            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
                         }
 
                         context.startActivity(intent);
@@ -166,7 +159,6 @@ public class DialogUtil {
                         Log.e("qwxc", e.getMessage());
                     }
                 });
-
             }
         });
 
@@ -195,6 +187,7 @@ public class DialogUtil {
 
     /**
      * 逻辑提示，点击控制
+     *
      * @param index 0 登陆超时
      */
     public void showTipsForControl(int index) {
@@ -202,7 +195,7 @@ public class DialogUtil {
                 .setMessage("敬请期待").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (index == 0){
+                        if (index == 0) {
                             dialogInterface.dismiss();
                             Intent intent = new Intent(getContext(), LoginActivity.class);
                             context.startActivity(intent);
@@ -221,10 +214,10 @@ public class DialogUtil {
                 .setMessage(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                            Intent intent = new Intent(getContext(), LoginActivity.class);
-                            context.startActivity(intent);
-                            MainActivity.instance.finish();
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        context.startActivity(intent);
+                        MainActivity.instance.finish();
                     }
                 }).create();
         dialog.setCancelable(false);

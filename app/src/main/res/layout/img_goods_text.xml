@@ -13,8 +13,8 @@
         android:layout_height="@dimen/dp_80"
         android:id="@+id/iv_img"/>
 
+
     <TextView
-        android:visibility="gone"
         android:id="@+id/tv_price"
         android:layout_marginTop="@dimen/dp_3"
         android:layout_gravity="center"
@@ -22,6 +22,13 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccentButton"
+        android:textColor="@color/black"
+        android:text="@string/app_money"/>
+
+    <TextView
+        android:id="@+id/tv_marketPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/app_money"/>
 </LinearLayout>

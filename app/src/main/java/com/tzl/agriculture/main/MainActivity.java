@@ -521,7 +521,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                             if (hasNew){
                                 String str = dataObj.optString("appAbout");
                                 AppVersion appVersion = JsonUtil.string2Obj(str, AppVersion.class);
-                                DialogUtil.init(MainActivity.this).showVersion(R.layout.dialog_version,mustUpdate,appVersion);
+                                new DialogUtil(getContext()).showVersion(R.layout.dialog_version,mustUpdate,appVersion);
                             }
 //                            //强制更新，不加载
 //                            if (!mustUpdate){
@@ -550,13 +550,11 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DialogUtil.init(this).des();
     }
 
     @Override
     public void finish() {
         super.finish();
-        DialogUtil.init(this).des();
     }
 
     public void requestPower() {

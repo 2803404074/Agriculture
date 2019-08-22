@@ -115,6 +115,23 @@ public class HtmlForStoryActivity extends BaseHtmlActivity implements View.OnCli
 
                     @Override
                     public void onFailed(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                spinKitView.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        super.onFailure(call, e);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                spinKitView.setVisibility(View.GONE);
+                            }
+                        });
                     }
                 });
 

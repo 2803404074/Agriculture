@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Paint;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -239,6 +240,9 @@ public class HomeFragment extends BaseFragment {
                         public void convert(Context mContext, BaseRecyclerHolder holder, int position,HomeMo.LimitGoods.GoodsList o) {
                             holder.setImageByUrl(R.id.iv_img, o.getPicUrl());
                             holder.setText(R.id.tv_price, getResources().getString(R.string.app_money_home, o.getPrice()));
+                            TextView tvMarketPrice = holder.getView(R.id.tv_marketPrice);
+                            tvMarketPrice.setText(getResources().getString(R.string.app_money_home, o.getOriginalPrice()));
+                            tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                         }
                     };
                     recyclerView.setAdapter(adapter);
@@ -574,14 +578,15 @@ public class HomeFragment extends BaseFragment {
 
     //订单农业，扶贫厅 弹窗
     private void showTwo() {
-        DialogUtil.init(getContext()).showTips();
+        new DialogUtil(getContext()).showTips();
     }
 
     /**
      * 新人礼包
      */
     private void showShareDialogNes() {
-        DialogUtil.init(getContext()).show(R.layout.dialog_img);
+
+        new DialogUtil(getContext()).show(R.layout.dialog_img);
     }
 
     @Override

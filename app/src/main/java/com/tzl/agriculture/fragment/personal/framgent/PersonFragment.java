@@ -349,7 +349,7 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     }else if (object.optInt("code") == -1){
                         ToastUtil.showShort(getContext(),TextUtil.checkStr2Str(object.optString("msg")));
                     }else {
-                        DialogUtil.init(getContext()).showTipsForControl("登陆失败，请重新登陆");
+                        new DialogUtil(getContext()).showTipsForControl("登陆失败，请重新登陆");
                     }
 
                 } catch (JSONException e) {

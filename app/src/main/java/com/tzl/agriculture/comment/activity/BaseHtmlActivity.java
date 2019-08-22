@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -18,6 +19,7 @@ import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.LoaddingUtils;
 import com.tzl.agriculture.util.MyWebViewClient;
 import com.tzl.agriculture.util.SPUtils;
+import com.tzl.agriculture.util.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +86,15 @@ public abstract class BaseHtmlActivity extends AppCompatActivity {
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
-        webView.setWebViewClient(new MyWebViewClient(webView));
+        MyWebViewClient webViewClient = new MyWebViewClient(webView);
+        webViewClient.setWebCallBack(new MyWebViewClient.WebCallBack() {
+            @Override
+            public void err(WebResourceError error) {
+                spinKitView.setVisibility(View.GONE);
+                ToastUtil.showShort(mContext,"网络异常");
+            }
+        });
+        webView.setWebViewClient(webViewClient);
         webView.loadDataWithBaseURL(null, HtmlStyleUtil.pingHtml(html), "text/html","utf-8", null);
 
         //webView.loadData(html, "text/html", "UTF-8");

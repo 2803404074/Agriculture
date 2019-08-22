@@ -120,7 +120,12 @@ public class HomeMo implements Serializable {
             private String picUrl;
             private String goodsId;
             private String price;
+            private String originalPrice;
             private String articleId;//去旅游的文章id
+
+            public String getOriginalPrice() {
+                return originalPrice;
+            }
 
             public String getPrice() {
                 return price;

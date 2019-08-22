@@ -31,6 +31,7 @@ public class AccountSaveActivity extends SetBaseActivity implements View.OnClick
     RelativeLayout rlDeviceManage;
 
 
+
     @Override
     public void backFinish() {
         finish();
@@ -64,7 +65,7 @@ public class AccountSaveActivity extends SetBaseActivity implements View.OnClick
                 break;
             case R.id.rl_accountRelation:
                 if(true){
-                    DialogUtil.init(this).showTips();
+                    new DialogUtil(this).showTips();
                     return;
                 }
                 Intent intent2 = new Intent(AccountSaveActivity.this, AccountRelationActivity.class);
@@ -72,7 +73,7 @@ public class AccountSaveActivity extends SetBaseActivity implements View.OnClick
                 break;
             case R.id.rl_bindPhone:
                 if(true){
-                    DialogUtil.init(this).showTips();
+                    new DialogUtil(this).showTips();
                     return;
                 }
                 Intent intent3 = new Intent(AccountSaveActivity.this, BindPhoneActivity.class);
@@ -80,7 +81,7 @@ public class AccountSaveActivity extends SetBaseActivity implements View.OnClick
                 break;
             case R.id.rl_device_manage:
                 if(true){
-                    DialogUtil.init(this).showTips();
+                    new DialogUtil(this).showTips();
                     return;
                 }
                 Intent intent4 = new Intent(AccountSaveActivity.this, DeviceManageActivity.class);

@@ -1,22 +1,17 @@
 package com.tzl.agriculture.fragment.personal.activity.ccb.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.ccb.adapter.CartAdapter;
 import com.tzl.agriculture.fragment.personal.activity.ccb.cartinter.OnItemMoneyClickListener;
 import com.tzl.agriculture.fragment.personal.activity.ccb.cartinter.OnViewItemClickListener;
 import com.tzl.agriculture.fragment.personal.activity.ccb.entity.CartInfo;
-import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
-import com.tzl.agriculture.model.HomeMo;
 import com.tzl.agriculture.util.DialogUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
@@ -36,9 +31,6 @@ import java.util.Map;
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import config.Mall;
 import config.ShopCart;
 import okhttp3.Call;
 
@@ -85,6 +77,7 @@ public class CartActivity extends BaseActivity {
 
 
     public void initView() {
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         cartShoppMoular.setOnClickListener(new OnClickListener());
         checkBox.setOnClickListener(new OnClickListener());
@@ -245,7 +238,7 @@ public class CartActivity extends BaseActivity {
                     break;
                 case R.id.cart_shopp_moular:
                     if(true){
-                        DialogUtil.init(getContext()).showTips();
+                        new DialogUtil(getContext()).showTips();
                         return;
                     }
                     if (num == 0) {
@@ -443,6 +436,10 @@ public class CartActivity extends BaseActivity {
                });
             }
         });
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
