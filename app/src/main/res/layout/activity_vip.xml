@@ -26,7 +26,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_200"
+                android:layout_height="wrap_content"
                 android:background="@mipmap/menber_beij">
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -41,8 +41,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_above="@+id/ll_ljkt"
                     android:gravity="center"
+                    android:id="@+id/ll_1"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/drawee_img">
                     <TextView
@@ -61,8 +61,8 @@
                         android:layout_marginVertical="@dimen/dp_5"
                         android:layout_above="@+id/ll_ljkt"
                         android:layout_centerHorizontal="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dp_90"
+                        android:layout_height="@dimen/dp_25"
                         android:src="@mipmap/vip_fpds"/>
                 </LinearLayout>
 
@@ -114,6 +114,7 @@
 
 
                 <LinearLayout
+                    android:layout_below="@+id/ll_1"
                     android:id="@+id/ll_ljkt"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_80"

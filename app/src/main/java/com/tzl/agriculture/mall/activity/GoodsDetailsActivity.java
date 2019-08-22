@@ -326,7 +326,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         showButtonLayoutData.setData();
 
         //销量
-        tvSalesNum.setText(TextUtil.checkStr2Num(goodsDetailsMo.getGoods().getSalesVolume()));
+        tvSalesNum.setText("月销量"+TextUtil.checkStr2Num(goodsDetailsMo.getGoods().getSalesVolume()));
 
         //邮费
         String yfStr = TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getFreeShipping());

@@ -75,7 +75,7 @@ public class ApplyActivity extends SetBaseActivity implements View.OnClickListen
 
     @Override
     public void initView() {
-        setTitle("成为顾问");
+        setTitle("成为扶贫大使");
         setAndroidNativeLightStatusBar(true);
         setStatusColor(R.color.colorW);
 
