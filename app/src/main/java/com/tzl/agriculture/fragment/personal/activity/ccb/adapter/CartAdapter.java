@@ -27,19 +27,27 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private List<CartInfo.DataBean> list;
+    private List<CartInfo.DataBean> list=new ArrayList<>();
     public ListBaseAdapter listBaseAdapter;
     public boolean isCheck = false;
 
-    public CartAdapter(Context context, List<CartInfo.DataBean> list) {
+    public CartAdapter(Context context) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
-        this.list = list;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(layoutInflater.inflate(R.layout.cart_dep, parent, false));
+    }
+
+
+    public void updateData(List<CartInfo.DataBean> e1){
+        list.clear();
+        if(e1!=null&&e1.size()!=0){
+            list.addAll(e1);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -73,7 +81,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         }
                     }
                     list.get(onePosition).setIscheck(isCheck);
-                    onItemMoneyClickListener.onItemClick(view, onePosition);
+                    onItemMoneyClickListener.onItemClick(view,3 ,onePosition,position);
                     notifyDataSetChanged();
                 }
             }
@@ -86,16 +94,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         listBaseAdapter.setOnClickAddCloseListenter(new OnClickAddCloseListenter() {
             @Override
             public void onItemClick(View view, int index, int onePosition, int position, int num) {
-                if (index==1){
-                    if (num>1) {
-                        list.get(onePosition).getItems().get(position).setNum((num - 1));
-                        notifyDataSetChanged();
-                    }
-                }else {
-                    list.get(onePosition).getItems().get(position).setNum((num + 1));
-                    notifyDataSetChanged();
-                }
-                onItemMoneyClickListener.onItemClick(view, onePosition);
+//                if (index==1){
+//                    if (num>1) {
+//                        list.get(onePosition).getItems().get(position).setNum((num - 1));
+//                        notifyDataSetChanged();
+//                    }
+//                }else {
+//                    list.get(onePosition).getItems().get(position).setNum((num + 1));
+//                    notifyDataSetChanged();
+//                }
+                onItemMoneyClickListener.onItemClick(view,index, onePosition,position);
             }
         });
 
@@ -146,7 +154,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list==null?0:list.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

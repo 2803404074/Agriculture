@@ -103,7 +103,7 @@
                         android:paddingVertical="@dimen/dp_5"
                         android:text="立即开通"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/sp_9"
+                        android:textSize="@dimen/sp_10"
                         android:textStyle="bold" />
                 </LinearLayout>
             </RelativeLayout>

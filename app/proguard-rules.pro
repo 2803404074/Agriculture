@@ -196,11 +196,17 @@
 #不混淆成员vip内部实体
 -keep class com.tzl.agriculture.fragment.vip.activity.VipActivity$* {
     *;
-}#不混淆成员内部实体
+}
+#不混淆成员内部实体
 -keep class com.tzl.agriculture.fragment.xiangc.activity.XiangcMyActivity$* {
     *;
-}#不混淆成员内部实体
+}
+#不混淆成员内部实体
 -keep class com.tzl.agriculture.mall.activity.LimitedTimeActivity$* {
+    *;
+}
+#不混淆成员内部实体
+-keep class com.tzl.agriculture.fragment.personal.activity.ccb.activity.CartActivity* {
     *;
 }
 

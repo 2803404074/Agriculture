@@ -10,11 +10,13 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.ccb.cartinter.OnClickAddCloseListenter;
 import com.tzl.agriculture.fragment.personal.activity.ccb.cartinter.OnClickListenterModel;
 import com.tzl.agriculture.fragment.personal.activity.ccb.entity.CartInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,13 +27,14 @@ public class ListBaseAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private List<CartInfo.DataBean.ItemsBean> list;
+    private List<CartInfo.DataBean.ItemsBean> list=new ArrayList<>();
     private int positionO;
 
     public ListBaseAdapter(Context context, int position, List<CartInfo.DataBean.ItemsBean> list) {
         this.positionO = position;
         this.layoutInflater = LayoutInflater.from(context);
-        this.list = list;
+        this.list.clear();
+        this.list.addAll(list);
         this.context = context;
     }
 
@@ -64,6 +67,7 @@ public class ListBaseAdapter extends BaseAdapter {
         viewHolder.tvChild.setText(list.get(position).getTitle());
         viewHolder.textView.setText("¥ " + list.get(position).getPrice());
         viewHolder.btnNum.setText(list.get(position).getNum()+"");
+        Glide.with(context.getApplicationContext()).load(list.get(position).getImage()).into(viewHolder.imageView);
         viewHolder.cbChild.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

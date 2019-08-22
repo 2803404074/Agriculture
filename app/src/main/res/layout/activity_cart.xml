@@ -22,6 +22,7 @@
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
                 android:padding="@dimen/dp_5"
+                android:id="@+id/back"
                 android:src="@mipmap/back"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -39,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp_16"
+                android:visibility="gone"
                 android:padding="@dimen/dp_5"
                 android:layout_marginHorizontal="@dimen/dp_5"
                 android:text="删除"/>
@@ -48,6 +50,7 @@
             android:id="@+id/recy"
             android:layout_marginHorizontal="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_40"
+            android:paddingBottom="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -66,6 +69,7 @@
             android:id="@+id/cbx_quanx_check"
             android:layout_width="23dp"
             android:layout_height="23dp"
+            android:visibility="gone"
             android:background="@drawable/checkbox_payment"
             android:button="@android:color/transparent"
             android:layout_marginLeft="10dp"
@@ -75,7 +79,9 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textSize="14dp"
+            android:id="@+id/text_quanx_check"
             android:text="全选"
+            android:visibility="gone"
             android:layout_marginLeft="5dp"
             />
         <View
@@ -118,8 +124,9 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_15"
             android:paddingHorizontal="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_10"
             android:paddingVertical="@dimen/dp_3"
-            android:background="@drawable/shape_login_blue"
+            android:background="@drawable/shape_login_blue_hide"
             android:text="结算"
             android:textColor="@android:color/white" />
     </LinearLayout>

@@ -67,6 +67,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import config.Article;
 import config.Mall;
+import config.ShopCart;
 import okhttp3.Call;
 
 /**
@@ -129,8 +130,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     WebView webView;
 
     //屏蔽购物车
-//    @BindView(R.id.tv_addcart)
-//    TextView tvAddCart;
+    @BindView(R.id.tv_addcart)
+    TextView tvAddCart;
 
     @BindView(R.id.tv_buy)
     TextView tvBuy;
@@ -177,13 +178,16 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.tv_salesNum)
     TextView tvSalesNum;
 
+    private boolean isAddCart; //true 加入  false 立即购买
+
     @BindView(R.id.labelLayout)
     ShowButtonLayout labelLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SPUtils.instance(this,1).remove("main_type");
-        SPUtils.instance(this,1).remove("main_link");
+        SPUtils.instance(this, 1).remove("main_type");
+        SPUtils.instance(this, 1).remove("main_link");
         StatusBarUtil.setRootViewFitsSystemWindows(this, false);
     }
 
@@ -209,11 +213,11 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
             StatusBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorW));
         }
 
-        if (getIntent().getIntExtra("type",0) == 1){
+        if (getIntent().getIntExtra("type", 0) == 1) {
             tvDh.setVisibility(View.VISIBLE);
             llDeatilsMenu.setVisibility(View.GONE);
             tvDh.setOnClickListener(this);
-        }else {
+        } else {
             tvDh.setVisibility(View.GONE);
             llDeatilsMenu.setVisibility(View.VISIBLE);
         }
@@ -224,7 +228,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         btCollect.setClickable(false);
         ivBack.setOnClickListener(this);
         ivShare.setOnClickListener(this);
-        //tvAddCart.setOnClickListener(this);
+        tvAddCart.setOnClickListener(this);
         llCs.setOnClickListener(this);
         tvBuy.setOnClickListener(this);
         llServer.setOnClickListener(this);
@@ -234,7 +238,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
 
     @OnClick({R.id.ll_collect})
-    public void onTextClick(View view){
+    public void onTextClick(View view) {
         collection();
     }
 
@@ -255,11 +259,11 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                                 String str = object.optString("data");
                                 goodsDetailsMo = JsonUtil.string2Obj(str, GoodsDetailsMo.class);
                                 setMess();
-                            } else if (object.optInt("code") == 0){
+                            } else if (object.optInt("code") == 0) {
                                 Intent intent = new Intent(GoodsDetailsActivity.this, LoginActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
-                            }else {
+                            } else {
                                 ToastUtil.showShort(GoodsDetailsActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                             }
                         } catch (JSONException e) {
@@ -280,13 +284,13 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         //0限时购入口
         //1会员兑换入口
         //2普通商品和开通会员入口
-        int type = getIntent().getIntExtra("type",0);
+        int type = getIntent().getIntExtra("type", 0);
 
-        if (type == 0 || !StringUtils.isEmpty(goodsDetailsMo.getGoods().getSpikeEndTime())){//限时购  -- 隐藏兑换，显示倒计时,显示购买
+        if (type == 0 || !StringUtils.isEmpty(goodsDetailsMo.getGoods().getSpikeEndTime())) {//限时购  -- 隐藏兑换，显示倒计时,显示购买
             int isSpike = goodsDetailsMo.getGoods().getIsSpike();
-            if (isSpike == 0){
+            if (isSpike == 0) {
                 llDateDown.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 llDateDown.setVisibility(View.GONE);
             }
             //倒计时
@@ -294,26 +298,26 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
             tvDh.setVisibility(View.GONE);
             llDeatilsMenu.setVisibility(View.VISIBLE);
 
-        } else if (type == 1){//会员兑换  -- 隐藏倒计时，显示兑换,隐藏购买
+        } else if (type == 1) {//会员兑换  -- 隐藏倒计时，显示兑换,隐藏购买
             tvDh.setVisibility(View.VISIBLE);//兑换视图
             //llDeatilsMenu.setVisibility(View.GONE);//购买视图
             btCollect.setVisibility(View.GONE);
             tvBuy.setVisibility(View.GONE);
             llDateDown.setVisibility(View.GONE);//倒计时视图
             tvDh.setOnClickListener(this);
-        }else{//普通、开会员     -- 隐藏倒计时，隐藏兑换，显示购买
+        } else {//普通、开会员     -- 隐藏倒计时，隐藏兑换，显示购买
             tvDh.setVisibility(View.GONE);
             llDateDown.setVisibility(View.GONE);
             llDeatilsMenu.setVisibility(View.VISIBLE);
         }
 
         //是否已收藏该商品
-        isCollect=!StringUtils.isEmpty(goodsDetailsMo.getGoods().getAlreadyCollect()) &&
+        isCollect = !StringUtils.isEmpty(goodsDetailsMo.getGoods().getAlreadyCollect()) &&
                 goodsDetailsMo.getGoods().getAlreadyCollect().equals("true");
-        setCollect(isCollect,false);
+        setCollect(isCollect, false);
 
         tvMarketPrice.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getOriginalPrice()));
-        tvMarketPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
+        tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
         tvPrice.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getPrice()));
         tvGoodsName.setText(TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getGoodsName()));
@@ -326,24 +330,24 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         showButtonLayoutData.setData();
 
         //销量
-        tvSalesNum.setText("月销量"+TextUtil.checkStr2Num(goodsDetailsMo.getGoods().getSalesVolume()));
+        tvSalesNum.setText("月销量" + TextUtil.checkStr2Num(goodsDetailsMo.getGoods().getSalesVolume()));
 
         //邮费
         String yfStr = TextUtil.checkStr2Str(goodsDetailsMo.getGoods().getFreeShipping());
-        tvYf.setText(yfStr.equals("0")? "包邮":getString(R.string.app_money)+yfStr);
+        tvYf.setText(yfStr.equals("0") ? "包邮" : getString(R.string.app_money) + yfStr);
 
         //评论数量
-        tvCommentNum.setText(goodsDetailsMo.getGoodsCommentList()==null ? "0":String.valueOf(goodsDetailsMo.getGoodsCommentList().size()));
+        tvCommentNum.setText(goodsDetailsMo.getGoodsCommentList() == null ? "0" : String.valueOf(goodsDetailsMo.getGoodsCommentList().size()));
 
         //评论头像
-        if (goodsDetailsMo.getGoodsCommentList() != null && goodsDetailsMo.getGoodsCommentList().size()>0){
+        if (goodsDetailsMo.getGoodsCommentList() != null && goodsDetailsMo.getGoodsCommentList().size() > 0) {
             Glide.with(getApplicationContext()).load(goodsDetailsMo.getGoodsCommentList().get(0).getHeadUrl()).into(ivHead);
             tvComName.setText(goodsDetailsMo.getGoodsCommentList().get(0).getNickname());
             tvComMess.setText(goodsDetailsMo.getGoodsCommentList().get(0).getContent());
 
             rlComment.setVisibility(View.VISIBLE);
             tvCommentTips.setVisibility(View.GONE);
-        }else {
+        } else {
             rlComment.setVisibility(View.GONE);
             tvCommentTips.setVisibility(View.VISIBLE);
         }
@@ -368,10 +372,10 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     //修改收藏颜色大小
-    private void setCollect(boolean isCollect,boolean isClick){
+    private void setCollect(boolean isCollect, boolean isClick) {
         System.out.println("isCollect = [" + isCollect + "]");
-        btCollect.setChecked(isCollect,isClick);
-        mTextViewCollect.setTextColor(ContextCompat.getColor(GoodsDetailsActivity.this,isCollect?R.color.colorOrange:R.color.colorHs2));
+        btCollect.setChecked(isCollect, isClick);
+        mTextViewCollect.setTextColor(ContextCompat.getColor(GoodsDetailsActivity.this, isCollect ? R.color.colorOrange : R.color.colorHs2));
     }
 
     private volatile List<ImageView> imgList = new ArrayList<>();
@@ -430,7 +434,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         webView.setWebViewClient(new MyWebViewClient(webView));
         //webView.getSettings().setDefaultZoom(HtmlStyleUtil.getZoomDensity(this));
         webView.getSettings().setDomStorageEnabled(true);
-        webView.loadDataWithBaseURL(null, HtmlStyleUtil.pingHtml(html), "text/html","utf-8", null);
+        webView.loadDataWithBaseURL(null, HtmlStyleUtil.pingHtml(html), "text/html", "utf-8", null);
     }
 
     @Override
@@ -447,14 +451,16 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 ShareUtils.getInstance(this).startShare(
                         goodsDetailsMo.getGoods().getName(),
                         goodsDetailsMo.getGoods().getGoodsName(),
-                        imgUrl,goodsDetailsMo.getGoods().getGoodsShareUrl(),null);
+                        imgUrl, goodsDetailsMo.getGoods().getGoodsShareUrl(), null);
                 break;
             case R.id.tv_buy:
+                isAddCart = false;
                 showBottomDialog(view);
                 break;
-//            case R.id.tv_addcart:
-//                showBottomDialog(view);
-//                break;
+            case R.id.tv_addcart:
+                isAddCart = true;
+                showBottomDialog(view);
+                break;
             case R.id.ll_cs:
                 showBottomDialogCs(view, goodsDetailsMo.getGoodsAttributes());
                 break;
@@ -463,8 +469,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.ll_comment:
                 Intent intent = new Intent(this, MyCommentActivity.class);
-                intent.putExtra("type",1);
-                intent.putExtra("goodsId",goodsDetailsMo.getGoods().getGoodsId());
+                intent.putExtra("type", 1);
+                intent.putExtra("goodsId", goodsDetailsMo.getGoods().getGoodsId());
                 startActivity(intent);
                 break;
             case R.id.tv_dh://兑换
@@ -492,8 +498,8 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         });
 
         ImageView imageView = view.findViewById(R.id.iv_img);
-        if (goodsDetailsMo ==null)return;
-        if (goodsDetailsMo.getGoods() == null)return;
+        if (goodsDetailsMo == null) return;
+        if (goodsDetailsMo.getGoods() == null) return;
         if (goodsDetailsMo.getGoods().getGallerys() != null && goodsDetailsMo.getGoods().getGallerys().size() > 0) {
             Glide.with(GoodsDetailsActivity.this).load(goodsDetailsMo.getGoods().getGallerys().get(0)).into(imageView);
         }
@@ -503,7 +509,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
         //库存
         TextView tvKc = view.findViewById(R.id.tv_kc);
-        tvKc.setText("库存"+goodsDetailsMo.getGoods().getNumber()+"件");
+        tvKc.setText("库存" + goodsDetailsMo.getGoods().getNumber() + "件");
 
         TextView tvReduce = view.findViewById(R.id.tv_reduce);
 
@@ -520,7 +526,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         //规格控件
         selectView = view.findViewById(R.id.shopping_selectView);
 
-        selectView.setTextViewAndGGproject(tvNum,tvPrice, tvKc, tvBuy, goodsDetailsMo.getGoodsSpecifications());
+        selectView.setTextViewAndGGproject(tvNum, tvPrice, tvKc, tvBuy, goodsDetailsMo.getGoodsSpecifications());
         selectView.setData(goodsDetailsMo.getGoodsSpecs());//规格数组
 
         //加
@@ -528,15 +534,15 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 int limitSize = goodsDetailsMo.getGoods().getPurchaseLimit();
-                if (limitSize>0 && limitSize<=Integer.parseInt(tvNum.getText().toString())){
-                    ToastUtil.showShort(GoodsDetailsActivity.this,"该商品每人只限购"+limitSize+"件哦");
+                if (limitSize > 0 && limitSize <= Integer.parseInt(tvNum.getText().toString())) {
+                    ToastUtil.showShort(GoodsDetailsActivity.this, "该商品每人只限购" + limitSize + "件哦");
                     return;
                 }
 
                 int n = Integer.parseInt(tvNum.getText().toString());
                 n++;
-                if (n>goodsDetailsMo.getGoods().getNumber()){
-                    ToastUtil.showShort(GoodsDetailsActivity.this,"数量超出范围");
+                if (n > goodsDetailsMo.getGoods().getNumber()) {
+                    ToastUtil.showShort(GoodsDetailsActivity.this, "数量超出范围");
                     return;
                 }
                 tvNum.setText(String.valueOf(n));
@@ -563,16 +569,20 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
                 if (!StringUtils.isEmpty(selectView.getProductId())) {
                     productId = selectView.getProductId();
                 }
-                if (StringUtils.isEmpty(productId)){
-                    ToastUtil.showShort(GoodsDetailsActivity.this,"产品已售完或超过购买库存数量");
+                if (StringUtils.isEmpty(productId)) {
+                    ToastUtil.showShort(GoodsDetailsActivity.this, "产品已售完或超过购买库存数量");
                     return;
                 }
-                quitOrder(productId, tvNum.getText().toString());
+                if (isAddCart) {
+                    addOrder(productId,tvNum.getText().toString());
+                } else {
+                    quitOrder(productId, tvNum.getText().toString());
+                }
 
             }
         });
 
-        int hight = (int) (Double.valueOf(ScreenUtils.getScreenHeight(this))/1.3);
+        int hight = (int) (Double.valueOf(ScreenUtils.getScreenHeight(this)) / 1.3);
         dialog.contentView(view)/*加载视图*/
                 .heightParam(hight)
                 /*动画设置*/
@@ -604,7 +614,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         BaseAdapter adapter = new BaseAdapter<GoodsDetailsMo.GoodsAttributes>(
                 GoodsDetailsActivity.this, recyclerView, mDate, R.layout.item_text_cs) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder,int position, GoodsDetailsMo.GoodsAttributes o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position, GoodsDetailsMo.GoodsAttributes o) {
                 holder.setText(R.id.tv_key, o.getAttribute());
                 holder.setText(R.id.tv_value, o.getValue());
             }
@@ -645,7 +655,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         BaseAdapter adapter = new BaseAdapter<GoodsDetailsMo.GoodsServices>(
                 GoodsDetailsActivity.this, recyclerView, mDate, R.layout.item_home_goods_server) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder, int position,GoodsDetailsMo.GoodsServices o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position, GoodsDetailsMo.GoodsServices o) {
                 holder.setText(R.id.tv_serverName, o.getGoodServiceName());
                 holder.setText(R.id.tv_serverDesc, o.getGoodServiceDesc());
             }
@@ -660,9 +670,9 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
     //确认订单
     private void quitOrder(String productId, String num) {
-        if (selectView != null){
-            if (StringUtils.isEmpty(selectView.getProductId())){
-                ToastUtil.showShort(this,"请选择规格");
+        if (selectView != null) {
+            if (StringUtils.isEmpty(selectView.getProductId())) {
+                ToastUtil.showShort(this, "请选择规格");
                 return;
             }
         }
@@ -712,28 +722,84 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
+
+    //加入购物车
+    private void addOrder(String productId, String num) {
+        if (selectView != null) {
+            if (StringUtils.isEmpty(selectView.getProductId())) {
+                ToastUtil.showShort(this, "请选择规格");
+                return;
+            }
+        }
+        setLoaddingView(true);
+        Map<String, String> map = new HashMap<>();
+        map.put("goodsId", goodsDetailsMo.getGoods().getGoodsId());
+        map.put("goodsSpecificationId", productId);
+        map.put("number", num);
+        String str = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(ShopCart.BASE).doPostJson2(ShopCart.addGoods, str, getToken(this), new GsonObjectCallback<String>(ShopCart.BASE) {
+            @Override
+            public void onUi(String result) {
+                setLoaddingView(false);
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optInt("code") == 0) {
+                        ToastUtil.showShort(GoodsDetailsActivity.this, "加入购物车成功");
+                    } else {
+                        ToastUtil.showShort(GoodsDetailsActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
+                    }
+                    dialog.dismiss();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setLoaddingView(false);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                super.onFailure(call, e);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setLoaddingView(false);
+                    }
+                });
+            }
+        });
+    }
+
     //收藏
     private void collection() {
         Map<String, String> map = new HashMap<>();
         map.put("goodsId", goodsDetailsMo.getGoods().getGoodsId());
         map.put("type", "1");
-        String str =JsonUtil.obj2String(map);
+        String str = JsonUtil.obj2String(map);
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(Mall.toOptionGoods, str, getToken(this), new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
                 System.out.println("result = [" + result + "]");
                 try {
                     JSONObject object = new JSONObject(result);
-                    if(object.optInt("code") == 0){
-                        isCollect=!isCollect;
-                        setCollect(isCollect,true);
-                    }else{
-                        ToastUtil.showShort(GoodsDetailsActivity.this,TextUtil.checkStr2Str(object.optString("msg")));
+                    if (object.optInt("code") == 0) {
+                        isCollect = !isCollect;
+                        setCollect(isCollect, true);
+                    } else {
+                        ToastUtil.showShort(GoodsDetailsActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailed(Call call, IOException e) {
             }
@@ -743,10 +809,11 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
 
     /**
      * 倒计时
+     *
      * @param data
      */
     private void dowTime(String data) {
-        if (StringUtils.isEmpty(data) || data.equals("null")){
+        if (StringUtils.isEmpty(data) || data.equals("null")) {
             tvDate.setText("活动已结束");
             llDeatilsMenu.setVisibility(View.GONE);
             return;
@@ -756,35 +823,36 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onProcess(int day, int hour, int minute, int second) {
                 String strDay = "";
-                String strHour= "";
+                String strHour = "";
                 String strMinute = "";
                 String strSecond = "";
 
-                if (day<10){
-                    strDay = 0+String.valueOf(day);
-                }else {
+                if (day < 10) {
+                    strDay = 0 + String.valueOf(day);
+                } else {
                     strDay = String.valueOf(day);
                 }
 
-                if (hour<10){
-                    strHour = 0+String.valueOf(hour);
-                }else {
+                if (hour < 10) {
+                    strHour = 0 + String.valueOf(hour);
+                } else {
                     strHour = String.valueOf(hour);
                 }
 
-                if (minute<10){
-                    strMinute = 0+String.valueOf(minute);
-                }else {
+                if (minute < 10) {
+                    strMinute = 0 + String.valueOf(minute);
+                } else {
                     strMinute = String.valueOf(minute);
                 }
 
-                if (second<10){
-                    strSecond = 0+String.valueOf(second);
-                }else {
+                if (second < 10) {
+                    strSecond = 0 + String.valueOf(second);
+                } else {
                     strSecond = String.valueOf(second);
                 }
                 tvDate.setText(strDay + "天 " + strHour + "时 " + strMinute + "分 " + strSecond + "秒");
             }
+
             @Override
             public void onFinish() {
                 tvDate.setText("活动已结束");

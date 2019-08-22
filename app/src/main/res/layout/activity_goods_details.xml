@@ -543,7 +543,7 @@
             android:paddingHorizontal="@dimen/dp_10"
             android:paddingVertical="@dimen/dp_5"
             android:text="加入购物车"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginRight="@dimen/dp_10"
             android:textColor="@color/colorPrimaryDark" />
 

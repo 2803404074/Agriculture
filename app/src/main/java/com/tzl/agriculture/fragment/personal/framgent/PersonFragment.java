@@ -2,6 +2,7 @@ package com.tzl.agriculture.fragment.personal.framgent;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.ccb.activity.BrowseActivity;
+import com.tzl.agriculture.fragment.personal.activity.ccb.activity.CartActivity;
 import com.tzl.agriculture.fragment.personal.activity.ccb.activity.CollectionGoodsActivity;
 import com.tzl.agriculture.fragment.personal.activity.function.activity.MyCommentActivity;
 import com.tzl.agriculture.fragment.personal.activity.order.MyOrderActivity;
@@ -282,7 +284,12 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
         dialogUtilT.show2(R.layout.dialog_share_app,userInfo);
     }
 
+    private String qrCodeUrl;
     private void initDialogImg(ImageView imageView,TextView tvCode) {
+        if(!TextUtils.isEmpty(qrCodeUrl)){
+            Glide.with(getContext().getApplicationContext()).load(qrCodeUrl).into(imageView);
+            return;
+        }
         OkHttp3Utils.getInstance(App.BASE).doPostJson2(User.shareAppToPic, "", getToken(), new GsonObjectCallback<String>(App.BASE) {
             @Override
             public void onUi(String result) {
@@ -292,8 +299,8 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                     if (object.optInt("code") == 0){
                         JSONObject dataObj = object.optJSONObject("data");
                         JSONObject shareObj = dataObj.optJSONObject("shareInfo");
-                        String qrCodeUrl = shareObj.optString("qrCodeUrl");
-                        Glide.with(getContext()).load(qrCodeUrl).into(imageView);
+                        qrCodeUrl = shareObj.optString("qrCodeUrl");
+                        Glide.with(getContext().getApplicationContext()).load(qrCodeUrl).into(imageView);
                         tvCode.setText(shareObj.optString("inviteCode"));
                         downImages.clear();
                         downImages.add(qrCodeUrl);
@@ -412,9 +419,9 @@ public class PersonFragment extends BaseFragment implements View.OnClickListener
                 startActivity(intent1);
                 break;
             case R.id.ll_cart:
-                DialogUtil.init(getContext()).showTips();
-//                Intent intent2 = new Intent(getContext(), CartActivity.class);
-//                startActivity(intent2);
+               // DialogUtil.init(getContext()).showTips();
+                Intent intent2 = new Intent(getContext(), CartActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.ll_see:
                 Intent intent3 = new Intent(getContext(), BrowseActivity.class);

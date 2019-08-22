@@ -156,7 +156,13 @@ public class ApplyActivity extends SetBaseActivity implements View.OnClickListen
         //此处设置位置窗体大小，我这里设置为了手机屏幕宽度的3/4
         dialog.getWindow().setLayout((ScreenUtils.getScreenWidth(this) / 4 * 3), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
+
+    List<VipActivity.QyTcMo> qyTcMos;
     private void initDialogImg(ImageView imageView, int index) {
+        if(qyTcMos!=null&&index<qyTcMos.size()){
+            Glide.with(ApplyActivity.this.getApplicationContext()).load(TextUtil.checkStr2Str(qyTcMos.get(index).getContUrl())).into(imageView);
+            return;
+        }
         String token = (String) SPUtils.instance(this, 1).getkey("token", "");
         OkHttp3Utils.getInstance(App.BASE).doPostJson2(App.interests, "", token, new GsonObjectCallback<String>(App.BASE) {
             @Override
@@ -164,7 +170,7 @@ public class ApplyActivity extends SetBaseActivity implements View.OnClickListen
                 try {
                     JSONObject object = new JSONObject(result);
                     String data = object.optString("data");
-                    List<VipActivity.QyTcMo> qyTcMos = JsonUtil.string2Obj(data, List.class, VipActivity.QyTcMo.class);
+                    qyTcMos = JsonUtil.string2Obj(data, List.class, VipActivity.QyTcMo.class);
                     if (null != qyTcMos && index < qyTcMos.size()) {
                         Glide.with(ApplyActivity.this).load(TextUtil.checkStr2Str(qyTcMos.get(index).getContUrl())).into(imageView);
                     }

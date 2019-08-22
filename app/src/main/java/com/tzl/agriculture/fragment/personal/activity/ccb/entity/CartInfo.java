@@ -1,5 +1,7 @@
 package com.tzl.agriculture.fragment.personal.activity.ccb.entity;
 
+import android.text.TextUtils;
+
 import java.util.List;
 
 /**
@@ -7,22 +9,22 @@ import java.util.List;
  * 购物车
  */
 
-public class CartInfo extends User{
+public class CartInfo {
 
-    private List<DataBean> data;
+    private List<DataBean> shopList;
 
     public List<DataBean> getData() {
-        return data;
+        return shopList;
     }
 
     public void setData(List<DataBean> data) {
-        this.data = data;
+        this.shopList = data;
     }
 
     public static class DataBean {
-        private String shop_id; //购物车id
-        private String shop_name; //店铺名称
-        private List<ItemsBean> items; //店铺商品列表
+        private String shopId; //购物车id
+        private String shopName; //店铺名称
+        private List<ItemsBean> goodsList; //店铺商品列表
         private boolean ischeck=false;
 
         public boolean ischeck() {
@@ -34,44 +36,80 @@ public class CartInfo extends User{
         }
 
         public String getShop_id() {
-            return shop_id;
+            return shopId;
         }
 
         public void setShop_id(String shop_id) {
-            this.shop_id = shop_id;
+            this.shopId = shop_id;
         }
 
         public String getShop_name() {
-            return shop_name;
+            return shopName;
         }
 
         public void setShop_name(String shop_name) {
-            this.shop_name = shop_name;
+            this.shopName = shop_name;
         }
 
         public List<ItemsBean> getItems() {
-            return items;
+            return goodsList;
         }
 
         public void setItems(List<ItemsBean> items) {
-            this.items = items;
+            this.goodsList = items;
         }
 
         public static class ItemsBean {
-            private String itemid; //商品id
-            private String quantity;
-            private String image;//图片
+            private String goodsId; //商品id
+            private String specifications;
+            private String picUrl;//图片
             private String price;//价钱
-            private String title;//标题
+            private String totalPrice;//总价格
+            private String goodsName;//标题
+            private String cartId;//购物车id
             private boolean ischeck=false;
-            private int num=1;
+            private String number="1";
+            private String stock="1";
 
-            public int getNum() {
-                return num;
+            public int getStock() {
+                if(TextUtils.isEmpty(stock)){
+                    return 1;
+                }
+                return Integer.valueOf(stock);
             }
 
-            public void setNum(int num) {
-                this.num = num;
+            public void setStock(String stockArp) {
+                stock = stockArp;
+            }
+
+            public int getCartId() {
+                if(TextUtils.isEmpty(cartId)){
+                    return 0;
+                }
+                return Integer.valueOf(cartId);
+            }
+
+            public void setCartId(String cartIdArp) {
+                cartId = cartIdArp;
+            }
+
+            public String getTotalPrice() {
+                return totalPrice;
+            }
+
+            public void setTotalPrice(String totalPriceArp) {
+                totalPrice = totalPriceArp;
+            }
+
+            public int getNum() {
+                if(TextUtils.isEmpty(number)){
+                    return 1;
+                }
+                return Integer.valueOf(number);
+            }
+
+            public void setNum(String num) {
+                this.number = num;
             }
 
             public boolean ischeck() {
@@ -83,27 +121,27 @@ public class CartInfo extends User{
             }
 
             public String getItemid() {
-                return itemid;
+                return goodsId;
             }
 
             public void setItemid(String itemid) {
-                this.itemid = itemid;
+                this.goodsId = itemid;
             }
 
-            public String getQuantity() {
-                return quantity;
+            public String getSpecifications() {
+                return specifications;
             }
 
-            public void setQuantity(String quantity) {
-                this.quantity = quantity;
+            public void setSpecifications(String quantity) {
+                this.specifications = quantity;
             }
 
             public String getImage() {
-                return image;
+                return picUrl;
             }
 
             public void setImage(String image) {
-                this.image = image;
+                this.picUrl = image;
             }
 
             public String getPrice() {
@@ -115,11 +153,11 @@ public class CartInfo extends User{
             }
 
             public String getTitle() {
-                return title;
+                return goodsName;
             }
 
             public void setTitle(String title) {
-                this.title = title;
+                this.goodsName = title;
             }
         }
     }

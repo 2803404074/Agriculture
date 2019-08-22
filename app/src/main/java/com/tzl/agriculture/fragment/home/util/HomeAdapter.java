@@ -38,6 +38,10 @@ public abstract class HomeAdapter extends RecyclerView.Adapter<BaseRecyclerHolde
         this.mData = list;
         notifyDataSetChanged();
     }
+
+    public void setmDataN(List<HomeMo> list) {
+        this.mData = list;
+    }
     public void update(List<HomeMo> list) {
         mData.clear();
         mData.addAll(list);

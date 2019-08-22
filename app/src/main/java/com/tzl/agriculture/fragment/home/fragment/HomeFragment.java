@@ -493,7 +493,7 @@ public class HomeFragment extends BaseFragment {
         if (dt != null && dt.size() > 0) {
             mData.addAll(dt);
         }
-        homeAdapter.setmData(mData);
+        homeAdapter.setmDataN(mData);
         homeRecycler.setAdapter(homeAdapter);
     }
 

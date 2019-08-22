@@ -131,6 +131,11 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 startActivity(intent);
             }
         }
+
+        fragmentManager = getSupportFragmentManager();
+        radioGroup.setOnCheckedChangeListener(MainActivity.this);
+        radioButton_01.setChecked(true);
+        radioButton_01.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     @Override
@@ -518,13 +523,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                                 AppVersion appVersion = JsonUtil.string2Obj(str, AppVersion.class);
                                 DialogUtil.init(MainActivity.this).showVersion(R.layout.dialog_version,mustUpdate,appVersion);
                             }
-                            //强制更新，不加载
-                            if (!mustUpdate){
-                                fragmentManager = getSupportFragmentManager();
-                                radioGroup.setOnCheckedChangeListener(MainActivity.this);
-                                radioButton_01.setChecked(true);
-                                radioButton_01.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                            }
+//                            //强制更新，不加载
+//                            if (!mustUpdate){
+//                                fragmentManager = getSupportFragmentManager();
+//                                radioGroup.setOnCheckedChangeListener(MainActivity.this);
+//                                radioButton_01.setChecked(true);
+//                                radioButton_01.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+//                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
