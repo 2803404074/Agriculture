@@ -14,8 +14,10 @@ import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
 import com.tzl.agriculture.model.CommentMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
+import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
+import com.tzl.agriculture.view.CommentImageCroDialog;
 import com.tzl.agriculture.view.onLoadMoreListener;
 
 import org.json.JSONException;
@@ -53,6 +55,7 @@ public class MyCommentActivity extends SetBaseActivity {
         finish();
     }
 
+
     @Override
     public int setLayout() {
         return R.layout.activity_my_comment;
@@ -60,11 +63,11 @@ public class MyCommentActivity extends SetBaseActivity {
 
     @Override
     public void initView() {
-        type = getIntent().getIntExtra("type",0);
+        type = getIntent().getIntExtra("type", 0);
         //1 商品的评论列表    0 我的评论列表
-        if (type == 1){
+        if (type == 1) {
             setTitle("评论");
-        }else {
+        } else {
             setTitle("我的评论");
         }
 
@@ -72,32 +75,38 @@ public class MyCommentActivity extends SetBaseActivity {
         setStatusColor(R.color.colorGri);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new BaseAdapter<CommentMo>(this,recyclerView,mData,R.layout.item_my_comment) {
+        adapter = new BaseAdapter<CommentMo>(this, recyclerView, mData, R.layout.item_my_comment) {
             @Override
-            public void convert(Context mContext, BaseRecyclerHolder holder,int position, CommentMo o) {
+            public void convert(Context mContext, BaseRecyclerHolder holder, int position, CommentMo o) {
 
                 SimpleDraweeView draweeView = holder.getView(R.id.drawee_img);
                 draweeView.setImageURI(o.getHeadUrl());
 
-                holder.setText(R.id.tv_name,o.getNickname());
-                holder.setText(R.id.tv_content,o.getContent());
-                holder.setText(R.id.tv_date,o.getCreateTime());
+                holder.setText(R.id.tv_name, o.getNickname());
+                holder.setText(R.id.tv_content, o.getContent());
+                holder.setText(R.id.tv_date, o.getCreateTime());
 
-                if (type == 1){
+                if (type == 1) {
                     holder.getView(R.id.rl_gooods).setVisibility(View.GONE);
-                }else {
+                } else {
                     holder.getView(R.id.rl_gooods).setVisibility(View.VISIBLE);
-                    holder.setImageByUrl(R.id.iv_goods_img,o.getGoods().getPicUrl());
-                    holder.setText(R.id.tv_goodsName,o.getGoods().getGoodsName());
-                    holder.setText(R.id.tv_price,o.getGoods().getFinalAmount());
+                    holder.setImageByUrl(R.id.iv_goods_img, o.getGoods().getPicUrl());
+                    holder.setText(R.id.tv_goodsName, o.getGoods().getGoodsName());
+                    holder.setText(R.id.tv_price, o.getGoods().getFinalAmount());
                 }
 
                 RecyclerView recySun = holder.getView(R.id.recy_sun);
-                recySun.setLayoutManager(new GridLayoutManager(MyCommentActivity.this,3));
-                BaseAdapter adapterx = new BaseAdapter<String>(MyCommentActivity.this,recySun,o.getImgList(),R.layout.img_fragment) {
+                recySun.setLayoutManager(new GridLayoutManager(MyCommentActivity.this, 3));
+                BaseAdapter adapterx = new BaseAdapter<String>(MyCommentActivity.this, recySun, o.getImgList(), R.layout.img_fragment) {
                     @Override
-                    public void convert(Context mContext, BaseRecyclerHolder holder, int position,String o) {
-                        holder.setImageByUrl(R.id.hxxq_img,o);
+                    public void convert(Context mContext, BaseRecyclerHolder holder1, int position, String o1) {
+                        holder1.setImageByUrl(R.id.hxxq_img, o1);
+                        holder1.getView(R.id.hxxq_img).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View viewArp) {
+                                initCommentImageCroDialog(position, o.getImgList());
+                            }
+                        });
                     }
                 };
                 recySun.setAdapter(adapterx);
@@ -114,39 +123,48 @@ public class MyCommentActivity extends SetBaseActivity {
         });
     }
 
+    //初始化
+    private CommentImageCroDialog mCommentImageCroDialog;
+    private void initCommentImageCroDialog(int positionArp, List<String> imgListArp) {
+        if(mCommentImageCroDialog==null)
+        mCommentImageCroDialog=new CommentImageCroDialog(this);
+        mCommentImageCroDialog.setData(positionArp,imgListArp);
+    }
+
     private int page = 1;
+
     @Override
     public void initData() {
         String utl = "";
-        Map<String,String>map = new HashMap<>();
-        if (type == 1){
+        Map<String, String> map = new HashMap<>();
+        if (type == 1) {
             utl = Mall.appCommentList;
-            map.put("goodsId",getIntent().getStringExtra("goodsId"));
-        }else {
+            map.put("goodsId", getIntent().getStringExtra("goodsId"));
+        } else {
             utl = Mall.myCommentList;
         }
-        map.put("pageNum",String.valueOf(page));
+        map.put("pageNum", String.valueOf(page));
         String str = JsonUtil.obj2String(map);
-        String token = (String) SPUtils.instance(this,1).getkey("token","");
+        String token = (String) SPUtils.instance(this, 1).getkey("token", "");
         OkHttp3Utils.getInstance(Mall.BASE).doPostJson2(utl, str, token, new GsonObjectCallback<String>(Mall.BASE) {
             @Override
             public void onUi(String result) {
                 System.out.println("result = [" + result + "]");
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == 0){
+                    if (object.optInt("code") == 0) {
                         JSONObject dataObj = object.optJSONObject("data");
                         String str = dataObj.optString("commentList");
-                        List<CommentMo>list = JsonUtil.string2Obj(str,List.class,CommentMo.class);
-                        if (list!=null && list.size()>0){
-                            if (page == 1){
+                        List<CommentMo> list = JsonUtil.string2Obj(str, List.class, CommentMo.class);
+                        if (list != null && list.size() > 0) {
+                            if (page == 1) {
                                 mData = list;
                                 adapter.updateData(mData);
-                            }else {
+                            } else {
                                 adapter.addAll(list);
                             }
-                        }else {
-                            if (adapter.getData() == null || adapter.getData().size() == 0){
+                        } else {
+                            if (adapter.getData() == null || adapter.getData().size() == 0) {
                                 ivTips.setVisibility(View.VISIBLE);
                             }
                         }
@@ -171,7 +189,8 @@ public class MyCommentActivity extends SetBaseActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 System.out.println("call = [" + call + "], e = [" + e + "]");
-                super.onFailure(call, e);runOnUiThread(new Runnable() {
+                super.onFailure(call, e);
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         ivTips.setVisibility(View.VISIBLE);

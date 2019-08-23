@@ -3,7 +3,10 @@ package com.tzl.agriculture.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -11,10 +14,13 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tzl.agriculture.R;
 import com.tzl.agriculture.application.AgricultureApplication;
 import com.tzl.agriculture.fragment.personal.login.activity.LoginActivity;
 import com.tzl.agriculture.fragment.personal.login.activity.PhoneRegistActivity;
 import com.tzl.agriculture.main.MainActivity;
+import com.tzl.agriculture.model.UserInfo;
+import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ToastUtil;
 
@@ -23,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import Utils.GsonObjectCallback;
 import Utils.OkHttp3Utils;
@@ -62,7 +70,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         Log.d("wechat", "onResp");
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
-                if(resp.getType()== ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){
+                if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {
                     finish();
                     return;
                 }
@@ -132,15 +140,20 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 try {
                     JSONObject object = new JSONObject(result);
                     if (StringUtils.isEmpty(result)) {
-                        return ;
+                        return;
                     }
                     String openId = object.optString("unionid");
                     String nickname = object.optString("nickname");
                     int sex = object.optInt("sex");
                     String headimgurl = object.optString("headimgurl");
-
-                    //检测用户
-                    checkUser(openId, nickname,sex, headimgurl);
+                    String t = (String) SPUtils.instance(WXEntryActivity.this, 1).getkey("wx_login_bind", "");
+                    if (TextUtils.isEmpty(t)) {
+                        //检测用户  --微信登录的时候
+                        checkUser(openId, nickname, sex, headimgurl);
+                    } else {
+                        //手机登录的时候绑定
+                        bindWx(openId);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -164,28 +177,81 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         });
     }
 
-    private void checkUser(final String openID, final String uName, int sex, final String headimgurl){
+    //绑定手机号
+    private void bindWx(String openIdArp) {
+        String str = (String) SPUtils.instance(this, 1).getkey("user", "");
+        String token=(String) SPUtils.instance(WXEntryActivity.this,1).getkey("token","");
+        UserInfo userInfo=null;
+        if (str != null) {
+            userInfo = JsonUtil.string2Obj(str, UserInfo.class);
+            if (userInfo == null || userInfo.getUserId() == 0) {
+                finish();
+                return;
+            }
+        }
+        if(TextUtils.isEmpty(token)){
+            finish();
+            return;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("openId", openIdArp);
+        map.put("userId", userInfo.getUserId());
+        String strJson = JsonUtil.obj2String(map);
+        OkHttp3Utils.getInstance(User.BASE).doPostJson2(User.bindWx, strJson,token, new GsonObjectCallback<String>(User.BASE) {
+            @Override
+            public void onUi(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    //请求成功
+                    if (object.optInt("code") == 0) {
+                        ToastUtil.showShort(WXEntryActivity.this,"绑定成功");
+                    }else{
+                        ToastUtil.showShort(WXEntryActivity.this,object.optString("msg"));
+                    }
+                } catch (JSONException e) {
+                    //e.printStackTrace();
+                }
+                finish();
+            }
+
+            @Override
+            public void onFailed(Call call, IOException e) {
+                ToastUtil.showShort(WXEntryActivity.this,"网络异常，绑定失败");
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                super.onFailure(call, e);
+                ToastUtil.showShort(WXEntryActivity.this,"网络异常，绑定失败");
+                finish();
+            }
+        });
+    }
+
+    private void checkUser(final String openID, final String uName, int sex, final String headimgurl) {
         OkHttp3Utils.desInstance();
         OkHttp3Utils.getInstance(User.BASE).doGet2(User.checkOpenId + openID, new GsonObjectCallback<String>(User.BASE) {
             @Override
             public void onUi(String result) {
                 try {
                     JSONObject object = new JSONObject(result);
-                    if (object.optInt("code") == 0){
+                    if (object.optInt("code") == 0) {
                         JSONObject dataObj = object.optJSONObject("data");
-                        boolean hasUser = dataObj.optBoolean("isRegister");{
-                            if (hasUser){//有该用户
-                                SPUtils.instance(WXEntryActivity.this,1).put("token",dataObj.optString("token"));
+                        boolean hasUser = dataObj.optBoolean("isRegister");
+                        {
+                            if (hasUser) {//有该用户
+                                SPUtils.instance(WXEntryActivity.this, 1).put("token", dataObj.optString("token"));
                                 Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                                 LoginActivity.instance.finish();
-                            }else {//没有该用户,去绑定手机号
+                            } else {//没有该用户,去绑定手机号
                                 Intent intent = new Intent(WXEntryActivity.this, PhoneRegistActivity.class);
-                                intent.putExtra("openId",openID);
-                                intent.putExtra("userName",uName);
-                                intent.putExtra("sex",sex);
-                                intent.putExtra("imgUrl",headimgurl);
+                                intent.putExtra("openId", openID);
+                                intent.putExtra("userName", uName);
+                                intent.putExtra("sex", sex);
+                                intent.putExtra("imgUrl", headimgurl);
                                 startActivity(intent);
                                 finish();
                             }

@@ -75,15 +75,15 @@ public class CartActivity extends BaseActivity {
     int num;
 
 
-
+    private OnClickListener mOnClickListener;
     public void initView() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        cartShoppMoular.setOnClickListener(new OnClickListener());
-        checkBox.setOnClickListener(new OnClickListener());
-        btnDelete.setOnClickListener(new OnClickListener());
-        text_quanx_check.setOnClickListener(new OnClickListener());
-        findViewById(R.id.back).setOnClickListener(new OnClickListener());
+        cartShoppMoular.setOnClickListener(mOnClickListener=new OnClickListener());
+        checkBox.setOnClickListener(mOnClickListener);
+        btnDelete.setOnClickListener(mOnClickListener);
+        text_quanx_check.setOnClickListener(mOnClickListener);
+        findViewById(R.id.back).setOnClickListener(mOnClickListener);
 
 //        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
 //        itemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.line_divider_inset));

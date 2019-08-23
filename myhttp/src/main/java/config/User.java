@@ -23,6 +23,9 @@ public class User extends Base{
     //检测用户是否存在（微信OpenId）
     public static String checkOpenId = "/api/basics/access/check/";
 
+    //手机号绑定微信
+    public static String bindWx = "/api/basics/check/bind/wx";
+
     //用户注册
     public static String register = "/api/basics/access/app/register";
 

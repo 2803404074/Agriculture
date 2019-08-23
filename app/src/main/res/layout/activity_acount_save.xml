@@ -29,6 +29,8 @@
                 android:textSize="@dimen/sp_15"/>
             <TextView
                 android:layout_width="wrap_content"
+                android:textSize="@dimen/sp_12"
+                android:layout_marginTop="@dimen/dp_5"
                 android:layout_height="wrap_content"
                 android:text="完成实名认证，尊享更多服务"/>
         </LinearLayout>
@@ -62,6 +64,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_12"
+                android:layout_marginTop="@dimen/dp_5"
                 android:text="可用微信快速登陆趣乡app"/>
         </LinearLayout>
         <ImageView
@@ -94,6 +98,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_12"
+                android:layout_marginTop="@dimen/dp_5"
                 android:text="更换手机尽快修改"/>
         </LinearLayout>
         <ImageView
@@ -126,7 +132,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="管理您最近登陆过的设备记录"/>
+                android:textSize="@dimen/sp_12"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text=" 管理您最近登陆过的设备记录"/>
         </LinearLayout>
         <ImageView
             android:layout_alignParentRight="true"

@@ -64,10 +64,6 @@ public class AccountSaveActivity extends SetBaseActivity implements View.OnClick
                 startActivity(intent1);
                 break;
             case R.id.rl_accountRelation:
-                if(true){
-                    new DialogUtil(this).showTips();
-                    return;
-                }
                 Intent intent2 = new Intent(AccountSaveActivity.this, AccountRelationActivity.class);
                 startActivity(intent2);
                 break;

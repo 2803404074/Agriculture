@@ -15,6 +15,7 @@ import com.tzl.agriculture.application.AgricultureApplication;
 import com.tzl.agriculture.util.DateUtil;
 import com.tzl.agriculture.util.DrawableSizeUtil;
 import com.tzl.agriculture.util.JsonUtil;
+import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseActivity;
@@ -243,6 +244,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
         req.state = "wechat_sdk_xb_live_state";//官方说明：用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验
+        SPUtils.instance(this,1).remove("wx_login_bind");
         AgricultureApplication.api.sendReq(req);
     }
 }
