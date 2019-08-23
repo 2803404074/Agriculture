@@ -338,7 +338,7 @@ public class GoodsDetailsActivity extends BaseActivity implements View.OnClickLi
         tvYf.setText(yfStr.equals("0") ? "包邮" : getString(R.string.app_money) + yfStr);
 
         //评论数量
-        tvCommentNum.setText(goodsDetailsMo.getGoodsCommentList() == null ? "0" : String.valueOf(goodsDetailsMo.getGoodsCommentList().size()));
+        tvCommentNum.setText(TextUtil.checkStr2Num(goodsDetailsMo.getGoods().getCommentNum()));
 
         //评论头像
         if (goodsDetailsMo.getGoodsCommentList() != null && goodsDetailsMo.getGoodsCommentList().size() > 0) {
