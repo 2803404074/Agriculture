@@ -34,6 +34,7 @@ public class CommentImageCroDialog extends Dialog implements ViewPager.OnPageCha
     public CommentImageCroDialog(Context context) {
         super(context);
         this.mContext=context;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         View view= LayoutInflater.from(context).inflate(R.layout.comment_cro_dialog,null,false);
         setContentView(view);
         view_pager=findViewById(R.id.view_pager);
@@ -57,16 +58,11 @@ public class CommentImageCroDialog extends Dialog implements ViewPager.OnPageCha
             }
 
             @Override
-            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                container.removeView((View) object);
-                super.destroyItem(container, position, object);
-
-            }
-
-            @Override
             public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-                return view == object;
+                return view==object;
             }
+
+
         });
         view_pager.addOnPageChangeListener(this);
 
@@ -102,6 +98,7 @@ public class CommentImageCroDialog extends Dialog implements ViewPager.OnPageCha
         mStrings.addAll(e);
         text_page.setText((index+1)+"/"+mStrings.size());
         mPagerAdapter.notifyDataSetChanged();
+        view_pager.setOffscreenPageLimit(e.size());
         show();
     }
 }

@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -26,6 +27,7 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.rey.material.app.BottomSheetDialog;
 import com.tzl.agriculture.R;
 import com.tzl.agriculture.fragment.personal.activity.set.SetBaseActivity;
+import com.tzl.agriculture.fragment.personal.activity.set.UserMessActivity;
 import com.tzl.agriculture.util.CameraUtil;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
@@ -40,7 +42,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -378,8 +385,22 @@ public class StartCommentActivity extends SetBaseActivity implements View.OnClic
             }
             case REQ_4: {
                 if (resultCode == RESULT_OK) {
-                    path = Uri2StringPathUtil.getRealPathFromURI(this, data.getData());
-                    loadUrl(new File(path));
+                    try {
+                       Bitmap bitmapCamera = BitmapFactory.decodeStream(getContentResolver()
+                                .openInputStream(imageUris));
+                        if (bitmapCamera != null) {
+                            File file = null;   //图片地址
+                            try {
+                                file = new File(new URI(imageUris.toString()));
+                            } catch (URISyntaxException e) {
+                                ToastUtil.showShort(StartCommentActivity.this,"获取文件失败！");
+                            }
+                            loadUrl(file);
+                        }
+
+                    } catch (FileNotFoundException e) {
+                        ToastUtil.showShort(StartCommentActivity.this,"获取文件失败！");
+                    }
                 }
                 break;
             }
@@ -387,6 +408,19 @@ public class StartCommentActivity extends SetBaseActivity implements View.OnClic
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
         }
+    }
+
+
+    public Uri bitmap2uri(Context c, Bitmap b) {
+        File path = new File(c.getCacheDir() + File.separator + System.currentTimeMillis() + ".jpg");
+        try {
+            OutputStream os = new FileOutputStream(path);
+            b.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.close();
+            return Uri.fromFile(path);
+        } catch (Exception ignored) {
+        }
+        return null;
     }
 
 

@@ -2,6 +2,7 @@ package com.tzl.agriculture.fragment.personal.activity.ccb.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.tzl.agriculture.fragment.personal.activity.ccb.cartinter.OnClickAddCl
 import com.tzl.agriculture.fragment.personal.activity.ccb.cartinter.OnClickListenterModel;
 import com.tzl.agriculture.fragment.personal.activity.ccb.entity.CartInfo;
 import com.tzl.agriculture.mall.activity.GoodsDetailsActivity;
+import com.tzl.agriculture.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +76,7 @@ public class ListBaseAdapter extends BaseAdapter {
 
         viewHolder.cbChild.setChecked(list.get(position).ischeck());
         viewHolder.tvChild.setText(list.get(position).getTitle());
+        viewHolder.tv_type.setText(TextUtils.isEmpty(list.get(position).getSpecifications())?"":list.get(position).getSpecifications().replaceAll("\"",""));
         viewHolder.textView.setText("¥ " + list.get(position).getPrice());
         viewHolder.btnNum.setText(list.get(position).getNum()+"");
         Glide.with(context.getApplicationContext()).load(list.get(position).getImage()).into(viewHolder.imageView);
@@ -112,7 +115,7 @@ public class ListBaseAdapter extends BaseAdapter {
 
     class ViewHolder implements View.OnClickListener{
 
-        public TextView tvChild;
+        public TextView tvChild,tv_type;
         public CheckBox cbChild;
         public TextView textView;
         public ImageView imageView;
@@ -124,6 +127,7 @@ public class ListBaseAdapter extends BaseAdapter {
         public ViewHolder(View view, int position) {
             this.position = position;
             tvChild = (TextView) view.findViewById(R.id.tv_child);
+            tv_type = (TextView) view.findViewById(R.id.tv_type);
             cbChild = (CheckBox) view.findViewById(R.id.cb_child);
             textView = view.findViewById(R.id.item_chlid_money);
             imageView =view.findViewById(R.id.item_chlid_image);
