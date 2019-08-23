@@ -24,6 +24,7 @@ import com.tzl.agriculture.model.GoodsMo;
 import com.tzl.agriculture.util.JsonUtil;
 import com.tzl.agriculture.util.SPUtils;
 import com.tzl.agriculture.util.ShowButtonLayoutData;
+import com.tzl.agriculture.util.TextUtil;
 import com.tzl.agriculture.util.ToastUtil;
 import com.tzl.agriculture.view.BaseAdapter;
 import com.tzl.agriculture.view.BaseRecyclerHolder;
@@ -246,32 +247,42 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 try {
                     JSONObject object = new JSONObject(result);
                     JSONObject dataObj = object.optJSONObject("data");
-                    String str = dataObj.optString("records");
-                    mData = JsonUtil.string2Obj(str,List.class,GoodsMo.class);
+                    if (dataObj.optInt("code") == 0){
+                        String str = dataObj.optString("records");
+                        mData = JsonUtil.string2Obj(str,List.class,GoodsMo.class);
+                        if (mData == null) {
+                            llSearch.setVisibility(View.VISIBLE);
+                            tvTips.setVisibility(View.VISIBLE);
+                            ToastUtil.showShort(SearchActivity.this,"登陆后再试试把吧");
+                            return;
+                        }
+                        if (mData.size()>0){
+                            llSearch.setVisibility(View.GONE);
+                            tvTips.setVisibility(View.GONE);
+                            adapter.updateData(mData);
+                        }else {
+                            mData.clear();
+                            adapter.updateData(mData);
+                            llSearch.setVisibility(View.VISIBLE);
+                            tvTips.setVisibility(View.VISIBLE);
+                        }
 
-                    if (mData.size()>0){
-                        llSearch.setVisibility(View.GONE);
-                        tvTips.setVisibility(View.GONE);
-                        adapter.updateData(mData);
+                        //添加历史
+                        for (int i = 0; i <HistList.size() ; i++) {
+                            if (HistList.get(i).equals(tag)){
+                                return;
+                            }
+                            if (HistList.size()>10){
+                                return;
+                            }
+                        }
+                        HistList.add(tag);
+                        String strHistList = JsonUtil.obj2String(HistList);
+                        SPUtils.instance(SearchActivity.this,1).put("historyGoods",strHistList);
                     }else {
-                        mData.clear();
-                        adapter.updateData(mData);
-                        llSearch.setVisibility(View.VISIBLE);
-                        tvTips.setVisibility(View.VISIBLE);
+                        ToastUtil.showShort(SearchActivity.this, TextUtil.checkStr2Str(object.optString("msg")));
                     }
 
-                    //添加历史
-                    for (int i = 0; i <HistList.size() ; i++) {
-                        if (HistList.get(i).equals(tag)){
-                            return;
-                        }
-                        if (HistList.size()>10){
-                            return;
-                        }
-                    }
-                    HistList.add(tag);
-                    String strHistList = JsonUtil.obj2String(HistList);
-                    SPUtils.instance(SearchActivity.this,1).put("historyGoods",strHistList);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
