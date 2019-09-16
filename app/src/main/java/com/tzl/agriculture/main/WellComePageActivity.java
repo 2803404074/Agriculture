@@ -29,7 +29,7 @@ import static androidx.core.content.PermissionChecker.PERMISSION_GRANTED;
 
 public class WellComePageActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
     private TextView text_time;
-    private ViewPager mViewPager;
+    private ViewPager mViewPager;//dfsdfsdfsfsdf
     private int[] ds = {R.mipmap.pic_guide_1, R.mipmap.pic_guide_2, R.mipmap.pic_guide_3, R.mipmap.pic_guide_4};
     private GuideButtomLineView mGuideButtomLineView;
     @Override

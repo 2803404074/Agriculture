@@ -66,7 +66,6 @@ public class WellcomActivity extends AppCompatActivity implements View.OnClickLi
                    }
                     String isLogin = (String) SPUtils.instance(WellcomActivity.this, 1).getkey("token", "");
                     if (!StringUtils.isEmpty(isLogin)) {
-
                         Intent intent = new Intent(WellcomActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
